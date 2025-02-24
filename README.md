@@ -13022,10 +13022,10 @@ Comment out example:
 home := $($HOME) ## comment
 
 target: deps ## comment
-    command \
-        | sed 's;^#;;' \
-        #| grep -v 'hoge'  <-- available comment out
-        | grep -v 'hoge' ## notice!  <-- unavailable comment (use -DeleteCommentEndOfCommandLine)
+    command |
+        sed 's;^#;;' |
+        # grep -v 'hoge' |  <-- available comment out
+        grep -v 'hoge' | ## notice!  <-- unavailable comment (use -DeleteCommentEndOfCommandLine)
         > a.md
 ```
 
@@ -13165,20 +13165,19 @@ all: pwsh ## update all
 .PHONY: pwsh
 pwsh: ${pwshdir} ${poshmock} ## update pwsh scripts
 	@Push-Location -LiteralPath "${pwshdir}\"
-	Copy-Item -LiteralPath \
-		./CHANGELOG.md, \
-		./README.md \
-		-Destination "${poshmock}\"
+	Copy-Item -Destination "${poshmock} -LiteralPath ./CHANGELOG.md, ./README.md		
 	Set-Location -LiteralPath "src"
-	Copy-Item -LiteralPath \
-		./self_function.ps1, \
+	Copy-Item -Destination "${poshmock}\src\" -LiteralPath ./self_function.ps1, \
 		./delf_function.ps1, \
 		./sm2_function.ps1, \
-		./man2_function.ps1 \
-		-Destination "${poshmock}\src\"
+		./man2_function.ps1
 	@Pop-Location
-	@if ( -not (Test-Path -LiteralPath "${pwshdir}\img\") ) { Write-Error "src is not exists: ""${pwshdir}\img\""" -ErrorAction Stop }
-	@if ( -not (Test-Path -LiteralPath "${poshmock}\img\") ) { Write-Error "dst is not exists: ""${poshmock}\img\""" -ErrorAction Stop }
+	@if ( -not (Test-Path -LiteralPath "${pwshdir}\img\") ) { \
+        Write-Error "src is not exists: ""${pwshdir}\img\""" -ErrorAction Stop \
+    }
+	@if ( -not (Test-Path -LiteralPath "${poshmock}\img\") ) { \
+        Write-Error "dst is not exists: ""${poshmock}\img\""" -ErrorAction Stop \
+    }
 	Robocopy "${pwshdir}\img\" "${poshmock}\img\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DT /UNILOG:NUL /TEE
 	Robocopy "${pwshdir}\.github\" "${poshmock}\.github\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DT /UNILOG:NUL /TEE
 	Robocopy "${pwshdir}\tests\" "${poshmock}\tests\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DT /UNILOG:NUL /TEE
@@ -13210,34 +13209,31 @@ documentdir := ~/Documents
 
 .PHONY: all
 all: ## Add ".txt" to the extension of the script file and Zip archive
-    ls -Path \
-        ${documentdir}/*.ps1 \
-        , ${documentdir}/*.py \
-        , ${documentdir}/*.R \
-        , ${documentdir}/*.yaml \
-        , ${documentdir}/*.Makefile \
-        , ${documentdir}/*.md \
-        , ${documentdir}/*.Rmd \
-        , ${documentdir}/*.qmd \
-        , ${documentdir}/*.bat \
-        , ${documentdir}/*.cmd \
-        , ${documentdir}/*.vbs \
-        , ${documentdir}/*.js \
-        , ${documentdir}/*.vimrc \
-        , ${documentdir}/*.gvimrc \
-        | ForEach-Object { \
-            Write-Host "Rename: $($_.Name) -> $($_.Name).txt"; \
+    ls -Path ${documentdir}/*.ps1, \
+        ${documentdir}/*.py, \
+        ${documentdir}/*.R, \
+        ${documentdir}/*.yaml, \
+        ${documentdir}/*.Makefile, \
+        ${documentdir}/*.md, \
+        ${documentdir}/*.Rmd, \
+        ${documentdir}/*.qmd, \
+        ${documentdir}/*.bat, \
+        ${documentdir}/*.cmd, \
+        ${documentdir}/*.vbs, \
+        ${documentdir}/*.js, \
+        ${documentdir}/*.vimrc, \
+        ${documentdir}/*.gvimrc |
+        ForEach-Object { \
+            Write-Host "Rename: $($_.Name) -> $($_.Name).txt" \
             $_ | Rename-Item -NewName {$_.Name -replace '$', '.txt' } \
         }
-    Compress-Archive \
-        -Path ${documentdir}/*.txt \
-        -DestinationPath ${documentdir}/a.zip -Update
+    Compress-Archive -Path ${documentdir}/*.txt -DestinationPath ${documentdir}/a.zip -Update
 
 .PHONY: clean
 clean: ## Remove "*.txt" items in Documents directory
-    ls -Path "${documentdir}/*.txt" \
-        | ForEach-Object { \
-            Write-Host "Remove: $($_.Name)"; \
+    ls -Path "${documentdir}/*.txt" |
+        ForEach-Object { \
+            Write-Host "Remove: $($_.Name)" \
             Remove-Item -LiteralPath $_.FullName \
         }
 ```

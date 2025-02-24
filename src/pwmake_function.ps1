@@ -110,10 +110,10 @@
             home := $($HOME) ## comment
 
             target: deps  ## comment
-                command \
-                    | sed 's;^#;;' \
-                    #| grep -v 'hoge'  <-- allowed comment out
-                    | grep -v 'hoge' ## notice!!  <-- not allowed (use -DeleteCommentEndOfCommandLine)
+                command |
+                    sed 's;^#;;' |
+                    # grep -v 'hoge' | <-- allowed comment out
+                    grep -v 'hoge' | ## notice!!  <-- not allowed (use -DeleteCommentEndOfCommandLine)
                     > a.md
         
     Tips:
@@ -317,32 +317,37 @@
 
     ```Makefile
     home := $($HOME)
-    pwshdir  := ${home}\cms\bin\posh-source
-    poshmock := ${home}\cms\bin\posh-mocks
+    pwshdir  := ${home}\cms\bin\pwsh
+    poshmock := ${home}\cms\bin\pwsh-sketches
 
     .PHONY: all
     all: pwsh ## update all
 
     .PHONY: pwsh
     pwsh: ${pwshdir} ${poshmock} ## update pwsh scripts
-        @Push-Location -LiteralPath "${pwshdir}\"
-        Copy-Item -LiteralPath \
-            ./CHANGELOG.md, \
-            ./README.md \
-            -Destination "${poshmock}\"
-        Set-Location -LiteralPath "src"
-        Copy-Item -LiteralPath \
-            ./self_function.ps1, \
-            ./delf_function.ps1, \
-            ./sm2_function.ps1, \
-            ./man2_function.ps1 \ ## Note ! do not use comma
-            -Destination "${poshmock}\src\"
-        @Pop-Location
-        @if ( -not (Test-Path -LiteralPath "${pwshdir}\img\") ) { Write-Error "src is not exists: ""${pwshdir}\img\""" -ErrorAction Stop }
-        @if ( -not (Test-Path -LiteralPath "${poshmock}\img\") ) { Write-Error "dst is not exists: ""${poshmock}\img\""" -ErrorAction Stop }
-        Robocopy "${pwshdir}\img\" "${poshmock}\img\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DT /UNILOG:NUL /TEE
-        Robocopy "${pwshdir}\.github\" "${poshmock}\.github\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DT /UNILOG:NUL /TEE
-        Robocopy "${pwshdir}\tests\" "${poshmock}\tests\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DT /UNILOG:NUL /TEE
+    @Push-Location -LiteralPath "${pwshdir}\"
+    Copy-Item -Destination "${poshmock}" -LiteralPath ./README.md, \
+        ./CHANGELOG.md, \
+        ./.gitignore, \
+        ./examples.md
+    Set-Location -LiteralPath "src"
+    Copy-Item -Destination "${poshmock}\src\" -LiteralPath ./man2_function.ps1, \
+        ./self_function.ps1, \
+        ./delf_function.ps1, \
+        ./sm2_function.ps1, \
+        ./man2_function.ps1
+    @Pop-Location
+    @if ( -not (Test-Path -LiteralPath "${pwshdir}\img\") ) { \
+        Write-Error "src is not exists: ""${pwshdir}\img\""" -ErrorAction Stop \
+    }
+    @if ( -not (Test-Path -LiteralPath "${poshmock}\img\") ) { \
+        Write-Error "dst is not exists: ""${poshmock}\img\""" -ErrorAction Stop \
+    }
+    # mirror dirs
+    Robocopy "${pwshdir}\img\" "${poshmock}\img\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DAT /UNILOG:NUL /TEE
+    Robocopy "${pwshdir}\examples\" "${poshmock}\examples\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DAT /UNILOG:NUL /TEE
+    Robocopy "${pwshdir}\.github\" "${poshmock}\.github\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DAT /UNILOG:NUL /TEE
+    Robocopy "${pwshdir}\tests\" "${poshmock}\tests\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DAT /UNILOG:NUL /TEE
     ```
 
 .EXAMPLE
@@ -360,34 +365,31 @@
 
     .PHONY: all
     all: ## Add ".txt" to the extension of the script file and Zip archive
-        ls -Path \
-            ${documentdir}/*.ps1 \
-            , ${documentdir}/*.py \
-            , ${documentdir}/*.R \
-            , ${documentdir}/*.yaml \
-            , ${documentdir}/*.Makefile \
-            , ${documentdir}/*.md \
-            , ${documentdir}/*.Rmd \
-            , ${documentdir}/*.qmd \
-            , ${documentdir}/*.bat \
-            , ${documentdir}/*.cmd \
-            , ${documentdir}/*.vbs \
-            , ${documentdir}/*.js \
-            , ${documentdir}/*.vimrc \
-            , ${documentdir}/*.gvimrc \
-            | ForEach-Object { \
-                Write-Host "Rename: $($_.Name) -> $($_.Name).txt"; \
+        ls -Path ${documentdir}/*.ps1, \
+            ${documentdir}/*.py, \
+            ${documentdir}/*.R, \
+            ${documentdir}/*.yaml, \
+            ${documentdir}/*.Makefile, \
+            ${documentdir}/*.md, \
+            ${documentdir}/*.Rmd, \
+            ${documentdir}/*.qmd, \
+            ${documentdir}/*.bat, \
+            ${documentdir}/*.cmd, \
+            ${documentdir}/*.vbs, \
+            ${documentdir}/*.js, \
+            ${documentdir}/*.vimrc, \
+            ${documentdir}/*.gvimrc |
+            ForEach-Object { \
+                Write-Host "Rename: $($_.Name) -> $($_.Name).txt" \
                 $_ | Rename-Item -NewName {$_.Name -replace '$', '.txt' } \
             }
-        Compress-Archive \
-            -Path ${documentdir}/*.txt \
-            -DestinationPath ${documentdir}/a.zip -Update
+        Compress-Archive -Path ${documentdir}/*.txt -DestinationPath ${documentdir}/a.zip -Update
 
     .PHONY: clean
     clean: ## Remove "*.txt" items in Documents directory
-        ls -Path "${documentdir}/*.txt" \
-            | ForEach-Object { \
-                Write-Host "Remove: $($_.Name)"; \
+        ls -Path "${documentdir}/*.txt" |
+            ForEach-Object { \
+                Write-Host "Remove: $($_.Name)" \
                 Remove-Item -LiteralPath $_.FullName \
             }
 
@@ -556,20 +558,19 @@ function pwmake {
                 [string] $line = [string] $line -replace '^\s+',' '
                 if ( $line -match ' \\$' ){
                     ## backslash
-                    $line = $line -replace '\s+\\$',' @-->@'
+                    $line = $line -replace '\s+\\$', "`n"
                     $prevLine = $prevLine + $line
                 } elseif ( $line -match ' \`$' ){
                     ## backquote
-                    $line = $line -replace '\s+\`$',' @-->@'
+                    $line = $line -replace '\s+\`$', "`n"
                     $prevLine = $prevLine + $line
                 } elseif ( $line -match ' \|$' ){
                     ## pipe
-                    $line = $line -replace '\s+\|$',' | @-->@'
+                    $line = $line -replace '\s+\|$',' | '
                     $prevLine = $prevLine + $line
                 } else {
                     if($prevLine -ne ''){
                         $prevLine = $prevLine + $line
-                        $prevLine = $prevLine -replace '@\-\->@\s*',''
                         Write-Output $prevLine
                         $prevLine = ''
                     }else{
@@ -578,7 +579,6 @@ function pwmake {
                 }
             }
         if ( $prevLine -ne '' ){
-            $prevLine = $prevLine -replace '@\-\->@\s*',''
             $prevLine = $prevLine -replace '\s*$',''
             [string[]] $lines += ,$prevLine
         }
