@@ -566,7 +566,7 @@ function pwmake {
                     $prevLine = $prevLine + $line
                 } elseif ( $line -match ' \|$' ){
                     ## pipe
-                    $line = $line -replace '\s+\|$'," | `n"
+                    $line = $line -replace '\s+\|$'," |`n"
                     $prevLine = $prevLine + $line
                 } else {
                     if($prevLine -ne ''){
@@ -623,10 +623,10 @@ function pwmake {
                 }
             }
             if ($argBlockFlag){
-                if( ($line -ne '') -and ($line -match '^[^\$]+:=') ){
+                if( ($line -ne '') -and ($line -match ':=') ){
                     $line = $line -replace '\s*:=\s*',':='
                     $argBlock += ,@($line)
-                }elseif( ($line -ne '') -and ($line -match '^[^\$]+=') ){
+                }elseif( ($line -ne '') -and ($line -match '=') ){
                     $line = $line -replace '\s*=\s*','='
                     $argBlock += ,@($line)
                 }
