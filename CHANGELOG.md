@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Set-Lang][] function.
+- Added [Execute-Lang][] function.
 - Changed [pwmake][] command line break handling from concatenation to line break.
 
 ## [0.1.0] - 2025-02-21
@@ -215,6 +217,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Decode-Uri]: src/Decode-Uri_function.ps1
 [Encode-Uri]: src/Encode-Uri_function.ps1
+
+[Set-Lang]: src/Set-Lang_function.ps1
+[Execute-Lang]: src/Execute-Lang_function.ps1
+
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.1.0..HEAD
 [0.1.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.1.0

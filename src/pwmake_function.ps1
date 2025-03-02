@@ -555,7 +555,7 @@ function pwmake {
         [string] $prevLine = ''
         [string[]] $lines = $lines | ForEach-Object {
                 [string] $line = [string] $_
-                [string] $line = [string] $line -replace '^\s+',' '
+                #[string] $line = [string] $line -replace '^\s+',' '
                 if ( $line -match ' \\$' ){
                     ## backslash
                     $line = $line -replace '\s+\\$', "`n"
@@ -566,7 +566,7 @@ function pwmake {
                     $prevLine = $prevLine + $line
                 } elseif ( $line -match ' \|$' ){
                     ## pipe
-                    $line = $line -replace '\s+\|$',' | '
+                    $line = $line -replace '\s+\|$'," |`n"
                     $prevLine = $prevLine + $line
                 } else {
                     if($prevLine -ne ''){
