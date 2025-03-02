@@ -244,3 +244,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/sleepy_function.ps1
 . $pwshSrcDir/Get-AppShortcut_function.ps1
 
+. $pwshSrcDir/Set-Lang_function.ps1
+. $pwshSrcDir/Execute-Lang_function.ps1
+
+
