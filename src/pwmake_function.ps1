@@ -508,17 +508,15 @@ function pwmake {
     }
 
     ## init var
-    [string] $makeFile = $File
     $phonyDict = @{}
-    [string] $makefileParentDir = Resolve-Path -LiteralPath "$makeFile" | Split-Path -Parent 
-    [string] $makefileParentDir = $makefileParentDir.Replace('\', '/')
-
+    [string] $makeFile = $File
     ## test
     $isExistMakefile = Test-Path -LiteralPath $makeFile
     if( -not $isExistMakefile){
         Write-Error "Could not find ""$makefile""" -ErrorAction Stop
     }
-
+    [string] $makefileParentDir = Resolve-Path -LiteralPath "$makeFile" | Split-Path -Parent
+    [string] $makefileParentDir = $makefileParentDir.Replace('\', '/')
     ## private functions
     function AddEndOfFileMarkAndIncludeMakefile ([string]$mfile){
         [string[]] $lines = @()
