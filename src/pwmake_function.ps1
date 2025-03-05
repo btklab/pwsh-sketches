@@ -436,6 +436,10 @@ function pwmake {
         [string] $PSScriptRoot,
 
         [Parameter(Mandatory=$False)]
+        [Alias('p')]
+        [switch] $PushAndPop,
+
+        [Parameter(Mandatory=$False)]
         [Alias('n')]
         [switch] $DryRun
     )
@@ -1157,109 +1161,120 @@ function pwmake {
     $targetSortedList = Toposort_Tarjan "$tar" $depsDict
     #$targetSortedList = $targetLineAry | toposort
 
-    ## debug log
-    if ($DryRun){
-        Write-Output "######## topological sorted target lines ##########"
-        foreach ($line in $targetSortedList) {
-            Write-Output "$line"
+    try {
+        ## Push-Location -LiteralPath 
+        if ( $PushAndPop ){
+            [String] $curLocation = (Resolve-Path -Relative .).Replace('\','/')
+            [String] $tarLocation = (Resolve-Path -Relative $makefileParentDir).Replace('\','/')
+            Push-Location -LiteralPath $makefileParentDir
+            Write-Host ""
+            Write-Host "Push to ""$tarLocation""" -ForegroundColor Blue
+            Write-Host ""
         }
-        Write-Output ""
-        Write-Output "######## topological sorted command lines ##########"
-        foreach ($tmpTarget in $targetSortedList) {
-            foreach($comline in $comDict[$tmpTarget]) {
-                if ( $comline -notmatch '^\s*$' ){
-                    $comline = ReplaceAutoVar "$comline" "$tmpTarget" $tarDepDict
-                    #Write-Output "$($tmpTarget): $comline"
-                    Write-Output "$comline"
-                }
+        ## debug log
+        if ($DryRun){
+            Write-Output "######## topological sorted target lines ##########"
+            foreach ($line in $targetSortedList) {
+                Write-Output "$line"
             }
-        }
-    }
-
-    ## execute commands
-    $isCommandExecuted = $False
-    if ($DryRun){
-        Write-Output ""
-        Write-Output "######## execute commands ##########"
-    }
-    [string[]]$execComAry = @()
-    foreach ($tar in $targetSortedList) {
-        $targetLineIsExist = $comDict.ContainsKey($tar)
-        if ( -not $targetLineIsExist ){
-            if (NoTarFile "$tar"){
-                ## target file is not exists
-                Write-Error "Error: file is not exitsts: '$tar'." -ErrorAction Stop
-            } else {
-                ## target file is exists
-                continue
-            }
-        }
-
-        ## set commandline as string array
-        [string[]]$commandlines = $comDict[$tar]
-
-        ## set dependency line as string
-        if ($tarDepDict[$tar][0] -eq '') {
-            $dep = ''
-        }else{
-            $dep = $tarDepDict[$tar] -join "$Delimiter"
-        }
-
-        ## target should be execute?
-        $comExecFlag = IsTargetExecute "$tar" $tarDepDict $phonies
-        if( -not $comExecFlag ){
-            ## continue ForEach-Object
-            ## do not execute commands
-            #if ($DryRun){ Write-Output "[F] $($tar): $dep" }
-            continue
-        }
-
-        ## is commandlines are exists?
-        if ($commandlines.Count -eq 0){
-            ## continue ForEach-Object
-            #if ($DryRun){ Write-Output "[F] $($tar): $dep" }
-            continue
-        }
-
-        ## execute commandlines
-        foreach ($comline in $commandlines){
-            ## replace auto variables
-            [string] $comline = ReplaceAutoVar "$comline" "$tar" $tarDepDict
-            if (($comline -eq '') -or ($comline -match '^\s*$')){
-                continue
-            }
-            ## main
-            if ($DryRun){
-                ## out debug
-                #Write-Output "[T] $($tar): $comline"
-                Write-Output "$comline"
-            }else{
-                ## exec commandline
-                $echoCom = $True
-                if ($comline -match '^@[^\(\{]'){
-                    $echoCom = $False
-                    $comline = $comline -replace '^@', ''
-                }
-                if ($echoCom){
-                    Write-Host "> $comline" -ForegroundColor Green
-                }
-                try {
-                    $isCommandExecuted = $True
-                    Invoke-Expression "$comline"
-                } catch {
-                    if ($ErrAction -eq "stop"){
-                        #Write-Warning "Error: $($tar): $comline"
-                        Write-Error $Error[0] -ErrorAction Stop
-                    }else{
-                        #Write-Warning "Error: $($tar): $comline"
-                        Write-Warning $Error[0]
+            Write-Output ""
+            Write-Output "######## topological sorted command lines ##########"
+            foreach ($tmpTarget in $targetSortedList) {
+                foreach($comline in $comDict[$tmpTarget]) {
+                    if ( $comline -notmatch '^\s*$' ){
+                        $comline = ReplaceAutoVar "$comline" "$tmpTarget" $tarDepDict
+                        #Write-Output "$($tmpTarget): $comline"
+                        Write-Output "$comline"
                     }
                 }
             }
         }
-        if ($echoCom){ Write-Host "" }
-    }
-    if( (-not $isCommandExecuted) -and (-not $DryRun)){
-        Write-Host "make: '$tar' is up to date."
+        ## execute commands
+        $isCommandExecuted = $False
+        if ($DryRun){
+            Write-Output ""
+            Write-Output "######## execute commands ##########"
+        }
+        [string[]]$execComAry = @()
+        foreach ($tar in $targetSortedList) {
+            $targetLineIsExist = $comDict.ContainsKey($tar)
+            if ( -not $targetLineIsExist ){
+                if (NoTarFile "$tar"){
+                    ## target file is not exists
+                    Write-Error "Error: file is not exitsts: '$tar'." -ErrorAction Stop
+                } else {
+                    ## target file is exists
+                    continue
+                }
+            }
+            ## set commandline as string array
+            [string[]]$commandlines = $comDict[$tar]
+            ## set dependency line as string
+            if ($tarDepDict[$tar][0] -eq '') {
+                $dep = ''
+            }else{
+                $dep = $tarDepDict[$tar] -join "$Delimiter"
+            }
+            ## target should be execute?
+            $comExecFlag = IsTargetExecute "$tar" $tarDepDict $phonies
+            if( -not $comExecFlag ){
+                ## continue ForEach-Object
+                ## do not execute commands
+                #if ($DryRun){ Write-Output "[F] $($tar): $dep" }
+                continue
+            }
+            ## is commandlines are exists?
+            if ($commandlines.Count -eq 0){
+                ## continue ForEach-Object
+                #if ($DryRun){ Write-Output "[F] $($tar): $dep" }
+                continue
+            }
+            ## execute commandlines
+            foreach ($comline in $commandlines){
+                ## replace auto variables
+                [string] $comline = ReplaceAutoVar "$comline" "$tar" $tarDepDict
+                if (($comline -eq '') -or ($comline -match '^\s*$')){
+                    continue
+                }
+                ## main
+                if ($DryRun){
+                    ## out debug
+                    #Write-Output "[T] $($tar): $comline"
+                    Write-Output "$comline"
+                }else{
+                    ## exec commandline
+                    $echoCom = $True
+                    if ($comline -match '^@[^\(\{]'){
+                        $echoCom = $False
+                        $comline = $comline -replace '^@', ''
+                    }
+                    if ($echoCom){
+                        Write-Host "> $comline" -ForegroundColor Green
+                    }
+                    try {
+                        $isCommandExecuted = $True
+                        Invoke-Expression "$comline"
+                    } catch {
+                        if ($ErrAction -eq "stop"){
+                            #Write-Warning "Error: $($tar): $comline"
+                            Write-Error $Error[0] -ErrorAction Stop
+                        }else{
+                            #Write-Warning "Error: $($tar): $comline"
+                            Write-Warning $Error[0]
+                        }
+                    }
+                }
+            }
+            if ($echoCom){ Write-Host "" }
+        }
+        if( (-not $isCommandExecuted) -and (-not $DryRun)){
+            Write-Host "make: '$tar' is up to date."
+        }
+    } finally {
+        if ( $PushAndPop ){
+            Pop-Location
+            Write-Host ""
+            Write-Host "Pop to ""$curLocation""" -ForegroundColor Blue
+        }
     }
 }
