@@ -10,6 +10,15 @@
     If file is specified, the number of lines is
     outut along with the filename.
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    Universal Shell Programming Laboratory's "Open-usp-Tukubai",
+    Here is the original copyright notice for "Open-usp-Tukubai":
+    
+        The MIT License Copyright (c) 2011-2023 Universal Shell Programming Laboratory
+        https://github.com/usp-engineers-community/Open-usp-Tukubai/blob/master/LICENSE
+
 .LINK
     gyo, retu
 

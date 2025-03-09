@@ -11,6 +11,15 @@
        Get only the first row with the same key with the value
        concatenated from 1st to 2nd column as the key.
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    Universal Shell Programming Laboratory's "Open-usp-Tukubai",
+    Here is the original copyright notice for "Open-usp-Tukubai":
+    
+        The MIT License Copyright (c) 2011-2023 Universal Shell Programming Laboratory
+        https://github.com/usp-engineers-community/Open-usp-Tukubai/blob/master/LICENSE
+
 .LINK
     getfirst, getlast
 

@@ -79,10 +79,14 @@
         location-3        7       70        8       80        9       90
 
 
-    Inspired by Open-usp-Tukubai - GitHub
-      - Url: https://github.com/usp-engineers-community/Open-usp-Tukubai
-      - License: The MIT License (MIT): Copyright (C) 2011-2022 Universal Shell Programming Laboratory
-      - Command: map
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    Universal Shell Programming Laboratory's "Open-usp-Tukubai",
+    Here is the original copyright notice for "Open-usp-Tukubai":
+    
+        The MIT License Copyright (c) 2011-2023 Universal Shell Programming Laboratory
+        https://github.com/usp-engineers-community/Open-usp-Tukubai/blob/master/LICENSE
 
 
 .EXAMPLE

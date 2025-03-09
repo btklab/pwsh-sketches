@@ -7,9 +7,17 @@
 
     delf <num> <num>...
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    Universal Shell Programming Laboratory's "Open-usp-Tukubai",
+    Here is the original copyright notice for "Open-usp-Tukubai":
+    
+        The MIT License Copyright (c) 2011-2023 Universal Shell Programming Laboratory
+        https://github.com/usp-engineers-community/Open-usp-Tukubai/blob/master/LICENSE
+
 .LINK
     self, delf
-
 
 .EXAMPLE
     # delete field 1 and 2
@@ -17,14 +25,12 @@
     3
     6
     9
-    
 
 .EXAMPLE
     # delete field 1 and 2nd field from right
     "1 2 3 4 5","6 7 8 9 10" | delf 1 NF-1
     2 3 5
     7 8 10
-    
 
 #>
 function delf {

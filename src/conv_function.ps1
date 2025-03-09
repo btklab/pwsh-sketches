@@ -45,6 +45,15 @@
         がい
         いる
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    greymd(Yasuhiro, Yamada)'s "egzact",
+    Here is the original copyright notice for "egzact": 
+    
+        The MIT License Copyright (c) 2016 Yasuhiro, Yamada
+        https://github.com/greymd/egzact/blob/master/LICENSE
+
 
 .PARAMETER Delimiter
     Input/Output field separator.
