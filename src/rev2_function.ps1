@@ -13,9 +13,14 @@
     Option:
         -e: (echo) 入力データも出力する
 
-    Reference:
-        https://qiita.com/greymd/items/3515869d9ed2a1a61a49
-        Qiita:greymd, 2016/05/12, accessed 2017/11/13
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    greymd(Yasuhiro, Yamada)'s "egzact",
+    Here is the original copyright notice for "egzact":
+    
+        The MIT License Copyright (c) 2016 Yasuhiro, Yamada
+        https://github.com/greymd/egzact/blob/master/LICENSE
 
 .LINK
     rev, rev2, stair, cycle

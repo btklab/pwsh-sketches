@@ -9,6 +9,15 @@
     "input" | han | zen -k
     → 英数字記号を半角に、カナのみ全角に変換
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    Universal Shell Programming Laboratory's "Open-usp-Tukubai",
+    Here is the original copyright notice for "Open-usp-Tukubai":
+    
+        The MIT License Copyright (c) 2011-2023 Universal Shell Programming Laboratory
+        https://github.com/usp-engineers-community/Open-usp-Tukubai/blob/master/LICENSE
+
 .LINK
     han, zen, vbStrConv
 
@@ -21,31 +30,31 @@
     Do not convert full-width(zenkaku) KANA
 
 .EXAMPLE
-"パピプペポ０１２３４５６７８９＝Ａ" | han | zen -k
-パピプペポ0123456789=A
-
-説明
-==============
-入力から英数字記号を半角に、カナのみ全角に変換
+    "パピプペポ０１２３４５６７８９＝Ａ" | han | zen -k
+    パピプペポ0123456789=A
+    
+    説明
+    ==============
+    入力から英数字記号を半角に、カナのみ全角に変換
 
 .EXAMPLE
-"パピプペポ０１２３４５６７８９＝Ａ" | han
-ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ0123456789=A
-
-
-"パピプペポ０１２３４５６７８９＝Ａ" | han | zen
-パピプペポ０１２３４５６７８９＝Ａ
-
-
-"パピプペポ０１２３４５６７８９＝Ａ" | han -k
-パピプペポ0123456789=A
-
-
-"パピプペポ０１２３４５６７８９＝Ａ" | han -k | zen
-パピプペポ０１２３４５６７８９＝Ａ
-
-"パピプペポ０１２３４５６７８９＝Ａ" | han | zen -k
-パピプペポ0123456789=A
+    "パピプペポ０１２３４５６７８９＝Ａ" | han
+    ﾊﾟﾋﾟﾌﾟﾍﾟﾎﾟ0123456789=A
+    
+    
+    "パピプペポ０１２３４５６７８９＝Ａ" | han | zen
+    パピプペポ０１２３４５６７８９＝Ａ
+    
+    
+    "パピプペポ０１２３４５６７８９＝Ａ" | han -k
+    パピプペポ0123456789=A
+    
+    
+    "パピプペポ０１２３４５６７８９＝Ａ" | han -k | zen
+    パピプペポ０１２３４５６７８９＝Ａ
+    
+    "パピプペポ０１２３４５６７８９＝Ａ" | han | zen -k
+    パピプペポ0123456789=A
 
 #>
 function han {

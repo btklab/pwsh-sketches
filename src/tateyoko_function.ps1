@@ -7,6 +7,15 @@
     Expects space-separated values as input.
     The number of columns can be irregular.
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    Universal Shell Programming Laboratory's "Open-usp-Tukubai",
+    Here is the original copyright notice for "Open-usp-Tukubai":
+    
+        The MIT License Copyright (c) 2011-2023 Universal Shell Programming Laboratory
+        https://github.com/usp-engineers-community/Open-usp-Tukubai/blob/master/LICENSE
+
 .EXAMPLE
     "1 2 3","4 5 6","7 8 9"
     1 2 3

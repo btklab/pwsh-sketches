@@ -29,15 +29,25 @@
         - Double quotes in data should be escaped
           with consecutive double quotes like ""
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    ryuichiueda's "MyCommands/csv2txt.py",
+    Here is the original copyright notice for "MyCommands/csv2txt.py":
+    
+        The MIT License Copyright (c) 2014, Ryuichi Ueda
+        https://github.com/ryuichiueda/MyCommands/blob/master/LICENSE.md
+
+
 .LINK
     csv2txt, json2txt
 
 .EXAMPLE
-cat a.csv | csv2txt
-
-PS > cat a.csv | csv2txt -z
-
-PS > cat a.csv | csv2txt -NaN
+    cat a.csv | csv2txt
+    
+    PS > cat a.csv | csv2txt -z
+    
+    PS > cat a.csv | csv2txt -NaN
 
 #>
 function csv2txt {

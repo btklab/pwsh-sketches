@@ -15,6 +15,15 @@
     If zero is specified for key such as sm2 0 0 2 3,
     all rows from 2nd column to 3rd column are summed.
 
+.DESCRIPTION
+
+    The main design pattern of this command was abstracted from
+    Universal Shell Programming Laboratory's "Open-usp-Tukubai",
+    Here is the original copyright notice for "Open-usp-Tukubai":
+    
+        The MIT License Copyright (c) 2011-2023 Universal Shell Programming Laboratory
+        https://github.com/usp-engineers-community/Open-usp-Tukubai/blob/master/LICENSE
+
 .EXAMPLE
     "A 1 10","B 1 10","A 1 10","C 1 10"
     A 1 10

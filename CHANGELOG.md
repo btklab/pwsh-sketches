@@ -7,12 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.2.0] - 2025-03-09
 
 - Added [Set-Lang][] function.
 - Added [Execute-Lang][] function.
 - Added [pwmake][] `-PushAndPop` option.
 - Changed [pwmake][] command line break handling from concatenation to line break.
 - Changed [pwmake][] fix test filepath.
+- Added The MIT License into each script file
 
 ## [0.1.0] - 2025-02-21
 
@@ -225,5 +229,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Execute-Lang]: src/Execute-Lang_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.1.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.2.0..HEAD
+[0.2.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.2.0
 [0.1.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.1.0
