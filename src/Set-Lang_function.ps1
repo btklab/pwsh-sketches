@@ -25,6 +25,9 @@ function Set-Lang {
     )
     # Import the necessary .NET class
     Add-Type -AssemblyName System.Globalization
+    # Save the current culture and UI culture
+    #[Object] $originalCulture = [System.Globalization.CultureInfo]::CurrentCulture
+    #[Object] $originalUICulture = [System.Globalization.CultureInfo]::CurrentUICulture
     # Set the desired culture (e.g., ja-JP)
     [Object] $dstCulture = New-Object System.Globalization.CultureInfo($Name)
     # Apply the culture to the current thread
