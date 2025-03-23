@@ -39,7 +39,7 @@ cat README.md `
     | Set-Clipboard
 ```
 
-- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
+- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Convert-DictionaryToPSCustomObject][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
 
 **General:** This repository provides filter commands for pattern matching on unstructured strings. Input and output are `UTF-8`, space-delimited, line-oriented strings (text objects) via the pipeline, similar to Unix/Linux shell tools. Some functions also accept or output PowerShell objects.
 
@@ -10950,6 +10950,44 @@ Output:
 
 ```
 2024-10-24<TAB><TAB>btklab, fuga<TAB>summary-1 summary-2 summary-3<TAB>link-1 link-2
+```
+
+#### [Convert-DictionaryToPSCustomObject] (Alias:dict2psobject) - Convert a dictionary into a PSCustomObject.<a id="Convert-DictionaryToPSCustomObject"></a>
+
+[Convert-DictionaryToPSCustomObject]: src/Convert-DictionaryToPSCustomObject_function.ps1
+
+Convert a dictionary (hashtable) into a PSCustomObject. This does not support scriptblock or nested structures within the dictionary.
+
+EXAMPLE: pipeline input
+
+```powershell
+@{ Name = "John Doe"; Age = 30; City = "New York" },
+@{ Name = "Jane Smith"; Age = 25; City = "London" } |
+Convert-DictionaryToPSCustomObject
+```
+
+Output:
+
+```markdown
+Name       Age City
+----       --- ----
+John Doe    30 New York
+Jane Smith  25 London
+```
+
+EXAMPLE: direct input
+
+```powershell
+$myDictionary = @{ Name = "Alice"; Age = 28; City = "Tokyo" }
+Convert-DictionaryToPSCustomObject -Dictionary $myDictionary
+```
+
+Output:
+
+```markdown
+Name  Age City
+----  --- ----
+Alice  28 Tokyo
 ```
 
 #### [Override-Yaml] - Override external yaml in markdown yaml.<a id="Override-Yaml"></a>
