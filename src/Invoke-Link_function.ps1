@@ -2,8 +2,8 @@
 .SYNOPSIS
     i : Invoke-Link - Open file/web links written in a text file
 
-    Open file/web links written in a text file or via pipeline or via Clipboard.
-    The processing priority is pipeline > arguments > clipboard.
+    Open file or web links from a text file, pipeline, or clipboard.
+    Processing priority: pipeline > arguments > clipboard.
 
         Usage:
             i <file> [keyword] [-Doc|-All|-First <n>]
@@ -20,52 +20,41 @@
             # comment
             https://www.amazon.co.jp/photos/  <- 3rd uri
 
-    By default, only the first (top) link in the link file is opened. 
-    The "-Doc" switch opens the second and subsequent links.
-    The "-All" switch opens all links (the first link and the subsequent links).
+    By default, only the **first** (top) link in the link file is opened.
+    The `-Doc` switch opens the second and subsequent links.
+    The `-All` switch opens all links (the first link and the subsequent links).
+
+    The intent of this specification is to reduce the number of link files.
+    If you put the links that you usually use in the first line of the link file
+    and the links that you refer to only occasionally in the following lines,
+    you can avoid opening an extra link every time.
 
     The intent of this specification is to reduce the number of link files.
     If you put the links that you usually use in the first line of the link
     file and the links that you refer to only occasionally in the following
     lines, you can avoid opening an extra link every time.
 
-        - If a text file (Ext: None, .txt, .md, ...) is specified,
-          open each line as link in default application
-            - Link beginning with "http" or "www":
-                - Start-Process (default browser)
-            - Directory and others:
-                - Invoke-Item <link>
-        - If a link file (.lnk) is specified, open the link in explorer
-        - If a PowerShell Script file (.ps1) is specified,
-          execute the script in current process:
-            - Able to use dot sourcing functions in current process
-            - Specify the absolute file path in the text file as possible.
-              Or Note that when specifying a relative path, the root is the
-              location of the current process
-        - If a directory is specified, the names and first lines of the
-          files in that hierarchy are listed.
-            - Collect files recursively with -Recurse option
+        - Text files (".txt", ".md", etc.): Open each line as a link.
+            - "http" or "www" links: Use "Start-Process" (default browser).
+            - Directories/other files: Use "Invoke-Item <link>".
+        - Link files (".lnk"): Open the link in Explorer.
+        - PowerShell scripts (".ps1"): Execute in the current process.
+            - Allows dot-sourcing functions.
+            - Use absolute paths or note relative paths are from the current process location.
+        - Directories: List file names and first lines recursively ("-Recurse" option).
 
-    Link file settings:
+        Link file settings:
 
-        - Multiple links(lines) in a file available.
-        - Tag
-            - To add tags, add a space + "#tag" to a comment line
-              starting with "#" or "Tag:"
-                - e.g. # commnent #tag-1 #tag-2
-                - e.g. Tag: #tag-1 #tag-2
-            - If you specify a directory as an argument:
-                - tags will be output. This is useful when searching linked files by tag.
-                - the directory name is set as a tag.
-        - Skip line
-            - Lines that empty or beginning with "#" are skipped.
-            - Lines that empty or beginning with "Tag:" are skipped.
-        - The link execution app can be any command if "-App" option is
-          specified.
-        - Links written in a text file may or may not be enclosed in
-          single/double quotes.
-        - If -l or -Location specified, open the first matched file location in explorer
-        - Environment variables such as ${HOME} can be used for path strings.
+        - Multiple links per file.
+        - Tags:
+            - Add "#tag" to comment lines starting with "#" or "Tag:".
+            - Example: "# comment #tag-1 #tag-2" or "Tag: #tag-1 #tag-2".
+            - Directory arguments output tags (useful for tag-based searches) and include the directory name as a tag.
+        - Skip lines: Empty lines or lines starting with "#" or "Tag:".
+        - Custom link execution app: Use "-App" option.
+        - Links in text files: Quotes are optional.
+        - File location: Open in Explorer with "-l" or "-Location" (no link execution).
+        - Environment variables: Supported in path strings (e.g., "${HOME}").
 
     Usage:
         i <file> [keyword] [-App <app>] ... Invoke-Item <links-writtein-in-text-file>
