@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - NA
 
+## [0.3.0] - 2025-03-23
+
+- Added [Sponge-Property] function
+- Added [Sponge-Script] function
+- Added [Split-HereString] function
+- Added [Set-DotEnv] Support for GnuPG decryption
+
 ## [0.2.0] - 2025-03-09
 
 - Added [Set-Lang][] function.
@@ -228,7 +235,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Set-Lang]: src/Set-Lang_function.ps1
 [Execute-Lang]: src/Execute-Lang_function.ps1
 
+[Sponge-Property]: src/Sponge-Property_function.ps1
+[Sponge-Script]: src/Sponge-Script_function.ps1
+[Split-HereString]: src/Split-HereString_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.2.0..HEAD
+
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.3.0..HEAD
+[0.3.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.3.0
 [0.2.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.2.0
 [0.1.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.1.0

@@ -193,7 +193,7 @@ function sleepy {
         [string] $tStr = span2str $tSpan
         $splatting = @{
             Activity = "$($tStr) / $($eStr)"
-            Status = " $perc% Complete:"
+            Status = " $perc% done"
             PercentComplete = $perc
             SecondsRemaining = $dSec
             Id = 1
