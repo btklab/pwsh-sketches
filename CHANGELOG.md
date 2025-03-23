@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - NA
 
+## [0.4.0] - 2025-03-24
+
+- Translated [README.md] from Japanese to English as faithfully as possible.
+
+### Breaking Changes
+
+- Remaned `jl` to [Join-While]
+- Remaned `jl2` to [Join-Until]
+
 ## [0.3.0] - 2025-03-23
 
 - Added [Sponge-Property] function
@@ -66,7 +75,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [han]: src/han_function.ps1
 [head]: src/head_function.ps1
 [image2md]: src/image2md_function.ps1
-[jl]: src/jl_function.ps1
 [json2txt]: src/json2txt_function.ps1
 [juni]: src/juni_function.ps1
 [keta]: src/keta_function.ps1
@@ -220,8 +228,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Add-ID]: src/Add-ID_function.ps1
 
-[Join-Line2]: src/Join-Line2_function.ps1
-
 [Tee-Clip]: src/Tee-Clip_function.ps1
 [Auto-Clip]: src/Auto-Clip_function.ps1
 
@@ -239,9 +245,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Sponge-Script]: src/Sponge-Script_function.ps1
 [Split-HereString]: src/Split-HereString_function.ps1
 
+[Join-While]: src/Join-While_function.ps1
+[Join-Until]: src/Join-Until_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.3.0..HEAD
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.4.0..HEAD
+[0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0
 [0.3.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.3.0
 [0.2.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.2.0
 [0.1.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.1.0

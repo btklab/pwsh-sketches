@@ -132,8 +132,8 @@ if ($IsWindows){
 
 . $pwshSrcDir/math2tex_function.ps1
 . $pwshSrcDir/tex2pdf_function.ps1
-. $pwshSrcDir/jl_function.ps1
-. $pwshSrcDir/Join-Line2_function.ps1
+. $pwshSrcDir/Join-While_function.ps1
+. $pwshSrcDir/Join-Until_function.ps1
 . $pwshSrcDir/kinsoku_function.ps1
 . $pwshSrcDir/filehame_function.ps1
 . $pwshSrcDir/table2md_function.ps1
@@ -247,4 +247,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Set-Lang_function.ps1
 . $pwshSrcDir/Execute-Lang_function.ps1
 
+. $pwshSrcDir/Split-HereString_function.ps1
+. $pwshSrcDir/Sponge-Script_function.ps1
+. $pwshSrcDir/Sponge-Property_function.ps1
 
