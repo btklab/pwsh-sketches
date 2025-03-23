@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- NA
+- Added [Convert-DictionaryToPSCustomObject] (Alias:dict2psobject) function
 
 ## [0.4.0] - 2025-03-24
 
@@ -248,7 +248,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Join-While]: src/Join-While_function.ps1
 [Join-Until]: src/Join-Until_function.ps1
 
-
+[Convert-DictionaryToPSCustomObject]: src/Convert-DictionaryToPSCustomObject_function.ps1
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.4.0..HEAD
 [0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0

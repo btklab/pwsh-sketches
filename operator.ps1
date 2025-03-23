@@ -247,6 +247,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Set-Lang_function.ps1
 . $pwshSrcDir/Execute-Lang_function.ps1
 
+. $pwshSrcDir/Convert-DictionaryToPSCustomObject_function.ps1
 . $pwshSrcDir/Split-HereString_function.ps1
 . $pwshSrcDir/Sponge-Script_function.ps1
 . $pwshSrcDir/Sponge-Property_function.ps1
