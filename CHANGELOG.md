@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- NA
+- Added [Sponge-Property] function
+- Added [Sponge-Script] function
+- Added [Split-HereString] function
 
 ## [0.2.0] - 2025-03-09
 
@@ -227,6 +229,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Set-Lang]: src/Set-Lang_function.ps1
 [Execute-Lang]: src/Execute-Lang_function.ps1
+
+[Sponge-Property]: src/Sponge-Property_function.ps1
+[Sponge-Script]: src/Sponge-Script_function.ps1
+[Split-HereString]: src/Split-HereString_function.ps1
+
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.2.0..HEAD

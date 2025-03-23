@@ -41,7 +41,7 @@ cat README.md `
     | Set-Clipboard
 ```
 
-- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Line2][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [jl][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
+- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Line2][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [jl][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
 
 **General**: This repository contains a set of filter commands for pattern matching on amorphous strings. The filter commands expect `UTF-8` + `space-delimited` + `line-oriented string data` (text object) through the pipeline as input. The output is also a string, not a typical PowerShell object. Some functions accept Object-input through pipeline, and some functions are "like PowerShell cmdlets" that output object. The design of the filters is similar to Unix/Linux shells such as Bash.
 
@@ -12948,6 +12948,266 @@ LCID             Name             DisplayName
 ----             ----             -----------
 1041             ja-JP            Japanese
 ```
+
+#### [Sponge-Property] (Alias: sponge) - Buffer all input before outputting and Expand a Property.<a id="Sponge-Property"></a>
+
+[Sponge-Property]: src/Sponge-Property_function.ps1
+
+This function is useful for chaining pipelines to expand nested objects without the backtracking for parentheses.
+
+Basically, This function buffer standard input.
+
+```powershell
+$input -> ($input)
+```
+
+Optionally, You can specify a property and expand it. (Method execution does not supported.)
+
+```powershell
+ls | sponge Name
+```
+
+equivalent to following:
+
+```powershell
+ls | Select-Object -ExpandProperty Name
+```
+
+This avoids the need to re-enter parentheses as shown below.
+
+```powershell
+(ls).Name
+```
+
+EXAMPLE of basic usage:
+
+```powershell
+# expand property
+ls | sponge Name
+ls | Sponge-Property Name
+
+# equivalent to following
+(ls).Name
+ls | Select-Object -ExpandProperty Name
+
+# It is similar to the following output.
+ls | select Name
+ls | Select-Object -Property Name
+```
+
+EXAMPLE of chaining pipelines to expand properties sequentially:
+
+```powershell
+# set input data
+$json = Get-Date `
+    | Select-Object -Property * `
+    | ConvertTo-Json `
+    | ConvertFrom-Json
+
+# show input data (json)
+$json
+```
+
+Output:
+
+```yaml
+DisplayHint : 2
+DateTime    : Sunday, March 23, 2025 12:19:44 PM
+Date        : 2025/03/23 0:00:00
+Day         : 23
+DayOfWeek   : 0
+DayOfYear   : 82
+Hour        : 12
+Kind        : 2
+Millisecond : 666
+Microsecond : 298
+Nanosecond  : 300
+Minute      : 19
+Month       : 3
+Second      : 44
+Ticks       : 638783291846662983
+TimeOfDay   : @{Ticks=443846662983; Days=0; Hours=12; Milliseconds
+                =666; Microseconds=298; Nanoseconds=300; Minutes=19;
+                Seconds=44; TotalDays=0.513711415489583; TotalHours
+                =12.32907397175; TotalMilliseconds=44384666.2983; To
+                talMicroseconds=44384666298.3; TotalNanoseconds=4438
+                4666298300; TotalMinutes=739.744438305; TotalSeconds
+                =44384.6662983}
+Year        : 2025
+```
+
+```powershell
+# expand property: TimeOfDay
+# (Expand properties in the pipeline without
+# the backtracking for parentheses
+$json | sponge TimeOfDay
+```
+
+```yaml
+Ticks             : 443846662983
+Days              : 0
+Hours             : 12
+Milliseconds      : 666
+Microseconds      : 298
+Nanoseconds       : 300
+Minutes           : 19
+Seconds           : 44
+TotalDays         : 0.513711415489583
+TotalHours        : 12.32907397175
+TotalMilliseconds : 44384666.2983
+TotalMicroseconds : 44384666298.3
+TotalNanoseconds  : 44384666298300
+TotalMinutes      : 739.744438305
+TotalSeconds      : 44384.6662983
+```
+
+```powershell
+# Further chaining pipelines to expand properties.
+$json | sponge TimeOfDay | sponge Ticks
+```
+
+Output:
+
+```
+443846662983
+```
+
+
+#### [Sponge-Script] (Alias: sponges) - .<a id="Sponge-Script"></a>
+
+[Sponge-Script]: src/Sponge-Script_function.ps1
+
+This function simplifies writing to the same file by chaining pipelines without parentheses backtracking.
+
+Basically, this function buffer standard input.
+
+```powershell
+$input -> ($input)
+```
+
+Optionally, you can specify a script(scriptblock) to pass the buffered input.
+
+```powershell
+cat a.txt | Sponge-Script {Set-Content a.txt}
+```
+
+The above is equivalent to following:
+
+```powershell
+(cat a.txt) | Set-Content a.txt
+```
+
+EXAMPLE
+
+```powershell
+# An Error occurs when outputting to the same file.
+cat a.txt | Set-Content a.txt
+
+    Error:
+    Set-Content: The process cannot access the file
+    because it is being used by another process.
+```
+
+```powershell
+# Buffer all input before outputting using sponge
+cat a.txt | Sponge-Script {Set-Content a.txt} -Debug
+
+    DEBUG: ($input) | Set-Content a.txt
+```
+
+```
+# The above is equivalent to the following:
+(cat a.txt) | Set-Content a.txt
+```
+
+```powershell
+# The redirection operators ">", ">>", and "2>" are supported.
+cat a.txt | Sponge-Script {> a.txt} -Debug
+
+    DEBUG: ($input) > a.txt
+```
+
+
+#### [Split-HereString] - Split a herestring into an array for line-by-line processing.<a id="Split-HereString"></a>
+
+[Split-HereString]: src/Split-HereString_function.ps1
+
+Split a herestring into a string-array, enabling line-by-line processing.
+
+While PowerShell's herestring is convenient for handling multi-line strings, it can be difficult to process them line by line.
+
+This function supports both input from the pipeline and input from arguments.
+
+
+EXAMPLE of basic usage:
+
+```powershell
+# set herestring
+$a = @"
+111
+222
+333
+"@
+
+# count herestring rows
+$a | Measure-Object
+```
+
+Output:
+
+```yaml
+Count : 1
+```
+
+```powershell
+# convert herestring to an array
+$a | Split-HereString
+Split-HereString $a
+
+# count rows
+$a | Split-HereString | Measure-Object
+```
+
+Output:
+
+```yaml
+Count : 3
+```
+
+EXAMPLE2: Herestring cannot be searched line-by-line.
+
+```powershell
+# set herestring
+$a = @"
+111
+222
+333
+"@
+
+# Searching herestring results in matching the entire content.
+$a | Select-String 222
+```
+
+Output:
+
+```
+111
+222
+333
+```
+
+```powershell
+# By splitting herestring into an array,
+# you can match each line individually.
+$a | Split-HereString | Select-String 222
+```
+
+Output:
+
+```
+222
+```
+
 
 
 #### [Set-DotEnv] (Alias: pwenv) - Set the contents of the .env file for the current process.<a id="Set-DotEnv"></a>
