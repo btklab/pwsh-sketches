@@ -7,23 +7,21 @@
 > |_|     \_/\_/  (____/|_| |_|      (____/|_|\_)|____)  |_|   \___)|_| |_||____)(____/
 ```
 
-A set of [PowerShell](https://github.com/PowerShell/PowerShell) 7 functions that filter text-object input from the pipeline(stdin) and return text-object (this concept is closer to Bash than PowerShell).Inspired by [Parsing Text with PowerShell (3/3), Steve Lee, January 28th, 2019](https://devblogs.microsoft.com/powershell/parsing-text-with-powershell-3-3/).
+A collection of [PowerShell](https://github.com/PowerShell/PowerShell) 7 text-processing functions, designed for pipeline input and output (closer to Bash than typical PowerShell). Inspired by [Parsing Text with PowerShell (3/3), Steve Lee, January 28th, 2019](https://devblogs.microsoft.com/powershell/parsing-text-with-powershell-3-3/).
 
-**Note**: This repository contains experimental PowerShell scripts for prototyping and exploring new ideas. Although these scripts have been run by the author, they are not intended for production use and may be unstable or incomplete.
+**Note:** These are experimental scripts for prototyping and exploration. Use with caution; they are not production-ready and may be unstable.
 
-- A set of functions for interactive text processing with connecting pipes.
-- For my personal work and hobby use.
-- For use in UTF-8 Japanese environments on windows.
-- Required `PowerShell7+` on `Windows`
-    - Some script may work with `PowerShell5`
-    - Some script may work with `PowerShell7+` on `Linux`
-- Note:
-    - The code is spaghetti (due to my technical inexperience).
-    - Insufficient tests and error handlings.
-    - Processing speed is **not fast**.
-    - The text used in this README.md and the functions in the `src` directory is basically English, but some parts of the code may use Japanese syntax or comments.
-- Workflow-Examples:
-    - See: [examples.md](examples.md)
+- Interactive text processing via pipelines.
+- Designed for Personal work and hobby use.
+- Optimized for UTF-8 Japanese on Windows environments.
+- Requires `PowerShell 7+` on `Windows`.
+    - Some scripts may work with `PowerShell 5`.
+    - Some scripts may work with `PowerShell 7+` on `Linux`.
+- Caveats:
+    - Code is experimental and may be poorly structured.
+    - Limited testing and error handling.
+    - Performance is **not optimized**.
+    - Primarily English documentation, but some code may contain Japanese.
 
 Function list:
 
@@ -41,12 +39,11 @@ cat README.md `
     | Set-Clipboard
 ```
 
-- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Line2][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [jl][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
+- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
 
-**General**: This repository contains a set of filter commands for pattern matching on amorphous strings. The filter commands expect `UTF-8` + `space-delimited` + `line-oriented string data` (text object) through the pipeline as input. The output is also a string, not a typical PowerShell object. Some functions accept Object-input through pipeline, and some functions are "like PowerShell cmdlets" that output object. The design of the filters is similar to Unix/Linux shells such as Bash.
+**General:** This repository provides filter commands for pattern matching on unstructured strings. Input and output are `UTF-8`, space-delimited, line-oriented strings (text objects) via the pipeline, similar to Unix/Linux shell tools. Some functions also accept or output PowerShell objects.
 
-**File Structure**: The file structure under the `src` directory is one file and one function. The function name is a string excluding `_function.ps1` from the file name. Basically, filters are not dependent on other filters, so if you move the function file and read it with dot source, you can use it anywhere. (Some filters depend on other filters.) Also, note that some filters only work with `PowerShell7+` on `Windows`.
-
+**File Structure:** Each function resides in its own `_function.ps1` file, named after the function (excluding the suffix). Most filters are independent and can be used anywhere by dot-sourcing their file. Note that some filters require `PowerShell 7+` on `Windows`.
 
 
 ## Install functions
@@ -62,7 +59,7 @@ cat README.md `
 . path/to/pwsh-sketches/operator-extra.ps1
 ```
 
-The functions are designed to be as independent from other functions as possible. You can also load single function using dot-sourcing. In that case, it is recommended to first set the encoding of the current process to `UTF-8` as shown below, because this functions basically assumes `UTF-8` for input and output through the pipeline.
+The functions are designed to be as independent from other functions as possible. You can also load single function using dot-source. In that case, it is recommended to first set the encoding of the current process to `UTF-8` as shown below, because this functions basically assumes `UTF-8` for input and output through the pipeline.
 
 
 ```powershell
@@ -82,7 +79,7 @@ The motivation for creating each function and usage.
 ### Show functions
 
 
-#### [man2] - Formats filelist as a wide table and gets manual <a id="man2"></a>
+#### [man2] - Formats filelist as a wide table and gets manual.<a id="man2"></a>
 
 [man2]: src/man2_function.ps1
 
@@ -166,7 +163,7 @@ catcsv                 gyo            rev2
 chead                  han            rev
 ```
 
-#### [Edit-Function] (Alias: e) - Edit my function with editor <a id="Edit-Function"></a>
+#### [Edit-Function] (Alias: e) - Edit my function with editor.<a id="Edit-Function"></a>
 
 [Edit-Function]: src/Edit-Function_function.ps1
 
@@ -279,7 +276,7 @@ e ../bin/pwsh-sketches/operator.ps1
 
 ### Unix-like text filters
 
-#### [sed] - Stream EDitor <a id="sed"></a>
+#### [sed] - Stream EDitor.<a id="sed"></a>
 
 [sed]: src/sed_function.ps1
 
@@ -382,7 +379,7 @@ aaa
 eee
 ```
 
-#### [sed-i] - Edit a file in place <a id="sed-i"></a>
+#### [sed-i] - Edit a file in place.<a id="sed-i"></a>
 
 [sed-i]: src/sed-i_function.ps1
 
@@ -457,7 +454,7 @@ ls *.txt | %{ sed-i 's;abc;hoge;g' $_.FullName -Execute -DoNotCreateBackup }
 ```
 
 
-#### [grep] - Single-line oriented searcher for regex patterns <a id="grep"></a>
+#### [grep] - Single-line oriented searcher for regex patterns.<a id="grep"></a>
 
 [grep]: src/grep_function.ps1
 
@@ -793,7 +790,7 @@ sepal_length,sepal_width,petal_length,petal_width,species
 6.3,2.9,5.6,1.8,virginica
 ```
 
-#### [head], [tail] - Output the first/last part of files <a id="head"></a> <a id="tail"></a>
+#### [head], [tail] - Output the first/last part of files.<a id="head"></a>.<a id="tail"></a>
 
 [head]: src/head_function.ps1
 [tail]: src/tail_function.ps1
@@ -811,7 +808,7 @@ Outputs the first or last few lines of the input string. Roughly equivalent to `
 - Inspired by Unix/Linux Commands
     - Command: `head`, `tail`
 
-#### [tail-f] - Output appended data as the file grows <a id="tail-f"></a>
+#### [tail-f] - Output appended data as the file grows.<a id="tail-f"></a>
 
 [tail-f]: src/tail-f_function.ps1
 
@@ -842,7 +839,7 @@ tail-f a.txt
 ```
 
 
-#### [chead], [ctail] - Cut the first/last part of files <a id="chead"></a> <a id="ctail"></a>
+#### [chead], [ctail] - Cut the first/last part of files.<a id="chead"></a>.<a id="ctail"></a>
 
 [chead]: src/chead_function.ps1
 [ctail]: src/ctail_function.ps1
@@ -956,7 +953,7 @@ Examples:
 3
 ```
 
-#### [uniq] - Report or omit repeated lines <a id="uniq"></a>
+#### [uniq] - Report or omit repeated lines.<a id="uniq"></a>
 
 [uniq]: src/uniq_function.ps1
 
@@ -971,7 +968,7 @@ Removes adjacent (consecutive) duplicate lines from the input and makes them uni
 - Inspired by Unix/Linux Commands
     - Command: `uniq`
 
-#### [cat2] - Concatenate files and print on the standard output <a id="cat2"></a>
+#### [cat2] - Concatenate files and print on the standard output.<a id="cat2"></a>
 
 [cat2]: src/cat2_function.ps1
 
@@ -983,7 +980,7 @@ Gets the contents of a text file. To specify multiple files, separate them with 
 - Inspired by Unix/Linux Commands
     - Command: `cat`
 
-#### [tac] - Output strings in reverse <a id="tac"></a>
+#### [tac] - Output strings in reverse.<a id="tac"></a>
 
 [tac]: src/tac_function.ps1
 
@@ -1011,7 +1008,7 @@ Examples:
 1
 ```
 
-#### [rev] - Reverse strings <a id="rev"></a>
+#### [rev] - Reverse strings.<a id="rev"></a>
 
 [rev]: src/rev_function.ps1
 
@@ -1034,7 +1031,7 @@ Examples:
 oeuia
 ```
 
-#### [rev2] - Reverse columns <a id="rev2"></a>
+#### [rev2] - Reverse columns.<a id="rev2"></a>
 
 [rev2]: src/rev2_function.ps1
 
@@ -1070,7 +1067,7 @@ Write-Output "01 02 03" | rev2 -e
 
 ### Text filters for space-separated input
 
-#### [tateyoko] - Transpose columns and rows <a id="tateyoko"></a>
+#### [tateyoko] - Transpose columns and rows.<a id="tateyoko"></a>
 
 [tateyoko]: src/tateyoko_function.ps1
 
@@ -1106,7 +1103,7 @@ Examples:
 3 6 9
 ```
 
-#### [fillretu] - Align records to the maximum number of columns <a id="fillretu"></a>
+#### [fillretu] - Align records to the maximum number of columns.<a id="fillretu"></a>
 
 [fillretu]: src/fillretu_function.ps1
 
@@ -1180,7 +1177,7 @@ cat dat.txt | yarr | fillretu | tateyoko | keta
    _    1    _
 ```
 
-#### [juni] - Enumerate the number of rows in each line <a id="juni"></a>
+#### [juni] - Enumerate the number of rows in each line.<a id="juni"></a>
 
 [juni]: src/juni_function.ps1
 
@@ -1208,7 +1205,7 @@ Output:
 4 d
 ```
 
-#### [self] - Select fields <a id="self"></a>
+#### [self] - Select fields.<a id="self"></a>
 
 [self]: src/self_function.ps1
 
@@ -1301,7 +1298,7 @@ Examples:
 ```
 
 
-#### [delf] - Delete fields <a id="delf"></a>
+#### [delf] - Delete fields.<a id="delf"></a>
 
 [delf]: src/delf_function.ps1
 
@@ -1359,7 +1356,7 @@ Examples:
 7 8 10
 ```
 
-#### [sm2] - Sum up <a id="sm2"></a>
+#### [sm2] - Sum up.<a id="sm2"></a>
 
 [sm2]: src/sm2_function.ps1
 
@@ -1498,7 +1495,7 @@ C 1 10
 1 C 1 10 10
 ```
 
-#### [map2] - Cross tabulation of long-type data <a id="map2"></a>
+#### [map2] - Cross tabulation of long-type data.<a id="map2"></a>
 
 [map2]: src/map2_function.ps1
 
@@ -1613,7 +1610,7 @@ loc-3   7       70      8       80      9       90
 
 
 
-#### [lcalc] - Column-to-column calculator <a id="lcalc"></a>
+#### [lcalc] - Column-to-column calculator.<a id="lcalc"></a>
 
 [lcalc]: src/lcalc_function.ps1
 
@@ -1740,7 +1737,7 @@ C 1 10
 1 C 1 10 10
 ```
 
-#### [lcalc2] - Column-to-column calculator <a id="lcalc2"></a>
+#### [lcalc2] - Column-to-column calculator.<a id="lcalc2"></a>
 
 [lcalc2]: src/lcalc2_function.ps1
 
@@ -1916,7 +1913,7 @@ C 1 10
 1 C 1 10 10
 ```
 
-#### [pawk] - Pattern-Action processor like GNU AWK <a id="pawk"></a>
+#### [pawk] - Pattern-Action processor like GNU AWK.<a id="pawk"></a>
 
 [pawk]: src/pawk_function.ps1
 
@@ -2114,7 +2111,7 @@ because numbers starting with zero are considered strings.
 ```
 
 ```powershell
-# Cast [string]"001" to [int]"001"       
+# Cast [string]"001" to [int]"001"
 $dat | pawk -Pattern {[int]$1 -eq 1}
 $dat
 ```
@@ -2730,7 +2727,7 @@ adcbe
 # the first and last elements are dropped from the array.
 ```
 
-#### [retu] - Output column number <a id="retu"></a>
+#### [retu] - Output column number.<a id="retu"></a>
 
 [retu]: src/retu_function.ps1
 
@@ -2800,14 +2797,14 @@ d d
 2 d d
 ```
 
-#### [count] - Count up keys <a id="count"></a>
+#### [count] - Count up keys.<a id="count"></a>
 
 [count]: src/count_function.ps1
 
-半角スペース区切り入力のキー数のカウント。
-`<k1>`列から`<k2>`列をキーフィールドとみなし、
-重複するキーフィールド数をカウントする。
-`-c`スイッチで、カウントアップしながら全行出力。
+Count the number of keys in space-delimited input.
+Treat columns `<k1>` through `<k2>` as key fields and
+count the number of duplicate key fields.
+Output all lines while incrementing the count with the `-c` switch.
 
 - Usage
     - `man2 count`
@@ -2825,36 +2822,34 @@ Input:
 cat a.txt
 ```
 
+```markdown
+01 Oregon 01 Portland 100
+01 Oregon 02 Salem 100
+01 Oregon 03 Eugene 100
+02 Nevada 04 Reno 100
+02 Nevada 05 CarsonCity 100
+02 Nevada 06 LasVegas 100
+02 Nevada 07 Henderson 100
+02 Nevada 08 Sparks 100
+02 Nevada 09 NorthLasVegas 100
+03 Arizona 10 Phoenix 100
+03 Arizona 11 Tucson 100
+03 Arizona 12 Mesa 100
+04 Utah 13 SaltLakeCity 100
+04 Utah 14 WestValleyCity 100
+04 Utah 15 Provo 100
+04 Utah 16 WestJordan 100
 ```
-01 埼玉県 01 さいたま市 100
-01 埼玉県 02 川越市 100
-01 埼玉県 03 熊谷市 100
-02 東京都 04 新宿区 100
-02 東京都 05 中央区 100
-02 東京都 06 港区 100
-02 東京都 07 千代田区 100
-02 東京都 08 八王子市 100
-02 東京都 09 立川市 100
-03 千葉県 10 千葉市 100
-03 千葉県 11 市川市 100
-03 千葉県 12 柏市 100
-04 神奈川県 13 横浜市 100
-04 神奈川県 14 川崎市 100
-04 神奈川県 15 厚木市 100
-04 神奈川県 16 小田原市 100
-```
-
-Output:
 
 ```powershell
 cat a.txt | grep . | sort | count 1 2
 ```
 
 ```
-3 01 埼玉県
-6 02 東京都
-3 03 千葉県
-4 04 神奈川県
+3 01 Oregon
+6 02 Nevada
+3 03 Arizona
+4 04 Utah
 ```
 
 ```powershell
@@ -2862,36 +2857,36 @@ cat a.txt | grep . | sort | count -c 1 2
 ```
 
 ```
-1 01 埼玉県 01 さいたま市 100
-2 01 埼玉県 02 川越市 100
-3 01 埼玉県 03 熊谷市 100
-1 02 東京都 04 新宿区 100
-2 02 東京都 05 中央区 100
-3 02 東京都 06 港区 100
-4 02 東京都 07 千代田区 100
-5 02 東京都 08 八王子市 100
-6 02 東京都 09 立川市 100
-1 03 千葉県 10 千葉市 100
-2 03 千葉県 11 市川市 100
-3 03 千葉県 12 柏市 100
-1 04 神奈川県 13 横浜市 100
-2 04 神奈川県 14 川崎市 100
-3 04 神奈川県 15 厚木市 100
-4 04 神奈川県 16 小田原市 100
+1 01 Oregon 01 Portland 100
+2 01 Oregon 02 Salem 100
+3 01 Oregon 03 Eugene 100
+1 02 Nevada 04 Reno 100
+2 02 Nevada 05 CarsonCity 100
+3 02 Nevada 06 LasVegas 100
+4 02 Nevada 07 Henderson 100
+5 02 Nevada 08 Sparks 100
+6 02 Nevada 09 NorthLasVegas 100
+1 03 Arizona 10 Phoenix 100
+2 03 Arizona 11 Tucson 100
+3 03 Arizona 12 Mesa 100
+1 04 Utah 13 SaltLakeCity 100
+2 04 Utah 14 WestValleyCity 100
+3 04 Utah 15 Provo 100
+4 04 Utah 16 WestJordan 100
 ```
 
-#### [getfirst] - Get the first row of the same key <a id="getfirst"></a>
+
+#### [getfirst] - Get the first row of the same key.<a id="getfirst"></a>
 
 [getfirst]: src/getfirst_function.ps1
 
-半角スペース区切り入力から、
-同一キーの最初行のデータを出力。
-大文字小文字を区別しない。
+Output the first line of data for each unique key from space-delimited input.
+Case-insensitive.
 
 - Usage
     - `man2 getfirst`
     - `getfirst <k1> <k2>`
-        - `<k1>`列から`<k2>`列をキーとみなす
+        - Treats `<k1>` column and `<k2>` column as keys.
 - Examples
     - `cat a.txt | getfirst 1 2`
         - **How to read** : Get only the first row with the same key with the value concatenated from 1st to 2nd column as the key.
@@ -2905,23 +2900,23 @@ Output:
 cat a.txt
 ```
 
-```
-01 埼玉県 01 さいたま市 100
-01 埼玉県 02 川越市 100
-01 埼玉県 03 熊谷市 100
-02 東京都 04 新宿区 100
-02 東京都 05 中央区 100
-02 東京都 06 港区 100
-02 東京都 07 千代田区 100
-02 東京都 08 八王子市 100
-02 東京都 09 立川市 100
-03 千葉県 10 千葉市 100
-03 千葉県 11 市川市 100
-03 千葉県 12 柏市 100
-04 神奈川県 13 横浜市 100
-04 神奈川県 14 川崎市 100
-04 神奈川県 15 厚木市 100
-04 神奈川県 16 小田原市 100
+```markdown
+01 Oregon 01 Portland 100
+01 Oregon 02 Salem 100
+01 Oregon 03 Eugene 100
+02 Nevada 04 Reno 100
+02 Nevada 05 CarsonCity 100
+02 Nevada 06 LasVegas 100
+02 Nevada 07 Henderson 100
+02 Nevada 08 Sparks 100
+02 Nevada 09 NorthLasVegas 100
+03 Arizona 10 Phoenix 100
+03 Arizona 11 Tucson 100
+03 Arizona 12 Mesa 100
+04 Utah 13 SaltLakeCity 100
+04 Utah 14 WestValleyCity 100
+04 Utah 15 Provo 100
+04 Utah 16 WestJordan 100
 ```
 
 ```powershell
@@ -2929,24 +2924,24 @@ cat a.txt | getfirst 1 2
 ```
 
 ```
-01 埼玉県 01 さいたま市 100
-02 東京都 04 新宿区 100
-03 千葉県 10 千葉市 100
-04 神奈川県 13 横浜市 100
+01 Oregon 01 Portland 100
+02 Nevada 04 Reno 100
+03 Arizona 10 Phoenix 100
+04 Utah 13 SaltLakeCity 100
 ```
 
-#### [getlast] - Get the last row of the same key <a id="getlast"></a>
+
+#### [getlast] - Get the last row of the same key.<a id="getlast"></a>
 
 [getlast]: src/getlast_function.ps1
 
-半角スペース区切り入力から、
-同一キーの最下行のデータを出力。
-大文字小文字を区別しない。
+Output the last line of data for each unique key from space-delimited input.
+Case-insensitive.
 
 - Usage
     - `man2 getlast`
     - `getlast <k1> <k2>`
-        - `<k1>`列から`<k2>`列をキーとみなす
+        - Treats `<k1>` column and `<k2>` column as keys.
 - Examples
     - `cat a.txt | getlast 1 2`
         - **How to read** : Get only the last row of the same key with the value concatenated from 1st to 2nd column as the key.
@@ -2960,23 +2955,23 @@ Output:
 cat a.txt
 ```
 
-```
-01 埼玉県 01 さいたま市 100
-01 埼玉県 02 川越市 100
-01 埼玉県 03 熊谷市 100
-02 東京都 04 新宿区 100
-02 東京都 05 中央区 100
-02 東京都 06 港区 100
-02 東京都 07 千代田区 100
-02 東京都 08 八王子市 100
-02 東京都 09 立川市 100
-03 千葉県 10 千葉市 100
-03 千葉県 11 市川市 100
-03 千葉県 12 柏市 100
-04 神奈川県 13 横浜市 100
-04 神奈川県 14 川崎市 100
-04 神奈川県 15 厚木市 100
-04 神奈川県 16 小田原市 100
+```markdown
+01 Oregon 01 Portland 100
+01 Oregon 02 Salem 100
+01 Oregon 03 Eugene 100
+02 Nevada 04 Reno 100
+02 Nevada 05 CarsonCity 100
+02 Nevada 06 LasVegas 100
+02 Nevada 07 Henderson 100
+02 Nevada 08 Sparks 100
+02 Nevada 09 NorthLasVegas 100
+03 Arizona 10 Phoenix 100
+03 Arizona 11 Tucson 100
+03 Arizona 12 Mesa 100
+04 Utah 13 SaltLakeCity 100
+04 Utah 14 WestValleyCity 100
+04 Utah 15 Provo 100
+04 Utah 16 WestJordan 100
 ```
 
 ```powershell
@@ -2984,19 +2979,18 @@ cat a.txt | getlast 1 2
 ```
 
 ```
-01 埼玉県 03 熊谷市 100
-02 東京都 09 立川市 100
-03 千葉県 12 柏市 100
-04 神奈川県 16 小田原市 100
+01 Oregon 03 Eugene 100
+02 Nevada 09 NorthLasVegas 100
+03 Arizona 12 Mesa 100
+04 Utah 16 WestJordan 100
 ```
 
 
-#### [yarr] - Expand long data to wide <a id="yarr"></a>
+#### [yarr] - Expand long data to wide.<a id="yarr"></a>
 
 [yarr]: src/yarr_function.ps1
 
-縦型（ロング型）の半角スペース区切りレコードを、
-指定列をキーに横型（ワイド型）に変換する。
+Convert vertical (long-format) records separated by single-byte spaces into horizontal (wide-format) records using specified columns as keys.
 
 - Usage
     - `man2 yarr`
@@ -3027,7 +3021,9 @@ cat a.txt
 Output(wide type data):
 
 ```powershell
-# num=1で左から1列目をkeyとしてロング型をワイド型に変換。
+# Convert long format to wide format
+# using the first column as the key (num=1).
+
 cat a.txt | grep . | yarr -n 1
 ```
 
@@ -3037,12 +3033,14 @@ cat a.txt | grep . | yarr -n 1
 2022 1 2
 ```
 
-※ `grep .`で空行をスキップ（＝1文字以上の行のみヒット）
+- **Note**: Skip empty lines with `grep .` (matches only lines with one or more characters)
 
 Equivalent in PowerShell
 
 ```powershell
-cat a.txt | grep . | ForEach-Object -begin{$h=@{}} -process{$a=$_ -split " ", 2; $h[$($a[0])]+=" $($a[1])"} -end {foreach($k in $h.keys){$k+$h[$k]}}
+cat a.txt `
+    | grep . `
+    | ForEach-Object -begin{$h=@{}} -process{$a=$_ -split " ", 2; $h[$($a[0])]+=" $($a[1])"} -end {foreach($k in $h.keys){$k+$h[$k]}}
 ```
 
 ```
@@ -3052,12 +3050,11 @@ cat a.txt | grep . | ForEach-Object -begin{$h=@{}} -process{$a=$_ -split " ", 2;
 ```
 
 
-#### [tarr] - Expand wide data to long <a id="tarr"></a>
+#### [tarr] - Expand wide data to long.<a id="tarr"></a>
 
 [tarr]: src/tarr_function.ps1
 
-横長（ワイド型）の半角スペース区切りレコードを、
-指定列をキーに縦長（ロング型）に変換する。
+Convert wide-format (space-delimited) records to long format, using specified columns as keys.
 
 - Usage
     - `man2 tarr`
@@ -3081,7 +3078,9 @@ cat a.txt
 Output(long type data):
 
 ```powershell
-# num=1で左から1列目をkeyとしてワイド型をロング型に変換。
+# Convert wide format to long format
+# using the first column as the key (num=1).
+
 cat a.txt | grep . | tarr -n 1
 ```
 
@@ -3097,17 +3096,14 @@ cat a.txt | grep . | tarr -n 1
 2022 2
 ```
 
-※ `grep .`で空行をスキップ（＝1文字以上の行のみヒット）
+- **Note**: Skip empty lines with `grep .` (matches only lines with one or more characters)
 
 
-#### [flat] - Flat columns <a id="flat"></a>
+#### [flat] - Flat columns.<a id="flat"></a>
 
 [flat]: src/flat_function.ps1
 
-半角スペース区切り文字列を任意列数となるように整える。
-`-ifs`で入力テキストの区切り文字を、<br />
-`-ofs`で出力テキストの区切り文字をそれぞれ指定できる。<br />
-それぞれ空文字も指定可能。（`-ifs ""`, `-ofs ""`）
+Adjust space-delimited strings to a specified number of columns. `-ifs` specifies the input text delimiter, and `-ofs` specifies the output text delimiter. Empty strings can also be specified for each. (`-ifs ""`, `-ofs ""`)
 
 - Usage
     - `man2 flat`
@@ -3148,14 +3144,11 @@ aiu
 eo
 ```
 
-#### [wrap] - Wrap each fields in specified format <a id="wrap"></a>
+#### [wrap] - Wrap each fields in specified format.<a id="wrap"></a>
 
 [wrap]: src/wrap_function.ps1
 
-半角スペース区切り文字列を任意の書式で**くるむ**。
-`-ifs`で入力テキストの区切り文字を、
-`-ofs`で出力テキストの区切り文字をそれぞれ指定できる。
-それぞれ空文字も指定可能。（`-ifs ""`, `-ofs ""`）
+**Wrap** space-delimited strings with an arbitrary format. `-ifs` specifies the input text delimiter, and `-ofs` specifies the output text delimiter. Empty strings can also be specified for each. (`-ifs ""`, `-ofs ""`)
 
 - Usage
     - `man2 wrap`
@@ -3216,7 +3209,7 @@ Examples
 </table>
 ```
 
-#### [Add-LineBreak] , [Add-LineBreakEndOfFile] - Add LineFeed <a id="Add-LineBreak"></a> <a id="Add-LineBreakEndOfFile"></a>
+#### [Add-LineBreak] , [Add-LineBreakEndOfFile] - Add LineFeed.<a id="Add-LineBreak"></a>.<a id="Add-LineBreakEndOfFile"></a>
 
 [Add-LineBreak]: src/Add-LineBreak_function.ps1
 [Add-LineBreakEndOfFile]: src/Add-LineBreakEndOfFile_function.ps1
@@ -3226,11 +3219,13 @@ Examples
 `Add-LineBreakEndOfFile`は、入力の最後に改行を1行挿入する。
 `Get-Content -Delimiter`と似た挙動である。
 
+Insert line breaks. `Add-LineBreak` inserts line breaks wherever it finds ``` `r`n ``` within a string. `Add-LineBreakEndOfFile` inserts a single line break at the end of the input. Behaves similarly to `Get-Content -Delimiter`.
+
 - Usage
     - `man2 Add-LineBreak`
     - `man2 Add-LineBreakEndOfFile`
 
-#### [Trim-EmptyLine] (alias: etrim) - Remove empty lines from the beginning and end of line. <a id="Trim-EmptyLine"></a></a>
+#### [Trim-EmptyLine] (alias: etrim) - Remove empty lines from the beginning and end of line..<a id="Trim-EmptyLine"></a></a>
 
 [Trim-EmptyLine]: src/Trim-EmptyLine_function.ps1
 
@@ -3316,23 +3311,27 @@ f
 ```
 
 
-#### [addb], [addl], [addr], [addt] - Insert text strings at the top, bottom, left, and right of the input <a id="addb"></a> <a id="addl"></a> <a id="addr"></a> <a id="addt"></a>
+#### [addb], [addl], [addr], [addt] - Insert text strings at the top, bottom, left, and right of the input.<a id="addb"></a>.<a id="addl"></a>.<a id="addr"></a>.<a id="addt"></a>
 
 [addb]: src/addb_function.ps1
 [addl]: src/addl_function.ps1
 [addr]: src/addr_function.ps1
 [addt]: src/addt_function.ps1
 
-入力の上下左右に文字列を挿入する。
+Insert strings at the top, bottom, left, and right of input.
 
-- `addt`: add-top: 入力行の先頭行の`上`に文字列を追加
-- `addb`: add-bottom: 入力行の末尾行の`下`文字列を追加
-- `addr`: add-right: 各入力行の最`右`列に文字列を追加
-- `addl`: add-left: 各入力行の最`左`列に文字列を追加
+- `addt`: add-top: Add a string `above` the first line of the input.
+- `addb`: add-bottom: Add a string `below` the last line of the input.
+- `addr`: add-right: Add a string to the rightmost column of each input line.
+- `addl`: add-left: Add a string to the leftmost column of each input line.
 
-`addt`と`addb`は、ヘッダやフッタを追加する。<br />
-`addt`と`addb`はカンマ区切りで複数行指定も可能。<br />
-`addr`と`addl`は、左や右に列を追加するのに便利。<br />
+Note:
+
+- `addt` and `addb` are used to add headers or footers.
+- `addt` and `addb` can also specify multiple lines separated by commas.
+- `addr` and `addl` are useful for adding columns to the left or right.
+
+Usage:
 
 - Usage
     - `man2 addb`
@@ -3347,19 +3346,14 @@ f
     - Command: `addt`, `addb`, `addr`, `addl`
 
 
-#### [conv] - Convolution operation or find N-gram of text <a id="conv"></a>
+#### [conv] - Convolution operation or find N-gram of text.<a id="conv"></a>
 
 [conv]: src/conv_function.ps1
 
-入力行を任意列数ごとに畳み込み演算（convolution）のように折り返す。
-文章のN-gramを求める。
+Wrap input lines like a convolution operation with a specified number of columns. Find the N-grams of a sentence.
 
-Convolution operation with the specified number of columns 
-for each input record. Instead of just wrapping lines, each
-lines shifts the previous line to the left by one element.
+Convolution operation with the specified number of columns for each input record. Instead of just wrapping lines, each lines shifts the previous line to the left by one element. Default field separator is space.
 
-Default field separator is space.
-    
 
 - Usage
     - `man2 conv`
@@ -3441,24 +3435,22 @@ Write-Output "にわにはにわにわとりがいる" | conv -fs '' 2 -r -f
 ```
 
 
-#### [keta] - Padding per columns <a id="keta"></a>
+#### [keta] - Padding per columns.<a id="keta"></a>
 
 [keta]: src/keta_function.ps1
 
-半角スペース区切り入力の桁そろえ。
-端末上で半角スペース区切り入力を確認するときに見やすい。
-マルチバイト文字対応。
+Align space-delimited input columns. Makes space-delimited input easier to view on the terminal. Supports multi-byte characters. (Non-ASCII characters are considered multibyte characters.)
 
 - Usage
-    - `man2 keta`
+  - `man2 keta`
 - Examples
-    - `"aaa bbb ccc","dddddd eeee ffff" | keta`
-        - デフォルトで右揃え
-    - `"aaa bbb ccc","dddddd eeee ffff" | keta -l`
-        - `-l`スイッチで左揃え
+  - `"aaa bbb ccc","dddddd eeee ffff" | keta`
+    - Right-aligned by default
+  - `"aaa bbb ccc","dddddd eeee ffff" | keta -l`
+    - Left-aligned with the `-l` switch
 - Inspired by [Open-usp-Tukubai - GitHub](https://github.com/usp-engineers-community/Open-usp-Tukubai)
-    - License: The MIT License (MIT): Copyright (C) 2011-2022 Universal Shell Programming Laboratory
-    - Command: `keta`
+  - License: The MIT License (MIT): Copyright (C) 2011-2022 Universal Shell Programming Laboratory
+  - Command: `keta`
 
 Examples:
 
@@ -3493,12 +3485,12 @@ dddddd eeee ffff
 ```
 
 
-#### [gyo] - Row counter <a id="gyo"></a>
+#### [gyo] - Row counter.<a id="gyo"></a>
 
 [gyo]: src/gyo_function.ps1
 
-入力文字列の行数をカウント。
-`(1..20 | Measure-Object).Count`と同じ効果。
+Count the number of lines in the input string.
+Equivalent to `(1..20 | Measure-Object).Count`.
 
 - Usage
     - `man2 gyo`
@@ -3537,21 +3529,20 @@ gyo *.*
 2 uri-list.txt
 ```
 
-#### [han] - Convert full-width kana to half-width kana using Microsoft.VisualBasic.VbStrConv <a id="han"></a>
+#### [han] - Convert full-width kana to half-width kana using Microsoft.VisualBasic.VbStrConv.<a id="han"></a>
 
 [han]: src/han_function.ps1
 
-全角文字を半角に変換。For japanese locale on windows。
-`[-k|-Kana]`スイッチで全角カタカナは変換しない
-（半角カナを全角に変換するわけではない）
+
+Convert full-width (zenkaku) characters to half-width (hankaku). For Japanese locale on Windows. The `[-k|-Kana]` switch does not convert full-width katakana. (It does not convert half-width kana to full-width.)
 
 - Usage
-    - `man2 han`
+  - `man2 han`
 - Params
-    - `[-k|-Kana]` - Do not convert full-width(zenkaku) KANA
+  - `[-k|-Kana]` - Do not convert full-width (zenkaku) KANA
 - Examples
-    - `"input" | han | zen -k`
-        - → 英数字記号を半角に、カナのみ全角に変換
+  - `"input" | han | zen -k`
+    - &rarr: Converts alphanumeric symbols to half-width, and katakana only to full-width.
 - Inspired by [Open-usp-Tukubai - GitHub](https://github.com/usp-engineers-community/Open-usp-Tukubai)
     - License: The MIT License (MIT): Copyright (C) 2011-2022 Universal Shell Programming Laboratory
     - Command: `han`
@@ -3617,20 +3608,20 @@ Examples:
 パピプペポ0123456789=A
 ```
 
-#### [zen] - Convert half-width kana to full-width kana using Microsoft.VisualBasic.VbStrConv <a id="zen"></a>
+#### [zen] - Convert half-width kana to full-width kana using Microsoft.VisualBasic.VbStrConv.<a id="zen"></a>
 
 [zen]: src/zen_function.ps1
 
-全角文字を半角に変換する。For japanese locale on windows。
-`[-k|-Kana]`スイッチで半角カタカナのみ全角カタカナに変換
+Convert half-width (hankaku) characters to full-width (zenkaku). For Japanese locale on Windows.
+The `[-k|-Kana]` switch converts only half-width katakana to full-width katakana.
 
 - Usage
-    - `man2 zen`
+  - `man2 zen`
 - Options
-    - `[-k|-Kana]` - Convert only half-width kana to full-width kana
+  - `[-k|-Kana]` - Convert only half-width kana to full-width kana
 - Examples
-    - `"input" | han | zen -k`
-        - → 英数字記号を半角に、カナのみ全角に変換
+  - `"input" | han | zen -k`
+    - &rarr; Converts alphanumeric symbols to half-width, and kana only to full-width.
 - Inspired by [Open-usp-Tukubai - GitHub](https://github.com/usp-engineers-community/Open-usp-Tukubai)
     - License: The MIT License (MIT): Copyright (C) 2011-2022 Universal Shell Programming Laboratory
     - Command: `zen`
@@ -3639,7 +3630,7 @@ Examples:
  - Learn
     - Regex.Replace Method (.NET 7)  - Replace(String, String, MatchEvaluator)
         - [Regex.Replace Method (System.Text.RegularExpressions)](https://learn.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regex.replace?view=net-7.0)
-        - [Regex.Replace メソッド (System.Text.RegularExpressions)](https://learn.microsoft.com/ja-jp/dotnet/api/system.text.regularexpressions.regex.replace)
+        - [Regex.Replace Method (System.Text.RegularExpressions)](https://learn.microsoft.com/ja-jp/dotnet/api/system.text.regularexpressions.regex.replace)
 
 Examples:
 
@@ -3695,11 +3686,11 @@ Examples:
 パピプペポ0123456789=A
 ```
 
-#### [vbStrConv] - Convert strings using Microsoft.VisualBasic.VbStrConv <a id="vbStrConv"></a>
+#### [vbStrConv] - Convert strings using Microsoft.VisualBasic.VbStrConv.<a id="vbStrConv"></a>
 
 [vbStrConv]: src/vbStrConv_function.ps1
 
-文字列の変換。
+String conversion.
 
 - Usage
     - `man2 vbStrConv`
@@ -3725,17 +3716,16 @@ Examples:
 Input
 ```
 
-#### [thisyear], [nextyear], [lastyear], [Get-DateAlternative] - Add this/next/last year to month/day input. To prevent mistyping the number of year. <a id="thisyear"></a> <a id="nextyear"></a> <a id="lastyear"></a> <a id="Get-DateAlternative"></a>
+#### [thisyear], [nextyear], [lastyear], [Get-DateAlternative] - Add this/next/last year to month/day input. To prevent mistyping the number of year..<a id="thisyear"></a>.<a id="nextyear"></a>.<a id="lastyear"></a>.<a id="Get-DateAlternative"></a>
 
 [thisyear]: src/Get-DateAlternative_function.ps1
 [lastyear]: src/Get-DateAlternative_function.ps1
 [nextyear]: src/Get-DateAlternative_function.ps1
 [Get-DateAlternative]: src/Get-DateAlternative_function.ps1
 
-シンプルな日付の入力（e.g. 1/23）に年を付与して出力。
-筆者は「年数」をしばしばミスタイプしてしまうためその予防として作成。
+Output a year appended to a simple date input (e.g.: `1/23` &rarr; `2025-01-23`). Created as a preventive measure against the author's frequent mistyping of "years."
 
-Add this/next/last year to month/day input.
+Add `this`/`next`/`last` year to `<month>/<day>` input.
 To prevent mistyping the number of year.
 
 Output to both clipboard and stdout by default.
@@ -3825,11 +3815,11 @@ lastyear 2/28 -s "_last_year"
 2022-02-28_last_year
 ```
 
-#### [fval] - Format values of specified column <a id="fval"></a>
+#### [fval] - Format values of specified column.<a id="fval"></a>
 
 [fval]: src/fval_function.ps1
 
-任意列の値を整形する。
+Format values in specified columns.
 
 ```powershell
 "1111 2222 3333" | fval '#,0.0' 2, 3
@@ -3855,13 +3845,13 @@ Example:
 ```
 
 
-#### [GetValueFrom-Key] (Alias: getvalkey) - Get the value only from the key-value text data <a id="GetValueFrom-Key"></a>
+#### [GetValueFrom-Key] (Alias: getvalkey) - Get the value only from the key-value text data.<a id="GetValueFrom-Key"></a>
 
 [GetValueFrom-Key]: src/GetValueFrom-Key_function.ps1
 
-Returns only the values that match the specified key from text data stored in space-delimited (space or tab) key-value format.
+Extracts values corresponding to specified keys from space or tab-delimited key-value text data.
 
-Whitespaces before and after keys and values are trimmed and ignored.
+Leading and trailing whitespaces are removed from keys and values.
 
 - Usage
     - `man2 getvalkey`
@@ -3926,9 +3916,7 @@ hog val hoge
 
 [PullOut-String]: src/PullOut-String_function.ps1
 
-Returns an array of two elements, the first element being the extracted strings, the second element being the remaining line. Left shortest match.
-
-Usage:
+Returns an array with two elements: the extracted strings as the first element and the remaining line as the second. Performs a left shortest match.
 
 
 - Usage
@@ -3993,17 +3981,16 @@ module
 
 ### Statistics
 
-#### [percentile] - Ranking with percentile and quartile <a id="percentile"></a>
+#### [percentile] - Ranking with percentile and quartile.<a id="percentile"></a>
 
 [percentile]: src/percentile_function.ps1
 
-半角スペース区切りデータにpercentileまたは四分位数（quartile）を適用してランク付け。
+Rank space-delimited data using percentiles or quartiles.
 
-[percentile]と[summary]はどちらも「ヘッダありスペース区切りデータの縦一列ぶんの要約統計量を算出する」点は同じ。
-[percentile]はCategory列を指定するとCategoryごとに要約統計量を計算できる。
+Both `percentile` and `summary` calculate summary statistics for a single column of headered space-delimited data.
+`percentile` allows for category-specific summary statistics when a category column is provided.
 
-Calculate and ranking with percentile and quartiles on space-delimited data with/without headers.
-
+Calculate and rank space-delimited data (with or without headers) using percentiles and quartiles.
 
 - Usage
     - `man2 percentile`
@@ -4461,13 +4448,13 @@ FillNaN    : 0
 ReplaceNaN : 4
 ```
 
-#### [decil] - Decile analysis (Divide records about 10 equal parts) <a id="decil"></a>
+#### [decil] - Decile analysis (Divide records about 10 equal parts).<a id="decil"></a>
 
 [decil]: src/decil_function.ps1
 
-デシル分析表の生成。入力データを10ブロックに分けてラベル付け。[percentile]との違いは、値をみずに単純に「行数」だけをみてそれを10等分する点。
+Generate decile analysis tables. Divides input data into 10 blocks and labels them. Unlike [percentile], this method simply divides the data into 10 equal parts based on the number of rows, without considering the actual values.
 
-[percentile]でのpercentileやquartileは外れ値を除外したり中央値をみるが、この[decil]はどちらかというと指定列の「上位の少数レコード」が総計の多く（たとえば8割）を占めている、ということを確認するのによく使う。
+While [percentile] calculates percentiles and quartiles, which may exclude outliers and focus on the median, [decil] is often used to identify if a small subset of the top records in a specified column accounts for a large portion of the total (e.g., `80%`).
 
 - Usage
     - `man2 decil`
@@ -4483,7 +4470,7 @@ ReplaceNaN : 4
         - `[-Outlier]`
         - `[-StandardDeviation]`
 - thanks:
-    - [デシル分析表の作成 with Excel](https://hitorimarketing.net/tools/decile-analysis.html)
+    - [Decile Analysis with Excel](https://hitorimarketing.net/tools/decile-analysis.html)
 
 Examples:
 
@@ -4629,20 +4616,20 @@ D01 CZ84 8470022 0.0026600974009877927269611624
 
 
 
-#### [summary] - Calculate the basic statistics of a specified field <a id="summary"></a>
+#### [summary] - Calculate the basic statistics of a specified field.<a id="summary"></a>
 
 [summary]: src/summary_function.ps1
 
-半角スペース区切りデータのうち数値列1列分の基礎統計量を算出する。
+Calculates basic statistics for a single numerical column in space-delimited data.
 
-[percentile]と[summary]はどちらも「ヘッダありスペース区切りデータの縦一列ぶんの要約統計量を算出する」点は同じ。
-[percentile]はCategory列を指定するとCategoryごとに基礎統計量を計算できる。
+Both `percentile` and `summary` calculate summary statistics for a single column of headered space-delimited data.
+`percentile` allows calculating basic statistics per category when a Category column is specified.
 
-- デフォルトで四分位数を計算
-    - 四分位数の中央値はExclusive
-    - 四分位数の外れ値は `(Qt1st - IQR*1.5)`以下、`(Qt3rd + IQR*1.5)`以上
-    - 標準偏差は`n-1`で割った値（標本標準偏差）
-- オプションで外れ値を加味した四分位数、標準偏差を算出
+- Calculates quartiles by default
+  - Quartile median is exclusive
+  - Outliers for quartiles are defined as values below `(Qt1st - IQR*1.5)` or above `(Qt3rd + IQR*1.5)`
+  - Standard deviation is calculated using `n-1` (sample standard deviation)
+- Options to calculate quartiles and standard deviation including outliers
 
 ```powershell
 cat iris.csv | summary 1 -d ","
@@ -4678,7 +4665,7 @@ Count-Total : 150
 
 Examples:
 
-一列分しか演算してくれない。
+Performs calculations on a single column only.
 
 ```powershell
 cat iris.csv | summary 1 -d ","
@@ -4700,7 +4687,8 @@ Count-NaN   : 0
 Count-Total : 150
 ```
 
-以下のように工夫すると任意の**複数列**の基礎統計量が計算できる。
+Basic statistics for multiple columns can be calculated by using the following techniques.
+
 
 ```powershell
 1..4 | %{ cat iris.csv | summary $_ -d "," } | ft
@@ -4716,17 +4704,15 @@ petal_width    150 1.20 0.10  0.30  1.30  1.80 2.50 1.50 0.75
 ```
 
 
-#### [movw] - Moving window approach <a id="movw"></a>
+#### [movw] - Moving window approach.<a id="movw"></a>
 
 [movw]: src/movw_function.ps1
 
-ムービング・ウィンドウ・アプローチ（異常検知の考え方・傾向分析（TREND ANALYSIS）の一種）のPowerShell実装。
+PowerShell implementation of the moving window approach (a type of anomaly detection and trend analysis).
 
-Implementation of moving window approach.
+> In a typical sampling plan, a fixed number of samples (n) are taken from the same lot and inspected. If the number of samples exceeding the threshold (m) is within (c), the lot is considered acceptable (two-class attribute sampling). However, the moving window approach involves taking a relatively large number of samples (n) at a fixed frequency over a certain period. As each new result is added, the oldest result is removed from the n-sample window. If the number of samples exceeding the threshold (m) within the window is within (c), the process or food safety management system is deemed to be adequately controlled. When the inspection results are presented in a table by sample date, the n-sample window appears to move with each new result, hence the name "moving window."
 
-> 通常のサンプリング計画では同一ロットから決められたサンプル数(n)を採取して検査し，その中で基準値(m)を超えるものが(c)個以内であれば合格と判定するが（2階級法），Moving windowでは，比較的大きな数のサンプル数n個を一定の期間，決められた頻度で採取して検査し，最新の結果が加わるたびに最古の検査結果をn個の枠から削除し，そのn個のなかで，基準値(m)を超えるものが(c)個以内であればその工程または食品安全管理システムは適切に管理されていると判断する手法であり，サンプル日ごとの検査結果を表に表した場合，n個の枠が検査結果が加わるたびに日々，枠（窓）を移動するように見えるので，ムービング・ウインドウと呼ばれている．
-
-from [グローバル化と食品微生物規格の考え方 - J-Stage](https://www.jstage.jst.go.jp/article/jsfm/32/2/32_124/_pdf)
+reference: [グローバル化と食品微生物規格の考え方 - J-Stage](https://www.jstage.jst.go.jp/article/jsfm/32/2/32_124/_pdf)
 
 
 - references:
@@ -4798,11 +4784,11 @@ s_l AcceptableLevel MaxLimit MaxFrequency WindowSize Res
 4.8 4.7             5.5      3            5          1
 ```
 
-#### [ysort] - Sort horizontally ignoring key fields <a id="ysort"></a>
+#### [ysort] - Sort horizontally ignoring key fields.<a id="ysort"></a>
 
 [ysort]: src/ysort_function.ps1
 
-水平方向の値ソート。任意のキーフィールドを無視して並び替えることもできる。
+Sort values horizontally. Allows sorting while ignoring specified key fields.
 
 ```powerhshell
 "key1 key2 2 4 7 1 3" | ysort -n 2
@@ -4812,8 +4798,7 @@ s_l AcceptableLevel MaxLimit MaxFrequency WindowSize Res
 key1 key2 1 2 3 4 7
 ```
 
-左列のキーを無視できる以外は、おおよそ以下のスクリプトと等価。
-Roughly equivalent to the script below:
+Apart from the ability to ignore left-side keys, it is roughly equivalent to the script below:
 
 ```powershell
 "3 1 2 11" | %{ ($_ -split " " | sort) -join " " }
@@ -5049,12 +5034,11 @@ abc1 Abc2 abc3 Abc4
 Abc2 Abc4 abc1 abc3
 ```
 
-#### [ycalc] - Calculates the numeric properties horizontally ignoring key fields <a id="ycalc"></a>
+#### [ycalc] - Calculates the numeric properties horizontally ignoring key fields.<a id="ycalc"></a>
 
 [ycalc]: src/ycalc_function.ps1
 
-水平方向の集計。任意のキーフィールドを無視しての集計も可能。
-デフォルトでヘッダありスペース区切りデータを期待する。
+Horizontal aggregation. Allows aggregation while ignoring specified key fields. Expects headered space-delimited data by default.
 
 ```powerhshell
 # non-key data
@@ -5128,9 +5112,9 @@ k1 k2 12 24 37 11 23 107 21.4 37 11
 
 ### Statistical analysis toolset for categorical time series dataset
 
-A toolset for categorical analysis and anomaly detection for time series data.
+This toolset provides categorical analysis and anomaly detection for time series data.
 
-The core concept of this section, the idea of performing data analysis on the console, was heavily inspired by the following sites:
+The core concept, performing data analysis directly in the console, was inspired by the following resources:
 
 - thanks to
     - Nicholas Dille, [Data Analysis using #PowerShell](https://dille.name/blog/2017/03/21/data-analysis-using-powershell/), Published on 21 Mar 2017
@@ -5138,23 +5122,23 @@ The core concept of this section, the idea of performing data analysis on the co
         - License: [Apache License 2.0](http://www.apache.org/licenses/)
         - See CREDIT section
 
-As a basis for the anomaly detection mechanism, I adopted the X-control chart method, in which process variation is determined from the average of the difference between successive observations.
+The anomaly detection uses the X-control chart method, which determines process variation from the average of successive observation differences.
 
-- [JISZ9020-2:2016 管理図 - 第2部：シューハート管理図](https://kikakurui.com/z9/Z9020-2-2016-01.html) - Part 2: Shewhart control charts
+- [JISZ9020-2:2016 Control charts - Part 2: Shewhart control charts](https://kikakurui.com/z9/Z9020-2-2016-01.html)
 
-The functions of the anomaly detection mechanism used in this section to be considered in its use are completely similar to those of an X-control chart.
+The anomaly detection functions here are equivalent to those of an X-control chart.
 
-Most of the functions presented in this section are also compartible with other type of data exploration.
+Most functions are also compatible with other data exploration types.
 
 ![Detect anomaly with X-Rs control chart](img/Detect-XrsAnomaly_01.png)
 
-> X管理図については，次によって幾つかの注意を払うことが望ましい。
+> Several precautions are advisable when using X-control charts:
 >
-> - a) X管理図は，群に基づく管理図ほど，工程変化に敏感ではない
-> - b) 工程分布が正規分布でない場合は，X管理図の解釈に注意しなければならない
-> - c) X管理図は，連続する観測値の間の差の平均値から工程変動を求める。したがって，データは時系列に沿ったものであり，また連続する二つの個々の測定値の収集の間に，いかなる大きな変化も工程内では発生していないことが条件となる。例えば，生産ラインを途中で停止した場合，二つの不連続のバッチ化学製品の生産活動からデータを収集し，最初の活動の最終バッチと次の活動の最初のバッチとの間の移動範囲を計算することは賢明なことではない
+> - a) X-control charts are less sensitive to process changes than control charts based on subgroups.
+> - b) If the process distribution is not normal, careful interpretation of X-control charts is necessary.
+> - c) X-control charts determine process variation from the average of the differences between successive observations. Therefore, the data must be time-sequenced, and there must be no significant changes within the process between the collection of two consecutive individual measurements. For example, it is not advisable to collect data from two discontinuous batches of chemical production activities after stopping the production line midway and calculate the moving range between the final batch of the first activity and the first batch of the next activity.
 
-<cite>from: [JISZ9020-2:2016 管理図－第2部：シューハート管理図](https://kikakurui.com/z9/Z9020-2-2016-01.html)　Control charts-Part 2: Shewhart control charts</cite>
+<cite>from: [JISZ9020-2:2016 Control charts - Part 2: Shewhart control charts](https://kikakurui.com/z9/Z9020-2-2016-01.html)</cite>
 
 Example script to calculate basic statistics by category:
 
@@ -5256,12 +5240,13 @@ Procedure:
     - `Plot-BarChart`
 
 
-#### [Shorten-PropertyName] - Shorten long property names <a id="Shorten-PropertyName"></a>
+#### [Shorten-PropertyName] - Shorten long property names.<a id="Shorten-PropertyName"></a>
 
 [Shorten-PropertyName]: src/Shorten-PropertyName_function.ps1
 
-Shorten the property names to one letter after each hyphens/underscores/dots.
-The aim is to reduce the number of characters input for long property name when data exploration.
+Shorten-PropertyName function.
+
+Shortens property names to their first letter after hyphens, underscores, or dots. Aims to reduce input for long property names during data exploration.
 
 - Usage
     - `man2 Shorten-PropertyName`
@@ -5334,7 +5319,7 @@ Default delimiter is `_`.
 
 
 
-#### [Select-Field], [Delete-Field] - Select/Delete properties by number of columns <a id="Select-Field"></a> <a id="Delete-Field"></a>
+#### [Select-Field], [Delete-Field] - Select/Delete properties by number of columns.<a id="Select-Field"></a>.<a id="Delete-Field"></a>
 
 [Delete-Field]: src/Select-Field_function.ps1
 [Select-Field]: src/Delete-Field_function.ps1
@@ -5407,7 +5392,7 @@ count b_l_m b_d_m f_l_m b_m_g year
 
 
 
-#### [Drop-NA], [Replace-NA] - Drop/Replace NA, NaN, Null Value of specified property <a id="Drop-NA"></a> <a id="Replace-NA"></a>
+#### [Drop-NA], [Replace-NA] - Drop/Replace NA, NaN, Null Value of specified property.<a id="Drop-NA"></a>.<a id="Replace-NA"></a>
 
 [Drop-NA]: src/Drop-NA_function.ps1
 [Replace-NA]: src/Replace-NA_function.ps1
@@ -5440,7 +5425,7 @@ count species island    bill_length_mm bill_depth_mm sex year
 ```
 
 
-#### [Apply-Function] (Alias: apply) - Apply function for each category <a id="Apply-Function"></a>
+#### [Apply-Function] (Alias: apply) - Apply function for each category.<a id="Apply-Function"></a>
 
 [Apply-Function]: src/Apply-Function_function.ps1
 
@@ -5499,7 +5484,7 @@ count species   island    b_l_m b_d_m f_l_m b_m_g sex    year key
 153   Gentoo    Biscoe    46.1  13.2  211   4500  female 2007 Gentoo, Biscoe
 ```
 
-#### [GroupBy-Object] (Alias: groupBy) - Apply function to each group <a id="GroupBy-Object"></a>
+#### [GroupBy-Object] (Alias: groupBy) - Apply function to each group.<a id="GroupBy-Object"></a>
 
 [GroupBy-Object]: src/GroupBy-Object_function.ps1
 
@@ -5555,13 +5540,11 @@ Gentoo, Biscoe      123   47.50 5843.10 bill_length_mm
 ```
 
 
-#### [Add-Stats] - Add statistics columns to each record <a id="Add-Stats"></a>
+#### [Add-Stats] - Add statistics columns to each record.<a id="Add-Stats"></a>
 
 [Add-Stats]: src/Add-Stats_function.ps1
 
-For categorical data analysis of time series data.
-Automatically exclude `NA`, `NaN`, `Null` from the specified column.
-Multiple columns can be specified at once.
+For categorical time series data analysis. Automatically excludes `NA`, `NaN`, and `Null` from specified columns. Supports multiple columns.
 
 - Usage
     - `man2 Add-Stats`
@@ -5657,7 +5640,7 @@ sl  sw  pl  pw  species    Mean_Of_sl Sum_Of_sl DevFromMean xrs
 7.7 3.0 6.1 2.3 virginica        5.84    876.50        1.86   1
 ```
 
-#### [Measure-Stats] (Alias: mstats) - Apply first record's key to each output <a id="Measure-Stats"></a>
+#### [Measure-Stats] (Alias: mstats) - Apply first record's key to each output.<a id="Measure-Stats"></a>
 
 [Measure-Stats]: src/Measure-Stats_function.ps1
 
@@ -5709,13 +5692,12 @@ versicolor    5.94 296.80 sepal_length
 virginica     6.59 329.40 sepal_length
 ```
 
-#### [Add-Quartile] (Alias: aquart) - Add quartile columns to each record <a id="Add-Quartile"></a>
+#### [Add-Quartile] (Alias: aquart) - Add quartile columns to each record.<a id="Add-Quartile"></a>
 
 [Add-Quartile]: src/Add-Quartile_function.ps1
 
 For categorical data analysis of time series data.
-Automatically exclude NA, NaN, Null from the specified column.
-Multiple columns can be specified at once.
+Automatically exclude NA, NaN, Null from the specified column. Multiple columns can be specified at once.
 
 - Usage
     - `man2 Add-Quartile`
@@ -5844,7 +5826,7 @@ s_w LoIQR HiIQR Outlier
 4.4  1.90  4.30       1
 ```
 
-#### [Measure-Quartile] (Alias: mquart) - Calc quartile <a id="Measure-Quartile"></a>
+#### [Measure-Quartile] (Alias: mquart) - Calc quartile.<a id="Measure-Quartile"></a>
 
 [Measure-Quartile]: src/Measure-Quartile_function.ps1
 
@@ -5934,7 +5916,7 @@ Max      : 6.9
 Outlier  : 0
 ```
 
-#### [Measure-Summary] (Alias: msummary) - Generate summary statistics for dataset <a id="Measure-Summary"></a>
+#### [Measure-Summary] (Alias: msummary) - Generate summary statistics for dataset.<a id="Measure-Summary"></a>
 
 [Measure-Summary]: src/Measure-Summary_function.ps1
 
@@ -6112,7 +6094,7 @@ Max        4.40   6.90
 Outlier    1.00   0.00
 ```
 
-#### [Transpose-Property] - Transpose Property name and value <a id="Transpose-Property"></a>
+#### [Transpose-Property] - Transpose Property name and value.<a id="Transpose-Property"></a>
 
 [Transpose-Property]: src/Transpose-Property_function.ps1
 
@@ -6196,7 +6178,7 @@ Max         7.00      730000.00  25.00  8500.00 2014.00
 Outlier    93.00         126.00  52.00   106.00   32.00
 ```
 
-#### [Detect-XrsAnomaly] - Detect anomaly values with X-Rs control <a id="Detect-XrsAnomaly"></a>
+#### [Detect-XrsAnomaly] - Detect anomaly values with X-Rs control.<a id="Detect-XrsAnomaly"></a>
 
 [Detect-XrsAnomaly]: src/Detect-XrsAnomaly_function.ps1
 
@@ -6319,7 +6301,7 @@ count key            b_l_m sex  year xrs
 186   Gentoo, Biscoe 59.6  male 2007   3
 ```
 
-#### [Plot-BarChart] - Plot Barchart on the console <a id="Plot-BarChart"></a>
+#### [Plot-BarChart] - Plot Barchart on the console.<a id="Plot-BarChart"></a>
 
 [Plot-BarChart]: src/Plot-BarChart_function.ps1
 
@@ -6422,7 +6404,7 @@ Import-Csv -Path penguins.csv `
     189 Gentoo    0           42.6 ||||||||||||||
 ```
 
-#### [Get-Histogram] - Get histogram data <a id="Get-Histogram"></a>
+#### [Get-Histogram] - Get histogram data.<a id="Get-Histogram"></a>
 
 [Get-Histogram]: src/Get-Histogram_function.ps1
 
@@ -6535,7 +6517,7 @@ virginica      5        6.80        7.50    10 |||||
 virginica      6        7.50        8.20     0
 ```
 
-#### [Unique-Object] - Get unique category <a id="Unique-Object"></a>
+#### [Unique-Object] - Get unique category.<a id="Unique-Object"></a>
 
 [Unique-Object]: src/Unique-Object_function.ps1
 
@@ -6625,7 +6607,7 @@ f       1
 a       1 <--- Undesired result
 ```
 
-#### [Replace-ForEach] - Replace specified property string <a id="Replace-ForEach"></a>
+#### [Replace-ForEach] - Replace specified property string.<a id="Replace-ForEach"></a>
 
 [Replace-ForEach]: src/Replace-ForEach_function.ps1
 
@@ -6679,7 +6661,7 @@ Import-Csv -Path planets.csv `
     | Format-Table
 ```
 
-#### [Join2-Object] (Alias: join2o) - INNER/OUTER Join records <a id="Join2-Object"></a>
+#### [Join2-Object] (Alias: join2o) - INNER/OUTER Join records.<a id="Join2-Object"></a>
 
 [Join2-Object]: src/Join2-Object_function.ps1
 
@@ -7080,21 +7062,18 @@ key_3 c.txt      0
 
 ### Plot chart and graph
 
-#### [dot2gviz] - Wrapper for Graphviz:dot command <a id="dot2gviz"></a>
+#### [dot2gviz] - Wrapper for Graphviz:dot command.<a id="dot2gviz"></a>
 
 [dot2gviz]: src/dot2gviz_function.ps1
 [Graphviz]: https://graphviz.org/
 
-[Graphviz]の`dot`ファイルを実行し、グラフ（棒グラフのグラフではなく、箱と矢印・ノードとエッジのほうのグラフ）を描画する。
-`dot -Tpng -o a.png a.dot`と等価。日本語WindowsでUTF-8な環境下での使用を想定。
+[Graphviz] executes a `dot` file to render a graph (not a bar chart, but a diagram with boxes, arrows, nodes, and edges). Equivalent to: `dot -Tpng -o a.png a.dot`. Designed for use in UTF-8 environments on Japanese Windows systems.
 
-[Graphviz]で日本語を用いるときは次のようにフォントを指定せねばならない。
+When using Japanese with [Graphviz], you need to specify the font as follows:
 
 - `dot -Nfontname="Meiryo" -Efontname="Meiryo" -Gfontname="Meiryo" -Tsvg -o a.svg a.dot`
 
-これでは長くて覚えられないので、ラッパースクリプトを作成した。
-最もシンプルに書くと`dot2gviz a.dot`。
-デフォルトで入力ファイル名と同ファイル名の`png`画像をカレントディレクトリに出力する。
+Since this is too long and hard to memorize, a wrapper script was created.  The simplest usage: `dot2gviz a.dot`.  By default, it outputs a `png` image with the same name as the input file in the current directory.
 
 - Usage
     - `man2 dot2gviz`
@@ -7108,36 +7087,36 @@ key_3 c.txt      0
         - `[-ErrorCheck]`
 - Examples
     - `dot2gviz a.dot`
-        - `dot -Tpng -o a.png a.dot`と等価
+        - Equivalent to `dot -Tpng -o a.png a.dot`
     - `dot2gviz a.dot -OutputFileType png`
-        - `dot -Tpng -o a.png a.dot`と等価
+        - Equivalent to `dot -Tpng -o a.png a.dot`
     - `dot2gviz a.dot -OutputFileType svg`
-        - `dot -Tsvg -o a.png a.dot`と等価
+        - Equivalent to `dot -Tsvg -o a.png a.dot`
 - Options
-    - `-LayoutEngine <layout>`でレイアウトエンジンを指定可能
+    - The layout engine can be specified using `-LayoutEngine <layout>`
         - `dot2gviz a.dot -LayoutEngine sfdp`
-            - `dot -Ksfdp -Tpng -o a.png a.dot`と等価
-    - `-FontName <fontname>`でフォントを指定可能
+            - Equivalent to `dot -Ksfdp -Tpng -o a.png a.dot`
+    - The font can be specified using `-FontName <fontname>`
         - `dot2gviz a.dot -FontName 'BIZ UDPGothic'`
-            - `dot -Nfontname="BIZ UDPGothic" -Efontname="BIZ UDPGothic" -Gfontname="BIZ UDPGothic" -Tpng -o a.png a.dot`と等価
-    - `-ErrorCheck`スイッチで、等価なdotコマンド文字列が出力される
+            - Equivalent to `dot -Nfontname="BIZ UDPGothic" -Efontname="BIZ UDPGothic" -Gfontname="BIZ UDPGothic" -Tpng -o a.png a.dot`
+    - The `-ErrorCheck` switch outputs the equivalent dot command string
         - `dot2gviz a.dot -OutputFileType svg -FontName Meiryo -ErrorCheck`
-            - 出力: `dot -Nfontname="Meiryo" -Efontname="Meiryo" -Gfontname="Meiryo" -Tsvg -o "a.svg" "a.dot"`
+            - Output: `dot -Nfontname="Meiryo" -Efontname="Meiryo" -Gfontname="Meiryo" -Tsvg -o "a.svg" "a.dot"`
 - Dependencies
     - [Graphviz](https://graphviz.org/)
     - Install Graphviz (for windows)
         - `winget install --id Graphviz.Graphviz --source winget`
         - and execute `dot -c` with administrator privileges
 
-#### [pu2java] - Wrapper for plantuml.jar command <a id="pu2java"></a>
+#### [pu2java] - Wrapper for plantuml.jar command.<a id="pu2java"></a>
 
 [pu2java]: src/pu2java_function.ps1
 
-[plantuml](https://plantuml.com/en/)形式の`.pu`ファイルを読み取り実行するラッパースクリプト。日本語WindowsでUTF-8な環境下での使用を想定。グラフ（棒グラフのグラフではなく、箱と矢印・ノードとエッジのほうのグラフ）を描画する。`java -jar plantuml.jar -charset "UTF-8" -tsvg a.pu`と等価。日本語を用いるときは`-charset "UTF-8"`を指定する。
+[plantuml](https://plantuml.com/en/) wrapper script for reading and executing `.pu` files. Designed for use in UTF-8 environments on Japanese Windows systems. It renders graphs (not bar charts, but diagrams with boxes, arrows, nodes, and edges). Equivalent to: `java -jar plantuml.jar -charset "UTF-8" -tsvg a.pu`. When using Japanese, specify `-charset "UTF-8"`.
 
-[dot2gviz]と同じくコマンド文字列が長くて覚えられないため、このラッパースクリプトを作成した。もっともシンプルに書くと`pu2java a.pu`。デフォルトで入力ファイル名と同ファイル名の`png`画像をカレントディレクトリに出力する。
+Similar to [dot2gviz], this wrapper script was created to simplify long and hard-to-remember command strings. The simplest usage: `pu2java a.pu`. By default, it outputs a `png` image with the same name as the input file to the current directory.
 
-`plantuml.jar`ファイルの場所はデフォルトで`${HOME}/bin/plantuml/plantuml.jar`を期待する。`-Jar <path/to/the/jar>`で任意の場所の`jar`ファイルを指定することもできる。
+The `plantuml.jar` file is expected by default at `${HOME}/bin/plantuml/plantuml.jar`. You can specify a custom location for the `jar` file using `-Jar <path/to/the/jar>`.
 
 - Usage
     - `man2 pu2java`
@@ -7156,15 +7135,15 @@ key_3 c.txt      0
         - `[-ErrorCheck]`
 - Examples
     - `pu2java a.pu`
-        - `java -jar plantuml.jar -charset "UTF-8" -tpng a.pu`と等価
+        - Equivalent to `java -jar plantuml.jar -charset "UTF-8" -tpng a.pu`
     - `pu2java a.pu -OutputFileType png`
-        - `java -jar plantuml.jar -charset "UTF-8" -tpng a.pu`と等価
+        - Equivalent to `java -jar plantuml.jar -charset "UTF-8" -tpng a.pu`
     - `pu2java a.pu -OutputFileType svg`
-        - `java -jar plantuml.jar -charset "UTF-8" -tsvg a.pu`と等価
+        - Equivalent to `java -jar plantuml.jar -charset "UTF-8" -tsvg a.pu`
 - Options
-    - `-ErrorCheck`スイッチで、等価なplantumlコマンド文字列が出力される
+    - The `-ErrorCheck` switch outputs the equivalent PlantUML command string
         - `pu2java a.pu svg -ErrorCheck`
-            - 出力: `java -jar plantuml.jar" -charset "UTF-8" -tsvg a.pu`
+            - Output: `java -jar plantuml.jar -charset "UTF-8" -tsvg a.pu`
 - Dependencies
     - plantuml
         - <https://plantuml.com/en/>
@@ -7176,25 +7155,22 @@ key_3 c.txt      0
         - <https://www.java.com/en/download/>
 
 
-#### [gantt2pu] - Visualizatoin tool of DANDORI-chart (setup-chart) for PlantUML. <a id="gantt2pu"></a>
+#### [gantt2pu] - Visualizatoin tool of DANDORI-chart (setup-chart) for PlantUML..<a id="gantt2pu"></a>
 
 [gantt2pu]: src/gantt2pu_function.ps1
 
-段取表の作成支援ツール。
-期日からタスクとタスク時間を逆算して着手日を求めるガントチャートを描画する
-（PlantUMLスクリプトを生成する）。
+Generates Gantt charts, calculating start dates backward from deadlines based on task durations (creates PlantUML scripts).
 
-タスクを積み上げて期限を決めずに期日からの逆算で着手日を求める理由は、タスクの抜け漏れを防ぐためと、着手日を「**できるだけ遅らせる**」ため。そうしないならば、タスクは「**できるだけ早く着手**」されることになりがち。
+This approach, calculating start dates from deadlines, prevents task omissions and "delays start dates as much as possible," avoiding the common issue of tasks "starting as early as possible."
 
-Calculate the task time backward from the GOAL (deadline) and
-draw a gantt-chart to find the start date.
+Calculates task times backward from the GOAL (deadline) to generate a Gantt chart and determine start dates.
 
-Reasons for working backwards from the goal to tasks and task times instead of piling up tasks to reach the goal:
+Reasons for calculating backward from the goal:
 
-1. To eliminate omissions of tasks.
-2. To delay as much as possible the start date.<br />Otherwise, all tasks are "start as soon as possible".
+1. Prevents task omissions.
+2. Delays start dates as much as possible, avoiding "start as soon as possible" behavior.
 
-Japanese "DANDORI" means "make arrangement", "take steps", "plan".
+Japanese "DANDORI" means "arrangement," "preparation," or "planning."
 
 - Usage
     - `man2 gantt2pu`
@@ -7235,32 +7211,35 @@ Japanese "DANDORI" means "make arrangement", "take steps", "plan".
     - `cat a.txt | gantt2pu > a.pu`
     - `pu2java`との連携
         - `cat a.txt | gantt2pu > a.pu ; pu2java a.pu | ii`
+- Examples
+  - `cat a.txt | gantt2pu > a.pu`
+  - Combination with `pu2java`
+    - `cat a.txt | gantt2pu > a.pu ; pu2java a.pu | ii`
 - Formats:
-    - `m`, `##` is a milestone. Specify with date as below.
-        - `m MileStoneName [yyyy-m-d]` or
-        - `## MileStoneName [yyyy-m-d]`
-    - `>` indicates task to be done after the milestone. Specify with task time as below.
-        - `> task name [1]`
-    - `<` indicates task to be done before the milestone. Specify with task time as below.
-        - `< task name [1]`
-    - `>>` is task to do after the previous task or milestone. Specify with task time as below.
-        - `>> task name [1]`
-    - `<<` is task to do before the previous task or milestone. Specify with task time as below.
-        - `<< task name [1]`
-    - `mm`, `###` puts the milestone on the start date or finish date of the previous task.
-        - Unlike `m` and `##`, no date specification is required.
-        - `mm` is cleard every milestone, but it is not cleared with
-          `-InheritTasks` switch, and all loaded tasks are memorized.
-        - However, in the `<` direction, regardless of whether `-InheritTasks` switch is
-          ON or OFF, the milestone is always placed at the "start position of the previous task".
+  - `m`, `##` is a milestone. Specify with date as below.
+    - `m MileStoneName [yyyy-m-d]` or
+    - `## MileStoneName [yyyy-m-d]`
+  - `>` indicates a task to be done after the milestone. Specify with task time as below.
+    - `> task name [1]`
+  - `<` indicates a task to be done before the milestone. Specify with task time as below.
+    - `< task name [1]`
+  - `>>` is a task to do after the previous task or milestone. Specify with task time as below.
+    - `>> task name [1]`
+  - `<<` is a task to do before the previous task or milestone. Specify with task time as below.
+    - `<< task name [1]`
+  - `mm`, `###` places the milestone on the start or finish date of the previous task.
+    - Unlike `m` and `##`, no date specification is required.
+    - `mm` is cleared every milestone, but it is not cleared with the
+      `-InheritTasks` switch, and all loaded tasks are memorized.
+    - However, in the `<` direction, regardless of whether the `-InheritTasks` switch is
+      ON or OFF, the milestone is always placed at the "start position of the previous task".
 - Options
-    - `-CloseSatSun` ... 土日をクローズ
-    - `-Today` ... 今日の日付をカラーリング
-    - `-StartDate yyyy-m-d` ... プロジェクト開始日を指定
-    - `-EndDate yyyy-m-d` ... プロジェクト終了日を指定
+  - `-CloseSatSun` ... Closes Saturdays and Sundays
+  - `-Today` ... Colors today's date
+  - `-StartDate` `yyyy-m-d` ... Specifies the project start date
+  - `-EndDate` `yyyy-m-d` ... Specifies the project end date
 - Relation
-    - [pu2java] from pwsh-sketches (this repository)
-
+  - `pu2java` from pwsh-sketches (this repository)
 Input:
 
 ```powershell
@@ -7335,20 +7314,19 @@ title "title"
 
 ![](img/gantt2pu_1.png)
 
-#### [mind2dot] - Generate graphviz script to draw a mind map from list data in markdown format <a id="mind2dot"></a>
+#### [mind2dot] - Generate graphviz script to draw a mind map from list data in markdown format.<a id="mind2dot"></a>
 
 [mind2dot]: src/mind2dot_function.ps1
 
-markdown形式のリストデータからマインドマップを描画する`graphviz`スクリプトを生成する。
-入力データは「半角スペース4つ」に「ハイフン」で階層構造を期待する
-（`-Space 2`とすると、ハイフンの前の半角スペースは2つとして認識する）。
+Generates a `graphviz` script to draw a mind map from markdown list data.
+Input data is expected to have a hierarchical structure with "four spaces" and "hyphens" (e.g., `-Space 2` interprets two spaces before the hyphen).
 
-- 文末にアンダースコア`_`を入れると、枠なし文字列になる
-- 一行目にmarkdownの第一見出し形式でタイトルを入力する（`# title`）とキャプションとして認識する。
+- An underscore `_` at the end of a line creates a frameless text.
+- A title in markdown's first-level heading format (`# title`) on the first line is recognized as a caption.
 
-箇条書きをマインドマップに変換すると、とくにグループ分けが視覚的に理解しやすくなる（気がする）。
-上の[dot2gviz]と組み合わせて使うと、形式変換から作図までワンライナーで処理できるので便利。
-たとえば、`cat a.md | mind2dot > a.dot; dot2gviz a.dot | ii`とする。
+Converting bullet points to a mind map can make group divisions particularly easy to understand visually.
+Combining it with the `dot2gviz` command above allows for one-liner processing from format conversion to drawing.
+For example: `cat a.md | mind2dot > a.dot; dot2gviz a.dot | ii`.
 
 - Usage
     - `man2 mind2dot`
@@ -7385,17 +7363,17 @@ markdown形式のリストデータからマインドマップを描画する`gr
     - `cat a.md | mind2dot -o a.dot`
     - `cat a.md | mind2dot > a.dot`
     - `cat a.md | mind2dot | Out-File a.dot -Encoding utf8`
-    - [dot2gviz]との連携
+    - Combination with [dot2gviz]
         - `cat a.md | mind2dot > a.dot; dot2gviz a.dot | ii`
 - Options
-    - `-LayoutEngine (circo|dot|fdp|neato|osage|sfdp|twopi|patchwork)`でレイアウトエンジンを指定可能
-    - `-FontName <fontname>`でフォントを指定可能
-    - `-SolarizedDark`, `-SolarizedLight`スイッチでカラースキーマ「[Solarized](https://github.com/altercation/solarized)」をセット
-    - `-NodeShape <String>`でノードの形状を変更可能
-        - `-FirstNodeShape <String>`でルート（一番最初）のノードの形状のみ変更
-    - `-Kinsoku <int>`で日本語文書に禁則処理を適用して任意の文字幅で折り返し
-        - 全角文字幅は2、半角文字幅は1として折り返し文字幅を指定する
-    - `-TopToBottom`スイッチで、レイアウトを左→右ではなく上→下に変更する
+  - `-LayoutEngine (circo|dot|fdp|neato|osage|sfdp|twopi|patchwork)`: Specifies the layout engine.
+  - `-FontName <fontname>`: Specifies the font.
+  - `-SolarizedDark`, `-SolarizedLight`: Sets the "[Solarized](https://github.com/altercation/solarized)" color scheme.
+  - `-NodeShape <String>`: Changes the node shape.
+    - `-FirstNodeShape <String>`: Changes only the root (first) node's shape.
+  - `-Kinsoku <int>`: Applies Japanese kinsoku processing for line wrapping at the specified character width.
+    - Specifies the wrapping character width, where full-width characters are 2 and half-width characters are 1.
+  - `-TopToBottom`: Changes the layout from left-to-right to top-to-bottom.
 - Dependencies
     - [kinsoku] from pwsh-sketches (this repository) if `-Kinsoku <int>` option used
 - Relation
@@ -7554,7 +7532,7 @@ cat a.md | mind2dot -FirstNodeFillColor orange > a.dot; dot2gviz a.dot | ii
 
 ![](img/mind2dot_FirstNodeShapeFillColor.png)
 
-`-Kinsoku <int>`オプションで、日本語の文章を禁則処理にしたがい任意幅で折り返し。全角文字列は幅2、半角文字列は幅1として折り返したい幅を指定する。
+The `-Kinsoku <int>` option wraps Japanese text at the specified width, applying kinsoku processing. Full-width characters are counted as 2, and half-width characters as 1.
 
 ```powershell
 # input
@@ -7582,20 +7560,20 @@ cat a.md | mind2dot -Kinsoku 14 > a.dot; dot2gviz a.dot -o png | ii
 
 
 
-#### [mind2pu] - Generate plantuml script to draw a mind map from list data in markdown format <a id="mind2pu"></a>
+#### [mind2pu] - Generate plantuml script to draw a mind map from list data in markdown format.<a id="mind2pu"></a>
 
 [mind2pu]: src/mind2pu_function.ps1
 
-markdown形式のリストデータからマインドマップを描画する`plantuml`スクリプトを生成する。
-入力データは「半角スペース4つ」に「ハイフン」で階層構造を期待する
-（`-Space 2`とすると、ハイフンの前の半角スペースは2つとして認識する）。
+Generates a `plantuml` script to draw a mindmap from markdown list data.
+Input data is expected to have a hierarchical structure with "four spaces" and "hyphens" (e.g., `-Space 2` interprets two spaces before the hyphen).
 
-- 文末にアンダースコア`_`を入れると、枠なし文字列になる
-- 一行目にmarkdownの第一見出し形式でタイトルを入力する（`# title`）と、図全体のキャプションとして認識する。
+- An underscore `_` at the end of a line creates a frameless text.
+- A title in markdown's first-level heading format (`# title`) on the first line is recognized as a caption for the entire diagram.
 
-箇条書きをマインドマップに変換すると、とくにグループ分けが視覚的に理解しやすくなる（気がする）。
-上の[pu2java]と組み合わせて使うと、形式変換から作図までワンライナーで処理できるので便利。
-たとえば、`cat a.md | mind2pu > a.pu; pu2java a.pu | ii`とする。
+Converting bullet points to a mind map can make group divisions particularly easy to understand visually.
+Combining it with the `pu2java` command above allows for one-liner processing from format conversion to drawing.
+For example: `cat a.md | mind2pu > a.pu; pu2java a.pu | ii`.
+
 
 - Usage
     - `man2 mind2pu`
@@ -7622,13 +7600,13 @@ markdown形式のリストデータからマインドマップを描画する`pl
     - `cat a.md | mind2pu -o a.pu`
     - `cat a.md | mind2pu > a.pu`
     - `cat a.md | mind2pu | Out-File a.pu -Encoding utf8`
-    - [pu2java]との連携
+    - Combination with [pu2java]
         - `cat a.md | mind2pu > a.pu ; pu2java a.pu | ii`
 - Params
-    - `-Theme <theme>`でカラースキーマを指定可能
-    - `-FontName <fontname>`でフォントを指定可能
-    - `-Kinsoku <int>`で日本語文書に禁則処理を適用して任意の文字幅で折り返し
-        - 全角文字幅は2、半角文字幅は1として折り返し文字幅を指定する
+    - `-Theme <theme>` allows specifying a color scheme.
+    - `-FontName <fontname>` allows specifying a font.
+    - `-Kinsoku <int>` applies kinsoku (line-breaking rules) to Japanese text and wraps lines at a specified character width.
+        - The character width is specified with full-width characters as 2 and half-width characters as 1.
 - Dependencies
     - [kinsoku] from pwsh-sketches (this repository) if `-Kinsoku <int>` option used
 - Relation
@@ -7713,8 +7691,7 @@ cat a.md | mind2pu -Theme blueprint > a.pu; pu2java a.pu | ii
 
 ![](img/mind2pu_Theme_blueprint.png)
 
-
-`-Kinsoku <int>`オプションで、日本語の文章を禁則処理にしたがい任意幅で折り返し。全角文字列は幅2、半角文字列は幅1として折り返したい幅を指定する。
+The `-Kinsoku <int>` option wraps Japanese text according to kinsoku (line-breaking rules) at a specified width. Full-width characters are treated as width 2, and half-width characters are treated as width 1, allowing you to specify the desired wrapping width.
 
 ```powershell
 # input
@@ -7742,7 +7719,7 @@ pu2java a.pu | ii
 
 ![](img/mind2pu_Kinsoku.png)
 
-`-WBS`スイッチでWork Breakdown Structure形式の図を出力。`@startuml`, `@enduml`の代わりに`@startwbs`, `@endwbs`を先頭と末尾に追加
+The `-WBS` switch outputs a diagram in Work Breakdown Structure format. Replace `@startuml` and `@enduml` with `@startwbs` and `@endwbs` at the beginning and end, respectively.
 
 ```powershell
 # apply WBS (Work Breakdown Structure)
@@ -7816,15 +7793,13 @@ skinparam DefaultFontName "Meiryo"
 ![](img/mind2pu_WBS.png)
 
 
-#### [logi2dot] - Generate data for graphviz with simple format <a id="logi2dot"></a>
+#### [logi2dot] - Generate data for graphviz with simple format.<a id="logi2dot"></a>
 
 [logi2dot]: src/logi2dot_function.ps1
 
-シンプルな記法で表現された論理ツリーデータを[Graphviz](https://graphviz.org/)形式（dot言語）に変換する。
+Convert logical tree data written in simple notation to [Graphviz](https://graphviz.org/) format (DOT language).
 
-Convert the following input data to graphviz format.
-The rightmost column is preceded tasks.
-If there are multiple, separate them with comma.
+Convert the input data below into Graphviz format. The rightmost column lists preceding tasks, separated by commas if there are multiple.
 
 ```
 # Input: id, task, [prectask1, prectask2,...]
@@ -7856,17 +7831,17 @@ C task-C [A,B]
         - `[-AddEdgeLabel]`
 - Examples
     - `cat input.txt | logi2dot`
-    - `dot2gviz`との連携
+    - Combination with `dot2gviz`
         - `cat input.txt | logi2dot > a.dot; dot2gviz a.dot svg | ii`
 - Options
-    - `-LayoutEngine (circo|dot|fdp|neato|osage|sfdp|twopi|patchwork)`でレイアウトエンジンを指定可能
-    - `-FontName <fontname>`でフォントを指定可能
-    - `-NodeShape <String>`でノードの形状を変更可能
-        - `-FirstNodeShape <String>`でルート（一番最初）のノードの形状のみ変更
-    - `-Kinsoku <int>`で日本語文書に禁則処理を適用して任意の文字幅で折り返し
-        - 全角文字幅は2、半角文字幅は1として折り返し文字幅を指定する
-    - `-TopToBottom`スイッチで、レイアウトを左→右ではなく上→下に変更する
-    - `-Grep pattern`で`regex-pattern`にマッチするラベルのノードの背景色や形を変える
+    - `-LayoutEngine (circo|dot|fdp|neato|osage|sfdp|twopi|patchwork)` allows specifying the layout engine.
+    - `-FontName <fontname>` allows specifying the font.
+    - `-NodeShape <String>` allows changing the shape of nodes.
+        - `-FirstNodeShape <String>` changes the shape of only the root (first) node.
+    - `-Kinsoku <int>` applies kinsoku (line-breaking rules) to Japanese text and wraps lines at a specified character width.
+        - Full-width characters are treated as width 2, and half-width characters as width 1, to specify the wrapping width.
+    - The `-TopToBottom` switch changes the layout from left-to-right to top-to-bottom.
+    - `-Grep pattern` changes the background color or shape of nodes with labels that match the `regex-pattern`.
 - Dependencies
     - [kinsoku] from pwsh-sketches (this repository) if `-Kinsoku <int>` option used
 - Relation
@@ -8131,11 +8106,11 @@ strict digraph logictree {
 
 
 
-#### [logi2pu] - Generate data for PlantUML (usecase diagram) with simple format <a id="logi2pu"></a>
+#### [logi2pu] - Generate data for PlantUML (usecase diagram) with simple format.<a id="logi2pu"></a>
 
 [logi2pu]: src/logi2pu_function.ps1
 
-シンプルな記法で表現された論理ツリーデータを[PlantUML](https://plantuml.com/en/)形式に変換する。
+Converts logical tree data expressed in a simple notation to PlantUML format.
 
 Convert the following input data to plantuml format.
 The rightmost column is preceded tasks.
@@ -8172,16 +8147,16 @@ C task-C [A,B]
         - `[[-KinsokuDelim] <String>]`
 - Examples
     - `cat input.txt | logi2pu`
-    - [pu2java]との連携
+    - Combination with [pu2java]
         - `cat input.txt | logi2pu > a.pu; pu2java a.pu svg | ii`
 - Options
-    - `-FontName <fontname>`でフォントを指定可能
-    - `-NodeShape <String>`でノードの形状を変更可能
-        `-FirstNodeShape <String>`でルート（一番最初）のノードの形状のみ変更
-    - `-Kinsoku <int>`で日本語文書に禁則処理を適用して任意の文字幅で折り返し
-        - 全角文字幅は2、半角文字幅は1として折り返し文字幅を指定する
-    - `-TopToBottom`スイッチで、レイアウトを左→右ではなく上→下に変更する
-    - `-Grep pattern`で`regex-pattern`にマッチするラベルのノードの背景色や形を変える
+  - `-FontName <fontname>`: Specifies the font.
+  - `-NodeShape <String>`: Changes the node shape.
+    - `-FirstNodeShape <String>`: Changes only the root (first) node's shape.
+  - `-Kinsoku <int>`: Applies Japanese kinsoku processing for line wrapping at the specified character width.
+    - Specifies the wrapping character width, where full-width characters are 2 and half-width characters are 1.
+  - `-TopToBottom`: Changes the layout from left-to-right to top-to-bottom.
+  - `-Grep pattern`: Changes the background color or shape of nodes with labels matching the `regex-pattern`.
 - Dependencies
     - [kinsoku] from pwsh-sketches (this repository) if `-Kinsoku <int>` option used
 - Relation
@@ -8358,12 +8333,11 @@ ActA <-> ActB #line:red : conflict！
 ![](img/logi2pu_2.png)
 
 
-#### [seq2pu] - Generate sequence-diagram from markdown-like list format <a id="seq2pu"></a>
+#### [seq2pu] - Generate sequence-diagram from markdown-like list format.<a id="seq2pu"></a>
 
 [seq2pu]: src/seq2pu_function.ps1
 
-マークダウンのリスト形式の入力データからシンプルなシーケンス図を描画する。
-
+Draw a simple sequence diagram from input data in Markdown list format.
 Easy and quick sequence-diagram creator from lists written in markdown-like format using [PlantUML](https://plantuml.com/en/).
 
 
@@ -8387,15 +8361,15 @@ Easy and quick sequence-diagram creator from lists written in markdown-like form
     - `cat a.md | seq2pu -o a.pu`
     - `cat a.md | seq2pu > a.pu`
     - `cat a.md | seq2pu | Out-File a.pu -Encoding utf8`
-    - [pu2java]との連携
+    - Combination with [pu2java]
         - `cat a.md | seq2pu > a.pu ; pu2java a.pu | ii`
 - Options
-    - `-Theme <theme>`でカラースキーマを指定可能
-    - `-FontName <fontname>`でフォントを指定可能
-    - `-Kinsoku <int>`で日本語文書に禁則処理を適用して任意の文字幅で折り返し
-        - 全角文字幅は2、半角文字幅は1として折り返し文字幅を指定する
-    - `-KinsokuNote <int>`はnote block文字列の折り返し幅
-        - `seq2pu`では、インデントされたリストは（keyword以外で始まるもの以外は）note blockとして解釈される
+    - `-Theme <theme>` allows specifying a color scheme.
+    - `-FontName <fontname>` allows specifying a font.
+    - `-Kinsoku <int>` applies kinsoku (line-breaking rules) to Japanese text and wraps lines at a specified width.
+        - Full-width characters are treated as width 2, and half-width characters as width 1, allowing you to specify the wrapping width.
+    - `-KinsokuNote <int>` specifies the wrapping width for note block text.
+        - In `seq2pu`, indented lists (except those starting with keywords) are interpreted as note blocks.
 - Dependencies
     - [kinsoku] from pwsh-sketches (this repository) if `-Kinsoku <int>` option used
 - Relation
@@ -8405,7 +8379,7 @@ Easy and quick sequence-diagram creator from lists written in markdown-like form
 
 Examples:
 
-シンプルな入力例： （インデントされたリストのマークがハイフンの場合は左ノート、それ以外は右ノートになる。ただし特定のkeywordで始まる場合はそのままplantumlの命令文として解釈される）
+Simple input example. If the marker of an indented list is a hyphen, it is treated as a left note; otherwise, it is treated as a right note. However, if it starts with a specific keyword, it is interpreted directly as a PlantUML command:
 
 ```markdown
 # How to cook curry
@@ -8431,10 +8405,7 @@ Examples:
     - add garam masala
 ```
 
-
-
-
-シーケンス図描画コマンド例：
+Sequence Diagram Drawing Command Example:
 
 ```powershell
 # Create sequence-diagram example
@@ -8443,13 +8414,11 @@ cat a.md `
 pu2java a.pu svg | ii
 ```
 
-出力：
+Output:
 
 ![](img/seq2pu_1.png)
 
-
-
-より複雑な入力例： （plantumlコマンドを併用。リスト以外のブロックはそのまま出力されることを利用する）
+A more complex input example. Combining PlantUML commands. Non-list blocks are directly output as-is:
 
 ```markdown
 # How to cook curry
@@ -8499,7 +8468,7 @@ pu2java a.pu svg | ii
     - add garam masala
 ```
 
-シーケンス図描画コマンド例：
+Sequence Diagram Drawing Command Example:
 
 ```powershell
 # Create sequence-diagram:
@@ -8508,20 +8477,17 @@ cat a.md `
 pu2java a.pu svg | ii
 ```
 
-出力：
+Output:
 
 ![](img/seq2pu_2.png)
 
 
 
-#### [flow2pu] - Generate activity-diagram (flowchart) from markdown-like list format <a id="flow2pu"></a>
+#### [flow2pu] - Generate activity-diagram (flowchart) from markdown-like list format.<a id="flow2pu"></a>
 
 [flow2pu]: src/flow2pu_function.ps1
 
-マークダウンのリスト形式の入力データから簡単に素早くシンプルなフローチャートを描画する。
-
 Easy and quick flow chart creator from lists written in markdown format.
-
 
 - Usage
     - `man2 flow2pu`
@@ -8544,15 +8510,15 @@ Easy and quick flow chart creator from lists written in markdown format.
     - `cat a.md | flow2pu -o a.pu`
     - `cat a.md | flow2pu > a.pu`
     - `cat a.md | flow2pu | Out-File a.pu -Encoding utf8`
-    - [pu2java]との連携
+    - Combination with [pu2java]
         - `cat a.md | flow2pu > a.pu ; pu2java a.pu | ii`
 - Options
-    - `-Theme <theme>`でカラースキーマを指定可能
-    - `-FontName <fontname>`でフォントを指定可能
-    - `-Kinsoku <int>`で日本語文書に禁則処理を適用して任意の文字幅で折り返し
-        - 全角文字幅は2、半角文字幅は1として折り返し文字幅を指定する
-    - `-KinsokuNote <int>`はnote block文字列の折り返し幅
-        - `flow2pu`では、インデントされたリストはすべてnote blockとして解釈される
+    - `-Theme <theme>` allows specifying a color scheme.
+    - `-FontName <fontname>` allows specifying a font.
+    - `-Kinsoku <int>` applies kinsoku (line-breaking rules) to Japanese text and wraps lines at a specified width.
+        - Full-width characters are treated as width 2, and half-width characters as width 1, allowing you to specify the wrapping width.
+    - `-KinsokuNote <int>` specifies the wrapping width for note block text.
+        - In `flow2pu`, all indented lists are interpreted as note blocks.
 - Dependencies
     - [kinsoku] from pwsh-sketches (this repository) if `-Kinsoku <int>` option used
 - Relation
@@ -8562,7 +8528,7 @@ Easy and quick flow chart creator from lists written in markdown format.
 
 Examples:
 
-シンプルな入力例： （インデントされたリストのマークがハイフンの場合は左ノート、それ以外は右ノートになる）
+A simple input example: If the marker of an indented list is a hyphen, it is treated as a left note; otherwise, it is treated as a right note:
 
 ```markdown
 # How to cook curry
@@ -8580,7 +8546,7 @@ Examples:
     - add garam masala
 ```
 
-フローチャート描画コマンド例：
+Flowchart Drawing Command Example:
 
 ```powershell
 # Create flowchart (activity-diagram)
@@ -8589,12 +8555,12 @@ cat a.md `
 pu2java a.pu svg | ii
 ```
 
-出力画像：
+Output image:
 
 ![](img/flow2pu_1.png)
 
 
-より複雑な入力例： （Level2ヘッダで、次の空行もしくは次のLevel2ヘッダが現れるまでの区間をパーティショニング）
+A more complex input example. Partition the section starting from a Level 2 header until the next blank line or the next Level 2 header appears:
 
 ```markdown
 # How to cook curry
@@ -8634,7 +8600,7 @@ endif
 end
 ```
 
-描画コマンド例：
+Drawing Command Example:
 
 ```powershell
 # output activity-diagram
@@ -8643,7 +8609,7 @@ cat a.md `
 pu2java a.pu svg | ii
 ```
 
-出力： （リストとヘッダ行以外はそのまま出力される）
+Output. Non-list and non-header lines are output as-is:
 
 ![](img/flow2pu_2.png)
 
@@ -8651,16 +8617,13 @@ pu2java a.pu svg | ii
 
 ### Image processing
 
-#### [ConvImage] - Image rotation, flipping, scaling, convert format <a id="ConvImage"></a>
+#### [ConvImage] - Image rotation, flipping, scaling, convert format.<a id="ConvImage"></a>
 
 [ConvImage]: src/ConvImage_function.ps1
 
-画像の回転、リサイズ、拡大縮小、形式変換。Assembly:`System.Drawing`を用いる。
-画像の形式変換は入出力に指定するファイルの拡張子から自動認識する
+Rotation, resizing, scaling, and format conversion of images. Utilizes the assembly: `System.Drawing`. Image format conversion is automatically recognized based on the file extensions specified for input and output.
 
- 「リサイズ」と「回転・反転」は同時に指定できない点に注意する。
- 出力ファイルと同名ファイルがあると強制上書きされる点にも注意する。
-
+Note that "resize" and "rotation/flip" cannot be specified simultaneously. Also, be aware that files with the same name as the output file will be overwritten.
 
 - Usage
     - `man2 ConvImage`
@@ -8696,10 +8659,10 @@ ConvImage before.jpg after.png
 ```
 
 ```markdown
-説明
+Description
 ========================
-最も簡単な例。
-before.jpg を after.png に形式変換する。
+The simplest example.
+Converts `before.jpg` to `after.png` format.
 ```
 
 ```powershell
@@ -8707,12 +8670,11 @@ ConvImage before.jpg after.png -resize 500x500
 ```
 
 ```markdown
-説明
+Description
 ========================
-最も簡単な例その2。
-before.jpg を after.png に形式変換し、かつ、
-サイズが 500px×500pxに収まるように
-アスペクト比（縦横比）を保ちリサイズする
+The second simplest example.
+Converts `before.jpg` to `after.png` format and resizes it
+to fit within 500px × 500px while maintaining the aspect ratio.
 ```
 
 ```powershell
@@ -8720,12 +8682,11 @@ ConvImage -inputFile before.jpg -outputFile after.png -resize 100x100
 ```
 
 ```markdown
-説明
+Description
 ========================
-オプションを正確に記述した例。上記「簡単な例その2」と同じ結果を得る。
-before.jpg を after.png に形式変換し、かつ、
-サイズが 100px×100pxに収まるように、
-アスペクト比（縦横比）を保ちリサイズする
+An example with accurate option specifications. Achieves the same result as "The second simplest example" above.
+Converts `before.jpg` to `after.png` format and resizes it
+to fit within 100px × 100px while maintaining the aspect ratio.
 ```
 
 ```powershell
@@ -8733,13 +8694,12 @@ ConvImage -inputFile before.jpg -outputFile after.png -resize 100x100 -notOverWr
 ```
 
 ```markdown
-説明
+Description
 ========================
-before.jpg を after.png に形式変換し、かつ、
-サイズが 100px×100pxに収まるように、
-アスペクト比（縦横比）を保ちリサイズする
--notOverWriteオプションにより、
-もし after.png が存在していても上書きしない.
+Converts `before.jpg` to `after.png` format and resizes it
+to fit within 100px × 100px while maintaining the aspect ratio.
+With the `-notOverWrite` option,
+the output file (`after.png`) will not be overwritten if it already exists.
 ```
 
 ```powershell
@@ -8747,11 +8707,11 @@ ConvImage before.jpg after.png -resize 10%
 ```
 
 ```markdown
-説明
+Description
 ========================
-before.jpg を after.png に形式変換し、かつ、
-縦横のピクセルが 10%（1/10）に縮小される
-アスペクト比（縦横比）は保たれる
+Converts `before.jpg` to `after.png` format and scales it down
+to 10% (1/10) of the original pixel dimensions.
+The aspect ratio is maintained.
 ```
 
 ```powershell
@@ -8759,11 +8719,10 @@ ConvImage before.jpg after.png -resize 100
 ```
 
 ```markdown
-説明
+Description
 ========================
-before.jpg を after.png に形式変換し、かつ、
-縦（高さ）のピクセルが 100pxにリサイズされる
-アスペクト比（縦横比）は保たれる
+Converts `before.jpg` to `after.png` format and resizes the height
+to 100px while maintaining the aspect ratio.
 ```
 
 ```powershell
@@ -8771,10 +8730,10 @@ ConvImage before.jpg after.png -rotate 90
 ```
 
 ```markdown
-説明
+Description
 ========================
-before.jpg を after.png に形式変換し、かつ、
-90度回転される
+Converts `before.jpg` to `after.png` format and rotates the image
+90 degrees.
 ```
 
 ```powershell
@@ -8782,11 +8741,10 @@ ConvImage before.jpg after.png -rotate 90 -flip
 ```
 
 ```markdown
-説明
+Description
 ========================
-before.jpg を after.png に形式変換し、かつ、
-90度回転され、かつ、
-上下反転される
+Converts `before.jpg` to `after.png` format, rotates the image 90 degrees,
+and flips it vertically.
 ```
 
 ```powershell
@@ -8794,23 +8752,22 @@ ConvImage before.jpg after.png -rotate 90 -flop
 ```
 
 ```markdown
-説明
+Description
 ========================
-before.jpg を after.png に形式変換し、かつ、
-90度回転され、かつ、
-左右反転される
+Converts `before.jpg` to `after.png` format, rotates the image 90 degrees,
+and flips it horizontally.
 ```
 
 ### Writing
 
-#### [mdgrep] - Multi-line oriented searcher for markdown-heading style <a id="mdgrep"></a>
+#### [mdgrep] - Multi-line oriented searcher for markdown-heading style.<a id="mdgrep"></a>
 
 [mdgrep]: src/mdgrep_function.ps1
 
-Markdownファイルの処理に特化した行指向ならぬブロック指向の正規表現パターンマッチングツール。
-指定した正規表現パターンにマッチしたMarkdown形式の第2レベル見出しとそのコンテンツを返す。
+A block-oriented regex pattern matching tool specialized for processing Markdown files, rather than line-oriented processing.
+It returns the Markdown-formatted second-level headings and their contents that match the specified regex pattern.
 
-たとえばこの[README.md]ファイルにはたくさんの関数が紹介されているが、ここから[man2]ファンクションについて書かれたセクションだけを抜き出すという仕事をする。
+For example, in this [README.md] file, there are numerous functions introduced, but the tool extracts only the section about the [man2] function.
 
 ```powershell
 # 当README.mdから「man2」ファンクションのセクションのみ抜き出す
@@ -8826,16 +8783,15 @@ cat README.md | mdgrep man2 -l 4 -t -e | head
 ```
 
 ```markdown
-#### [man2] - Formats filelist as a wide table and gets manual <a id="man2"></a>
+#### [man2] - Formats filelist as a wide table and gets manual.<a id="man2"></a>
 
 [man2]: src/man2_function.ps1
-
-`src`配下の関数（ファイル）名を列挙する。
-筆者は作った関数をすぐに忘れてしまうため。
 
 - Usage
     - `man2 man2`
     - `man2 <function-name> [-p|-Paging]`
+
+...
 ```
 
 
@@ -8877,16 +8833,16 @@ cat README.md | mdgrep seq2pu -Level 3
 ```
 
 ```markdown
-    ### Plot chart and graph
-    #### [dot2gviz] - Wrapper for Graphviz:dot command
-    #### [pu2java] - Wrapper for plantuml.jar command
-    #### [gantt2pu] - Visualizatoin tool of DANDORI-chart (setup-chart) for PlantUML.
-    #### [mind2dot] - Generate graphviz script to draw a mind map from list data in markdown format
-    #### [mind2pu] - Generate plantuml script to draw a mind map from list data in markdown format
-    #### [logi2dot] - Generate data for graphviz with simple format
-    #### [logi2pu] - Generate data for PlantUML (usecase diagram) with simple format
-    #### [seq2pu] - Generate sequence-diagram from markdown-like list format
-    #### [flow2pu] - Generate activity-diagram (flowchart) from markdown-like list format
+### Plot chart and graph
+#### [dot2gviz] - Wrapper for Graphviz:dot command
+#### [pu2java] - Wrapper for plantuml.jar command
+#### [gantt2pu] - Visualizatoin tool of DANDORI-chart (setup-chart) for PlantUML.
+#### [mind2dot] - Generate graphviz script to draw a mind map from list data in markdown format
+#### [mind2pu] - Generate plantuml script to draw a mind map from list data in markdown format
+#### [logi2dot] - Generate data for graphviz with simple format
+#### [logi2pu] - Generate data for PlantUML (usecase diagram) with simple format
+#### [seq2pu] - Generate sequence-diagram from markdown-like list format
+#### [flow2pu] - Generate activity-diagram (flowchart) from markdown-like list format
 ```
 
 ```powershell
@@ -8895,7 +8851,7 @@ cat README.md | mdgrep seq2pu -Level 4
 ```
 
 ```markdown
-#### [seq2pu] - Generate sequence-diagram from markdown-like list format <a id="seq2pu"></a>
+#### [seq2pu] - Generate sequence-diagram from markdown-like list format.<a id="seq2pu"></a>
 ```
 
 ```powershell
@@ -9081,25 +9037,26 @@ $markdown | mdgrep fuga2 -Level 3 -p -e
 fuga2
 ```
 
-マークダウンファイルだけではなく、マークダウンスタイルで記述された見出し行（`#`）を含むテキストファイルならばなんでも適用できる。
-たとえば、スクリプトのコメント記号が（`#`）であれば、`#`の数をマークダウンの見出しスタイルに合わせるとよい：
+It can be applied not only to Markdown files but to any text file that includes heading lines (`#`) written in Markdown style.
+For example, if the comment symbol in a script is (`#`), you can adjust the number of `#` to match the Markdown heading style:
+
 
 ```powershell
 cat a.ps1
 ```
 
 ```markdown
-    ## plus
-    1+1
+## plus
+1+1
 
-    ## sub
-    2-3
+## sub
+2-3
 
-    ## mul
-    4*5
+## mul
+4*5
 
-    ## div
-    6/7
+## div
+6/7
 ```
 
 ```powershell
@@ -9107,10 +9064,10 @@ cat a.ps1 | mdgrep
 ```
 
 ```markdown
-    ## plus
-    ## sub
-    ## mul
-    ## div
+## plus
+## sub
+## mul
+## div
 ```
 
 ```powershell
@@ -9119,18 +9076,17 @@ cat a.ps1 | mdgrep div -t -e
 ```
 
 ```markdown
-    ## div
-    6/7
+## div
+6/7
 ```
 
-PowerShellスクリプトファイルはコメントが`#`なので、コメントをマークダウンライクな見出し記法で記述しておくと、
-スクリプトファイル内に記述されたprivateなfunctionを、function名grepにて抜き出すことができる。
+Since PowerShell script files use `#` for comments, writing comments in Markdown-like heading notation allows you to extract private functions within the script file using function name grep.
 
 ```powershell
 cat a.ps1
 ```
 
-```markdown
+```powershell
     # private functions
     ## isFileExists - is file exists?
     function isFileExists ([string]$f){
@@ -9168,18 +9124,18 @@ cat a.ps1
     ...
 ```
 
-この`a.ps1`から関数`Celsius2Fahrenheit`を抜き出してみる:
+Extract the `Celsius2Fahrenheit` function from this `a.ps1` file:
 
 ```powershell
 cat a.ps1 | mdgrep
 ```
 
 ```markdown
-    ## isFileExists - is file exists?
-    ## isCommandExist - is command exists?
-    ## Celsius2Fahrenheit - convert Celsius to Fahrenheit
-    ## Fahrenheit2Celsius - convert Fahrenheit to Celsius
-    ## Get-UIBufferSize - get terminal width
+## isFileExists - is file exists?
+## isCommandExist - is command exists?
+## Celsius2Fahrenheit - convert Celsius to Fahrenheit
+## Fahrenheit2Celsius - convert Fahrenheit to Celsius
+## Get-UIBufferSize - get terminal width
 ```
 
 ```powershell
@@ -9187,7 +9143,7 @@ cat a.ps1 | mdgrep celsius2 -Expand -MatchOnlyTitle
 cat a.ps1 | mdgrep celsius2 -e -t
 ```
 
-```markdown
+```powershell
     ## Celsius2Fahrenheit - convert Celsius to Fahrenheit
     function Celsius2Fahrenheit ( [float] $C ){
         ### calc
@@ -9195,9 +9151,9 @@ cat a.ps1 | mdgrep celsius2 -e -t
     }
 ```
 
-スクリプトファイルでコメントを使用するときはしばしばインデントするので、コメント行の行頭には空白が入る。
-たとえば上の例では関数の中のコメントは`^spaces + ### comment`とある。
-`[-i|-IgnoreLeadingSpaces]`スイッチを指定すると、行頭の空白を無視し、これを[mdgrep]でマークダウン見出しとして解釈させられる。
+When using comments in script files, they are often indented, so there are spaces at the beginning of comment lines.
+For example, in the above example, the comments inside the function are written as `^spaces + ### comment`.
+By specifying the `[-i|-IgnoreLeadingSpaces]` switch, the leading spaces are ignored, allowing [mdgrep] to interpret them as Markdown headings.
 
 ```powershell
 # IgnoreLeadingSpaces option treat '^space' + '## ...' as header
@@ -9222,10 +9178,10 @@ cat a.ps1 | mdgrep -l 3 -i
 ```
 
 ```markdown
-    ### test command
-    ### calc
-    ### calc
-    ### calc
+### test command
+### calc
+### calc
+### calc
 ```
 
 ```markdown
@@ -9234,7 +9190,7 @@ cat a.ps1 | mdgrep -l 3 -i test
 ```
 
 ```markdown
-    ### test command
+### test command
 ```
 
 ```powershell
@@ -9242,7 +9198,7 @@ cat a.ps1 | mdgrep -Level 3 -IgnoreLeadingSpaces test -Expand
 cat a.ps1 | mdgrep -l 3 -i test -e
 ```
 
-```markdown
+```powershell
     ### test command
     try { Get-Command $cmd -ErrorAction Stop > $Null
         return $True
@@ -9252,9 +9208,8 @@ cat a.ps1 | mdgrep -l 3 -i test -e
 }
 ```
 
-`-CustomCommentBlock "begin-symbol","end-symbol"`で、言語特有の複数行コメント内の`#`記号を無視できる。
-上のPowerShellスクリプトのパース事例では、`-CustomCommentBlock "<#","#>"`を追加しておくと、
-スクリプトのSynopsisにある`#`記号がマッチしなくなるのでより安全。
+With `-CustomCommentBlock "begin-symbol","end-symbol"`, you can ignore `#` symbols within language-specific multi-line comments.
+In the PowerShell script parsing example above, adding `-CustomCommentBlock "<#","#>"` makes it safer, as the `#` symbols in the script's Synopsis will no longer match.
 
 The `-List` switch parses the list structure instead of the header structure. An example, this is used to focus on a specific block in a list-structured outliner.
 
@@ -9283,21 +9238,20 @@ cat a.md | mdgrep -List .
 ```
 
 ```markdown
-     - Lv.1
-         - Lv.1.1
-         - Lv.1.2
-     - Lv.2
-         - Lv.2.1
-             - Lv.2.1.1
-         - Lv.2.2
-     - Lv.3
+    - Lv.1
+        - Lv.1.1
+        - Lv.1.2
+    - Lv.2
+        - Lv.2.1
+            - Lv.2.1.1
+        - Lv.2.2
+    - Lv.3
 ```
 
 
 ##### grep changelog
 
-markdownの見出し形式で書かれたchangelogの検索例
-
+An example of searching a changelog written in Markdown heading format.
 
 `changelog.txt`
 
@@ -9326,7 +9280,7 @@ markdownの見出し形式で書かれたchangelogの検索例
 - piyo3
 ```
 
-タイトルまたは本文に`fuga`を含むブロックを抽出する
+Extract blocks where the title or body contains `fuga`.
 
 
 ```powershell
@@ -9349,15 +9303,13 @@ cat changelog.txt | mdgrep fuga -Expand
 - fuga3
 ```
 
-#### [mdfocus] - Multi-line oriented searcher for markdown-list style <a id="mdfocus"></a>
+#### [mdfocus] - Multi-line oriented searcher for markdown-list style.<a id="mdfocus"></a>
 
 [mdfocus]: src/mdfocus_function.ps1
 
-Markdownのリストブロックに対するパターンマッチング。
-リストレベル2以下の要素を検索、マッチした場合にマッチ行だけでなくその行が所属するレベル2ブロックをまるごと返す.
-
-[mdgrep]のラッパー。`mdgrep -List`オプションがデフォルトセット。
-
+Pattern matching for Markdown list blocks.
+Searches for elements at list level 2 or below, and if a match is found, it returns not only the matching line but the entire level 2 block to which the line belongs.
+A wrapper for [mdgrep]. The `mdgrep -List` option is set as the default.
 
 - Usage
     - `man2 mdfocus`
@@ -9432,7 +9384,7 @@ cat a.md | mdfocus 'Lv\.2' | list2table
 -       Lv.2    Lv.2.2
 ```
 
-#### [Execute-TinyTeX] (Alias: tinytex) - Execute `Rscript -e "tinytex::lualatex('a.tex')"` on cli <a id="Execute-TinyTeX"></a>
+#### [Execute-TinyTeX] (Alias: tinytex) - Execute `Rscript -e "tinytex::lualatex('a.tex')"` on cli.<a id="Execute-TinyTeX"></a>
 
 [Execute-TinyTeX]: src/Execute-TinyTeX_function.ps1
 
@@ -9486,7 +9438,7 @@ tinytex -SearchPackage "/times.sty"
 tinytex -InstallPackage "psnfss"
 ```
 
-#### [Execute-RMarkdown] (Alias: rmarkdown) - Execute `Rscript -e "rmarkdown::render(input='a.Rmd')"` on cli <a id="Execute-RMarkdown"></a>
+#### [Execute-RMarkdown] (Alias: rmarkdown) - Execute `Rscript -e "rmarkdown::render(input='a.Rmd')"` on cli.<a id="Execute-RMarkdown"></a>
 
 [Execute-RMarkdown]: src/Execute-RMarkdown_function.ps1
 
@@ -9527,7 +9479,7 @@ rmarkdown .\index.Rmd -All
 ```
 
 
-#### [math2tex] (Alias: chem2tex) - Add LaTeX preables to the mathematical and chemical formula in LaTex format. <a id="math2tex"></a>
+#### [math2tex] (Alias: chem2tex) - Add LaTeX preables to the mathematical and chemical formula in LaTex format..<a id="math2tex"></a>
 
 [math2tex]: src/math2tex_function.ps1
 
@@ -9566,7 +9518,7 @@ echo '\ce{2H + O2 -> H2O}' | math2tex > a.tex; tinytex a.tex | ii
 \end{document}
 ```
 
-#### [Inkscape-Converter] (Alias: inkconv) - Convert pdf, svg, png using inkscape. <a id="Inkscape-Converter"></a>
+#### [Inkscape-Converter] (Alias: inkconv) - Convert pdf, svg, png using inkscape..<a id="Inkscape-Converter"></a>
 
 [Inkscape-Converter]: src/Inkscape-Converter_function.ps1
 
@@ -9600,23 +9552,25 @@ inkconv in.pdf out.png -w 400 | ii
 ```
 
 
-#### [tex2pdf] - Compile tex to pdf <a id="tex2pdf"></a>
+#### [tex2pdf] - Compile tex to pdf.<a id="tex2pdf"></a>
 
 [tex2pdf]: src/tex2pdf_function.ps1
 
-`.tex`から`.pdf`ファイルをコンパイルする、`lualatex`と`uplatex`のラッパースクリプト。
+A wrapper script for compiling `.tex` files into `.pdf` files using `lualatex` and `uplatex`.
 
-`lualatex`を使用する場合は、
+When using `lualatex`, execute:
 
-- `lualatex a.tex`
+```powershell
+lualatex a.tex
+```
 
-を実行し、`uplatex`を使用する場合は、
+When using `uplatex`, execute:
 
-- `uplatex a.tex`
-- `uplatex a.tex`
-- `dvipdfmx -o a.pdf a.dvi`
-
-を実行する。
+```powershell
+uplatex a.tex
+uplatex a.tex
+dvipdfmx -o a.pdf a.dvi
+```
 
 - Usage
     - `man2 tex2pdf`
@@ -9628,18 +9582,18 @@ inkconv in.pdf out.png -w 400 | ii
         - `lualatex`, `uplatex`
 
 
-#### [kinsoku] - Japanese text wrapper <a id="kinsoku"></a>
+#### [kinsoku] - Japanese text wrapper.<a id="kinsoku"></a>
 
 [kinsoku]: src/kinsoku_function.ps1
 
-日本語文章の文字列折り返し。
-入力行1行ごとに禁則処理を施し、任意の幅で折り返す。
-入力はパイプライン経由を期待。
-`-Expand`スイッチでぶら下げ処理。
+String wrapping for Japanese text.
+Applies kinsoku (line-breaking rules) to each input line and wraps it at a specified width.
 
-用途は、筆者の場合、[Graphviz](https://graphviz.org/)や[plantuml](https://plantuml.com/)などの外部ツールに日本語を流し込み、かつ、折り返したい場合によく用いる。
-単純に文字数をカウントして折り返すと、日本語の場合は句読点などが行頭にきて読みにくいことがあるため。
+- Input is expected via a pipeline.
+- The `-Expand` switch enables hanging indentation processing.
 
+In my case, this is often used when passing Japanese text to external tools like [Graphviz](https://graphviz.org/) or [PlantUML](https://plantuml.com/) while also requiring line wrapping.
+Simply counting characters to wrap lines can make Japanese text hard to read, as punctuation marks may appear at the beginning of a line.
 
 - Usage
     - `man2 kinsoku`
@@ -9653,13 +9607,13 @@ inkconv in.pdf out.png -w 400 | ii
         - `[-SkipTop <String>]`
         - `[-SkipTopJoinStr <String>]`
 - Options:
-    - `-Width <int>`で折返し文字幅を指定（全角2、半角1）
-    - `-Expand`でぶら下げ禁則処理ON
-    - `-Yoon`で「ゃゅょ」と促音「っ」禁則処理ON（デフォルトでON）
-    - `-Join '\n'`で改行ポイントに`\n`を挿入。出力は改行なし
-    - `-AddLastChar <str>`で行末のみに任意文字列を追加
-    - `-OffTrim`で行頭行末の空白を削除しない
-        - 禁則処理後、行の前後の空白は削除される
+    - `-Width <int>` specifies the line wrapping width (full-width characters are counted as 2, half-width as 1).
+    - `-Expand` enables hanging indentation processing.
+    - `-Yoon` applies kinsoku processing for "ゃ", "ゅ", "ょ", and the sokuon "っ" (enabled by default).
+    - `-Join '\n'` inserts `\n` at line break points, but the output remains unbroken.
+    - `-AddLastChar <str>` appends a specified string only at the end of lines.
+    - `-OffTrim` prevents the removal of spaces at the beginning and end of lines.
+        - After applying kinsoku processing, spaces at the beginning and end of lines are typically removed.
 - Examples:
     - `"aa aa aa aaa aa aa, hoge fuga." | kinsoku 18`
     - `"あいうえおかきくけこ、さしすせそたち。" | kinsoku 20 -Expand`
@@ -9739,8 +9693,10 @@ ID0001:ああ
 ```
 
 ```powershell
-# -SkipTop 'ID....:'で、ID文字列はノーカウント。
-# 先頭にIDがあり、それをカウントしたくない場合などに使う。
+# With -SkipTop 'ID....:', ID strings are not counted.
+# Useful in cases where an ID appears at the beginning
+# and you don't want to include it in the count.
+
 "ID0001:あああああ、いいいいい、ううううう" `
     | kinsoku 10 -Expand -SkipTop 'ID....:'
 ```
@@ -9780,16 +9736,14 @@ ID0001:\nあああああ、\nいいいいい、\nううううう
 ID0001:\nあああああ、\nいいいいい、\nううううう\r\n
 ```
 
-#### [filehame] - Insert contents into template <a id="filehame"></a>
+#### [filehame] - Insert contents into template.<a id="filehame"></a>
 
 [filehame]: src/filehame_function.ps1
 
-テンプレートファイルの任意の文字列を含む行を見つけるとそこに別のテキストファイルを挿入する。
-「ファイルをはめ込む」ので`filehame`。
-
-引数にハイフン`-`を指定すると標準入力から読み込み。
-
-キーワードは大文字小文字を区別する（keyword is case-sensitive.）
+Find a line in a template file that contains a specified string, and insert another text file at that location.
+Since it "fits files into place," it is called `filehame`.
+If a hyphen `-` is specified as an argument, the input is read from standard input.
+Keywords are case-sensitive.
 
 - Usage
     - `man2 filehame`
@@ -9866,14 +9820,13 @@ cat contents.md `
 </html>
 ```
 
-#### [Test-isAsciiLine] (Alias: isAsciiLine) - Test if a line of text contains only ASCII characters <a id="Test-isAsciiLine"></a>
+#### [Test-isAsciiLine] (Alias: isAsciiLine) - Test if a line of text contains only ASCII characters.<a id="Test-isAsciiLine"></a>
 
 [Test-isAsciiLine]: src/Test-isAsciiLine_function.ps1
 [isAsciiLine]: src/Test-isAsciiLine_function.ps1
 
 - Usage
     - `man2 Test-isAsciiLine`
-
 
 ```powershell
 "a".."d" | isAsciiLine
@@ -9900,15 +9853,14 @@ T d
 ```
 
 
-#### [Get-OGP] (Alias: ml) - Make Link with markdown format <a id="Get-OGP"></a>
+#### [Get-OGP] (Alias: ml) - Make Link with markdown format.<a id="Get-OGP"></a>
 
 [Get-OGP]: src/Get-OGP_function.ps1
 
-指定したURIからサイトプレビュー用Open Graph protocol（OGP）の要素（主にmetaタグの要素）を取得する。
-標準入力、第一引数でUriを指定しない場合はクリップボードの値を使おうとする。
+Retrieve Open Graph Protocol (OGP) elements (mainly meta tag elements) for site previews from a specified URI.
+If neither standard input nor the first argument specifies a URI, it will attempt to use the value from the clipboard.
 
-気になるサイトのUriをクリップボードにコピーした状態でコマンドを打つと、マークダウン形式やhtml形式に変換してくれる。
-ブログ記事の作成などに便利な道具。
+By copying the URI of an interesting site to the clipboard and running the command, it can convert the information into Markdown or HTML formats. A useful tool for creating blog articles.
 
 - Usage (`Set-Alias -name ml -value Get-OGP`)
     - `man2 Get-OGP`
@@ -9935,11 +9887,11 @@ T d
         - `[-Cite]`
         - `[-Raw]`
         - `[-NoShrink]`
-- Examples
+- Examples  
     - `ml -m | Set-Clipboard`
-        - クリップボードのUriをマークダウン形式のリンクに変換して再度クリップボードに格納
+        - Converts the URI in the clipboard into a Markdown-style link and stores it back into the clipboard.
     - `ml | Format-List`
-        - クリップボードのUriからOGP要素（metaタグの要素）を取得
+        - Retrieves OGP elements (meta tag elements) from the URI in the clipboard.
 - Inspired by [goark/ml - GitHub](https://github.com/goark/ml)
     - License: Apache License Version 2.0, January 2004, https://www.apache.org/licenses/LICENSE-2.0
     - Command: [Get-OGP] (Alias: ml)
@@ -10040,12 +9992,11 @@ Example:
 echo "./%E6%8E%B2%E7%A4%BA%E6%9D%BF/start.txt" | Encode-Uri -Debug
  ```
 
-#### [fpath] - Remove double-quotes and replace backslashes to slashes from windows path <a id="fpath"></a>
+#### [fpath] - Remove double-quotes and replace backslashes to slashes from windows path.<a id="fpath"></a>
 
 [fpath]: src/fpath_function.ps1
 
-Windows環境のファイルパスの整形。
-動作は単純で、ファイルパスからダブルクオート`"`を除去し、バックスラッシュ`\`をスラッシュ`/`に置換するのみ。
+Formatting file paths in the Windows environment. The operation is simple: it removes double quotes `"` from the file paths and replaces backslashes `\` with forward slashes `/`.
 
 - Usage
     - `man2 fpath`
@@ -10088,15 +10039,14 @@ cat paths.txt | fpath
 ```
 
 
-#### [watercss] - Get Water.css rel link <a id="watercss"></a>
+#### [watercss] - Get Water.css rel link.<a id="watercss"></a>
 
 [watercss]: src/watercss_function.ps1
 
 A small tool to always quickly install [Water.css](https://watercss.kognise.dev/),
 a simple and beautiful CSS framework.
 
-この小さなツールを使えば、いつでもすぐに[Water.css](https://watercss.kognise.dev/)のlink tagを生成できる。<br />
-たとえば出力をVSCodeのMarkdownにペーストすると、プレビューの見栄えがよくなる。
+With this small tool, you can quickly generate a link tag for [Water.css](https://watercss.kognise.dev/) at any time. For example, pasting the output into VSCode's Markdown enhances the appearance of the preview.
 
 ```powershell
 watercss
@@ -10148,11 +10098,11 @@ watercss -Light
     - License: The MIT License (MIT) Copyright © 2019 Kognise
 
 
-#### [image2md] - Convert image filename and alt text to markdown format <a id="image2md"></a>
+#### [image2md] - Convert image filename and alt text to markdown format.<a id="image2md"></a>
 
 [image2md]: src/image2md_function.ps1
 
-画像ファイル名とaltテキストをマークダウン形式に変換する。
+Convert an image file name and alt text into Markdown format.
 
 ```powershell
 "a.png alt text" | image2md
@@ -10162,10 +10112,7 @@ watercss -Light
 ![alt text](a.png)
 ```
 
-最初のスペースまでの文字列を画像ファイル名、それ以降の文字列をaltテキストと認識する。
-したがって、画像ファイル名に空白文字を含んではいけない。
-
-筆者はマークダウン形式で画像ファイルを指定するとき、`[ ]`と`( )`のどっちが`alt`でどっちが`imagefile`なのか、いつもすぐに思い出せない。（`![alt](image.png)`？ or `!(alt)[image.png]`？）
+The string up to the first space is recognized as the image file name, and the string after that is recognized as the alt text. Therefore, the image file name must not contain spaces. I can never seem to quickly recall which part goes in `[ ]` and which part goes in `( )` when specifying an image file in Markdown format. (e.g. `![alt](image.png)`? or `!(alt)[image.png]`?)
 
 - Usage
     - `man2 image2md`
@@ -10243,22 +10190,22 @@ Output:
 ```
 
 
-#### [table2md] - Convert tab and csv delimited tables to markdown table format <a id="table2md"></a>
+#### [table2md] - Convert tab and csv delimited tables to markdown table format.<a id="table2md"></a>
 
 [table2md]: src/table2md_function.ps1
 
-tab区切り・csv区切りの表をmarkdown形式に変換する。
-標準入力、第一引数で何も指定ない場合はクリップボードの値を使おうとする。
+Convert tab-delimited or CSV-delimited tables into Markdown format.  
+If neither standard input nor the first argument is specified, it attempts to use the clipboard value.
 
-csv, tsvは**ヘッダありデータ**のみ受付（1行目をヘッダ行とみなす）。
-デフォルトでタブ区切り(`-Delimiter "\t"`)
+CSV and TSV only accept **header data** (the first row is considered the header row).  
+By default, it uses tab-delimited format (`-Delimiter "\t"`).
 
-- csv, tsvは数字・ハイフン・ドットだけのセルは自動で右寄せ
-- 単位つきcsvカラム（列）も、`-Units unit1,unit2,...`指定で右寄せ
-- `半角スペース` + `kg`,`ml`,`CFU`,`RLU`などいくつかの単位つき数値は標準で右寄せ
+- Cells containing only numbers, hyphens, or dots in CSV/TSV are automatically right-aligned.  
+- CSV columns with units can also be right-aligned by specifying `-Units unit1,unit2,...`.  
+- Numeric values with units such as `kg`, `ml`, `CFU`, `RLU`, preceded by a half-width space, are standardly right-aligned.
 
-エクセル表を直接コピーして変換する用途を想定している（markdown形式の表は書きにくい）。
-ただしエクセルの**セル内改行**や**セル結合**がなされた入力データはうまく変換できない。
+This is intended for use with Excel tables directly copied and converted (writing Markdown tables can be tedious).  
+However, input data with **line breaks within cells** or **merged cells** in Excel cannot be converted properly.
 
 - Usage
     - `man2 table2md`
@@ -10313,7 +10260,7 @@ cat iris.csv | table2md -d "," -Units "CFU","kg" | head -n 7
 # (Default -Units " kg"," ml", " CFU", "RLU", etc...)
 ```
 
-#### [list2table] - Convert markdown list format to long type data (make it greppable!) <a id="list2table"></a>
+#### [list2table] - Convert markdown list format to long type data (make it greppable!).<a id="list2table"></a>
 
 [list2table]: src/list2table_function.ps1
 
@@ -10552,7 +10499,7 @@ title Lv.3
 ```
 
 
-#### [linkextract] - Extract links from html <a id="linkextract"></a>
+#### [linkextract] - Extract links from html.<a id="linkextract"></a>
 
 [linkextract]: src/linkextract_function.ps1
 
@@ -10570,7 +10517,7 @@ title Lv.3
         - `[-AddUri]`
 - Operation
     - For uri:
-        - `(Invoke-WebRequest $uri).Links.href`    
+        - `(Invoke-WebRequest $uri).Links.href`
     - For file:
         - `$reg = [Regex]'href="(http|www\.)[^"]+"'`<br />`$reg.Matches( $_ ) | ForEach-Object { $_.Value }`
 - Options:
@@ -10699,11 +10646,11 @@ Detect broken links.
 ```
 
 
-#### [linkcheck] - Broken link checker <a id="linkcheck"></a>
+#### [linkcheck] - Broken link checker.<a id="linkcheck"></a>
 
 [linkcheck]: src/linkcheck_function.ps1
 
-引数に指定したuriのリンク切れをチェックする。
+Checks for broken links of URIs specified as arguments.
 
 - Usage
     - `man2 linkcheck`
@@ -10754,59 +10701,57 @@ Detect broken links in m.html
 ```
 
 
-#### [jl] - Join the next Line if line ends with the keyword <a id="jl"></a>
+#### [Join-While] (Alias:joinw) - Join lines while a specified regex is found.<a id="Join-While"></a>
 
-[jl]: src/jl_function.ps1
+[Join-While]: src/Join-While_function.ps1
 
-キーワードで終わる行に次の行を連結する。たとえばHTMLで日本語を使うとき、
-「、」で改行した場合に余計な空白がはいることがあるが、このコマンドで下処理しておけば大丈夫。
-デフォルトで「、」で終わる行のみ検知して次の行を連結。そうでない行はそのまま出力。
+Concatenate lines while they match the specified regular expression or a blank line is encountered.
 
 - Usage
-    - `man2 jl`
+    - `man Join-While`
+    - `man2 Join-While`
 - Params
-    - `jl`
-        - `[[-Key] <String>]`
-        - `[-Delimiter <String>]`
+    - `Join-While`
+        - `[[-Regex] <regex>]`
+        - `[-Delimiter "<String>"]`
         - `[-SkipBlank]`
+        - `[-Before <string ary>]`
+        - `[-After  <string ary>]`
         - `[-AddCrLf]`
-- Note
-    - `-Key <regex>`で任意の末尾文字列を指定できる。ただし正規表現regexである点に注意
-    - たとえば`-Key .`を指定すると、すべての行（空行以外）が連結される
-    - 文字列としての`.`や`-`を指定する場合は`\.`、`\-`のようにエスケープすること
 
-Input:
+Note that ending character string treated as regular expressions. Use escape mark `\` to search for symbols as character, for example:
+    
+- `.` to `\.`
+- `-` to `\-`
+- `$` to `\$`
+- `\` to `\\`
+
+
+EXAMPLE: Concatenate lines until a comma appears at the end.
 
 ```powershell
-Write-Output "あいう、","えお”,"かきくけ","こさし"
-```
-
-```
-あいう、
-えお
-かきくけ
-こさし
+@("hogehoge and",
+"fugafuga.",
+"piyopiyo,",
+"hogefuga."
+) | joinw ',$' -Delimiter " "
 ```
 
 Output:
 
-```powershell
-Write-Output "あいう、","えお”,"かきくけ","こさし" | jl
+```
+hogehoge and
+fugafuga.
+piyopiyo, hogefuga.
 ```
 
-```
-あいう、えお
-かきくけ
-こさし
+- **Note**:
+    - If `-Regex ""` is specified, concatenate all lines.
+    - If `-Regex "."`  is specified, concatenate lines by blank lines
 
-説明
-=============
-デフォルトで、全角読点「、」で終わる行に次の行を連結する
-```
+EXAMPLE: Converts blank line delimited records to tab delimited records.
 
-オプションの工夫で「空行区切り」のリストを「タブ区切り」に変換できる。
-
-Input
+Input:
 
 ```powershell
 cat data.txt
@@ -10832,123 +10777,188 @@ fuga
 fuga
 ```
 
-Output
-
 ```powershell
-cat data.txt | jl . -d "`t"
+cat data.txt | joinw . -d "`t"
 ```
+
+Output:
 
 ```
 bumon-A filter  17:45 2017/05/10        hoge    fuga
 bumon-B eva     17:46 2017/05/10        piyo    piyo
 bumon-C tank    17:46 2017/05/10        fuga    fuga
 
-説明
+Description.
 =============
-空行区切りレコードをタブ区切りに変換
 ```
 
-#### [Join-Line2] (Alias: jl2) - Concatenates lines until a specified string is found.<a id="Join-Line2"></a>
+#### [Join-Until] (Alias: joinu) - Join lines until a specified regex is found.<a id="Join-Until"></a>
 
-[Join-Line2]: src/Join-Line2_function.ps1
+[Join-Until]: src/Join-Until_function.ps1
 
-Concatenates lines until a specified string is found.
+Concatenate lines until they match the specified regular expression.
+
 
 - Usage
-    - `man2 jl2`
+    - `man Join-Until`
+    - `man2 Join-Until`
 
-EXAMPLE
+EXAMPLE: Concatenate lines until a comma appears at the end.
 
-input data:
+```powershell
+@("hogehoge and",
+"fugafuga.",
+"piyopiyo,",
+"hogefuga."
+) | joinu ',$'
+```
+
+Output:
+
+```
+hogehoge and fugafuga.
+piyopiyo, hogefuga.
+```
+
+EXAMPLE: concat line
+
+Input:
+
+```powershell
+cat data.txt
+```
+
+Output:
 
 ```
 # data
 
 [date]
-  2024-10-24
+    2024-10-24
 
 [title]
 
 [author]
-  btklab,
-  fuga
+    btklab,
+    fuga
 
 [summary]
-  summary-1
-  summary-2
-  summary-3
+    summary-1
+    summary-2
+    summary-3
 
 [link]
-  link-1
-  link-2
+    link-1
+    link-2
 ```
-
-concat data
 
 ```powershell
-cat data.txt | jl2 -Match '\['
-
-    # data
-    [date] 2024-10-24
-    [title]
-    [author] btklab, fuga
-    [summary] summary-1 summary-2 summary-3
-    [link] link-1 link-2
+cat data.txt | joinu '\['
 ```
 
-skip header
+Output:
+
+```
+# data
+[date] 2024-10-24
+[title]
+[author] btklab, fuga
+[summary] summary-1 summary-2 summary-3
+[link] link-1 link-2
+```
+
+EXAMPLE: skip header
 
 ```powershell
-cat data.txt | jl2 -Match '\[' -SkipHeader
-    [date] 2024-10-24
-    [title]
-    [author] btklab, fuga
-    [summary] summary-1 summary-2 summary-3
-    [link] link-1 link-2
+cat data.txt | joinu '\[' -SkipHeader
 ```
 
-delete match
+Output:
+
+```
+[date] 2024-10-24
+[title]
+[author] btklab, fuga
+[summary] summary-1 summary-2 summary-3
+[link] link-1 link-2
+```
+
+EXAMPLE: delete match
 
 ```powershell
-cat data.txt | jl2 -Match '\[([^]]+)\]' -Delete
-    # data
-    2024-10-24
-    <blankline>
-    btklab, fuga
-    summary-1 summary-2 summary-3
-    link-1 link-2
+cat data.txt | joinu '\[([^]]+)\]' -Delete
 ```
 
-replace match
+Output:
+
+```
+# data
+2024-10-24
+<blankline>
+btklab, fuga
+summary-1 summary-2 summary-3
+link-1 link-2
+```
+
+EXAMPLE: replace match
 
 ```powershell
-cat data.txt | jl2 -Match '\[([^]]+)\]' -Replace '$1:'
-    # data
-    date: 2024-10-24
-    title:
-    author: btklab, fuga
-    summary: summary-1 summary-2 summary-3
-    link: link-1 link-2
+cat data.txt | joinu '\[([^]]+)\]' -Replace '$1:'
 ```
 
-concatenates lines by item, deletes item names, and outputs in one tab-delimited line for spread sheet.
+Output:
+
+```yaml
+# data
+date: 2024-10-24
+title:
+author: btklab, fuga
+summary: summary-1 summary-2 summary-3
+link: link-1 link-2
+```
+
+EXAMPLE: insert empty line for each line
 
 ```powershell
-@(cat data.txt | jl2 -Match '\[([^]]+)\]' -Delete -SkipHeader) -join "`t"
-    2024-10-24<TAB><TAB>btklab, fuga<TAB>summary-1 summary-2 summary-3<TAB>link-1 link-2
+cat data.txt | joinu '\[([^]]+)\]' -After "" | juni
 ```
 
-#### [Override-Yaml] - Override external yaml in markdown yaml <a id="Override-Yaml"></a>
+Output:
+
+```
+1 # data
+2
+3 [date] 2024-10-24
+4
+5 [title]
+6
+7 [author] btklab, fuga
+8
+9 [summary] summary-1 summary-2 summary-3
+10
+11 [link] link-1 link-2
+12
+```
+
+EXAMPLE: concatenates lines by item, deletes item names, and outputs in one tab-delimited line for spread sheet
+
+```powershell
+(cat data.txt | joinu '\[([^]]+)\]' -Delete -SkipHeader) -join "`t"
+```
+
+Output:
+
+```
+2024-10-24<TAB><TAB>btklab, fuga<TAB>summary-1 summary-2 summary-3<TAB>link-1 link-2
+```
+
+#### [Override-Yaml] - Override external yaml in markdown yaml.<a id="Override-Yaml"></a>
 
 [Override-Yaml]: src/Override-Yaml_function.ps1
 
-Markdownファイルのyamlヘッダに外部yamlヘッダのアイテムを追加する。
-キーが重複した場合はmarkdownファイルのyamlデータが優先される。
-markdownに記述するyamlは単行のみとする。
+Add items from an external YAML header to the YAML header of a Markdown file. If there are duplicate keys, the YAML data in the Markdown file takes precedence. The YAML described in the Markdown file should be single-line only.
 
-yamlデータの共用可能部分を外部ファイル化することで、markdownファイルに書かれる記事固有のyamlセッティングを最小限ですませられる。
-
-動機：筆者は長いYamlヘッダは記憶できない。覚えていられるのは`title`、`author`、`date`程度である。
+Motivation: The author cannot memorize long YAML headers. The only items remembered are `title`, `author`, and `date`. By externalizing reusable portions of YAML data, article-specific YAML settings written in Markdown files can be minimized.
 
 ```yaml
 title: "Can't remember longer yaml!"
@@ -11218,26 +11228,21 @@ fuga
 
 ### csv / toml / json handling
 
-#### [toml2psobject] - Parser for toml-like configuration files <a id="toml2psobject"></a>
+#### [toml2psobject] - Parser for toml-like configuration files.<a id="toml2psobject"></a>
 
 [toml2psobject]: src/toml2psobject_function.ps1
 
-[TOML(Tom's Obvious Minimal Language)](https://toml.io/en/)風設定ファイルの簡易パーサ。
-TOML風の設定情報を読み込みPSCustomObjectとして返す。
+A simple parser for configuration files in [TOML (Tom's Obvious Minimal Language)](https://toml.io/en/) format. Reads TOML-style configuration data and returns it as a PSCustomObject.
 
-ユースケースとしては、筆者は職務をTOML形式でリストアップする場合などに用いている。
-配列とハッシュを用いて1カラムの中に複数の要素を格納できるので、
-CSV形式などの「1行1レコード形式」では表現しにくい情報を表現できるかもしれない。
-（Excelのセル内改行のイメージ）
+Use cases include listing tasks in TOML format. By using arrays and hashes to store multiple elements in a single column, it may allow representation of information that is difficult to express in "one row per record" formats like CSV (similar to the concept of line breaks within Excel cells).
 
-基本的にTOML的な記法を期待するが、もっとも違う点は
-ブラケット`[ ]`で囲む文字列を`key`ではなく`key="id"`として認識する点と、
-ブラケット内でドット`.`を用いても要素の親子関係を表現せずひとつの文字列として解釈する点、
-その代わり、マルチバイト文字をブラケット内に用いることができる。
+The parser generally expects TOML-style syntax but differs in the following ways:
 
-`-ToJson`スイッチで出力をJson形式に変換したり、
-`ConvertTo-Csv`でCSV形式に変換したりできる。
-（PowerShellを使わない同僚のためにリストをエクスポートできる）
+- Strings enclosed in brackets `[]` are recognized as `key="id"` rather than as `key`.
+- Dots `.` within brackets are interpreted as a single string rather than representing parent-child relationships between elements.
+- Multibyte characters can be used within brackets.
+
+You can use the `-ToJson` switch to convert the output into JSON format or `ConvertTo-Csv` to convert it into CSV format, allowing you to export lists for colleagues who do not use PowerShell.
 
 - Usage
     - `man2 toml2psobject`
@@ -11299,16 +11304,13 @@ note  : multi-line note1
         multi-line note3
 ```
 
-#### [json2txt] - Transform json into key-value format with one record per line. <a id="json2txt"></a>
+#### [json2txt] - Transform json into key-value format with one record per line..<a id="json2txt"></a>
 
 [json2txt]: src/json2txt_function.ps1
 
-Json形式のテキスト入力を1行1レコード形式に変換し`grep`しやすくする。
-逆変換はできない。
-PowerShell7.3以降に実装された`ConvertFrom-Json -AsHashTable`を使用する。
+Convert JSON-formatted text input into a one-line-per-record format to make it easier to `grep`. Reverse conversion is not possible. It uses `ConvertFrom-Json -AsHashTable`, implemented in PowerShell 7.3 and later.
 
-動機は、「[GitHub - jiro4989/gsv: gsv transforms a multi-line CSV into one-line JSON to make it easier to grep.](https://github.com/jiro4989/gsv)」およびその発想元である「[GitHub - tomnomnom/gron: Make JSON greppable!](https://github.com/tomnomnom/gron)」のコンセプトが面白かったため。
-とくに具体的なユースケースを想定していない。
+The motivation comes from the concepts of ["GitHub - jiro4989/gsv: gsv transforms a multi-line CSV into one-line JSON to make it easier to grep."](https://github.com/jiro4989/gsv) and its inspiration, ["GitHub - tomnomnom/gron: Make JSON greppable!"](https://github.com/tomnomnom/gron). No specific use cases are envisioned.
 
 - Usage
     - `man2 json2txt`
@@ -11377,12 +11379,11 @@ cat a.json | json2txt
 .widget.text.onMouseUp = "sun1.opacity = (sun1.opacity / 100) * 90;"
 ```
 
-#### [csv2txt] - Convert CSV to SSV <a id="csv2txt"></a>
+#### [csv2txt] - Convert CSV to SSV.<a id="csv2txt"></a>
 
 [csv2txt]: src/csv2txt_function.ps1
 
-CSVを半角スペース区切りの1行1レコード形式（SSV）に変換する。
-改行含みのCSVデータを1行にして`grep`する、などの用途に便利。
+Convert CSV into a single-line, space-separated value (SSV) format. This is useful for tasks such as converting CSV data containing line breaks into a single line for easier `grep` operations.
 
 - Usage
     - `man2 csv2txt`
@@ -11435,13 +11436,12 @@ id main id2 sub val
 04  ddd  03 zzz  10
 ```
 
-#### [catcsv] - Concatenate csv files <a id="catcsv"></a>
+#### [catcsv] - Concatenate csv files.<a id="catcsv"></a>
 
 [catcsv]: src/catcsv_function.ps1
 
-任意のフォルダにあるUTF-8なCSVファイル群をひとつのCSVファイルにまとめる。
-空行はスキップ。CSVヘッダは「有or無」どちらかに統一されている必要あり。
-ヘッダ「無し」の場合`-NoHeader`オプションをつける
+Combine multiple UTF-8 CSV files from any folder into a single CSV file.  
+Blank lines are skipped. CSV headers must be consistently either "present" or "absent." If headers are "absent," use the `-NoHeader` option.
 
 - Usage
     - `man2 catcsv`
@@ -11455,17 +11455,15 @@ id main id2 sub val
         - `[-NoHeader]`
 - Examples
     - `catcsv`
-        - カレントディレクトリの`*.csv`を`out.csv`に出力する
+        - Outputs `*.csv` files from the current directory into `out.csv`.
     - `catcsv a*.csv -Output out.csv`
-        - カレントディレクトリの`a*.csv`を`out.csv`に出力する
+        - Outputs `a*.csv` files from the current directory into `out.csv`.
 
-
-#### [csv2sqlite] - Apply sqlite-sql to csv files <a id="csv2sqlite"></a>
+#### [csv2sqlite] - Apply sqlite-sql to csv files.<a id="csv2sqlite"></a>
 
 [csv2sqlite]: src/csv2sqlite_function.ps1
 
-CSVファイルに対して`sqlite`のSQL文を発行する。
-CSVファイルをSQLで操作し、集計したり検索できる。
+Execute `sqlite` SQL statements against a CSV file. You can manipulate, aggregate, and search CSV files using SQL.
 
 - Usage
     - `man2 csv2sqlite`
@@ -11576,16 +11574,13 @@ survived  pclass  sex     age   sibsp  parch  fare     embarked  class
 
 ### File and directory manipuration
 
-#### [fwatch] - A filewatcher using LastWriteTime and FileHash <a id="fwatch"></a>
+#### [fwatch] - A filewatcher using LastWriteTime and FileHash.<a id="fwatch"></a>
 
 [fwatch]: src/fwatch_function.ps1
 
-ファイル監視。実行したディレクトリ配下のファイルの変更を、
-更新時刻またはハッシュ値の比較で検知する。
-`-Action {scriptblock}`を指定すると、変化を検知した際にアクションを実行する。
+File monitoring. Detects changes to files in the executed directory by comparing modification times or hash values. If `-Action {scriptblock}` is specified, an action is executed when a change is detected.
 
-ユースケースとしては、筆者の場合LaTeXやMarkdownで文章を書きながら
-ソースファイルの変更を監視し、上書き保存ごとにコンパイルする、というふうに用いている。
+Use case: In my case, I use it to monitor changes to source files while writing documents in LaTeX or Markdown, and compile them every time I save.
 
 - Usage
     - `man2 fwatch`
@@ -11605,22 +11600,22 @@ survived  pclass  sex     age   sibsp  parch  fare     embarked  class
     - `fwatch -Path . -Action {cat a.md | md2html > a.html; ii a.html} -Recurse`
 
 
-#### [Rename-Normalize] (Alias: ren2norm) - File name normalizer for Japanese on windows <a id="Rename-Normalize"></a>
+#### [Rename-Normalize] (Alias: ren2norm) - File name normalizer for Japanese on windows.<a id="Rename-Normalize"></a>
 
 [Rename-Normalize]: src/Rename-Normalize_function.ps1
 
-標準入力からのファイルオブジェクトを読み、ファイル名を以下のルールで正規化する。for Japanese environment on windows.
+Normalizes filenames from standard input for Japanese Windows environments:
 
-- 半角 → 全角変換: カナ
-- 全角 → 半角変換: 英数字記号
-- スペース → アンダースコア
+- Converts half-width kana to full-width.
+- Converts full-width alphanumeric symbols to half-width.
+- Replaces spaces with underscores.
 
-デフォルトで実行せずに変換結果のみを表示する。
+Displays results only by default; renaming requires explicit execution.
 
-- `-Execute`スイッチを指定した場合のみリネームを実行する。
-- `-AddDate`スイッチで、正規化＋ファイル名先頭に`yyyy-MM-dd-`を追加。
+- Renaming is executed only when the `-Execute` switch is specified.
+- The `-AddDate` switch adds `yyyy-MM-dd-` to the beginning of the normalized file name.
 
-カナなどの日本語を変換するため、`han`、`zen`コマンドに依存。
+Depends on the `han` and `zen` commands to convert Japanese characters such as Kana.
 
 - Usage
     - `man2 Rename-Normalize`
@@ -11722,13 +11717,11 @@ clipwatch-function - Copy.ps1 => clipwatch-function-Copy.ps1
 clipwatch-function.ps1        => clipwatch-function.ps1
 ```
 
-#### [push2loc] - Push-Location and execute commands to clipped files <a id="push2loc"></a>
+#### [push2loc] - Push-Location and execute commands to clipped files.<a id="push2loc"></a>
 
 [push2loc]: src/push2loc_function.ps1
 
-エクスプローラからクリップボードにコピーしたファイルまたはディレクトリの場所に`Push-Location`する。
-[clip2file]と組み合わせて使う。
-カレントディレクトリから遠い場所にあるファイルを操作したいとき、それから、複数のディレクトリ内のファイルに対して同じ操作を適用するときに便利。
+`Push-Location` to the file or directory path copied from Explorer to the clipboard. Use in conjunction with [clip2file]. Useful for manipulating files in locations far from the current directory, and for applying the same operation to files in multiple directories.
 
 - Usage
     - `man2 push2loc`
@@ -11931,7 +11924,7 @@ clip2file | push2loc -Action { git status } -Pop -Execute
 
 ### Clipboard operation
 
-#### [Unzip-Archive] (Alias: clip2unzip) - Get files copied to the clipboard as an objects <a id="Unzip-Archive"></a>
+#### [Unzip-Archive] (Alias: clip2unzip) - Get files copied to the clipboard as an objects.<a id="Unzip-Archive"></a>
 
 [Unzip-Archive]: src/Unzip-Archive_function.ps1
 [clip2unzip]: src/Unzip-Archive_function.ps1
@@ -12034,13 +12027,11 @@ clip2unzip -File "path/to/the/zipdir/PowerShell-7.4.0-win-x64.zip" -f
 ```
 
 
-#### [clip2file] - Get files copied to the clipboard as an objects <a id="clip2file"></a>
+#### [clip2file] - Get files copied to the clipboard as an objects.<a id="clip2file"></a>
 
 [clip2file]: src/clip2file_function.ps1
 
-エクスプローラからクリップボードにコピーしたファイルをオブジェクトとして取得し、
-そのままパイプラインで`Copy-Item`、`Move-Item`、`Rename-Item`コマンドレットと連携させられる。
-カレントディレクトリを移動したり、ファイルのフルパスを指定せずとも、別のディレクトリにあるファイルの操作ができる。
+Retrieves files copied from Explorer to the clipboard as objects, enabling direct pipelining with `Copy-Item`, `Move-Item`, and `Rename-Item` cmdlets. This allows file operations in other directories without changing the current directory (without `cd`) or specifying full file paths.
 
 - Usage
     - `man2 clip2file`
@@ -12124,12 +12115,11 @@ clip2file | Rename-Normalize
 ```
 
 
-#### [clip2push] - Push-Location and execute commands to clipped files <a id="clip2push"></a>
+#### [clip2push] - Push-Location and execute commands to clipped files.<a id="clip2push"></a>
 
 [clip2push]: src/clip2push_function.ps1
 
-エクスプローラからクリップボードにコピーしたファイルまたはディレクトリの場所に`Push-Location`する。
-カレントディレクトリから遠い場所にあるファイルを操作したいとき、それから、複数のディレクトリ内のファイルに対して同じ操作を適用したいときに便利。
+`Push-Location` to the file or directory path copied from Explorer to the clipboard. Useful for manipulating files in locations far from the current directory, and for applying the same operation to files in multiple directories.
 
 - Usage
     - `man2 clip2push`
@@ -12235,11 +12225,11 @@ clip2push -Action { git status } -Pop -Execute
     nothing to commit, working tree clean
 ```
 
-#### [clip2hyperlink] - Create hyperlink formula for excel from clipped files. <a id="clip2hyperlink"></a>
+#### [clip2hyperlink] - Create hyperlink formula for excel from clipped files..<a id="clip2hyperlink"></a>
 
 [clip2hyperlink]: src/clip2hyperlink_function.ps1
 
-クリップボードにコピーされたファイルパスからエクセル用ハイパーリンク関数を生成する。
+Generates an Excel `hyperlink` function from a file path copied to the clipboard.
 
 - Usage
     - `man2 clip2hyperlink`
@@ -12296,15 +12286,11 @@ PS> clip2file | clip2hyperlink
 ```
 
 
-#### [clip2img] - Save clip board image as an image file <a id="clip2img"></a>
+#### [clip2img] - Save clip board image as an image file.<a id="clip2img"></a>
 
 [clip2img]: src/clip2img_function.ps1
 
-クリップボードの画像データを画像ファイルとして保存。
-`printscreen`で画像をキャプチャして画像ファイルに保存する、という作業を想定。
-クリップボードに画像がなければエラーを返す。
-
-デフォルトの保存場所は`~/Pictures`
+Saves image from the clipboard as an image file(PNG/JPG file). Intended for capturing images with `printscreen` and saving them. Returns an error if there is no image on the clipboard. The default save location is `~/Pictures`.
 
 - Usage
     - `man2 clip2img`
@@ -12354,11 +12340,11 @@ ls a.png | ClipImageFrom-File
 ```
 
 
-#### [clip2normalize] - Text normalizer for japanese on windows <a id="clip2normalize"></a>
+#### [clip2normalize] - Text normalizer for japanese on windows.<a id="clip2normalize"></a>
 
 [clip2normalize]: src/clip2normalize_function.ps1
 
-半角カナや全角英数字交じりのテキストをできるだけきれいにする。Make half-width kana and full-width alphanumeric mixed text as clean as possible. For japanese environment on windows.
+Cleans up text containing mixed half-width kana and full-width alphanumeric characters as much as possible. For Japanese environments on Windows.
 
 - Usage
     - `man2 clip2normalize`
@@ -12404,7 +12390,7 @@ clip2normalize
 3. abcde
 ```
 
-#### [clip2shortcut] - Create relative-path shortcuts from clipped files. <a id="clip2shortcut"></a>
+#### [clip2shortcut] - Create relative-path shortcuts from clipped files..<a id="clip2shortcut"></a>
 
 [clip2shortcut]: src/clip2shortcut_function.ps1
 
@@ -12418,6 +12404,14 @@ Only for windows.
 
 リンク先と元でドライブレターが異なる場合は絶対パスでショートカットを作成する。
 存在しないファイルを指定するとエラーをレイズし処理を中断する。
+
+Creates a relative shortcut to a file copied from Explorer to the clipboard in the current directory. (Windows only) This allows shortcuts to files on USB drives with dynamic drive letters.
+
+Specifically, it sets the shortcut's TargetPath to:
+
+- `%windir%\explorer.exe "relpath/to/source/file"`
+
+Creates absolute shortcuts if source and link destinations have different drive letters. Stops with an error if the file doesn't exist.
 
 - Usage
     - `man2 clip2shortcut`
@@ -12478,7 +12472,7 @@ popd
     Target: %windir%\explorer.exe "..\index.html"
 ```
 
-#### [Get-ClipboardAlternative] (Alias: gclipa)  - Get file/image/uri objects from clipboard <a id="Get-ClipboardAlternative"></a>
+#### [Get-ClipboardAlternative] (Alias: gclipa)  - Get file/image/uri objects from clipboard.<a id="Get-ClipboardAlternative"></a>
 
 [Get-ClipboardAlternative]: src/Get-ClipboardAlternative_function.ps1
 [gclipa]: src/Get-ClipboardAlternative_function.ps1
@@ -12676,7 +12670,7 @@ gclipa -ImagePath ~/Downloads/image.png -Debug
 
 Output:
 
-```markdown   
+```markdown 
     DEBUG: Read from Clipboard::GetImage()
     DEBUG: SaveAs: path/to/the/dir/image.png
 
@@ -12688,7 +12682,7 @@ Mode  LastWriteTime    Length Name
 ```
 
 
-#### [Decrease-Indent] (Alias: dind) - Decrease the total indent <a id="Decrease-Indent"></a>
+#### [Decrease-Indent] (Alias: dind) - Decrease the total indent.<a id="Decrease-Indent"></a>
 
 [Decrease-Indent]: src/Decrease-Indent_function.ps1
 
@@ -13271,59 +13265,53 @@ PS> pwenv -e -o
 PS> exit
 ```
 
-#### [pwmake] - Pwsh implementation of GNU make command <a id="pwmake"></a>
+#### [pwmake] - Pwsh implementation of GNU make command.<a id="pwmake"></a>
 
 [pwmake]: src/pwmake_function.ps1
 
-PowerShell版make-like command。GNU makeの劣化コピー。
-カレントディレクトリにあるMakefileを読み実行する。
-GNU make用のMakefileとの互換性は、シンプルな書き方をすれば保たれることもあるが、基本的にうすい。
-詳しい違いは後述するが、たとえば、宣言した変数を用いるときは`${ver}`とする点。
-`$(ver)`を用いてもよいがPowerShellの`Subexpression演算子`とみなされ展開される、など。
+**Synopsis**: A simplified PowerShell version of the **GNU make** command that reads and executes a `Makefile` in the current directory. It has limited compatibility with GNU make's `Makefiles`, though basic syntax may work. For instance, `${ver}` references variables, but `$(ver)` is interpreted as PowerShell's `Subexpression operator`.
 
+**Key Features**: Runs PowerShell commands as a task runner within the current process. Functions dot-sourced into the current PowerShell session can be invoked from the Makefile.
 
-特徴は、実行コマンドにPowerShellコマンドを使用できる点、およびタスクランナーとしてカレントプロセスで動作する点。
-たとえば、カレントプロセスのPowerShellにドットソースで読み込んだ関数も、Makefileに記述して走らせることができる。
-
-筆者のユースケースとしては、たまにしか使わない自作コマンドのメモ（覚え書き）として、それから、よく使うけれど長ったらしいワンライナーを実行するために用いている。
+Ideal for storing infrequently used custom commands or running lengthy, commonly used one-liners.
 
 - Usage
     - `man2 pwmake`
-    - `pwmake`・・・引数なしでカレントディレクトリの`Makefile`を探し実行
-    - `pwmake -f path/to/Makefile`・・・ファイル指定
-    - `pwmake -Help`・・・各target行末尾の「` ## コメント`」部をヘルプとして出力
+    - `pwmake` ... Executes `Makefile` in the current directory without arguments.
+    - `pwmake -f path/to/Makefile` ... Specifies a file.
+    - `pwmake -Help` ... Outputs comments at the end of each target line as help.
     - `pwmake -DryRun`
-    - `pwmake -Param "hoge"`・・・set predefined variable (string)
-    - `pwmake -Params "hoge", "fuga"`・・・set predefined variables (string array)
-    - `pwmake -Variables "file=main.md"`・・・override variable
+    - `pwmake -Param "hoge"` ... Sets a predefined string variable.
+    - `pwmake -Params "hoge", "fuga"` ... Sets predefined string array variables.
+    - `pwmake -Variables "file=main.md"` ... Overrides a variable.
     - `pwmake [[-Target] <String>] [[-Variables] <String[]>] [-File <String>] [-Delimiter <String>] [-TargetDelimiter <String>] [-ErrAction<String>] [-Help] [-DryRun]`
 - Options
-    - `-DryRun`でコマンドを実行せずに実行ログのみ出力
-    - `-Help`・・・Makefileの各target行末尾に「` ## コメント`」としておくと、`pwmake -Help`で、targetごとのヘルプを取得
+    - `-DryRun` ... Outputs execution logs without running commands.
+    - `-Help` ... Retrieves target-specific help from comments at the end of Makefile target lines (` ## comment`).
 - Note
-    - 最初行からコロン`:`を含む行までの間に変数を宣言することができる
-    - コロン`:`を含む行をターゲット行とみなし、それ以外の行をコマンド行とみなす
-    - ファイル名やターゲット名に空白（半角スペース）を含めない
-    - コマンド行は1つ以上の空白又はタブを行頭におく
-    - カレントプロセスで動作する
-        - ファイルは絶対パス指定でない場合はカレントディレクトリからの相対パスで探す
-        - 実行コマンドにPowerShellコマンドを使用できる
-            - カレントプロセスのPowerShellにドットソースで読み込んだ関数も、Makefileに記述して走らせることができる
-    - コマンドラインの行頭に`@`をつけると出力にコマンドラインをechoしない
-    - 宣言した変数を用いるときは`${ver}`とする
-        - `$(ver)`を用いてもよいがPowerShellの`Subexpression演算子`とみなされ展開される点に注意する
-    - ただし変数に代入する値には$(shell command)としてもよい。たとえば：
-        - `DATE := $((Get-Date).ToString('yyyy-MM-dd'))`は、右辺を展開**して**代入
-        - `DATE := ${(Get-Date).ToString('yyyy-MM-dd')}`は、右辺を展開**せず**代入
-        - `DATE  = $((Get-Date).ToString('yyyy-MM-dd'))`は、右辺を展開**せず**代入
-        - `DATE  = ${(Get-Date).ToString('yyyy-MM-dd')}`は、右辺を展開**せず**代入
-            - 注：最初の例以外は、**変数は実行時に展開される**点に注意する
-    - Makefileの各target列末尾に「` ## コメント`」としておくと、`pwmake -Help`で、targetごとのヘルプを取得
-    - コメントの扱い
-        - `#`から始まる行はコメントとみなす
-        - 行末コメントは、変数宣言行とターゲットラインのみ（行頭が空白でない行のみ）可能
-            - コマンドラインの行末コメントは不可。ただし`-DeleteCommentEndOfCommandLine`スイッチを指定すれば、コマンドライン行でも強制的に`#`以降をコメントとみなす。（行頭から右にみて最初の`#`から行末までの最長一致）
-            - このオプションを指定した場合、コマンド自体に'#'を含むと誤動作するので注意
+    - Variables can be declared before the first line containing a colon `:`.
+    - Lines with a colon `:` are treated as target lines; others as command lines.
+    - Avoid spaces in filenames and target names.
+    - Command lines must start with one or more spaces or tabs.
+    - Runs in the current process.
+        - Files are located relative to the current directory unless specified as absolute paths.
+        - PowerShell commands can be used for execution.
+            - Functions dot-sourced into the current PowerShell session can be called from the Makefile.
+    - Prefixing a command line with `@` suppresses echoing the command.
+    - Use `${ver}` to reference declared variables.
+        - `$(ver)` may work, but is treated as PowerShell's `Subexpression operator` and expanded.
+    - However, `$(shell command)` can be used for values assigned to variables. For example:
+        - `DATE := $((Get-Date).ToString('yyyy-MM-dd'))` ... Expands the right-hand side **before** assignment.
+        - `DATE := ${(Get-Date).ToString('yyyy-MM-dd')}` ... Assigns the right-hand side **without** expansion.
+        - `DATE  = $((Get-Date).ToString('yyyy-MM-dd'))` ... Assigns the right-hand side **without** expansion.
+        - `DATE  = ${(Get-Date).ToString('yyyy-MM-dd')}` ... Assigns the right-hand side **without** expansion.
+            - Note: Except for the first example, variables are **expanded at runtime**.
+    - Comments at the end of Makefile target lines (` ## comment`) are displayed as help with `pwmake -Help`.
+    - Comment handling:
+        - Lines starting with `#` are treated as comments.
+        - End-of-line comments are allowed only on variable declaration and target lines (lines not starting with spaces).
+            - End-of-line comments on command lines are not allowed. However, the `-DeleteCommentEndOfCommandLine` switch forces `#` and subsequent characters to be treated as comments on command lines. (Longest match from the first `#` to the end of the line).
+            - Note: Using this option may cause malfunctions if commands contain '#'.
 - Inspired by Unix/Linux Commands
     - Command: `make`
 
@@ -13399,29 +13387,28 @@ clean: ## Remove cache files.
     Remove-Item -Path *.aux,*.dvi,*.log -Force
 ```
 
-Makefileの各target列末尾に「` ## コメント`」としたので、`pwmake -Help`で、targetごとのヘルプを取得できる。
+**Help** for each target can be obtained using `pwmake -Help` if " `## comment`" is added at the end of each target line in the Makefile.
 
 ```Makefile
-# ヘルプメッセージの設定書式
+# Help message setting format
 target: [dep dep ...] ## this is help message
 ```
 
-
 ```powershell
 pwmake -f Makefile -Help
-pwmake -Help # デフォルトでカレントディレクトリのMakefileを探す
+pwmake -Help # Searches for Makefile in the current directory by default
 ```
 
 ```markdown
 target synopsis
 ------ --------
-all    Generate pdf file and open.
-a.pdf  Generate pdf file from dvi file.
-a.dvi  Generate dvi file from tex file.
-clean  Remove cache files.
+all  Generate pdf file and open.
+a.pdf Generate pdf file from dvi file.
+a.dvi Generate dvi file from tex file.
+clean Remove cache files.
 ```
 
-`-DryRun`でコマンドを実行せずに実行ログのみ出力
+`-DryRun` outputs execution logs without executing commands.
 
 ```powershell
 pwmake -DryRun
@@ -13475,7 +13462,7 @@ dvipdfmx -o a.pdf a.dvi
 @echo 2023-01-15 (Sun) 10:26:09
 ```
 
-実行時エラーが発生すると処理は停止する
+Execution halts upon encountering a runtime error.
 
 ```powershell
 pwmake
@@ -13487,14 +13474,9 @@ pwmake: The term 'uplatex' is not recognized as a name of a cmdlet, function, sc
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
 ```
 
-別のMakefileの例。
+**Another Makefile example**: This repository ([GitHub - btklab/pwsh-sketches](https://github.com/btklab/pwsh-sketches)) is a partial clone of a larger, original repository. Edits are made in the original repository (`posh-source`), and then copied to `pwsh-sketches` using a `Makefile` like the one below. This setup was chosen to streamline edits to functions common to both repositories. (As a side effect, I often forget to copy the last changes to `pwsh-sketches` after updating files in `posh-source` multiple times, resulting in commits without the latest changes.) (In essence, the code in the `posh-source` repository is too spaghetti-like and unstable to be publicly shared.)
 
-このリポジトリ（[GitHub - btklab/pwsh-sketches](https://github.com/btklab/pwsh-sketches)）は別の大元となるリポジトリの部分的な複製である。編集は大元のリポジトリ(`posh-source`)で行い、以下のような`Makefile`を用いて（`pwsh-sketches`に）複製している。このような構成にした理由は、両リポジトリに共通する関数を編集するとき、一度ですませたいため。（副作用として、大元の`posh-source`のファイルを何度か更新して、`pwsh-sketches`に最後の変更の複製を忘れた（`pwmake`し忘れた）ままコミットする、ということがしばしば発生している）（要するに`posh-source`リポジトリのコードは、この`pwsh-sketches`よりもスバゲッティで不安定なため、とても公開できる代物ではない、ということ）
-
-ちなみに、文末に「`space`」+「`\` or `` ` `` or `|`」（正規表現でかくと`\s\\$` or ``\s`$`` or `\s\|$`）とすると、次の行を連結してワンライナーにできる。
-この点を利用してターゲット関数のリストを多少読みやすく・追加削除しやすくしている（つもり）。
-
-この事例はコピーファイル数が少なく、個々のコマンド行の実行時間が短く、またファイルの依存関係もないので、`Makefile`を記述して`make`する必要はとくにない。ふつうの`.ps1`スクリプトでこと足りる。
+By the way, adding `space` + `\` or `` ` `` or `|` at the end of a line (regex: `\s\\$` or ``\s`$`` or `\s\|$`) concatenates the next line, forming a one-liner. This is used to make the target function list somewhat easier to read and modify. In this case, the number of files copied is small, the execution time of each command line is short, and there are no file dependencies, so there's no real need to write a `Makefile` and use `make`. A regular `.ps1` script would suffice.
 
 
 ```makefile
@@ -13527,15 +13509,14 @@ pwsh: ${pwshdir} ${poshmock} ## update pwsh scripts
 	Robocopy "${pwshdir}\tests\" "${poshmock}\tests\" /MIR /XA:SH /R:0 /W:1 /COPY:DAT /DCOPY:DT /UNILOG:NUL /TEE
 ```
 
-もうひとつの`Makefile`事例。
+**Another example of a** `Makefile`: A `Makefile` that adds the `.txt` extension to various script files located directly in the `~/Documents` folder and creates a Zip archive.
 
-`~/Documents`フォルダ直下にある各種スクリプトファイルに拡張子`.txt`を付与した上でZipアーカイブする`Makefile`。
+One of the notable features of [pwmake] is that it operates within the **current process**, for better or worse. In this case, be mindful of how file paths are written. To avoid potential issues, it is recommended to use **absolute paths** when writing file paths in the `Makefile`.
 
-[pwmake]の特徴のひとつは**よくも悪くも**カレントプロセスで動作すること。このケースではファイルパスの書き方に注意する。`Makefile`に記述する場合はできるだけ**フルパス**で書くと事故が起こりにくい。
+If file paths are written as relative paths, they will be relative to the directory where `pwmake` is executed. Using relative paths is fine if you always `cd` to the directory containing the `Makefile` before executing `pwmake`. However, if you call a `Makefile` outside the current directory using `pwmake -f <Makefile>` without `cd`, be cautious. In such cases, using absolute paths is a safer way to avoid errors.
 
-ファイルを相対パスで書いた場合は`pwmake`の実行ディレクトリからの相対パスになる点に注意する。都度`Makefile`がおいてあるディレクトリに`cd`してから`pwmake`を実行する場合は相対パスでもよいが、`cd`せずにカレントディレクトリ外の`Makefile`を`pwmake -f <Makefile>`で呼び出すときは要注意。そういうケースではファイルは絶対パスで表現するのが事故予防によい。
+The following `Makefile` is written with absolute paths, assuming it will be invoked without `cd` using `pwmake -f ~/Documents/Makefile`.
 
-以下の`Makefile`も、`cd`せずに`pwmake -f ~/Documents/Makefile`で呼び出すことを想定してファイルを絶対パスで表現したもの。
 
 ```powreshell
 pwmake -f ~/Documents/Makefile -Help
@@ -13582,21 +13563,20 @@ clean: ## Remove "*.txt" items in Documents directory
         }
 ```
 
-#### [Invoke-Link] (Alias: i) - Read and execute links written in a text file <a id="Invoke-Link"></a>
+#### [Invoke-Link] (Alias: i) - Read and execute links written in a text file.<a id="Invoke-Link"></a>
 
 [Invoke-Link]: src/Invoke-Link_function.ps1
 
-Open file/web links written in a text file or via pipeline or via Clipboard.
-The processing priority is `pipeline > arguments > clipboard`.
+Open file or web links from a text file, pipeline, or clipboard. Processing priority: `pipeline > arguments > clipboard`.
 
-    Usage:
+    **Usage**:
         i <file> [keyword] [-Doc|-All|-First <n>]
             ... Invoke-Item <links-writtein-in-text-file>
-        
+    
         i <file> [keyword] [-Doc|-All|-First <n>] -App <application>
             ... application <links-writtein-in-text-file>
-
-    Link file structure:
+    
+    **Link file structure**:
         # amazon                          <- (optional) title / comment
         Tag: #amazon #shop                <- (optional) tag
         https://www.amazon.co.jp/         <- 1st (top) uri
@@ -13604,40 +13584,30 @@ The processing priority is `pipeline > arguments > clipboard`.
         # comment
         https://www.amazon.co.jp/photos/  <- 3rd uri
 
-By default, only the first (top) link in the link file is opened. The `-Doc` switch opens the second and subsequent links. The `-All` switch opens all links (the first link and the subsequent links).
+By default, only the **first** (top) link in the link file is opened. The `-Doc` switch opens the second and subsequent links. The `-All` switch opens all links (the first link and the subsequent links). The intent of this specification is to reduce the number of link files. If you put the links that you usually use in the first line of the link file and the links that you refer to only occasionally in the following lines, you can avoid opening an extra link every time.
 
-The intent of this specification is to reduce the number of link files. If you put the links that you usually use in the first line of the link file and the links that you refer to only occasionally in the following lines, you can avoid opening an extra link every time.
 
-- If a text file (`.txt`, `.md`, ...) is specified, open each line as link in default application
-    - Link beginning with "http" or "www":
-        - `Start-Process` (default browser)
-    - Directory and others:
-        - `Invoke-Item <link>`
-- If a link file (`.lnk`) is specified, open the link in explorer
-- If a PowerShell Script file (`.ps1`) is specified, execute the script in current process:
-    - Able to use dot sourcing functions in current process
-    - Specify the absolute file path in the text file as possible.  Or Note that when specifying a relative path, the root is the location of the current process
-- If a directory is specified, the names and first lines of the files in that hierarchy are listed.
-    - Collect files recursively with `-Recurse` option
+- Text files (`.txt`, `.md`, etc.): Open each line as a link.
+    - `http` or `www` links: Use `Start-Process` (default browser).
+    - Directories/other files: Use `Invoke-Item <link>`.
+- Link files (`.lnk`): Open the link in Explorer.
+- PowerShell scripts (`.ps1`): Execute in the current process.
+    - Allows dot-sourcing functions.
+    - Use absolute paths or note relative paths are from the current process location.
+- Directories: List file names and first lines recursively (`-Recurse` option).
 
 Link file settings:
 
-- Multiple links(lines) in a file available.
-- Tag
-    - To add tags, add a `space` + `#tag` to a comment line
-      starting with `#` or `Tag:`
-        - e.g. `# commnent #tag-1 #tag-2`
-        - e.g. `Tag: #tag-1 #tag-2`
-    - If you specify a directory as an argument:
-        - tags will be output. This is useful when searching linked files by tag.
-        - the directory name is set as a tag.
-- Skip line
-    - Lines that empty or beginning with `#` are skipped.
-    - Lines that empty or beginning with `Tag:` are skipped.
-- The link execution app can be any command if `-App` option is specified.
-- Links written in a text file may or may not be enclosed in single/double quotes.
-- If `-l` or `-Location` specified, open the file location in explorer (do not run link)
-- Environment variables such as `${HOME}` can be used for path strings.
+- Multiple links per file.
+- Tags:
+    - Add `#tag` to comment lines starting with `#` or `Tag:`.
+    - Example: `# comment #tag-1 #tag-2` or `Tag: #tag-1 #tag-2`.
+    - Directory arguments output tags (useful for tag-based searches) and include the directory name as a tag.
+- Skip lines: Empty lines or lines starting with `#` or `Tag:`.
+- Custom link execution app: Use `-App` option.
+- Links in text files: Quotes are optional.
+- File location: Open in Explorer with `-l` or `-Location` (no link execution).
+- Environment variables: Supported in path strings (e.g., `${HOME}`).
 
 Usage:
 
@@ -13661,9 +13631,9 @@ Usage:
         2. As a website favorite link collection
         3. As a simple task runner
 
-EXAMPLE:
+EXAMPLE: basic usage:
 
-cat link file
+show linkfile:
 
 ```powershell
 cat amazon.txt
@@ -13677,7 +13647,7 @@ https://music.amazon.co.jp/       <- 2nd uri
 https://www.amazon.co.jp/photos/  <- 3rd uri
 ```
 
-(`default`) open only the top uri
+`default`: open only the top uri
 
 ```powershell
 i amazon.txt
@@ -13687,7 +13657,7 @@ i amazon.txt
 Start-Process -FilePath "https://www.amazon.co.jp/" <- 1st uri
 ```
 
-(`-Doc`) open extra uris
+`-Doc`: open extra uris
 
 ```powershell
 i amazon.txt -Doc
@@ -13698,7 +13668,7 @@ Start-Process -FilePath "https://music.amazon.co.jp/"      <- 2nd uri
 Start-Process -FilePath "https://www.amazon.co.jp/photos/" <- 3rd uri
 ```
 
-(`-All`) open all uris
+`-All`: open all uris
 
 ```powershell
 i amazon.txt -All
@@ -13710,7 +13680,7 @@ Start-Process -FilePath "https://music.amazon.co.jp/"      <- 2nd uri
 Start-Process -FilePath "https://www.amazon.co.jp/photos/" <- 3rd uri
 ```
 
-(`-First <n>`) open first `<n>` uris
+`-First <n>`: open first `<n>` uris
 
 ```powershell
 i amazon.txt -First 2
@@ -13732,9 +13702,9 @@ i amazon.txt -First 2 -man
 Start-Process -FilePath "https://www.amazon.co.jp/photos/" <- 3rd uri
 ```
 
-Another examples:
+**Another examples**: using another apps to open link.
 
-Input
+linkfile:
 
 ```powershell
 cat ./link/about_Invoke-Item.txt
@@ -13744,19 +13714,19 @@ cat ./link/about_Invoke-Item.txt
 https://learn.microsoft.com/ja-jp/powershell/module/microsoft.powershell.management/invoke-item
 ```
 
-Output:
+open link in default browser
 
 ```powershell
-# open link in default browser
 i ./link/about_Invoke-Item.txt
 ```
 
+open link in "**firefox**" browser
+
 ```powershell
-# open link in "firefox" browser
 i ./link/about_Invoke-Item.txt -App firefox
 ```
 
-Examples:
+**Examples**: Behavior when a directory is specified and dry run, etc...
 
 ```powershell
 # input text file
@@ -13766,6 +13736,8 @@ cat ./link/rmarkdown_site.txt
 ```
 "C:/Users/path/to/the/index.html"
 ```
+
+directory specification:
 
 ```powershell
 # Get-ChildItem <dir>
@@ -13780,6 +13752,8 @@ Mode         LastWriteTime Length Name
 -a---  2023/02/07    20:58     25 google
 ```
 
+dry run
+
 ```powershell
 # dry run
 i ./link/rmarkdown_site.txt -d
@@ -13790,24 +13764,27 @@ i ./link/rmarkdown_site.txt -d
 Invoke-Item "C:/Users/path/to/the/index.html"
 ```
 
+open index.html in default browser
+
 ```powershell
-# open index.html in default browser
 i ./link/rmarkdown_site.txt
 ```
 
+open index.html in VSCode
+
 ```powershell
-# open index.html in VSCode
 i ./link/rmarkdown_site.txt -App code
 ```
 
+open linked file location in explorer
+
 ```powershell
-# open linked file location in explorer
 i ./link/rmarkdown_site.txt -l
 ```
 
-```powershell
-## execute if *.ps1 file specified
+execute if `*.ps1` file specified
 
+```powershell
 cat ./link/MicrosoftSecurityResponseCenter_Get-Rssfeed.ps1
 ```
 
@@ -13833,10 +13810,9 @@ MSRC Security Update Guide 2023-09-15 Chromium: CVE-2023-4904...
 MSRC Security Update Guide 2023-09-15 Chromium: CVE-2023-4905...
 ```
 
-.EXAMPLE
-```powershell
-# tag search
+EXAMPLE: tag search
 
+```powershell
 ## link file
 cat ./work/apps/chrome.txt
 ```
@@ -13861,7 +13837,7 @@ Id Tag                Name               Line
 ```
 
 
-#### [Get-Ticket] (Alias: t) - A parser for tickets written in one-liner text <a id="Get-Ticket"></a>
+#### [Get-Ticket] (Alias: t) - A parser for tickets written in one-liner text.<a id="Get-Ticket"></a>
 
 [Get-Ticket]: src/Get-Ticket_function.ps1
 
@@ -13964,7 +13940,8 @@ t keyword 1,3
 t . 1,3
 ```
 
-invoke link in body with `[-i|-InvokeLink]`.  
+invoke link in body with `[-i|-InvokeLink]`.
+
 e.g. `link: https://example.com/`
 
 ```powershell
@@ -14284,8 +14261,8 @@ t -o -sa -full | Sort "Project" | ft
 ```
 
 ```markdown
-Id Done Project     Act                          Name        
--- ---- -------     ---                          ----        
+Id Done Project     Act                          Name
+-- ---- -------     ---                          ----
  1 -    +Get-Ticket (B) 2023-12-01 Add-Ticket    [tickets.md]
  2 -    +Get-Ticket (B) 2023-12-01 Register-Git  [tickets.md]
 ```
@@ -14413,7 +14390,7 @@ ganttDiagram {
 @endgantt
 ```
 
-#### [Sort-Block] (Alias: blsort) - Sort based on the title line without destroying the body of the list <a id="Sort-Block"></a>
+#### [Sort-Block] (Alias: blsort) - Sort based on the title line without destroying the body of the list.<a id="Sort-Block"></a>
 
 [Sort-Block]: src/Sort-Block_function.ps1
 
@@ -14561,7 +14538,7 @@ mutual
 ```
 
 
-#### [Grep-Block] (Alias: blgrep) - Grep the list while preserving parent-child relationship <a id="Grep-Block"></a>
+#### [Grep-Block] (Alias: blgrep) - Grep the list while preserving parent-child relationship.<a id="Grep-Block"></a>
 
 [Grep-Block]: src/Grep-Block_function.ps1
 
@@ -14728,15 +14705,15 @@ mutual
 ```
 
 
-#### [pwsync] - Invoke Robocopy.exe <a id="pwsync"></a>
+#### [pwsync] - Invoke `Robocopy.exe`.<a id="pwsync"></a>
 
 [pwsync]: src/pwsync_function.ps1
 
-`Robocopy.exe`のラッパースクリプト。フォルダ間で**多数のファイルを安定して同期できる**`Robocopy`は毎日なにかと活躍する。たとえばバックアップ・サーバへのファイルアップロード・データのサルベージなど。
+This is a wrapper script for `Robocopy.exe`. `Robocopy` is a robust tool for synchronizing large numbers of files between folders, useful for tasks like backups, server uploads, and data recovery.
 
-筆者は`Robocopy`を毎日手動で使っているので、`robocopy src dst *.* /MIR /COPY:DAT /DCOPY:DAT /R:5 /W:5 /L`などは手が覚えている。したがって[pwsync]コマンドはとくに必要ないのだが、メモがわりにスクリプトにした。
+As I frequently use `Robocopy` manually, commands like `robocopy src dst *.* /MIR /COPY:DAT /DCOPY:DAT /R:5 /W:5 /L` are second nature to me. This [pwsync] script is more of a personal memo than a necessity.
 
-UTF-8環境下のPowerShell7での使用を想定している。
+This function Designed for use with PowerShell 7 in a UTF-8 environment.
 
 - Usage
     - `man2 pwsync`
@@ -14774,12 +14751,12 @@ UTF-8環境下のPowerShell7での使用を想定している。
     - `[-exec|-Execute]`
     - `[-h|-Help]`
 - Note
-    - `source`と`destination`の指定順序を間違えると`source`が消えてしまう事故になるので注意する
-        - 最初に（左に）`source`、次に（右に）`destination`が正解
-        - 覚え方：話し言葉のように「`source`から`destination`にファイルを同期する」
-    - `Robocopy`はデフォルトで実行してしまうが、[pwsync]は明示的に`-Execute`スイッチを指定しない限りは実行しない
-        - `-Execute`, `-Echo`, `-L|-DryRun`スイッチをなにも指定しなかった場合、デフォルトで`-Quit`スイッチが指定される
-    - [pwsync]は以下の手順で用いると安全である:
+    - **Be careful**, as specifying the `source` and `destination` in the wrong order can result in the `source` being deleted.
+        - The correct order is `source` first (on the left), then `destination` (on the right).
+        - Mnemonic: "Synchronize files from `source` to `destination`" as in spoken language.
+    - While `Robocopy` executes by default, [pwsync] does not execute unless the `-Execute` switch is explicitly specified.
+        - If none of the `-Execute`, `-Echo`, or `-L|-DryRun` switches are specified, the `-Quit` switch is specified by default.
+    - [pwsync] is safest to use with the following procedure:
         1. `pwsync src dst -MIR [-Quit]`
             - (test option: equivalent to `robocopy src dst /MIR /QUIT`)
         2. `pwsync src dst -MIR -DryRun (or -L)`
@@ -14898,7 +14875,7 @@ Examples:
     pwsync src dst -MINAGE 20230324
     pwsync src dst -ExcludeLastWriteDateNewerEqal 20230324
 
-    
+
 # Exclude LastAccessDate older equal 3 days ago or 2023-03-24
     pwsync src dst -MAXLAD 3
     pwsync src dst -ExcludeLastAccessDateOlderEqal 3
@@ -14917,13 +14894,11 @@ Examples:
 
 
 
-#### [tenki] - Open tenki.jp or jma.go.jp in browser <a id="tenki"></a>
+#### [tenki] - Open tenki.jp or jma.go.jp in browser.<a id="tenki"></a>
 
 [tenki]: src/tenki_function.ps1
 
-日本・兵庫県の天気情報webページをブラウザで開く。
-
-Open Hyogo/Japan weather reports in browser (on windows).
+Open weather information web pages for Hyogo Prefecture/Japan in a browser.
 
 - Usage
     - `man2 tenki`
@@ -14950,11 +14925,11 @@ Open Hyogo/Japan weather reports in browser (on windows).
     - `tenki -Edge` ... open tenki.jp forecast and map in edge
 
 
-#### [say] - Speech Synthesizer <a id="say"></a>
+#### [say] - Speech Synthesizer.<a id="say"></a>
 
 [say]: src/say_function.ps1
 
-入力された文字列を読み上げる（文字列入力を音声出力に変換する）。
+Convert input text to speech (text-to-speech).
 
 - Usage
     - `man2 say`
@@ -14962,7 +14937,7 @@ Open Hyogo/Japan weather reports in browser (on windows).
     - `Get-Clipboard | say -JA`
 
 
-#### [Sleep-ComputerAFM] - Sleep computer After a Few Minutes <a id="Sleep-ComputerAFM"></a>
+#### [Sleep-ComputerAFM] - Sleep computer After a Few Minutes.<a id="Sleep-ComputerAFM"></a>
 
 [Sleep-ComputerAFM]: src/Sleep-ComputerAFM_function.ps1
 
@@ -14983,7 +14958,7 @@ if ( $UseRundll32 ){
 }
 ```
 
-#### [Shutdown-ComputerAFM] - Shutdown computer After a Few Minutes <a id="Shutdown-ComputerAFM"></a>
+#### [Shutdown-ComputerAFM] - Shutdown computer After a Few Minutes.<a id="Shutdown-ComputerAFM"></a>
 
 [Shutdown-ComputerAFM]: src/Shutdown-ComputerAFM_function.ps1
 
@@ -14991,7 +14966,7 @@ if ( $UseRundll32 ){
     - `man Shutdown-ComputerAFM`
 
 
-#### [Set-NowTime2Clipboard] (Alias: now) - Set current datetime to the clipboard <a id="Set-NowTime2Clipboard"></a>
+#### [Set-NowTime2Clipboard] (Alias: now) - Set current datetime to the clipboard.<a id="Set-NowTime2Clipboard"></a>
 
 [Set-NowTime2Clipboard]: src/Set-NowTime2Clipboard_function.ps1
 
@@ -15052,16 +15027,13 @@ now -DateTimeTS : 2023-12-21T06:32
 
 
 
-#### [sleepy] - A pomodoro timer using progress bar <a id="sleepy"></a>
+#### [sleepy] - A pomodoro timer using progress bar.<a id="sleepy"></a>
 
 [sleepy]: src/sleepy_function.ps1
 
-`Start-Sleep`にプログレスバーを付与したもの。
-経過時間や残り時間が**視覚的に**わかる。
-デフォルトで`-Minutes 25`（ポモドーロタイマー）。
+A `Start-Sleep` with a progress bar. Visually displays elapsed and remaining time. Defaults to `-Minutes 25` (Pomodoro timer).
 
-筆者は`Windows Terminal`を`Alt > Shift > +/-`で分割し、
-常に端末の片隅に表示して使っている。
+I use it by splitting `Windows Terminal` with `Alt > Shift > +/-` and displaying it in a corner of the terminal at all times.
 
 - Usage
     - `man2 sleepy`
@@ -15086,12 +15058,12 @@ now -DateTimeTS : 2023-12-21T06:32
     - License: The MIT License (MIT): Copyright (c) 2022 Yasuhiro Matsumoto
     - Command: `sleepy`
 
-#### [teatimer] - Time-up notification <a id="teatimer"></a>
+#### [teatimer] - Time-up notification.<a id="teatimer"></a>
 
 [teatimer]: src/teatimer_function.ps1
 
-Windows環境用ティータイマー。時間がきたら通知トレイからポップアップ通知してくれる。
-仕事に没頭すると休憩するタイミングをのがしやすいので。
+Windows tea timer with notification tray pop-ups.
+Helps prevent missed breaks during focused work.
 
 - Usage
     - `man2 teatimer`
@@ -15109,17 +15081,14 @@ Windows環境用ティータイマー。時間がきたら通知トレイから�
         - `[-Quiet]`
         - `[[-IconType]`
 
-#### [Get-AppShortcut] - List up app-shortcuts <a id="Get-AppShortcut"></a>
+#### [Get-AppShortcut] - List up app-shortcuts.<a id="Get-AppShortcut"></a>
 
 [Get-AppShortcut]: src/Get-AppShortcut_function.ps1
 
 
-日本語Windows環境では、キーボードのミスタッチ等により、望まずして「IMEの全角英数字入力モード」になることがある。
-この事象はたまにしか発生しないので、もとに戻す方法を調べてもすぐに忘れてしまうため、関数で記述して覚えておくことにした。
-ついでに、（筆者の）実務でたまに使うけれど覚えていられないショートカット、たとえばエクセルやワードの全画面表示なども記述した。
+Accidental "IME full-width alphanumeric mode" in Japanese Windows is frustratingly common due to typos. It's infrequent, so I always forget how to fix it. I wrote a function to help me remember. I also included shortcuts I struggle to recall, like Excel/Word's full-screen mode.
 
-結局のところ、上のような状況がまれに発生しても、**このような関数を作ったこと自体を忘れている**ので、使われることはなかった。
-
+Ironically, when it happens, **I forget I even created the functions**, so they're never used.
 
 - Usage
     - `man2 Get-AppShortcut`
