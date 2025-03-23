@@ -197,7 +197,7 @@ function Join-Until {
             Mandatory=$False,
             ValueFromPipeline=$True
         )]
-        [Object[]] $InputText
+        [String[]] $InputText
     )
 
     begin {
