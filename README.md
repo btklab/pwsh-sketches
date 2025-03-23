@@ -13214,7 +13214,7 @@ Output:
 
 [Set-DotEnv]: src/Set-DotEnv_function.ps1
 
-Read ".env" file  and temporarily add environment variables.
+Read `.env` or `.env.gpg` file and temporarily add environment variables.
 
 ```
 ".env" file format (UTF8): 
@@ -13224,7 +13224,8 @@ Read ".env" file  and temporarily add environment variables.
 - Usage
     - `man pwenv`
 - Note
-    - By default, the .env file in the current directory is read.
+    - By default, the `.env` file in the current directory is read.
+        - If the `-GPG` switch is specified or the file extension is `.gpg`(e.g. `.env.gpg`), it is automatically treated as a **GPG-encrypted file** and decrypt using `gpg.exe`
     - The default behavior is dryrun. Run with the -Execute option.
     - The scope of the environment variable is the current process.
         - It is temporary, not permanent.

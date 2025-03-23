@@ -8,6 +8,9 @@
             <key>=<value>
     
     - By default, the .env file in the current directory is read.
+      If the -GPG switch is specified or the file extension is .gpg,
+      (e.g.: .env.gpg) it is automatically treated as a GPG-encrypted
+      file and decrypted using gpg.exe
     - The default behavior is dryrun. Run with the -Execute option.
     - The scope of the environment variable is the current process.
       It is temporary, not permanent.
@@ -69,10 +72,20 @@ function Set-DotEnv {
         [Switch] $Execute
         ,
         [Parameter( Mandatory=$False )]
+        [Switch] $GPG
+        ,
+        [Parameter( Mandatory=$False )]
         [Alias('q')]
         [Switch] $Quiet
     )
     # private function
+    function isCommandExist ([string]$Name) {
+        try { Get-Command -Name $Name -ErrorAction Stop > $Null
+            return $True
+        } catch {
+            return $False
+        }
+    }
     filter TrimAndRemoveComment {
         [String] $line = $_
         [String] $line = $line.Trim()
@@ -101,12 +114,40 @@ function Set-DotEnv {
     # main
     foreach ( $p in $Path ){
         # test path
+        if ( (Test-Path -LiteralPath "$p.gpg" ) ){
+            $p = "$p.gpg"
+        }
         if ( -not (Test-Path -LiteralPath $p ) ){
             Write-Error """$Path"" is not exists." -ErrorAction Stop
         }
+        write-debug "Target file: $p"
         # read file
         $envHash = [ordered] @{}
-        Get-Content -LiteralPath "$p" -Encoding utf8 `
+        [string] $ext = (Get-Item -LiteralPath $p).Extension
+        if ( $GPG -or $ext -eq '.gpg' ){
+            if ( -not (isCommandExist "gpg") ){
+                Write-Host "gpg.exe could not found."
+                Write-Host ""
+                Write-Host "Please install GnuPG or Gpg4win:"
+                Write-Host "  GNU Privacy Guard : winget install --id GnuPG.GnuPG --source winget -e"
+                Write-Host "  Gpg4win           : winget install --id GnuPG.Gpg4win --source winget -e"
+                Write-Host ""
+                Write-Host "list-keys using gpg.exe on commandline:"
+                Write-Host "  gpg --list-keys"
+                Write-Host ""
+                Write-Host "Encrypt .env using gpg.exe on commandline:"
+                Write-Host "  gpg --encrypt .env [-r <FINGERPRINT>]"
+                Write-Host ""
+                Write-Host "Decrypt and output to console .env.gpg using gpg.exe:"
+                Write-Host "  gpg -o - --decrypt .env.gpg"
+                Write-Host ""
+                Write-Error "Exection Error." -ErrorAction Stop
+            }
+            [string[]] $contents = gpg -o - --decrypt $p
+        } else {
+            [string[]] $contents = Get-Content -LiteralPath "$p" -Encoding utf8
+        }
+        $contents `
             | TrimAndRemoveComment `
             | ForEach-Object {
                 $name, $val = $_ -split '\s*=\s*', 2
