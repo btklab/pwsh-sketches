@@ -13266,6 +13266,8 @@ While PowerShell's herestring is convenient for handling multi-line strings, it 
 
 This function supports both input from the pipeline and input from arguments.
 
+For example, you can retrieve data using Invoke-WebRequest, expand it into RawContent, and then process each line individually.
+
 
 EXAMPLE of basic usage:
 
@@ -13336,7 +13338,36 @@ Output:
 222
 ```
 
+EXAMPLE: Split the RawContent obtained from Invoke-WebRequest into individual lines.  
 
+Get RawContent
+
+```powershell
+Invoke-WebRequest -Uri https://example.com/ `
+    | Select-Object -ExpandProperty RawContent `
+    | Measure-Object
+```
+
+Output
+
+```yaml
+Count : 1
+```
+
+Split RawContent
+
+```powershell
+Invoke-WebRequest -Uri https://example.com/ `
+    | Select-Object -ExpandProperty RawContent `
+    | Split-HereString `
+    | Measure-Object
+```
+
+Output:
+
+```yaml
+Count : 60
+```
 
 #### [Set-DotEnv] (Alias: pwenv) - Set the contents of the .env file for the current process.<a id="Set-DotEnv"></a>
 

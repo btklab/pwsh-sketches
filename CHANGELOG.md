@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Added [Convert-DictionaryToPSCustomObject][] (Alias:dict2psobject) function
-- Added [Sponge-Property][] Alias unbox
-- Added [Replace-InQuote][] function
+- NA
 
+## [0.5.0] - 2025-03-26
+
+- Added [Convert-DictionaryToPSCustomObject][] (Alias:dict2psobject) function.
+- Added [Sponge-Property][] Alias unbox.
+- Added [Replace-InQuote][] function.
+- Changed [Split-HereString][], [Replace-InQuote][], [sed][], [grep][] Synopsis.
 
 ## [0.4.0] - 2025-03-24
 
@@ -254,7 +258,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Convert-DictionaryToPSCustomObject]: src/Convert-DictionaryToPSCustomObject_function.ps1
 [Replace-InQuote]: src/Replace-InQuote_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.4.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.5.0..HEAD
+[0.5.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.5.0
 [0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0
 [0.3.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.3.0
 [0.2.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.2.0

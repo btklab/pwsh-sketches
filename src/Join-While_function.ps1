@@ -41,13 +41,13 @@
     "hogefuga."
     ) | joinw ',$' -Delimiter " "
 
-        hogehoge and
-        fugafuga.
-        piyopiyo, hogefuga.
+    hogehoge and
+    fugafuga.
+    piyopiyo, hogefuga.
 
     # Note:
     #
-    # If -Regex "" is specified,
+    # If -Regex '' or '^' is specified,
     # concatenate all lines.
     #
     # If -Regex "."  is specified,

@@ -9,6 +9,9 @@
 
     This function supports both input from the pipeline and input from arguments.
 
+    For example, you can retrieve data using Invoke-WebRequest,
+    expand it into RawContent, and then process each line individually.
+
 .EXAMPLE
     # set herestring
     $a = @"
@@ -51,6 +54,24 @@
     $a | Split-HereString | Select-String 222
 
         222
+
+.EXAMPLE
+    # Split the RawContent obtained from Invoke-WebRequest into individual lines.  
+    
+    # Get RawContent
+    Invoke-WebRequest -Uri https://example.com/ `
+        | Select-Object -ExpandProperty RawContent `
+        | Measure-Object
+
+    Count             : 1
+
+    # Split RawContent
+    Invoke-WebRequest -Uri https://example.com/ `
+        | Select-Object -ExpandProperty RawContent `
+        | Split-HereString `
+        | Measure-Object
+
+    Count             : 60
 
 .NOTES
     about_Split - Microsoft Learn

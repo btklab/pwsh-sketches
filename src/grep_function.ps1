@@ -66,12 +66,18 @@
 .LINK
     grep, sed
 
-    about Select-String
-    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-string?view=powershell-7.3
+.NOTES
+    about_Regular_Expressions - PowerShell
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions
 
-    about splatting
-    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting?view=powershell-7.3
+    Regular Expression Language - Quick Reference - .NET
+    https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
 
+    about_Select-String
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-string
+
+    about_splatting
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_splatting
 
 
 .EXAMPLE
