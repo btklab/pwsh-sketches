@@ -40,6 +40,14 @@
     Delete mode:
         sed 'd;pattern for start-of-deletion;pattern for end-of-deletion;'
 
+.NOTES
+    about_Regular_Expressions - PowerShell
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions
+
+    Regular Expression Language - Quick Reference - .NET
+    https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
+
+
 .LINK
     grep, sed, sed-i
 
