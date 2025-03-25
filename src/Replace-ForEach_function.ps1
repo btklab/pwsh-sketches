@@ -9,7 +9,7 @@
         [-OnlyIfPropertyExists]
 
 .LINK
-    Shorten-PropertyName
+    Shorten-PropertyName, Replace-InQuart
 
 .EXAMPLE
     # replace method property's space to underscore

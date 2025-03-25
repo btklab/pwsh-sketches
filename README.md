@@ -39,7 +39,7 @@ cat README.md `
     | Set-Clipboard
 ```
 
-- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Convert-DictionaryToPSCustomObject][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
+- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Convert-DictionaryToPSCustomObject][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-InQuote][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
 
 **General:** This repository provides filter commands for pattern matching on unstructured strings. Input and output are `UTF-8`, space-delimited, line-oriented strings (text objects) via the pipeline, similar to Unix/Linux shell tools. Some functions also accept or output PowerShell objects.
 
@@ -3978,6 +3978,97 @@ https://powershell//about_split
 module
 ```
 
+#### [Replace-InQuote] - Replace substrings enclosed in double quotes.<a id="Replace-InQuote"></a>
+
+[Replace-InQuote]: src/Replace-InQuote_function.ps1
+
+Replace spaces to underscores only within strings enclosed in double quotes.
+
+```powershell
+echo 'aaa "b b b" ccc' | Replace-InQuote -From " " -To "_"
+```
+
+output:
+
+```
+aaa "b_b_b" ccc
+```
+
+**Function behavior**: Note that this function allows to specify arbitrary types and numbers of enclosing characters using -Quote or -PunctuationMarks, but it does not differentiate between the types of enclosing characters. This function reads the input line by line, from left to right, character by character, treating the odd-numbered enclosing characters found as opening brackets and the even-numbered enclosing characters found as closing brackets.
+
+EXAMPLE: Read from standard input and transform
+
+```powershell
+$logEntries = @(
+'192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET /index.html HTTP/1.1" 200 1234',
+'203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST /api/data HTTP/1.1" 500 432',
+'198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT /upload HTTP/1.1" 201 5678'
+)
+
+# Replace spaces to underscores only within strings enclosed in double quotes.
+$logEntries | Replace-InQuote -From ' ' -To '_'
+```
+
+Output:
+
+```
+192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET_/index.html_HTTP/1.1" 200 1234
+203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST_/api/data_HTTP/1.1" 500 432
+198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT_/upload_HTTP/1.1" 201 5678
+```
+
+Format Apachelog into space-delimited data.
+
+```powershell
+$logEntries | Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']'
+```
+
+Output:
+
+```
+192.168.1.1 - - [25/Mar/2025:06:45:00_+0900] "GET_/index.html_HTTP/1.1" 200 1234
+203.0.113.12 - - [25/Mar/2025:06:45:02_+0900] "POST_/api/data_HTTP/1.1" 500 432
+198.51.100.42 - - [25/Mar/2025:06:45:04_+0900] "PUT_/upload_HTTP/1.1" 201 5678
+```
+
+EXAMPLE: Convert to object using `ConvertFrom-CSV`.
+
+```powershell
+$logEntries `
+| Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']' `
+| ConvertFrom-Csv -Delimiter " " -Header (1..7|%{"c$_"}) `
+| ft
+```
+
+Output:
+
+```
+c1            c2 c3 c4                           c5                       c6  c7
+--            -- -- --                           --                       --  --
+192.168.1.1   -  -  [25/Mar/2025:06:45:00_+0900] GET_/index.html_HTTP/1.1 200 1234
+203.0.113.12  -  -  [25/Mar/2025:06:45:02_+0900] POST_/api/data_HTTP/1.1  500 432
+198.51.100.42 -  -  [25/Mar/2025:06:45:04_+0900] PUT_/upload_HTTP/1.1     201 5678
+```
+
+Replace underscores with spaces in the strings of columns `c4` and `c5` using `Replace-ForEach` function.
+
+```powershell
+$logEntries `
+| Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']' `
+| ConvertFrom-Csv -Delimiter " " -Header ( 1..7 | %{ "c$_" } ) `
+| Replace-ForEach -Property c4, c5 -From "_" -To " " `
+| ft
+```
+
+Output:
+
+```
+c1            c2 c3 c4                           c5                       c6  c7
+--            -- -- --                           --                       --  --
+192.168.1.1   -  -  [25/Mar/2025:06:45:00 +0900] GET /index.html HTTP/1.1 200 1234
+203.0.113.12  -  -  [25/Mar/2025:06:45:02 +0900] POST /api/data HTTP/1.1  500 432
+198.51.100.42 -  -  [25/Mar/2025:06:45:04 +0900] PUT /upload HTTP/1.1     201 5678
+```
 
 ### Statistics
 
@@ -12981,7 +13072,7 @@ LCID             Name             DisplayName
 1041             ja-JP            Japanese
 ```
 
-#### [Sponge-Property] (Alias: sponge) - Buffer all input before outputting and Expand a Property.<a id="Sponge-Property"></a>
+#### [Sponge-Property] (Alias: sponge/unbox) - Buffer all input before outputting and Expand a Property.<a id="Sponge-Property"></a>
 
 [Sponge-Property]: src/Sponge-Property_function.ps1
 
@@ -12997,6 +13088,10 @@ Optionally, You can specify a property and expand it. (Method execution does not
 
 ```powershell
 ls | sponge Name
+
+# or
+
+ls | unbox Name
 ```
 
 equivalent to following:
@@ -13015,8 +13110,9 @@ EXAMPLE of basic usage:
 
 ```powershell
 # expand property
-ls | sponge Name
 ls | Sponge-Property Name
+ls | unbox Name
+ls | sponge Name
 
 # equivalent to following
 (ls).Name

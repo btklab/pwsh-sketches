@@ -40,7 +40,7 @@
 
 
 .LINK
-    csv2txt, json2txt
+    csv2txt, json2txt, Replace-InQuart
 
 .EXAMPLE
     cat a.csv | csv2txt
