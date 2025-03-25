@@ -7,23 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Added [Convert-DictionaryToPSCustomObject] (Alias:dict2psobject) function
+- Added [Convert-DictionaryToPSCustomObject][] (Alias:dict2psobject) function
+- Added [Sponge-Property][] Alias unbox
+- Added [Replace-InQuote][] function
+
 
 ## [0.4.0] - 2025-03-24
 
-- Translated [README.md] from Japanese to English as faithfully as possible.
+- Translated [README.md][] from Japanese to English as faithfully as possible.
 
 ### Breaking Changes
 
-- Remaned `jl` to [Join-While]
-- Remaned `jl2` to [Join-Until]
+- Remaned `jl` to [Join-While][]
+- Remaned `jl2` to [Join-Until][]
 
 ## [0.3.0] - 2025-03-23
 
-- Added [Sponge-Property] function
-- Added [Sponge-Script] function
-- Added [Split-HereString] function
-- Added [Set-DotEnv] Support for GnuPG decryption
+- Added [Sponge-Property][] function
+- Added [Sponge-Script][] function
+- Added [Split-HereString][] function
+- Added [Set-DotEnv][] Support for GnuPG decryption
 
 ## [0.2.0] - 2025-03-09
 
@@ -249,6 +252,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Join-Until]: src/Join-Until_function.ps1
 
 [Convert-DictionaryToPSCustomObject]: src/Convert-DictionaryToPSCustomObject_function.ps1
+[Replace-InQuote]: src/Replace-InQuote_function.ps1
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.4.0..HEAD
 [0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Sponge-Property (Alias:sponge) - Buffer all input before outputting and Expand a Property.
+    Sponge-Property (Alias:sponge/unbox) - Buffer all input before outputting and Expand a Property.
 
     This function is useful for chaining pipelines to expand
     nested objects without the backtracking for parentheses.
@@ -13,6 +13,7 @@
     (Method execution does not supported.)
 
         ls | sponge Name
+        ls | unbox Name
 
         (equivalent to following:)
         ls | Select-Object -ExpandProperty Name
@@ -98,6 +99,7 @@
 #>        
 function Sponge-Property {
     [CmdletBinding()]
+    [Alias('unbox')]
     param (
         [Parameter( Mandatory=$False, Position=0 )]
         [Alias('p')]
