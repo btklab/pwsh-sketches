@@ -5,8 +5,8 @@
     Concatenate lines until they match the specified regular expression.
 
     Param:
-      -Trim    ... Trim only the connected lines before joining.
-      -TrimAll ... Trim all lines before and after joining.
+      -TrimOnlyInJoin ... Trim only the connected lines before joining.
+      -DisableTrim    ... Disable Trim all lines before and after joining.
 
 .LINK
     Join-While, Join-Until, Trim-EmptyLine, list2txt, csv2txt
@@ -49,7 +49,7 @@
           link-1
           link-2
         
-    cat data.txt | joinu '\[' -TrimAll
+    cat data.txt | joinu '\['
 
     Output:
 
@@ -62,7 +62,7 @@
 
 .EXAMPLE
     # skip header
-    cat data.txt | joinu '\[' -Trim -SkipHeader
+    cat data.txt | joinu '\[' -SkipHeader
 
     Output:
 
@@ -74,7 +74,7 @@
 
 .EXAMPLE
     # delete match
-    cat data.txt | joinu '\[([^]]+)\]' -TrimAll -Delete
+    cat data.txt | joinu '\[([^]]+)\]' -Delete
 
     Output:
 
@@ -87,7 +87,7 @@
 
 .EXAMPLE
     # replace match
-    cat data.txt | joinu '\[([^]]+)\]' -TrimAll -Replace '$1:'
+    cat data.txt | joinu '\[([^]]+)\]' -Replace '$1:'
 
     Output:
 
@@ -100,7 +100,7 @@
 
 .EXAMPLE
     # insert empty line for each line
-    cat data.txt | joinu '\[([^]]+)\]' -TrimAll -After "" | juni
+    cat data.txt | joinu '\[([^]]+)\]' -After "" | juni
 
     Output:
 
@@ -122,7 +122,7 @@
     # deletes item names,
     # and outputs in one tab-delimited line
     # for spread sheet
-    (cat data.txt | joinu '\[([^]]+)\]' -TrimAll -Delete -SkipHeader) -join "`t"
+    (cat data.txt | joinu '\[([^]]+)\]' -Delete -SkipHeader) -join "`t"
 
     Output:
     
@@ -138,7 +138,7 @@ function Join-Until {
             Mandatory=$False,
             Position = 0
         )]
-        [Alias('m')]
+        [Alias('r')]
         [String] $Regex = "."
         ,
         [Parameter(
@@ -149,16 +149,16 @@ function Join-Until {
         [String] $Delimiter = " "
         ,
         [Parameter(
-            HelpMessage="Trim line",
+            HelpMessage="Trim only injoin line",
             Mandatory=$False
         )]
-        [Switch] $Trim
+        [Switch] $TrimOnlyInJoin
         ,
         [Parameter(
-            HelpMessage="Trim entire line",
+            HelpMessage="Disable Trim line",
             Mandatory=$False
         )]
-        [Switch] $TrimAll
+        [Switch] $DisableTrim
         ,
         [Parameter(
             Mandatory=$False
@@ -175,7 +175,7 @@ function Join-Until {
             HelpMessage="Delete matched strings",
             Mandatory=$False
         )]
-        [Alias('dm')]
+        [Alias('del')]
         [Switch] $Delete
         ,
         [Parameter(
@@ -189,12 +189,14 @@ function Join-Until {
             HelpMessage="Insert Before",
             Mandatory=$False
         )]
+        [Alias('b')]
         [String[]] $Before
         ,
         [Parameter(
             HelpMessage="Insert After",
             Mandatory=$False
         )]
+        [Alias('a')]
         [String[]] $After
         ,
         [parameter(
@@ -233,9 +235,9 @@ function Join-Until {
         } else {
             [Bool] $inJoin = $True
         }
-        if ( $TrimAll ){
+        if ( -not $DisableTrim ){
             [String] $readLine = $readLine.Trim()
-        } elseif ( $Trim -and $inJoin ){
+        } elseif ( $TrimOnlyInJoin -and $inJoin ){
             [String] $readLine = $readLine.Trim()
         }
         ## test readline
@@ -256,7 +258,7 @@ function Join-Until {
             [String[]] $tempLineAry = $tempAryList.ToArray()
             if ( $tempLineAry.Count -gt 0 ){
                 [String] $writeLine = $tempLineAry -join $Delimiter
-                if ( $TrimAll ){
+                if ( -not $DisableTrim ){
                     $writeLine = $writeLine.Trim()
                 }
                 Write-BeforeAndAfterOutput $writeLine
@@ -279,7 +281,7 @@ function Join-Until {
         [String[]] $tempLineAry = $tempAryList.ToArray()
         if ( $tempLineAry.Count -gt 0 ){
             [String] $writeLine = $tempLineAry -join $Delimiter
-            if ( $TrimAll ){
+            if ( -not $DisableTrim ){
                 $writeLine = $writeLine.Trim()
             }
             Write-BeforeAndAfterOutput $writeLine

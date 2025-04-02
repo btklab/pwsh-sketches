@@ -6,8 +6,8 @@
     a blank line is encountered.
 
     Param:
-      -Trim    ... Trim only the connected lines before joining.
-      -TrimAll ... Trim all lines before and after joining.
+      -TrimOnlyInJoin ... Trim only the connected lines before joining.
+      -DisableTrim    ... Disable Trim all lines before and after joining.
 
     Note that ending character string treated as regular expressions.
     Use escape mark "\" to search for symbols as character, for example:
@@ -92,16 +92,18 @@
 function Join-While {
     Param(
         [Parameter(Mandatory=$False, Position=0)]
+        [Alias('r')]
         [string]$Regex
         ,
         [Parameter(Mandatory=$False)]
+        [Alias('d')]
         [string]$Delimiter = ' '
         ,
         [Parameter(Mandatory=$False)]
-        [switch]$Trim
+        [switch]$TrimOnlyInJoin
         ,
         [Parameter(Mandatory=$False)]
-        [switch]$TrimAll
+        [switch]$DisableTrim
         ,
         [Parameter(Mandatory=$False)]
         [switch]$DisableBlankDelimiter
@@ -110,9 +112,11 @@ function Join-While {
         [switch]$AddCrLf
         ,
         [Parameter(Mandatory=$False)]
+        [Alias('b')]
         [string[]]$Before
         ,
         [Parameter(Mandatory=$False)]
+        [Alias('a')]
         [string[]]$After
         ,
         [parameter(Mandatory=$False, ValueFromPipeline=$True)]
@@ -124,6 +128,7 @@ function Join-While {
         [Regex] $reg        = $Regex
         [string] $readLine  = ""
         [string] $writeLine = ""
+        [bool] $inJoin      = $False
         ## private function
         function Write-BeforeAndAfterOutput ([string] $line) {
             if ( $Before.Count -gt 0 ){
@@ -152,15 +157,15 @@ function Join-While {
         } else {
             [bool] $secondMatch = $False
         }
-        if ( $TrimAll ){
+        if ( -not $DisableTrim ){
             $readLine = $readLine.Trim()
-        } elseif ( $Trim -and $nextMatch ){
+        } elseif ( $TrimOnlyInJoin -and $nextMatch ){
             $readLine = $readLine.Trim()
         }
         # skip blank
         if (( -not $DisableBlankDelimiter ) -and ($readLine -match '^\s*$')) {
             if ($inJoin) {
-                if ( $TrimAll ) {
+                if ( -not $DisableTrim ) {
                     $writeLine = $writeLine.Trim()
                 }
                 Write-BeforeAndAfterOutput $writeLine
@@ -187,7 +192,7 @@ function Join-While {
             }else{
                 [string] $writeLine = $readLine
             }
-            if ( $TrimAll ) {
+            if ( -not $DisableTrim ) {
                 $writeLine = $writeLine.Trim()
             }
             Write-BeforeAndAfterOutput $writeLine
@@ -197,7 +202,7 @@ function Join-While {
     end{
         # output
         if ($writeLine -ne '') {
-            if ( $TrimAll ) {
+            if ( -not $DisableTrim ) {
                 [string] $writeLine = $writeLine.Trim()
             }
             Write-BeforeAndAfterOutput $writeLine
