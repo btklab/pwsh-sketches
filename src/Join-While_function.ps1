@@ -5,6 +5,10 @@
     Concatenate lines while they match the specified regular expression or
     a blank line is encountered.
 
+    Param:
+      -Trim    ... Trim only the connected lines before joining.
+      -TrimAll ... Trim all lines before and after joining.
+
     Note that ending character string treated as regular expressions.
     Use escape mark "\" to search for symbols as character, for example:
     
@@ -27,10 +31,6 @@
 
 .PARAMETER AddCrLf
     Insert a blank line end of input.
-
-.PARAMETER SkipBlank
-    If detect a blank line,
-    output once there.
 
 .EXAMPLE
     # Concatenate lines until a comma appears at the end.
@@ -98,7 +98,13 @@ function Join-While {
         [string]$Delimiter = ' '
         ,
         [Parameter(Mandatory=$False)]
-        [switch]$SkipBlank
+        [switch]$Trim
+        ,
+        [Parameter(Mandatory=$False)]
+        [switch]$TrimAll
+        ,
+        [Parameter(Mandatory=$False)]
+        [switch]$DisableBlankDelimiter
         ,
         [Parameter(Mandatory=$False)]
         [switch]$AddCrLf
@@ -115,7 +121,6 @@ function Join-While {
     begin{
         ## init var
         [int] $counter      = 0
-        [bool] $bufFlag     = $False
         [Regex] $reg        = $Regex
         [string] $readLine  = ""
         [string] $writeLine = ""
@@ -136,32 +141,54 @@ function Join-While {
         $counter++
         # read a line
         [string] $readLine = $_
-        # skip blank
-        if (($SkipBlank) -and ($readLine -eq '')) {
-            if ($bufFlag) {
-                Write-BeforeAndAfterOutput $writeLine
-                $writeLine = ''
-                $bufFlag = $False
+        if ( $readLine -match $reg ){
+            if ( $inJoin ) {
+                [bool] $inJoin      = $True
+                [bool] $secondMatch = $True
+            } else {
+                [bool] $inJoin      = $True
+                [bool] $secondMatch = $False
             }
-            Write-Output ""
+        } else {
+            [bool] $secondMatch = $False
+        }
+        if ( $TrimAll ){
+            $readLine = $readLine.Trim()
+        } elseif ( $Trim -and $nextMatch ){
+            $readLine = $readLine.Trim()
+        }
+        # skip blank
+        if (( -not $DisableBlankDelimiter ) -and ($readLine -match '^\s*$')) {
+            if ($inJoin) {
+                if ( $TrimAll ) {
+                    $writeLine = $writeLine.Trim()
+                }
+                Write-BeforeAndAfterOutput $writeLine
+                [string] $writeLine = ''
+                [bool] $inJoin = $False
+            }
+            #Write-Output ''
             return
         }
-        # don't skip blank
-        if ($readLine -cmatch $reg){
+        # do not skip blank
+        if ($readLine -match $reg){
             ## if ends with $Str
-            if ($bufFlag){
+            if ($inJoin){
                 $writeLine += $Delimiter + $readLine
             }else{
                 $writeLine = $readLine
             }
-            $bufFlag = $True
+            [bool] $inJoin = $True
         }else{
             ## if not ends with $Str
-            if ($bufFlag){
-                $writeLine = $writeLine + $Delimiter + $readLine
-                $bufFlag = $False
+            if ($inJoin){
+                [string] $writeLine = $writeLine + $Delimiter + $readLine
+                [bool] $inJoin = $False
             }else{
-                $writeLine = $readLine
+                [string] $writeLine = $readLine
+            }
+            if ( $TrimAll ) {
+                $writeLine = $writeLine.Trim()
             }
             Write-BeforeAndAfterOutput $writeLine
             [string] $writeLine = ''
@@ -170,10 +197,13 @@ function Join-While {
     end{
         # output
         if ($writeLine -ne '') {
+            if ( $TrimAll ) {
+                [string] $writeLine = $writeLine.Trim()
+            }
             Write-BeforeAndAfterOutput $writeLine
         }
         if ($AddCrLf) {
-            Write-Output ""
+            Write-Output ''
         }
     }
 }

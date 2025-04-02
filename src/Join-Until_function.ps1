@@ -4,6 +4,10 @@
 
     Concatenate lines until they match the specified regular expression.
 
+    Param:
+      -Trim    ... Trim only the connected lines before joining.
+      -TrimAll ... Trim all lines before and after joining.
+
 .LINK
     Join-While, Join-Until, Trim-EmptyLine, list2txt, csv2txt
 
@@ -45,7 +49,7 @@
           link-1
           link-2
         
-    cat data.txt | joinu '\['
+    cat data.txt | joinu '\[' -TrimAll
 
     Output:
 
@@ -58,7 +62,7 @@
 
 .EXAMPLE
     # skip header
-    cat data.txt | joinu '\[' -SkipHeader
+    cat data.txt | joinu '\[' -Trim -SkipHeader
 
     Output:
 
@@ -70,20 +74,20 @@
 
 .EXAMPLE
     # delete match
-    cat data.txt | joinu '\[([^]]+)\]' -Delete
+    cat data.txt | joinu '\[([^]]+)\]' -TrimAll -Delete
 
     Output:
 
         # data
         2024-10-24
-        <blankline>
+
         btklab, fuga
         summary-1 summary-2 summary-3
         link-1 link-2
 
 .EXAMPLE
     # replace match
-    cat data.txt | joinu '\[([^]]+)\]' -Replace '$1:'
+    cat data.txt | joinu '\[([^]]+)\]' -TrimAll -Replace '$1:'
 
     Output:
 
@@ -96,7 +100,7 @@
 
 .EXAMPLE
     # insert empty line for each line
-    cat data.txt | joinu '\[([^]]+)\]' -After "" | juni
+    cat data.txt | joinu '\[([^]]+)\]' -TrimAll -After "" | juni
 
     Output:
 
@@ -118,7 +122,7 @@
     # deletes item names,
     # and outputs in one tab-delimited line
     # for spread sheet
-    (cat data.txt | joinu '\[([^]]+)\]' -Delete -SkipHeader) -join "`t"
+    (cat data.txt | joinu '\[([^]]+)\]' -TrimAll -Delete -SkipHeader) -join "`t"
 
     Output:
     
@@ -139,31 +143,32 @@ function Join-Until {
         ,
         [Parameter(
             HelpMessage="Output delimiter",
-            Mandatory=$False,
-            Position = 1
+            Mandatory=$False
         )]
         [Alias('d')]
         [String] $Delimiter = " "
         ,
         [Parameter(
-            HelpMessage="Do not trim line",
+            HelpMessage="Trim line",
             Mandatory=$False
         )]
-        [Alias('nt')]
-        [Switch] $NoTrim
+        [Switch] $Trim
         ,
         [Parameter(
-            HelpMessage="Do not skip blank line",
+            HelpMessage="Trim entire line",
             Mandatory=$False
         )]
-        [Alias('ns')]
-        [Switch] $NoSkip
+        [Switch] $TrimAll
+        ,
+        [Parameter(
+            Mandatory=$False
+        )]
+        [Switch] $DisableBlankDelimiter
         ,
         [Parameter(
             HelpMessage="Skip header until a specified string is found",
             Mandatory=$False
         )]
-        [Alias('s')]
         [Switch] $SkipHeader
         ,
         [Parameter(
@@ -204,6 +209,7 @@ function Join-Until {
         # set variables
         [Int] $rowCounter = 0
         [Bool] $firstMatch = $False
+        [Bool] $inJoin = $True
         [String[]] $tempLineAry = @()
         $tempAryList = New-Object 'System.Collections.Generic.List[System.String]'
         ## private function
@@ -221,23 +227,27 @@ function Join-Until {
     process {
         $rowCounter++
         [String] $readLine = [String] $_
-        if ( $NoTrim ){
-            #pass
-        } else {
-            [String] $readLine = $readLine.Trim()
-        }
         if ( $readLine -match $Regex ){
             [Bool] $firstMatch = $True
+            [Bool] $inJoin = $False
+        } else {
+            [Bool] $inJoin = $True
+        }
+        if ( $TrimAll ){
+            [String] $readLine = $readLine.Trim()
+        } elseif ( $Trim -and $inJoin ){
+            [String] $readLine = $readLine.Trim()
         }
         ## test readline
         Write-Debug "firstMatch: $firstMatch"
         if ( $SkipHeader -and -not $firstMatch ){
             return
         }
-        if ( $NoSkip ){
-            #pass
-        } else {
-            if ( $readLine -eq ''){
+        if ( $readLine -match '^\s*$'){
+            if ( $DisableBlankDelimiter ){
+                return
+            } else {
+                #Write-Output ''
                 return
             }
         }
@@ -246,10 +256,8 @@ function Join-Until {
             [String[]] $tempLineAry = $tempAryList.ToArray()
             if ( $tempLineAry.Count -gt 0 ){
                 [String] $writeLine = $tempLineAry -join $Delimiter
-                if ( $NoTrim ){
-                    #pass
-                } else {
-                    [String] $writeLine = $writeLine.Trim()
+                if ( $TrimAll ){
+                    $writeLine = $writeLine.Trim()
                 }
                 Write-BeforeAndAfterOutput $writeLine
             }
@@ -263,11 +271,6 @@ function Join-Until {
         } elseif ( $Delete ){
             [String] $readLine = $readLine -replace $Regex, ''
         }
-        if ( $NoTrim ){
-            #pass
-        } else {
-            [String] $readLine = $readLine.Trim()
-        }
         $tempAryList.Add( $readLine )
     }
 
@@ -276,10 +279,8 @@ function Join-Until {
         [String[]] $tempLineAry = $tempAryList.ToArray()
         if ( $tempLineAry.Count -gt 0 ){
             [String] $writeLine = $tempLineAry -join $Delimiter
-            if ( $NoTrim ){
-                #pass
-            } else {
-                [String] $writeLine = $writeLine.Trim()
+            if ( $TrimAll ){
+                $writeLine = $writeLine.Trim()
             }
             Write-BeforeAndAfterOutput $writeLine
         }
