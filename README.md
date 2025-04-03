@@ -4072,6 +4072,57 @@ c1            c2 c3 c4                           c5                       c6  c7
 
 ### Statistics
 
+#### [Get-Dataset] (Alias:dataset) - Retrieves the 'iris' dataset from R using Rscript.<a id="Get-Dataset"></a>
+
+[Get-Dataset]: src/Get-Dataset
+
+This script uses Rscript to execute an R command that loads the 'iris' dataset.
+
+**Prerequisites**: R must be installed on the system.
+
+```cmd
+winget install --id RProject.R --source winget -e
+```
+
+and add to the PATH environment variable
+
+- Usage
+    - `man2 dataset`
+    - `dataset [iris,etc...]`
+
+EXAMPLE: Show top 5 dataset names.
+
+```powershell
+dataset | select -First 5
+```
+
+```markdown
+Name          Type       Title
+----          ----       -----
+AirPassengers ts         Monthly Airline Passenger Numbers 1949-1960
+BJsales       ts         Sales Data with Leading Indicator
+BJsales.lead  ts         Sales Data with Leading Indicator
+BOD           data.frame Biochemical Oxygen Demand
+CO2           data.frame Carbon Dioxide Uptake in Grass Plants
+```
+
+EXAMPLE: Get the iris dataset.
+
+```powershell
+dataset iris | select -First 5 | ft
+```
+
+```markdown
+Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+------------ ----------- ------------ ----------- -------
+5.1          3.5         1.4          0.2         setosa
+4.9          3           1.4          0.2         setosa
+4.7          3.2         1.3          0.2         setosa
+4.6          3.1         1.5          0.2         setosa
+5            3.6         1.4          0.2         setosa
+```
+
+
 #### [percentile] - Ranking with percentile and quartile.<a id="percentile"></a>
 
 [percentile]: src/percentile_function.ps1

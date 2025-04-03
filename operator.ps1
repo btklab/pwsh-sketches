@@ -186,6 +186,7 @@ if ( $IsWindows ){
 ## sys admin
 
 ## statistics
+. $pwshSrcDir/Get-Dataset_function.ps1
 . $pwshSrcDir/percentile_function.ps1
 . $pwshSrcDir/decil_function.ps1
 . $pwshSrcDir/summary_function.ps1

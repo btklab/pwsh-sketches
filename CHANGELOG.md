@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Changed [Join-While][] Option `Trim` to `DisableTrim`
-- Changed [Join-Until][] Option `Trim` to `DisableTrim`
+- Changed [Join-While][] Option `Trim` to `DisableTrim`.
+- Changed [Join-Until][] Option `Trim` to `DisableTrim`.
+- Added [Get-Dataset][] function.
 
 ## [0.5.0] - 2025-03-26
 
@@ -259,9 +260,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Convert-DictionaryToPSCustomObject]: src/Convert-DictionaryToPSCustomObject_function.ps1
 [Replace-InQuote]: src/Replace-InQuote_function.ps1
 
+[Get-Dataset]: src/Get-Dataset_function.ps1
+
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.5.0..HEAD
 [0.5.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.5.0
 [0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0
 [0.3.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.3.0
 [0.2.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.2.0
 [0.1.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.1.0
+
