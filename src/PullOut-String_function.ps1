@@ -49,7 +49,7 @@
 
 .NOTES
     about_Split - PowerShell
-    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_split?view=powershell-7.4
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_split
 #>
 function PullOut-String {
 
