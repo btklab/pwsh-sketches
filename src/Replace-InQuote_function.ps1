@@ -103,7 +103,7 @@ function Replace-InQuote {
         ,
         [Parameter(Mandatory=$false)]
         [Alias('q')]
-        [string] $Quart = '"'
+        [string] $Quote = '"'
         ,
         [Parameter(Mandatory=$false)]
         [Alias('p')]
@@ -121,10 +121,10 @@ function Replace-InQuote {
                 [string] $c
             )
             [bool] $quartFlag = $False
-            if ( $Quart -eq '' ) {
+            if ( $Quote -eq '' ) {
                 # skip
             } else {
-                if ( $c -eq $Quart ) {
+                if ( $c -eq $Quote ) {
                     $quartFlag = $true
                 }
             }
