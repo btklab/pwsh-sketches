@@ -6,7 +6,7 @@
     
     reference:
     - Invoke-WebRequest
-      https://docs.microsoft.com/ja-jp/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.2
+      https://docs.microsoft.com/ja-jp/powershell/module/microsoft.powershell.utility/invoke-webrequest
 
     -Header: Recognize 1st column as filename, 2nd as href.
       The filename is added to the leftmost of output.

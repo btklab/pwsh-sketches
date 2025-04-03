@@ -19,7 +19,7 @@
     - 【WEBツール】Unicode 変換 - お便利ツール.com （unicode変換）
         - https://www.oh-benri-tools.com/tools/programming/unicode-escape-unescape
     - ArrayList
-        - https://docs.microsoft.com/ja-jp/dotnet/api/system.collections.arraylist.remove?view=net-5.0
+        - https://docs.microsoft.com/ja-jp/dotnet/api/system.collections.arraylist.remove
 
     references:
     - 禁則処理 (Sep. 10, 2022, 09:31 UTC). In Wikipedia: The Free Encyclopedia.

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Replace-InQuote - Replace substrings enclosed in double quotes.
+    Replace-InQuote (Alias:qsed) - Replace substrings enclosed in double quotes.
 
     default: Replace spaces to underscores only within strings
              enclosed in double quotes.
@@ -103,7 +103,7 @@ function Replace-InQuote {
         ,
         [Parameter(Mandatory=$false)]
         [Alias('q')]
-        [string] $Quart = '"'
+        [string] $Quote = '"'
         ,
         [Parameter(Mandatory=$false)]
         [Alias('p')]
@@ -121,10 +121,10 @@ function Replace-InQuote {
                 [string] $c
             )
             [bool] $quartFlag = $False
-            if ( $Quart -eq '' ) {
+            if ( $Quote -eq '' ) {
                 # skip
             } else {
-                if ( $c -eq $Quart ) {
+                if ( $c -eq $Quote ) {
                     $quartFlag = $true
                 }
             }
@@ -195,7 +195,7 @@ function Replace-InQuote {
     }
 }
 # set alias
-[String] $tmpAliasName = "repq"
+[String] $tmpAliasName = "qsed"
 [String] $tmpCmdName   = "Replace-InQuote"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
