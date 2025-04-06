@@ -16,6 +16,8 @@
         "-" to "\-"
         "$" to "\$"
         "\" to "\\"
+        "?" to "\?"
+        "*" to "\*"
 
 .LINK
     Join-While, Join-Until, Trim-EmptyLine, list2txt, csv2txt
@@ -88,6 +90,14 @@
         =============
         Converts blank line delimited records to tab delimited records.
 
+.EXAMPLE
+    # Replace first delimiter
+    cat data.txt | joinw . -d ", " -ReplaceFirstDelimiter ": "
+
+    bumon-A: filter, 17:45 2017/05/10, hoge, fuga
+    bumon-B: eva, 17:46 2017/05/10, piyo, piyo
+    bumon-C: tank, 17:46 2017/05/10, fuga, fuga
+
 #>
 function Join-While {
     Param(
@@ -98,6 +108,9 @@ function Join-While {
         [Parameter(Mandatory=$False)]
         [Alias('d')]
         [string]$Delimiter = ' '
+        ,
+        [Parameter(Mandatory=$False)]
+        [switch]$EscapeRegex
         ,
         [Parameter(Mandatory=$False)]
         [switch]$TrimOnlyInJoin
@@ -119,13 +132,20 @@ function Join-While {
         [Alias('a')]
         [string[]]$After
         ,
+        [Parameter(Mandatory=$False)]
+        [string]$ReplaceFirstDelimiter
+        ,
         [parameter(Mandatory=$False, ValueFromPipeline=$True)]
         [string[]]$TextObject
     )
     begin{
         ## init var
-        [int] $counter      = 0
-        [Regex] $reg        = $Regex
+        [int] $counter = 0
+        if ($EscapeRegex) {
+            [regex] $reg = [Regex]::Escape($Regex)
+        } else {
+            [regex] $reg = $Regex
+        }
         [string] $readLine  = ""
         [string] $writeLine = ""
         [bool] $inJoin      = $False
@@ -133,6 +153,12 @@ function Join-While {
         function Write-BeforeAndAfterOutput ([string] $line) {
             if ( $Before.Count -gt 0 ){
                 Write-Output $Before
+            }
+            if ( $ReplaceFirstDelimiter ){
+                [regex] $escapedDelimiter = [Regex]::Escape($Delimiter)
+                $line = $escapedDelimiter.Replace($line, $ReplaceFirstDelimiter, 1)
+            } else {
+                $line = $line
             }
             Write-Output $line
             if ( $After.Count -gt 0 ){
@@ -178,8 +204,10 @@ function Join-While {
         # do not skip blank
         if ($readLine -match $reg){
             ## if ends with $Str
-            if ($inJoin){
+            if ($inJoin -and $secondMatch){
                 $writeLine += $Delimiter + $readLine
+            } elseif ($inJoin -and -not $secondMatch){
+                $writeLine = $readLine
             }else{
                 $writeLine = $readLine
             }
