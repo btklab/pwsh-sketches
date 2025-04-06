@@ -7,8 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Changed [Convert-DictionaryToPSCustomObject][] Supported ordered hashtable.
 - Changed [Join-While][] Option `Trim` to `DisableTrim`.
 - Changed [Join-Until][] Option `Trim` to `DisableTrim`.
+- Changed [Join-While][] Add `-ReplaceFirstDelimiter` option.
+- Changed [Join-Until][] Add `-ReplaceFirstDelimiter` option.
 - Added [Get-Dataset][] function.
 
 ## [0.5.0] - 2025-03-26

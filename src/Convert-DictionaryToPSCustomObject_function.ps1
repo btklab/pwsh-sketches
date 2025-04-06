@@ -16,11 +16,9 @@
 
 .EXAMPLE
     # pipeline input
-    @{ Name = "John Doe"; Age = 30; City = "New York" },
-    @{ Name = "Jane Smith"; Age = 25; City = "London" } |
+    [ordered] @{ Name = "John Doe"; Age = 30; City = "New York" },
+    [ordered] @{ Name = "Jane Smith"; Age = 25; City = "London" } |
     Convert-DictionaryToPSCustomObject
-
-    Output:
 
     Name       Age City
     ----       --- ----
@@ -29,10 +27,8 @@
 
 .EXAMPLE
     # direct input
-    $myDictionary = @{ Name = "Alice"; Age = 28; City = "Tokyo" }
+    $myDictionary = [ordered] @{ Name = "Alice"; Age = 28; City = "Tokyo" }
     Convert-DictionaryToPSCustomObject -Dictionary $myDictionary
-
-    Output:
 
     Name  Age City
     ----  --- ----
@@ -42,22 +38,36 @@ function Convert-DictionaryToPSCustomObject {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory=$true, ValueFromPipeline=$true)]
-        [hashtable] $Dictionary
+        [object[]] $Dictionary
         ,
         [Parameter(Mandatory=$false)]
         [Alias('r')]
         [switch] $Recurse
     )
     process {
-        $Object = [PSCustomObject]::new()
-        foreach ($Key in $Dictionary.Keys) {
-            if($Dictionary[$key] -as [System.Collections.Hashtable[]] -and $Recurse){
-                $Object | Add-Member -MemberType "NoteProperty" -Name $Key -Value $(Convert-DictionaryToPSCustomObject $Dictionary[$key] -Recurse)
-            } else {
-                $Object | Add-Member -MemberType "NoteProperty" -Name $Key -Value ($Dictionary[$Key])
+        # check input hash type
+        try {
+            [System.Collections.Specialized.OrderedDictionary[]]$Hash = $Dictionary
+        } catch {
+            try {
+                [System.Collections.Hashtable[]]$Hash = $Dictionary
+            } catch {
+                Write-Error $Error -ErrorAction Stop
             }
         }
-        Write-Output $Object
+        foreach ( $eHash in $Hash) {
+            $oHash = [ordered] @{}
+            foreach ($key in $eHash.Keys) {
+                if ($eHash[$key] -as [System.Collections.Specialized.OrderedDictionary[]] -and $Recurse){
+                    $oHash[$key] = $(Convert-DictionaryToPSCustomObject $eHash[$key] -Recurse)
+                } elseif ($Hash[$key] -as [System.Collections.Hashtable[]] -and $Recurse){
+                    $oHash[$key] = $(Convert-DictionaryToPSCustomObject $eHash[$key] -Recurse)
+                } else {
+                    $oHash[$key] = ($eHash[$Key])
+                }
+            }
+        }
+        [PSCustomObject]$oHash
     }
 }
 # set alias
