@@ -2,7 +2,7 @@
 .SYNOPSIS
     Rename-Normalize - File name normalizer for Japanese on windows
 
-    Read and rename file objects from standard input.
+    Read and rename file from standard input.
 
     By default, shows what would happen if the command runs.
     The command is not run.

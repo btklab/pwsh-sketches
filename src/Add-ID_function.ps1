@@ -8,6 +8,11 @@
     The default id property name is "id".
     If there are duplicates, it will be "id<n>".
 
+.LINK
+    ForEach-Step, ForEach-Block, ForEach-Label,
+    Apply-Function, Trim-EmptyLine, toml2psobject,
+    Add-Id
+
 .EXAMPLE
     # input data
     ls -File | select Name, Length
