@@ -67,8 +67,8 @@ function Format-Path {
     }
 }
 # set alias
-[String] $tmpAliasName = "fstep"
-[String] $tmpCmdName   = "ForEach-Step"
+[String] $tmpAliasName = "fpath"
+[String] $tmpCmdName   = "Format-Path"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `
