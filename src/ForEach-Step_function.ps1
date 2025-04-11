@@ -1,9 +1,11 @@
 <#
 .SYNOPSIS
-    ForEach-Step (alias: fstep) - Apply a function to each line-oriented step.
+    ForEach-Step (Alias: fstep) - Apply a function to each line.
 
 .LINK
-    ForEach-Step, ForEach-Block, Add-ForEach, Apply-Function, Trim-EmptyLine, toml2psobject
+    ForEach-Step, ForEach-Block, ForEach-Label,
+    Apply-Function, Trim-EmptyLine, toml2psobject,
+    Add-Id
 
 .NOTES
     about Script Blocks - PowerShell

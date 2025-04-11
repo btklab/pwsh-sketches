@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Add-ForEach (alias: addf) - Insert arrayed strings for each input repeatedly.
+    ForEach-Label (Alias: flabel) - Insert label for each input repeatedly.
 
     Repeatedly inserts a given string array into each input.
 
@@ -16,7 +16,9 @@
     phone : 0123-123-123
 
 .LINK
-    ForEach-Step, ForEach-Block, Add-ForEach, Apply-Function, Trim-EmptyLine, toml2psobject
+    ForEach-Step, ForEach-Block, ForEach-Label,
+    Apply-Function, Trim-EmptyLine, toml2psobject,
+    Add-Id
 
 .EXAMPLE
     # add name for each value
@@ -118,7 +120,7 @@
     }
 
 #>
-function Add-ForEach {
+function ForEach-Label {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$True, HelpMessage="Add array")]
@@ -291,8 +293,8 @@ function Add-ForEach {
     return
 }
 # set alias
-[String] $tmpAliasName = "addf"
-[String] $tmpCmdName   = "Add-ForEach"
+[String] $tmpAliasName = "flabel"
+[String] $tmpCmdName   = "ForEach-Label"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `
