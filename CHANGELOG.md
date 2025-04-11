@@ -7,9 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.6.0] - 2025-04-08
+
+- Added [Get-Dataset][] function.
+- Added [Map-Object][] function.
+- Added [UnMap-Object][] function.
+- Added [Calc-CrossTabulation][] function.
+- Added [ForEach-Block][] function.
+- Added [ForEach-Step][] function.
+- Added [ForEach-Label][] function.
+- Changed [Convert-DictionaryToPSCustomObject][] Supported ordered hashtable.
 - Changed [Join-While][] Option `Trim` to `DisableTrim`.
 - Changed [Join-Until][] Option `Trim` to `DisableTrim`.
-- Added [Get-Dataset][] function.
+- Changed [Join-While][] Add `-ReplaceFirstDelimiter` option.
+- Changed [Join-Until][] Add `-ReplaceFirstDelimiter` option.
+- Changed [Shorten-PropertyName][] Refactor code.
+
+Breaking Changes
+
+- Renamed `fpath` to [Format-Path][]
+- Renamed `ConvImage` to [Convert-Image][]
 
 ## [0.5.0] - 2025-03-26
 
@@ -62,7 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [clip2img]: src/clip2img_function.ps1
 [clipwatch]: src/clipwatch_function.ps1
 [conv]: src/conv_function.ps1
-[ConvImage]: src/ConvImage_function.ps1
+[Convert-Image]: src/Convert-Image_function.ps1
 [count]: src/count_function.ps1
 [csv2sqlite]: src/csv2sqlite_function.ps1
 [csv2txt]: src/csv2txt_function.ps1
@@ -132,7 +151,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [summary]: src/summary_function.ps1
 [movw]: src/movw_function.ps1
 
-[fpath]: src/fpath_function.ps1
+[Format-Path]: src/Format-Path_function.ps1
 [watercss]: src/watercss_function.ps1
 
 [flow2pu]: src/flow2pu_function.ps1
@@ -235,7 +254,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [Invoke-Link]: src/Invoke-Link_function.ps1
 
-[Add-ID]: src/Add-ID_function.ps1
+[Add-Id]: src/Add-Id_function.ps1
 
 [Tee-Clip]: src/Tee-Clip_function.ps1
 [Auto-Clip]: src/Auto-Clip_function.ps1
@@ -260,9 +279,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Convert-DictionaryToPSCustomObject]: src/Convert-DictionaryToPSCustomObject_function.ps1
 [Replace-InQuote]: src/Replace-InQuote_function.ps1
 
-[Get-Dataset]: src/Get-Dataset_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.5.0..HEAD
+[ForEach-Block]: src/ForEach-Block_function.ps1
+[ForEach-Step]: src/ForEach-Step_function.ps1
+[ForEach-Label]: src/ForEach-Label_function.ps1
+
+[Get-Dataset]: src/Get-Dataset_function.ps1
+[Map-Object]: src/Map-Object_function.ps1
+[UnMap-Object]: src/UnMap-Object_function.ps1
+[Calc-CrossTabulation]: src/Calc-CrossTabulation_function.ps1
+
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.6.0..HEAD
+[0.6.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.6.0
 [0.5.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.5.0
 [0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0
 [0.3.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.3.0

@@ -55,11 +55,11 @@ function Format-Path {
     param (
         [Parameter( Mandatory=$False, Position=0, ValueFromPipeline=$True)]
         [Alias('p')]
-        [string[]] $Paths
+        [string[]] $Path
     )
-    if ( -not $Paths ){ [string[]] $Paths = Get-ClipBoard }
-    if ( $Paths.Count -eq 0 ){ return }
-    foreach ( $pat in $Paths ){
+    if ( -not $Path ){ [string[]] $Path = Get-ClipBoard }
+    if ( $Path.Count -eq 0 ){ return }
+    foreach ( $pat in $Path ){
         if ( $pat -ne ''){
             [string] $writeLine = $pat.Replace('"','').Replace('\','/')
             Write-Output $writeLine
@@ -67,8 +67,8 @@ function Format-Path {
     }
 }
 # set alias
-[String] $tmpAliasName = "fstep"
-[String] $tmpCmdName   = "ForEach-Step"
+[String] $tmpAliasName = "fpath"
+[String] $tmpCmdName   = "Format-Path"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `

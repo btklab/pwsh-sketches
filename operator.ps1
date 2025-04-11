@@ -80,7 +80,7 @@ if ($IsWindows){
 . $pwshSrcDir/Trim-EmptyLine_function.ps1
 . $pwshSrcDir/ForEach-Block_function.ps1
 . $pwshSrcDir/ForEach-Step_function.ps1
-. $pwshSrcDir/Add-ForEach_function.ps1
+. $pwshSrcDir/ForEach-Label_function.ps1
 
 
 . $pwshSrcDir/lcalc_function.ps1
@@ -119,7 +119,7 @@ if ($IsWindows){
 
 
 ## image processing
-. $pwshSrcDir/ConvImage_function.ps1
+. $pwshSrcDir/Convert-Image_function.ps1
 
 
 ## writing
@@ -147,7 +147,7 @@ if ($IsWindows){
 . $pwshSrcDir/Get-OGP_function.ps1
 . $pwshSrcDir/Decode-Uri_function.ps1
 . $pwshSrcDir/Encode-Uri_function.ps1
-. $pwshSrcDir/fpath_function.ps1
+. $pwshSrcDir/Format-Path_function.ps1
 . $pwshSrcDir/watercss_function.ps1
 
 ## csv
@@ -195,6 +195,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/ycalc_function.ps1
 
 # statistics - Anomaly detection
+. $pwshSrcDir/Add-Id_function.ps1
 . $pwshSrcDir/Shorten-PropertyName_function.ps1
 . $pwshSrcDir/Drop-NA_function.ps1
 . $pwshSrcDir/Replace-NA_function.ps1
@@ -229,6 +230,10 @@ if ( $IsWindows ){
 . $pwshSrcDir/Cast-Double_function.ps1
 . $pwshSrcDir/Cast-Integer_function.ps1
 . $pwshSrcDir/Edit-Property_function.ps1
+
+. $pwshSrcDir/Map-Object_function.ps1
+. $pwshSrcDir/UnMap-Object_function.ps1
+. $pwshSrcDir/Calc-CrossTabulation_function.ps1
 
 ## math
 

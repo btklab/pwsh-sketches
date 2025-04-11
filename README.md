@@ -39,7 +39,7 @@ cat README.md `
     | Set-Clipboard
 ```
 
-- [Add-ID][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [ConvImage][], [Convert-DictionaryToPSCustomObject][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-Dataset][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-InQuote][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fpath][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
+- [Add-Id][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Calc-CrossTabulation][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [Convert-DictionaryToPSCustomObject][], [Convert-Image][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [ForEach-Block][], [ForEach-Label][], [ForEach-Step][], [Format-Path][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-Dataset][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Map-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-InQuote][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [UnMap-Object][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [table2md][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
 
 **General:** This repository provides filter commands for pattern matching on unstructured strings. Input and output are `UTF-8`, space-delimited, line-oriented strings (text objects) via the pipeline, similar to Unix/Linux shell tools. Some functions also accept or output PowerShell objects.
 
@@ -4074,7 +4074,7 @@ c1            c2 c3 c4                           c5                       c6  c7
 
 #### [Get-Dataset] (Alias:dataset) - Retrieves the 'iris' dataset from R using Rscript.<a id="Get-Dataset"></a>
 
-[Get-Dataset]: src/Get-Dataset
+[Get-Dataset]: src/Get-Dataset_function.ps1
 
 This script uses Rscript to execute an R command that loads the 'iris' dataset.
 
@@ -7131,9 +7131,9 @@ date       version date2
 2019-09-18 v3.0.0  19/9/18
 ```
 
-#### [Add-ID] - Add unique key property.<a id="Add-ID"></a>
+#### [Add-Id] - Add unique key property.<a id="Add-Id"></a>
 
-[Add-ID]: src/Add-ID_function.ps1
+[Add-Id]: src/Add-Id_function.ps1
 
 Give each row a formatted id.
 
@@ -7141,7 +7141,7 @@ By default, sequential integer numbers are assigned.
 The default id property name is "id".
 If there are duplicates, it will be "id<n>".
 
-- Usage: `man Add-ID`
+- Usage: `man Add-Id`
 
 Examples:
 
@@ -7162,7 +7162,7 @@ c.txt      0
 assign an id to each row
 
 ```markdown
-ls -File | select Name, Length | Add-ID
+ls -File | select Name, Length | Add-Id
 ```
 
 ```markdown
@@ -7176,7 +7176,7 @@ id Name  Length
 assign formatted ids to each row
 
 ```powershell
-ls -File | select Name, Length | Add-ID -Format 'key_000'
+ls -File | select Name, Length | Add-Id -Format 'key_000'
 ```
 
 ```markdown
@@ -7190,7 +7190,7 @@ key_003 c.txt      0
 assign formatted ids to each row
 
 ```powershell
-ls -File | select Name, Length | Add-ID -Prefix "key_"
+ls -File | select Name, Length | Add-Id -Prefix "key_"
 ```
 
 ```markdown
@@ -7201,6 +7201,467 @@ key_2 b.txt      0
 key_3 c.txt      0
 ```
 
+#### [ForEach-Step] (Alias: fstep) - Apply a function to each line.<a id="ForEach-Step"></a>
+
+[ForEach-Step]: src/ForEach-Step_function.ps1
+
+- Usage: `man ForEach-Step`
+
+**EXAMPLE**: Calculate the basic statistic for each of the three rows.
+
+```powershell
+1..10 | fstep -Step 3 -func { Measure-Object -AllStats } | ft
+```
+
+```markdown
+Count Average   Sum Maximum Minimum StandardDeviation Property
+----- -------   --- ------- ------- ----------------- --------
+    3    2.00  6.00    3.00    1.00              1.00
+    3    5.00 15.00    6.00    4.00              1.00
+    3    8.00 24.00    9.00    7.00              1.00
+    1   10.00 10.00   10.00   10.00              0.00
+```
+
+**EXAMPLE**: Apply the command every three lines.
+
+```powershell
+1..10 | fstep -Step 3 -func {flat}
+```
+
+```markdown
+1 2 3
+4 5 6
+7 8 9
+10
+```
+
+#### [ForEach-Block] (Alias: fblock) - Apply a function to each line-oriented block.<a id="ForEach-Block"></a>
+
+[ForEach-Block]: src/ForEach-Block_function.ps1
+
+Apply a function to blocks separated by empty line.
+
+- Usage: `man ForEach-Block`
+
+EXAMPLE
+
+**Input**: blocks separated by empty line
+
+```powershell
+1..10 | fstep 3 -End {""} | Trim-EmptyLine
+```
+
+```
+1
+2
+3
+
+4
+5
+6
+
+7
+8
+9
+
+10
+```
+
+**Output**: measure for each block
+
+```powershell
+1..10 | fstep 3 -End {""} | Trim-EmptyLine `
+    | fblock { Measure-Object -AllStats } | ft
+```
+
+```markdown
+Count Average   Sum Maximum Minimum StandardDeviation Property
+----- -------   --- ------- ------- ----------------- --------
+    3    2.00  6.00    3.00    1.00              1.00
+    3    5.00 15.00    6.00    4.00              1.00
+    3    8.00 24.00    9.00    7.00              1.00
+    1   10.00 10.00   10.00   10.00              0.00
+```
+
+
+
+#### [ForEach-Label] (Alias: flabel) - Insert label for each input repeatedly.<a id="ForEach-Label"></a>
+
+[ForEach-Label]: src/ForEach-Label_function.ps1
+
+Repeatedly inserts a given string array into each input.
+
+- Usage: `man ForEach-Label`
+
+```powershell
+"john","doe","0123-123-123", "foo","bar","0123-123-123" `
+    | addf "fname","lname","phone" -fs " : " -End ""
+```
+
+Output:
+
+```yaml
+fname : john
+lname : doe
+phone : 0123-123-123
+
+fname : foo
+lname : bar
+phone : 0123-123-123
+```
+
+**EXAMPLE**: add name for each value
+
+```powershell
+1..10 | addf "item.1", "item.2", "item.3"
+```
+
+```
+item.1 1
+item.2 2
+item.3 3
+item.1 4
+item.2 5
+item.3 6
+item.1 7
+item.2 8
+item.3 9
+item.1 10
+```
+
+**EXAMPLE**: add name for each value
+
+```powershell
+1..10 | addf "item.1", "item.2", "item.3" -fs " = "
+```
+
+```
+item.1 = 1
+item.2 = 2
+item.3 = 3
+item.1 = 4
+item.2 = 5
+item.3 = 6
+item.1 = 7
+item.2 = 8
+item.3 = 9
+item.1 = 10
+```
+
+**EXAMPLE**: Insert a blank line after each label
+
+```powershell
+1..10 | addf "item.1", "item.2", "item.3" -End ""
+```
+
+```
+item.1 1
+item.2 2
+item.3 3
+
+item.1 4
+item.2 5
+item.3 6
+
+item.1 7
+item.2 8
+item.3 9
+
+item.1 10
+```
+
+**EXAMPLE**: wrap output
+
+```powershell
+1..10 | addf "item.1", "item.2", "item.3" -fs " = " -Begin "{" -End "}" -Indent "    "
+```
+
+```json
+{
+    item.1 = 1
+    item.2 = 2
+    item.3 = 3
+}
+{
+    item.1 = 4
+    item.2 = 5
+    item.3 = 6
+}
+{
+    item.1 = 7
+    item.2 = 8
+    item.3 = 9
+}
+{
+    item.1 = 10
+}
+```
+
+**EXAMPLE**: wrap output and add record separator
+
+```powershell
+1..10 | addf "item.1", "item.2", "item.3" -fs " = " -Begin "{" -End "}" -Indent "    " -rs "," -SkipLastSeparator
+```
+
+```json
+{
+    item.1 = 1,
+    item.2 = 2,
+    item.3 = 3
+},
+{
+    item.1 = 4,
+    item.2 = 5,
+    item.3 = 6
+},
+{
+    item.1 = 7,
+    item.2 = 8,
+    item.3 = 9
+},
+{
+    item.1 = 10
+}
+```
+
+#### [Calc-CrossTabulation] Cross-tabulate Data.<a id="Calc-CrossTabulation"></a>
+
+[Calc-CrossTabulation]: src/Calc-CrossTabulation_function.ps1
+
+Expand a long-format dataset into wide-format. The key column must not contain a comma and a space (`, `). There is no need to pre-sort or deduplicate the key column.
+
+- Usage:
+    - Calc-CrossTabulation
+        - `[-r|-RowProperty] <String[]>`
+        - `[-c|-ColumnProperty] <String>`
+        - `[-v|-ValueProperty] <String>`
+        - `[-Sum]`
+        - `[-Average]`
+        - `[-Count]`
+        - `[-Max]`
+        - `[-Min]`
+        - `[-StandardDeviation]`
+        - `[-EmptyValue <Double>]`
+        - `[-ReplaceComma]`
+        - `[-Cast <"int"|"double"|"decimal">]`
+
+EXAMPLE
+
+Input:
+
+```powershell
+$data = @(
+    [ordered] @{ Category="A"; Product="X"; Count=10 },
+    [ordered] @{ Category="A"; Product="Y"; Count=5  },
+    [ordered] @{ Category="B"; Product="X"; Count=15 },
+    [ordered] @{ Category="B"; Product="Z"; Count=8  },
+    [ordered] @{ Category="A"; Product="X"; Count=7  }
+) | dict2psobject
+```
+
+```markdown
+Category Product Count
+-------- ------- -----
+A        X          10
+A        Y           5
+B        X          15
+B        Z           8
+A        X           7
+```
+
+Cross-tabulate the data:
+
+```powershell
+$data | Calc-CrossTabulation -r Category -c Product -v Count
+```
+
+```markdown
+Category     X    Y    Z
+--------     -    -    -
+A        17.00 5.00 0.00
+B        15.00 0.00 8.00
+```
+
+#### [Map-Object] Cross-tabulation of strings.<a id="Map-Object"></a>
+
+[Map-Object]: src/Map-Object_function.ps1
+
+The key column must not contain a comma and a space (`, `).
+
+- Usage:
+    - Map-Object
+        - `[-r|-RowProperty] <String[]>`
+        - `[-c|-ColumnProperty] <String>`
+        - `[-v|-ValueProperty] <String >`
+        - `[-EmptyValue <String>]`
+        - `[-ReplaceComma]`
+
+EXAMPLE
+
+Input:
+
+```powershell
+$data = @(
+    [ordered]@{ Category="A"; Product="X"; Count="C.1" },
+    [ordered]@{ Category="A"; Product="Y"; Count="C.5" },
+    [ordered]@{ Category="A"; Product="X"; Count="C.1" }
+    [ordered]@{ Category="B"; Product="Z"; Count="C.8" }
+    [ordered]@{ Category="A"; Product="X"; Count="C.7" }
+) | dict2psobject
+```
+
+```markdown
+Category Product Count
+-------- ------- -----
+A        X       C.1
+A        Y       C.5
+A        X       C.1
+B        Z       C.8
+A        X       C.7
+```
+
+Output:
+
+```powershell
+$data | Map-Object -r Category -c Count -v Product | ft
+```
+
+```markdown
+Category C.1  C.5 C.7 C.8
+-------- ---  --- --- ---
+A        X, X Y   X
+B                     Z
+```
+
+Unmap the data to a cross-tabulation format
+
+```powershell
+$data `
+    | Map-Object -r Category -c Count -v Product `
+    | UnMap-Object -r Category -VariableColumnPrefix 'C.' -VariableColumnName "Count" `
+    | ft
+```
+
+Output:
+
+```markdown
+Category Count Value
+-------- ----- -----
+A        C.1   X, X
+A        C.5   Y
+A        C.7   X
+A        C.8
+B        C.1
+B        C.5
+B        C.7
+B        C.8   Z
+```
+
+#### [UnMap-Object] Converts wide-format data into long-format data.<a id="UnMap-Object"></a>
+
+[UnMap-Object]: src/UnMap-Object_function.ps1
+
+Converts wide-format data into long-format data for easier analysis and visualization. It supports specifying multiple row identifiers and dynamically pivots columns based on prefixes or explicitly defined column names.
+
+- Usage:
+    - UnMap-Object
+        - `[-r|-RowIdentifier] <String[]>`
+        - `[-c|-VariableColumns <String[]>]`
+        - `[-p|-VariableColumnPrefix <String>]`
+        - `[-ValueColumnName <String>]`
+        - `[-VariableColumnName <String>]`
+
+**EXAMPLE1**: Sample data (wide format like a cross-tabulation result)
+
+```powershell
+$WideDataTable = @(
+    [ordered]@{ ID = 1; Product_X = 10; Product_Y = 5; Category_A = 20; Category_B = 15; Category_C = 1 },
+    [ordered]@{ ID = 2; Product_X = 7;  Product_Y = 12; Category_A = 25; Category_B = 18 },
+    [ordered]@{ ID = 3; Product_X = 18; Product_Y = 3;  Category_A = 30; Category_B = 22 }
+) | dict2psobject
+
+$WideDataTable | ft
+```
+
+```markdown
+ID Product_X Product_Y Category_A Category_B Category_C
+-- --------- --------- ---------- ---------- ----------
+    1        10         5         20         15          1
+    2         7        12         25         18
+    3        18         3         30         22
+```
+
+```powershell
+Write-Host "Convert by detecting columns with a prefix:"
+
+$WideDataTable `
+    | UnMap-Object `
+        -RowIdentifier "ID" `
+        -VariableColumnPrefix "Product_" `
+        -DeletePrefix `
+    | Format-Table
+```
+
+```markdown
+ID Product_ Value
+-- -------- -----
+    1 X           10
+    1 Y            5
+    2 X            7
+    2 Y           12
+    3 X           18
+    3 Y            3
+```
+
+**EXAMPLE2**: Convert by directly specifying column names.
+
+```powershell
+$WideDataTable `
+    | UnMap-Object `
+        -RowIdentifier "ID","Product_X","Category_A" `
+        -VariableColumns "Category_A", "Category_B", "Category_C" `
+        -VariableColumnName "CategoryName" `
+    | Format-Table
+```
+
+```markdown
+ID Product_X Category_A CategoryName Value
+-- --------- ---------- ------------ -----
+    1        10         20 Category_A      20
+    1        10         20 Category_B      15
+    1        10         20 Category_C       1
+    2         7         25 Category_A      25
+    2         7         25 Category_B      18
+    3        18         30 Category_A      30
+    3        18         30 Category_B      22
+```
+
+**EXAMPLE3**: Convert by combining prefix detection and direct specification.
+
+```powershell
+$WideDataTable `
+    | UnMap-Object `
+        -RowIdentifier "ID" `
+        -VariableColumnPrefix "Product_" `
+        -VariableColumns "Category_A" `
+        -ValueColumnName "Value" `
+        -VariableColumnName "ProdAndCat" `
+    | Format-Table
+```
+
+```markdown
+ID ProdAndCat Value
+-- ---------- -----
+    1 Category_A    20
+    1 X             10
+    1 Y              5
+    2 Category_A    25
+    2 X              7
+    2 Y             12
+    3 Category_A    30
+    3 X             18
+    3 Y              3
+```
 
 ### Plot chart and graph
 
@@ -8759,9 +9220,9 @@ Output. Non-list and non-header lines are output as-is:
 
 ### Image processing
 
-#### [ConvImage] - Image rotation, flipping, scaling, convert format.<a id="ConvImage"></a>
+#### [Convert-Image] (Alias: ConvImage) - Image rotation, flipping, scaling, convert format.<a id="Convert-Image"></a>
 
-[ConvImage]: src/ConvImage_function.ps1
+[Convert-Image]: src/Convert-Image_function.ps1
 
 Rotation, resizing, scaling, and format conversion of images. Utilizes the assembly: `System.Drawing`. Image format conversion is automatically recognized based on the file extensions specified for input and output.
 
@@ -10134,15 +10595,15 @@ Example:
 echo "./%E6%8E%B2%E7%A4%BA%E6%9D%BF/start.txt" | Encode-Uri -Debug
  ```
 
-#### [fpath] - Remove double-quotes and replace backslashes to slashes from windows path.<a id="fpath"></a>
+#### [Format-Path] (Alias: fpath) - Remove double-quotes and replace backslashes to slashes from windows path.<a id="Format-Path"></a>
 
-[fpath]: src/fpath_function.ps1
+[fpath]: src/Format-Path_function.ps1
 
 Formatting file paths in the Windows environment. The operation is simple: it removes double quotes `"` from the file paths and replaces backslashes `\` with forward slashes `/`.
 
 - Usage
     - `man2 fpath`
-    - `fpath [[-Paths] <String[]>`
+    - `fpath [[-Path] <String[]>`
 
 Examples:
 

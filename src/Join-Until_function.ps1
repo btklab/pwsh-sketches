@@ -24,98 +24,97 @@
 
 
 .EXAMPLE
-    # concat line
     cat data.txt
 
-    Output:
-
-        # data
-        
-        [date]
-          2024-10-24
-        
-        [title]
-        
-        [author]
-          btklab,
-          fuga
-        
-        [summary]
-          summary-1
-          summary-2
-          summary-3
-        
-        [link]
-          link-1
-          link-2
+    # data
+    
+    [date]
+        2024-10-24
+    
+    [title]
+    
+    [author]
+        btklab,
+        fuga
+    
+    [summary]
+        summary-1
+        summary-2
+        summary-3
+    
+    [link]
+        link-1
+        link-2
         
     cat data.txt | joinu '\['
 
-    Output:
-
-        # data
-        [date] 2024-10-24
-        [title]
-        [author] btklab, fuga
-        [summary] summary-1 summary-2 summary-3
-        [link] link-1 link-2
+    # data
+    [date] 2024-10-24
+    [title]
+    [author] btklab, fuga
+    [summary] summary-1 summary-2 summary-3
+    [link] link-1 link-2
 
 .EXAMPLE
     # skip header
     cat data.txt | joinu '\[' -SkipHeader
 
-    Output:
-
-        [date] 2024-10-24
-        [title]
-        [author] btklab, fuga
-        [summary] summary-1 summary-2 summary-3
-        [link] link-1 link-2
+    [date] 2024-10-24
+    [title]
+    [author] btklab, fuga
+    [summary] summary-1 summary-2 summary-3
+    [link] link-1 link-2
 
 .EXAMPLE
     # delete match
     cat data.txt | joinu '\[([^]]+)\]' -Delete
 
-    Output:
+    # data
+    2024-10-24
 
-        # data
-        2024-10-24
-
-        btklab, fuga
-        summary-1 summary-2 summary-3
-        link-1 link-2
+    btklab, fuga
+    summary-1 summary-2 summary-3
+    link-1 link-2
 
 .EXAMPLE
     # replace match
     cat data.txt | joinu '\[([^]]+)\]' -Replace '$1:'
 
-    Output:
+    # data
+    date: 2024-10-24
+    title:
+    author: btklab, fuga
+    summary: summary-1 summary-2 summary-3
+    link: link-1 link-2
 
-        # data
-        date: 2024-10-24
-        title:
-        author: btklab, fuga
-        summary: summary-1 summary-2 summary-3
-        link: link-1 link-2
+.EXAMPLE
+    # Replace first delimiter
+    cat data.txt | joinu '\[' -Delimiter ',' -ReplaceFirstDelimiter ": "
+
+    # data
+    [date]: 2024-10-24
+    [title]
+    [author]: btklab,,fuga
+    [summary]: summary-1,summary-2,summary-3
+    [link]: link-1,link-2
+
 
 .EXAMPLE
     # insert empty line for each line
     cat data.txt | joinu '\[([^]]+)\]' -After "" | juni
 
-    Output:
-
-        1 # data
-        2
-        3 [date] 2024-10-24
-        4
-        5 [title]
-        6
-        7 [author] btklab, fuga
-        8
-        9 [summary] summary-1 summary-2 summary-3
-        10
-        11 [link] link-1 link-2
-        12
+    1 # data
+    2
+    3 [date] 2024-10-24
+    4
+    5 [title]
+    6
+    7 [author] btklab, fuga
+    8
+    9 [summary] summary-1 summary-2 summary-3
+    10
+    11 [link] link-1 link-2
+    12
 
 .EXAMPLE
     # concatenates lines by item,
@@ -149,10 +148,22 @@ function Join-Until {
         [String] $Delimiter = " "
         ,
         [Parameter(
+            HelpMessage="Escape regex",
+            Mandatory=$False
+        )]
+        [Switch] $EscapeRegex
+        ,
+        [Parameter(
             HelpMessage="Trim only injoin line",
             Mandatory=$False
         )]
         [Switch] $TrimOnlyInJoin
+        ,
+        [Parameter(
+            HelpMessage="Replace the 1st Delimiter",
+            Mandatory=$False
+        )]
+        [String] $ReplaceFirstDelimiter
         ,
         [Parameter(
             HelpMessage="Disable Trim line",
@@ -210,6 +221,11 @@ function Join-Until {
     begin {
         # set variables
         [Int] $rowCounter = 0
+        if ($EscapeRegex) {
+            [regex] $reg = [Regex]::Escape($Regex)
+        } else {
+            [regex] $reg = $Regex
+        }
         [Bool] $firstMatch = $False
         [Bool] $inJoin = $True
         [String[]] $tempLineAry = @()
@@ -218,6 +234,12 @@ function Join-Until {
         function Write-BeforeAndAfterOutput ([string] $line) {
             if ( $Before.Count -gt 0 ){
                 Write-Output $Before
+            }
+            if ( $ReplaceFirstDelimiter ){
+                [regex] $escapedDelimiter = [Regex]::Escape($Delimiter)
+                $line = $escapedDelimiter.Replace($line, $ReplaceFirstDelimiter, 1)
+            } else {
+                $line = $line
             }
             Write-Output $line
             if ( $After.Count -gt 0 ){
@@ -229,7 +251,7 @@ function Join-Until {
     process {
         $rowCounter++
         [String] $readLine = [String] $_
-        if ( $readLine -match $Regex ){
+        if ( $readLine -match $reg ){
             [Bool] $firstMatch = $True
             [Bool] $inJoin = $False
         } else {
@@ -253,7 +275,7 @@ function Join-Until {
                 return
             }
         }
-        if ( $readLine -match $Regex ){
+        if ( $readLine -match $reg ){
             ## output stocked lines
             [String[]] $tempLineAry = $tempAryList.ToArray()
             if ( $tempLineAry.Count -gt 0 ){
@@ -269,9 +291,9 @@ function Join-Until {
         }
         ## replace match
         if ( $Replace ){
-            [String] $readLine = $readLine -replace $Regex, $Replace
+            [String] $readLine = $readLine -replace $reg, $Replace
         } elseif ( $Delete ){
-            [String] $readLine = $readLine -replace $Regex, ''
+            [String] $readLine = $readLine -replace $reg, ''
         }
         $tempAryList.Add( $readLine )
     }

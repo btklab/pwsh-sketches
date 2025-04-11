@@ -1,12 +1,17 @@
 <#
 .SYNOPSIS
-    Add-ID - Add unique key property
+    Add-Id - Add unique key property
 
     Give each row a formatted id.
 
     By default, sequential integer numbers are assigned.
     The default id property name is "id".
     If there are duplicates, it will be "id<n>".
+
+.LINK
+    ForEach-Step, ForEach-Block, ForEach-Label,
+    Apply-Function, Trim-EmptyLine, toml2psobject,
+    Add-Id
 
 .EXAMPLE
     # input data
@@ -19,7 +24,7 @@
         c.txt      0
     
     # assign ids to each row
-    ls -File | select Name, Length | Add-ID
+    ls -File | select Name, Length | Add-Id
     
         id Name  Length
         -- ----  ------
@@ -29,7 +34,7 @@
 
 .EXAMPLE
     # assign formatted ids to each row
-    ls -File | select Name, Length | Add-ID -Format 'key_000'
+    ls -File | select Name, Length | Add-Id -Format 'key_000'
     
         id      Name  Length
         --      ----  ------
@@ -39,7 +44,7 @@
 
 .EXAMPLE
     # assign formatted ids to each row
-    ls -File | select Name, Length | Add-ID -Prefix "key_"
+    ls -File | select Name, Length | Add-Id -Prefix "key_"
         
         id    Name  Length
         --    ----  ------
@@ -48,7 +53,7 @@
         key_3 c.txt      0
 
 #>
-function Add-ID
+function Add-Id
 {
     [CmdletBinding()]
     Param(
