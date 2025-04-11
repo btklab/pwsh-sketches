@@ -146,71 +146,124 @@
          |            ~~~~~~~~~~~~~~~~~~~~
          | Property name: "sepal_l" -> "s_l" already exists.
 
+.EXAMPLE
+    # Shorten property names to any desired character count
+    # using -Length option
+    dataset iris3 | Select-Object -First 1
+    
+    Sepal.L..Setosa     : 5.1
+    Sepal.W..Setosa     : 3.5
+    Petal.L..Setosa     : 1.4
+    Petal.W..Setosa     : 0.2
+    Sepal.L..Versicolor : 7
+    Sepal.W..Versicolor : 3.2
+    Petal.L..Versicolor : 4.7
+    Petal.W..Versicolor : 1.4
+    Sepal.L..Virginica  : 6.3
+    Sepal.W..Virginica  : 3.3
+    Petal.L..Virginica  : 6
+    Petal.W..Virginica  : 2.5
+
+    # raise dupulicated error
+    dataset iris3 `
+        | Select-Object -First 1 `
+        | Shorten-PropertyName -Delimiter "." -Length 1
+
+    Shorten-PropertyName: Property name: "Sepal.L..Virginica" -> "S.L..V" already exists.
+
+    # Shorten property names to 2 characters
+    dataset iris3 `
+        | Select-Object -First 1 `
+        | Shorten-PropertyName -Delimiter "." -Length 2
+    
+    Se.L..Se : 5.1
+    Se.W..Se : 3.5
+    Pe.L..Se : 1.4
+    Pe.W..Se : 0.2
+    Se.L..Ve : 7
+    Se.W..Ve : 3.2
+    Pe.L..Ve : 4.7
+    Pe.W..Ve : 1.4
+    Se.L..Vi : 6.3
+    Se.W..Vi : 3.3
+    Pe.L..Vi : 6
+    Pe.W..Vi : 2.5
+
 #>
 function Shorten-PropertyName
 {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$False)]
-        [ValidateSet("_", ".", " ", "/", "-")]
         [Alias('d')]
-        [string] $Delimiter = '_',
-        
+        [string] $Delimiter = '_'
+        ,
         [Parameter(Mandatory=$False)]
         [Alias('v')]
-        [switch] $VeryShorten,
-        
+        [switch] $VeryShorten
+        ,
+        [Alias('l')]
+        [int[]] $Length
+        ,
         [Parameter(Mandatory=$False, ValueFromPipeline=$True)]
         [PSObject] $InputObject
     )
-    # set regex
-    if ( $VeryShorten ){
-        # do not output delimiter
-        [string] $outDelim = ''
-    } else {
-        [string] $outDelim = $Delimiter
-    }
-    # [string] $pat1 = '^([^_])([^_])*_'
-    # [string] $pat2 = '_([^_])([^_])*'
-    if ( $Delimiter -match '\-|\.'){
-        # for regex special characters
-        [string] $pat1 = '^([^@placeholder@])([^@placeholder@])*\@placeholder@'
-        [string] $pat1 = $pat1.Replace('@placeholder@', $Delimiter)
-        [string] $pat2 = '\@placeholder@([^@placeholder@])([^@placeholder@])*'
-        [string] $pat2 = $pat2.Replace('@placeholder@', $Delimiter)
-    } else {
-        [string] $pat1 = '^([^@placeholder@])([^@placeholder@])*@placeholder@'
-        [string] $pat1 = $pat1.Replace('@placeholder@', $Delimiter)
-        [string] $pat2 = '@placeholder@([^@placeholder@])([^@placeholder@])*'
-        [string] $pat2 = $pat2.Replace('@placeholder@', $Delimiter)
-    }
-    [string] $ret1 = '$1' + $Delimiter
-    [string] $ret2 = $Delimiter + '$1'
-    Write-Debug "regex1: '$pat1', '$ret1'"
-    Write-Debug "regex2: '$pat2', '$ret2'"
+    # escape delimiter
+    [regex] $escapedDelimiter = [regex]::Escape($Delimiter)
     # get all property names
     [String[]] $OldPropertyNames = ($input[0].PSObject.Properties).Name
     [String[]] $ReplaceComAry = @()
     [String[]] $newNameAry = @()
+    [String[]] $tmpNameAry = @()
     foreach ( $oldName in $OldPropertyNames ){
-        [string] $newName = $oldName -replace $pat1, $ret1
-        [string] $newName = $newName -replace $pat2, $ret2
-        if ( $VeryShorten ){
-            if ( $Delimiter -match '\-|\.'){
-                $delDelim = '\' + $Delimiter
+        [string[]] $splitNames = $oldName -split $escapedDelimiter
+        # collect delimited names
+        foreach ( $splitName in $splitNames ){
+            if ( $splitName.Length -eq 0 ){
+                # empty string
+                $tmpNameAry += $splitName
+            } elseif ( $splitName.Length -eq 1 ){
+                # single character
+                $tmpNameAry += $splitName
             } else {
-                $delDelim = $Delimiter
+                # multiple characters
+                if ( $Length.Count -eq 1 ){
+                    if ( $Length[0] -gt $splitName.Length ){
+                        [int] $sNum = 0
+                        [int] $eNum = $splitName.Length
+                    } else {
+                        [int] $sNum = 0
+                        [int] $eNum = $Length[0]
+                    }
+                } elseif ( $SubString.Count -gt 1 ){
+                    [int] $sNum = $Length[0]
+                    [int] $eNum = $Length[1]
+                } else {
+                    [int] $sNum = 0
+                    [int] $eNum = 1
+                }
+                try {
+                    $tmpNameAry += $splitName.SubString($sNum, $eNum)
+                } catch {
+                    Write-Error $error[0] -ErrorAction Stop
+                }
             }
-            [string] $newName = $newName -replace $delDelim, ''
         }
+        # create new property name
+        if ( $VeryShorten ){
+            [string] $newName = $tmpNameAry -join ''
+        } else {
+            [string] $newName = $tmpNameAry -join $Delimiter
+        }
+        Write-Debug $newName
         # duplicate test for newname
-        if ( $newNameAry.Contains($newName) ){
+        if ( $newName -in $newNameAry ){
             Write-Error "Property name: ""$oldName"" -> ""$newName"" already exists." -ErrorAction Stop
         }
         $newNameAry += $newName
         $ReplaceComAry += "@{N=""$newName""; E={`$_.""$($oldName)""}}"
+        [String[]] $tmpNameAry = @()
     }
-
     # invoke command strings
     $hash = $ReplaceComAry | ForEach-Object { Invoke-Expression -Command $_ }
     $input | Select-Object -Property $hash
