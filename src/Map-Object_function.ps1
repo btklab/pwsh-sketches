@@ -1,12 +1,14 @@
 <#
 .SYNOPSIS
-    Map-Object -- Cross-tabulation of strings.
+    Map-Object -- Converts long-format data into wide-format data.
+
+    Pivoting/Cross-tabulating with Grouping.
 
     Usage:
         Map-Object
-            [-r|-RowProperty]    <String[]>
+            [-r|-RowProperty] <String[]>
             [-c|-ColumnProperty] <String>
-            [-v|-ValueProperty]  <String>
+            [-v|-ValueProperty] <String>
             [-Sum]
             [-Average]
             [-Count]
@@ -17,7 +19,12 @@
             [-EmptyValue <value>]
             [-ReplaceComma]
 
+.NOTES
+    Group-Object (Microsoft.PowerShell.Utility) - PowerShell
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/group-object
+
 .LINK
+    Map-Object, UnMap-Object,
     Convert-DictionaryToPSCustomObject (dict2psobject),
     Edit-Property (editprop), Replace-ForEach,
     fillrety, addt, addl, addr

@@ -8,9 +8,9 @@
 
     Usage:
         Calc-CrossTabulation
-            [-r|-RowProperty]    <String[]>
+            [-r|-RowProperty] <String[]>
             [-c|-ColumnProperty] <String>
-            [-v|-ValueProperty]  <String>
+            [-v|-ValueProperty] <String>
             [-Sum]
             [-Average]
             [-Count]

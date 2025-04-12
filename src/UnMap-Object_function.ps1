@@ -4,6 +4,7 @@
 
     Converts wide-format data into long-format data for easier
     analysis and visualization.
+
     It supports specifying multiple row identifiers and dynamically
     pivots columns based on prefixes or explicitly defined column
     names.
@@ -17,6 +18,7 @@
             [-VariableColumnName <String>]
 
 .LINK
+    Map-Object, UnMap-Object,
     Convert-DictionaryToPSCustomObject (dict2psobject)
 
 .EXAMPLE
