@@ -19,6 +19,8 @@
             [-Cast <string|int|double|decimal>]
             [-EmptyValue <value>]
             [-ReplaceComma]
+            [-DropNA]
+            [-ReplaceNA <regex>]
 
 .NOTES
     Group-Object (Microsoft.PowerShell.Utility) - PowerShell
@@ -234,6 +236,12 @@ function Map-Object {
         [switch] $ReplaceComma
         ,
         [Parameter(Mandatory=$false)]
+        [switch] $DropNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [string] $ReplaceNA
+        ,
+        [Parameter(Mandatory=$false)]
         [ValidateSet(
             "string",
             "int",
@@ -333,6 +341,19 @@ function Map-Object {
         [string] $RowKey = $RowKey
         $Column = $Item.$ColumnProperty
         $Value = $Item.$ValueProperty
+        if ( $DropNA ){
+            # check for NA values
+            if ( $Value -match '^NA$|^NaN$' ) {
+                # skip NA values
+                $Value = $Null
+            }
+        } elseif ( $ReplaceNA ){
+            # replace NA values
+            if ( $Value -match '^NA$|^NaN$' ) {
+                # replace NA values
+                $Value = $Value -replace '^NA$|^NaN$', $ReplaceNA
+            }
+        }
         if (-not $CrossTab[$RowKey].ContainsKey($Column)) {
             # init array
             $CrossTab[$RowKey][$Column] = @()

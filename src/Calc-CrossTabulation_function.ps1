@@ -2,7 +2,7 @@
 .SYNOPSIS
     Calc-CrossTabulation -- Cross-tabulate Data.
 
-    Expand a long-format dataset into wide-format.
+    Expand a long-format data into a wide-format data.
     The key column must not contain a comma and a space (", ").
     There is no need to pre-sort or deduplicate the key column.
 
@@ -19,8 +19,10 @@
             [-Min]
             [-Std|-StandardDeviation]
             [-EmptyValue <Double>]
-            [-ReplaceComma]
             [-Cast <int|double|decimal>]
+            [-ReplaceComma]
+            [-DropNA]
+            [-ReplaceNA <regex>]
 
 .LINK
     Convert-DictionaryToPSCustomObject (dict2psobject),
@@ -99,6 +101,12 @@ function Calc-CrossTabulation {
         [Parameter(Mandatory=$false)]
         [switch] $ReplaceComma
         ,
+        [Parameter(Mandatory=$false)]
+        [switch] $DropNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [string] $ReplaceNA
+        ,
         [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
         [object[]] $InputObject
     )
@@ -164,6 +172,19 @@ function Calc-CrossTabulation {
         [string] $RowKey = $RowKey
         $Column = $Item.$ColumnProperty
         $Value = $Item.$ValueProperty
+        if ( $DropNA ){
+            # check for NA values
+            if ( $Value -match '^NA$|^NaN$' ) {
+                # skip NA values
+                $Value = $Null
+            }
+        } elseif ( $ReplaceNA ){
+            # replace NA values
+            if ( $Value -match '^NA$|^NaN$' ) {
+                # replace NA values
+                $Value = $Value -replace '^NA$|^NaN$', $ReplaceNA
+            }
+        }
         if (-not $CrossTab[$RowKey].ContainsKey($Column)) {
             # init array
             $CrossTab[$RowKey][$Column] = @()
