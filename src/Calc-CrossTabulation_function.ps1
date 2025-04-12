@@ -8,18 +8,18 @@
 
     Usage:
         Calc-CrossTabulation
-            [-r|-RowProperty] <String[]>
+            [-r|-RowProperty]    <String[]>
             [-c|-ColumnProperty] <String>
-            [-v|-ValueProperty] <String>
+            [-v|-ValueProperty]  <String>
             [-Sum]
             [-Average]
             [-Count]
             [-Max]
             [-Min]
-            [-StandardDeviation]
+            [-Std|-StandardDeviation]
             [-EmptyValue <Double>]
             [-ReplaceComma]
-            [-Cast <"int"|"double"|"decimal">]
+            [-Cast <int|double|decimal>]
 
 .LINK
     Convert-DictionaryToPSCustomObject (dict2psobject),
@@ -69,6 +69,7 @@ function Calc-CrossTabulation {
         [switch] $Sum
         ,
         [Parameter(Mandatory=$false)]
+        [Alias('Mean')]
         [switch] $Average
         ,
         [Parameter(Mandatory=$false)]
@@ -81,6 +82,7 @@ function Calc-CrossTabulation {
         [switch] $Min
         ,
         [Parameter(Mandatory=$false)]
+        [Alias('Std')]
         [switch] $StandardDeviation
         ,
         [Parameter(Mandatory=$false)]
@@ -88,7 +90,7 @@ function Calc-CrossTabulation {
         ,
         [Parameter(Mandatory=$false)]
         [ValidateSet("int", "double", "decimal")]
-        [string] $Cast
+        [string] $Cast = "double"
         ,
         [Parameter(Mandatory=$false)]
         [switch] $ReplaceComma
@@ -97,8 +99,11 @@ function Calc-CrossTabulation {
         [object[]] $InputObject
     )
     # set variable
-    [string] $SplitDelimiter = ", "
     [string] $ProxyDelimiter = '@p@r@o@x@y@'
+    [string] $SplitDelimiter = ", "
+    if ( $Count ) {
+        $Cast = 'int'
+    }
     # Combine multiple RowProperty values to create row keys
     if ( $ReplaceComma) {
         foreach ( $p in $RowProperty ) {
@@ -115,11 +120,8 @@ function Calc-CrossTabulation {
 
     # Create hashtables for each row key
     foreach ($RowValue in $RowValues) {
-        Write-Debug "RowValue: $RowValue"
         $CrossTab[$RowValue] = @{}
     }
-    #$CrossTab["$($RowValues -join $SplitDelimiter)"] = @{}
-    #Write-Debug "RowValue: $($RowValues -join $SplitDelimiter)"
 
     # Aggregate data and store it in the cross-tabulation table
     foreach ($Item in $input) {
@@ -128,15 +130,41 @@ function Calc-CrossTabulation {
         [string] $RowKey = $RowKey
         $Column = $Item.$ColumnProperty
         $Value = $Item.$ValueProperty
-        Write-Debug $RowKey
-        Write-Debug $($CrossTab[$RowKey])
         if (-not $CrossTab[$RowKey].ContainsKey($Column)) {
+            # init array
             $CrossTab[$RowKey][$Column] = @()
         }
-        $CrossTab[$RowKey][$Column] += $Value
+        try {
+            # Add the casted value into the hash table
+            $CrossTab[$RowKey][$Column] += switch -Exact ( $Cast ){
+                'int'      { [int]      $Value }
+                'double'   { [double]   $Value }
+                'decimal'  { [decimal]  $Value }
+                default    { [string]   $Value }
+            }
+        } catch {
+            #Write-Error "Failed to add value '$Value' to CrossTab for RowKey '$RowKey' and Column '$Column'."
+            Write-Error $error[0] -ErrorAction stop
+        }
+        Write-Debug "cast=$Cast; key=$RowKey; col=$Column; val=$($CrossTab[$RowKey][$Column] -join ', ')"
     }
 
     # Display the results
+    if ( $Sum ){
+        [string] $AggregateFunction = "Sum"
+    } elseif ($Average) {
+        [string] $AggregateFunction = "Average"
+    } elseif ($Count) {
+        [string] $AggregateFunction = "Count"
+    } elseif ($Max) {
+        [string] $AggregateFunction = "Max"
+    } elseif ($Min) {
+        [string] $AggregateFunction = "Min"
+    } elseif ($StandardDeviation) {
+        [string] $AggregateFunction = "Std"
+    } else {
+        [string] $AggregateFunction = 'Sum'
+    }
     $o = [ordered] @{}
     [int] $i = 0
     foreach ($RowValue in $CrossTab.Keys | Sort-Object) {
@@ -151,41 +179,34 @@ function Calc-CrossTabulation {
         }
         foreach ($ColumnValue in $ColumnValues) {
             $Values = $CrossTab[$RowValue][$ColumnValue]
-            [string] $AggregateFunction = 'Sum'
-            if ( $Sum ){
-                $AggregateFunction = "Sum"
-            } elseif ($Average) {
-                $AggregateFunction = "Average"
-            } elseif ($Count) {
-                $AggregateFunction = "Count"
-            } elseif ($Max) {
-                $AggregateFunction = "Max"
-            } elseif ($Min) {
-                $AggregateFunction = "Min"
-            } elseif ($StandardDeviation) {
-                $AggregateFunction = "Std"
-            }
             $Result = switch -Exact ($AggregateFunction) {
                 "Sum"     {$Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum}
                 "Average" {$Values | Measure-Object -Average | Select-Object -ExpandProperty Average}
                 "Count"   {$Values.Count}
                 "Max"     {$Values | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum}
                 "Min"     {$Values | Measure-Object -Minimum | Select-Object -ExpandProperty Minimum}
-                "Std"     {$Values | Measure-Object -Minimum | Select-Object -ExpandProperty StandardDeviation}
+                "Std"     {$Values | Measure-Object -StandardDeviation | Select-Object -ExpandProperty StandardDeviation}
                 default   {$Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum} # Default to Sum
             }
-            if ( $Result -eq $null ) { $Result = $EmptyValue }
-            if ( $Cast ){
-                $Result = switch -Exact ( $Cast ) {
-                    "int"     {[int]$Result}
-                    "double"  {[double]$Result}
-                    "decimal" {[decimal]$Result}
-                    default   {$Result} # Default to no cast
-                }
+            if ( $Result -eq $null ) {
+                $Result = $EmptyValue
             }
-            $o[$ColumnValue] = $Result
+            try {
+                if ( $Cast ){
+                    $Result = switch -Exact ( $Cast ) {
+                        "int"     {[int]     $Result}
+                        "double"  {[double]  $Result}
+                        "decimal" {[decimal] $Result}
+                        default   {$Result} # Default to no cast
+                    }
+                }
+                $o[$ColumnValue] = $Result
+            } catch {
+                Write-Error $error[0] -ErrorAction stop
+            }
         }
         [pscustomobject]$o
         $o = [ordered] @{}
     }
 }
+
