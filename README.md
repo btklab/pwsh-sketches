@@ -5280,7 +5280,7 @@ Most functions are also compatible with other data exploration types.
 > - b) If the process distribution is not normal, careful interpretation of X-control charts is necessary.
 > - c) X-control charts determine process variation from the average of the differences between successive observations. Therefore, the data must be time-sequenced, and there must be no significant changes within the process between the collection of two consecutive individual measurements. For example, it is not advisable to collect data from two discontinuous batches of chemical production activities after stopping the production line midway and calculate the moving range between the final batch of the first activity and the first batch of the next activity.
 
-<cite>from: [JISZ9020-2:2016 Control charts - Part 2: Shewhart control charts](https://kikakurui.com/z9/Z9020-2-2016-01.html)</cite>
+<cite>The above is my English translation based on [JISZ9020-2:2016 Control charts - Part 2: Shewhart control charts](https://kikakurui.com/z9/Z9020-2-2016-01.html)</cite>
 
 Example script to calculate basic statistics by category:
 
@@ -5338,46 +5338,46 @@ count species xrs detect   b_l_m BarChart
         - License: Creative Commons Zero v1.0 Universal
 
 
-Procedure:
+Statistical analysis procedures using this toolset:
 
 1. **Convert** dataset to PSObject with:
     - `ConvertFrom-Csv` (built-in Cmdlet)
     - `Import-Csv` (built-in Cmdlet)
     - `Import-Excel` (external module)
-1. **Shorten** long column names to make data exploration easier (Optional):
+2. **Shorten** long column names to make data exploration easier (Optional):
     - `Shorten-PropertyName`
-1. **Replace** record with (Optional):
+3. **Replace** record with (Optional):
     - `Replace-ForEach`
-1. **Join** datasets with:
+4. **Join** datasets with:
     - `Join-Object` (external module)
     - `Join2-Object`
-1. **Select** the required columns with:
+5. **Select** the required columns with:
     - `Select-Object` (built-in Cmdlet)
     - `Select-Field`
     - `Delete-Field`
-1. **Filter** the required records with:
+6. **Filter** the required records with:
     - `Where-Object` (built-in Cmdlet)
-1. **Drop** NA, NaN, Null record from data with:
+7. **Drop** NA, NaN, Null record from data with:
     - `Drop-NA`
     - `Replace-NA`
-1. **Sort** data stably by category with:
+8. **Sort** data stably by category with:
     - `Sort-Object <property> -Stable`
-1. **Arrange** data
+9. **Arrange** data
     - `Unique-Object`
     - `Transpose-Property`
-1. **GroupBy** category and add to each record with:
+10. **GroupBy** category and add to each record with:
     - `Apply-Function`
     - `GroupBy-Object`
-1. **Calculate** and add basic statistics and add to each record with:
+11. **Calculate** and add basic statistics and add to each record with:
     - `Measure-Object` (built-in Cmdlet)
     - `Measure-Summary`
     - `Add-Stats`
     - `Add-Quartile`
     - `Measure-Stats`
     - `Measure-Quartile`
-1. **Detect** anomaly record (using X-Rs control method) with:
+12. **Detect** anomaly record (using X-Rs control method) with:
     - `Detect-XrsAnomaly`
-1. **Visualize** the results in charts with:
+13. **Visualize** the results in charts with:
     - `Get-Histogram`
     - `Plot-BarChart`
 
@@ -7480,7 +7480,7 @@ A        17.00 5.00 0.00
 B        15.00 0.00 8.00
 ```
 
-#### [Map-Object] Cross-tabulation of strings.<a id="Map-Object"></a>
+#### [Map-Object] Converts long-format data into wide-format data.<a id="Map-Object"></a>
 
 [Map-Object]: src/Map-Object_function.ps1
 
