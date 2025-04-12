@@ -7070,15 +7070,15 @@ sepal_length sepal_width petal_length petal_width species
 ```
 
 
-#### [Edit-Property] - Edit values in a specific column.<a id="Edit-Property"></a>
+#### [Edit-Property] (Alias: Add-Property) - Edit values in a specific column.<a id="Edit-Property"></a>
 
 [Edit-Property]: src/Edit-Property_function.ps1
 
-- Usage: `man Edit-Property`
+- Usage:
+    - `man Edit-Property`
+    - `man Add-Property`
 
-Example1
-
-edit date format
+**Example.1**: Edit date format.
 
 ```powershell
 # input data
@@ -7111,9 +7111,7 @@ date             version
 2019/09/18 (Wed) v3.0.0
 ```
 
-EXAMPLE2
-
-Create a new property from an exiting property
+**EXAMPLE.2**: Create a new property from an exiting property.
 
 ```powershell
 cat data.txt `
