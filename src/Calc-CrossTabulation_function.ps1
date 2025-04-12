@@ -12,7 +12,8 @@
             [-c|-ColumnProperty] <String>
             [-v|-ValueProperty] <String>
             [-Sum]
-            [-Average]
+            [-Mean|-Average]
+            [-Median]
             [-Count]
             [-Max]
             [-Min]
@@ -73,6 +74,9 @@ function Calc-CrossTabulation {
         [switch] $Average
         ,
         [Parameter(Mandatory=$false)]
+        [switch] $Median
+        ,
+        [Parameter(Mandatory=$false)]
         [switch] $Count
         ,
         [Parameter(Mandatory=$false)]
@@ -98,6 +102,36 @@ function Calc-CrossTabulation {
         [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
         [object[]] $InputObject
     )
+    # private function
+    ## Function to get the median of an array
+    function Get-Median {
+        param (
+            [Parameter(Mandatory=$true)]
+            [double[]] $Numbers # Input array, specified as double type
+        )
+        # Get the number of elements in the array
+        [int] $dataCount = $Numbers.Count
+        # Handle the case where the array is empty
+        if ($dataCount -eq 0) {
+            #Write-Error "Array is empty. Cannot calculate the median." -ErrorAction SilentlyContinue
+            return $Null # Returns $null in case of error, which is common
+        }
+        # Sort the array (necessary for median calculation)
+        [double[]] $sortedNumbers = $Numbers | Sort-Object
+        # If the number of elements is odd
+        if ($dataCount % 2 -eq 1) {
+            # The middle element is the median
+            [double] $medianVal = $sortedNumbers[($dataCount - 1) / 2]
+        } else {
+            # If the number of elements is even
+            # The average of the two middle elements is the median
+            [double] $middleVal1 = $sortedNumbers[$dataCount / 2 - 1]
+            [double] $middleVal2 = $sortedNumbers[$dataCount / 2]
+            # Divide by 2.0 to ensure the result is a double
+            [double] $medianVal = ($middleVal1 + $middleVal2) / 2.0
+        }
+        return $medianVal
+    }
     # set variable
     [string] $ProxyDelimiter = '@p@r@o@x@y@'
     [string] $SplitDelimiter = ", "
@@ -140,7 +174,7 @@ function Calc-CrossTabulation {
                 'int'      { [int]      $Value }
                 'double'   { [double]   $Value }
                 'decimal'  { [decimal]  $Value }
-                default    { [string]   $Value }
+                default    { [int]      $Value }
             }
         } catch {
             #Write-Error "Failed to add value '$Value' to CrossTab for RowKey '$RowKey' and Column '$Column'."
@@ -154,6 +188,8 @@ function Calc-CrossTabulation {
         [string] $AggregateFunction = "Sum"
     } elseif ($Average) {
         [string] $AggregateFunction = "Average"
+    } elseif ($Median) {
+        [string] $AggregateFunction = "Median"
     } elseif ($Count) {
         [string] $AggregateFunction = "Count"
     } elseif ($Max) {
@@ -165,6 +201,7 @@ function Calc-CrossTabulation {
     } else {
         [string] $AggregateFunction = 'Sum'
     }
+    
     $o = [ordered] @{}
     [int] $i = 0
     foreach ($RowValue in $CrossTab.Keys | Sort-Object) {
@@ -179,17 +216,22 @@ function Calc-CrossTabulation {
         }
         foreach ($ColumnValue in $ColumnValues) {
             $Values = $CrossTab[$RowValue][$ColumnValue]
-            $Result = switch -Exact ($AggregateFunction) {
-                "Sum"     {$Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum}
-                "Average" {$Values | Measure-Object -Average | Select-Object -ExpandProperty Average}
-                "Count"   {$Values.Count}
-                "Max"     {$Values | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum}
-                "Min"     {$Values | Measure-Object -Minimum | Select-Object -ExpandProperty Minimum}
-                "Std"     {$Values | Measure-Object -StandardDeviation | Select-Object -ExpandProperty StandardDeviation}
-                default   {$Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum} # Default to Sum
-            }
-            if ( $Result -eq $null ) {
+            if ( $Values.Count -eq 0 ) {
                 $Result = $EmptyValue
+            } else {
+                $Result = switch -Exact ($AggregateFunction) {
+                    "Sum"     {$Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum}
+                    "Average" {$Values | Measure-Object -Average | Select-Object -ExpandProperty Average}
+                    "Median"  {Get-Median $Values}
+                    "Count"   {$Values.Count}
+                    "Max"     {$Values | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum}
+                    "Min"     {$Values | Measure-Object -Minimum | Select-Object -ExpandProperty Minimum}
+                    "Std"     {$Values | Measure-Object -StandardDeviation | Select-Object -ExpandProperty StandardDeviation}
+                    default   {$Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum} # Default to Sum
+                }
+                if ( $Result -eq $null ) {
+                    $Result = $EmptyValue
+                }
             }
             try {
                 if ( $Cast ){
@@ -197,7 +239,7 @@ function Calc-CrossTabulation {
                         "int"     {[int]     $Result}
                         "double"  {[double]  $Result}
                         "decimal" {[decimal] $Result}
-                        default   {$Result} # Default to no cast
+                        default   {$Result} # Default as-is
                     }
                 }
                 $o[$ColumnValue] = $Result
