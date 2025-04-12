@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Edit-Property - Edit values in a specific column
+    Edit-Property (Alias: Add-Property) - Edit values in a specific column
 
     Edit values in a specific column while preserving other columns.
 
@@ -85,7 +85,7 @@ function Edit-Property
     $input | Select-Object -Property $hashAry
 }
 # set alias
-[String] $tmpAliasName = "editprop"
+[String] $tmpAliasName = "Add-Property"
 [String] $tmpCmdName   = "Edit-Property"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `

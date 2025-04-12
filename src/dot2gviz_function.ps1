@@ -15,6 +15,20 @@
     japanese fonts must be specified in the "fontname"
     of the dot file to be desplayed properly.
 
+.DESCRIPTION
+    Graphviz executes a `dot` file to render a graph.(not a bar chart,
+    but a diagram with boxes, arrows, nodes, and edges). Equivalent to:
+    `dot -Tpng -o a.png a.dot`. Designed for use in UTF-8 environments
+    on Japanese Windows systems.
+
+    When using Japanese with [Graphviz], you need to specify the font as follows:
+
+    - `dot -Nfontname="Meiryo" -Efontname="Meiryo" -Gfontname="Meiryo" -Tsvg -o a.svg a.dot`
+
+    Since this is too long and hard to memorize, a wrapper script was created.
+    The simplest usage: `dot2gviz a.dot`.  By default, it outputs a `png` image
+    with the same name as the input file in the current directory.
+
 .LINK
     pu2java, dot2gviz, pert, pert2dot, pert2gantt2pu, mind2dot, mind2pu, gantt2pu, logi2dot, logi2dot2, logi2dot3, logi2pu, logi2pu2, flow2pu, seq2pu
 

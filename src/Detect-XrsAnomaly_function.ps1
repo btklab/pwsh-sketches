@@ -58,9 +58,73 @@
 
             [-o|-OnlyDeviationRecord]
                 Output only records with detected abnormal values
+.DESCRIPTION
+    The anomaly detection uses the X-control chart method, which determines process variation from the average of successive observation differences.
+
+    - [JISZ9020-2:2016 Control charts - Part 2: Shewhart control charts](https://kikakurui.com/z9/Z9020-2-2016-01.html)
+
+    The anomaly detection functions here are equivalent to those of an X-control chart.
+
+    Most functions are also compatible with other data exploration types.
+
+    ![Detect anomaly with X-Rs control chart](img/Detect-XrsAnomaly_01.png)
+
+    > Several precautions are advisable when using X-control charts:
+    >
+    > - a) X-control charts are less sensitive to process changes than control charts based on subgroups.
+    > - b) If the process distribution is not normal, careful interpretation of X-control charts is necessary.
+    > - c) X-control charts determine process variation from the average of the differences between successive observations. Therefore, the data must be time-sequenced, and there must be no significant changes within the process between the collection of two consecutive individual measurements. For example, it is not advisable to collect data from two discontinuous batches of chemical production activities after stopping the production line midway and calculate the moving range between the final batch of the first activity and the first batch of the next activity.
+
+    <cite>The above is my English translation based on [JISZ9020-2:2016 Control charts - Part 2: Shewhart control charts](https://kikakurui.com/z9/Z9020-2-2016-01.html)</cite>
+
+    Statistical analysis procedures using this toolset:
+    
+    1. **Convert** dataset to PSObject with:
+        - `ConvertFrom-Csv` (built-in Cmdlet)
+        - `Import-Csv` (built-in Cmdlet)
+        - `Import-Excel` (external module)
+    2. **Shorten** long column names to make data exploration easier (Optional):
+        - `Shorten-PropertyName`
+    3. **Replace** record with (Optional):
+        - `Replace-ForEach`
+    4. **Join** datasets with:
+        - `Join-Object` (external module)
+        - `Join2-Object`
+    5. **Select** the required columns with:
+        - `Select-Object` (built-in Cmdlet)
+        - `Select-Field`
+        - `Delete-Field`
+    6. **Filter** the required records with:
+        - `Where-Object` (built-in Cmdlet)
+    7. **Drop** NA, NaN, Null record from data with:
+        - `Drop-NA`
+        - `Replace-NA`
+    8. **Sort** data stably by category with:
+        - `Sort-Object <property> -Stable`
+    9. **Arrange** data
+        - `Unique-Object`
+        - `Transpose-Property`
+    10. **GroupBy** category and add to each record with:
+        - `Apply-Function`
+        - `GroupBy-Object`
+    11. **Calculate** and add basic statistics and add to each record with:
+        - `Measure-Object` (built-in Cmdlet)
+        - `Measure-Summary`
+        - `Add-Stats`
+        - `Add-Quartile`
+        - `Measure-Stats`
+        - `Measure-Quartile`
+    12. **Detect** anomaly record (using X-Rs control method) with:
+        - `Detect-XrsAnomaly`
+    13. **Visualize** the results in charts with:
+        - `Get-Histogram`
+        - `Plot-BarChart`
+
 
 .LINK
-    Shorten-PropertyName, Drop-NA, Replace-NA, Apply-Function, Add-Stats, Detect-XrsAnomaly, Plot-BarChart, Get-First, Get-Last, Select-Field, Delete-Field
+    Shorten-PropertyName, Drop-NA, Replace-NA, Apply-Function,
+    Add-Stats, Detect-XrsAnomaly, Plot-BarChart,
+    Get-First, Get-Last, Select-Field, Delete-Field
 
 .NOTES
     reference: Z 9020-2：2016 (ISO 7870-2：2013) 

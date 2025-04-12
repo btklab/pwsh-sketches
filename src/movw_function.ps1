@@ -57,6 +57,17 @@
         - The approach is appropriate where the between-lot variability of samples
           is less than the within-lot variability.
 
+.DESCRIPTION
+    > In a typical sampling plan, a fixed number of samples (n) are taken from the same lot and inspected. If the number of samples exceeding the threshold (m) is within (c), the lot is considered acceptable (two-class attribute sampling). However, the moving window approach involves taking a relatively large number of samples (n) at a fixed frequency over a certain period. As each new result is added, the oldest result is removed from the n-sample window. If the number of samples exceeding the threshold (m) within the window is within (c), the process or food safety management system is deemed to be adequately controlled. When the inspection results are presented in a table by sample date, the n-sample window appears to move with each new result, hence the name "moving window."
+    
+    reference: the avobe is my english translation based on the paper: ["Globalization and the Concept of Food Microbiological Standards." - J-Stage](https://www.jstage.jst.go.jp/article/jsfm/32/2/32_124/_pdf)
+    
+    - references:
+        - [Guidelines&nbsp;&#124; CODEXALIMENTARIUS FAO-WHO](https://www.fao.org/fao-who-codexalimentarius/codex-texts/guidelines/en/)
+            - [CXG 21-1997	Principles and Guidelines for the Establishment and Application of Microbiological Criteria Related to Foods](https://www.fao.org/fao-who-codexalimentarius/sh-proxy/en/?lnk=1&url=https%253A%252F%252Fworkspace.fao.org%252Fsites%252Fcodex%252FStandards%252FCXG%2B21-1997%252FCXG_021e.pdf)
+        - [Application of the moving window approach in the verification of the performance of food safety management systems - ScienceDirect](https://www.sciencedirect.com/science/article/abs/pii/S0956713515001061)
+
+
 .LINK
     movw, mave
 
