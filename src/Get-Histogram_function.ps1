@@ -323,6 +323,9 @@ function Get-Histogram {
         [switch] $AllProperty
         ,
         [Parameter(Mandatory=$False)]
+        [switch] $SkipBlank
+        ,
+        [Parameter(Mandatory=$False)]
         [ValidateSet("int", "double", "decimal")]
         [string] $Cast = "double"
         ,
@@ -359,7 +362,7 @@ function Get-Histogram {
         Write-Debug ('[{0}] Maximum value not specified. Using largest value ({1}) from input data.' -f $MyInvocation.MyCommand, $Maximum)
     }
     if (-Not $PSBoundParameters.ContainsKey('BucketCount')) {
-        $BucketCount = [math]::Ceiling(($Maximum - $Minimum) / $BucketWidth)
+        $BucketCount = [math]::Ceiling(($Maximum - $Minimum) / $BucketWidth) + 1
         Write-Debug ('[{0}] Bucket count not specified. Calculated {1} buckets from width of {2}.' -f $MyInvocation.MyCommand, $BucketCount, $BucketWidth)
     }
     if ($BucketCount -gt 100) {
@@ -403,15 +406,15 @@ function Get-Histogram {
     Write-Debug ('[{0}] Building histogram' -f $MyInvocation.MyCommand)
     $DataIndex = 1
     foreach ($_ in $input) {
-        if ( [string]($_.$Value) -match '^NA$' ){
+        if ( [string]($_."$Value") -match '^NA$|^NaN$' ){
             Write-Error "Drop 'NA/NaN' in advance." -ErrorAction Stop
         }
-        if ( [string]($_.$Value) -match '^NaN$' ){
-            Write-Error "Drop 'NA/NaN' in advance." -ErrorAction Stop
-        }
-        #if ( [string]($_.$Value) -match '^\s*$' ){
-        if ( [string]($_.$Value).Trim() -eq '' ){
-            Write-Error "The input string '' was not in a correct format." -ErrorAction Stop
+        if ( [string]($_."$Value") -match '^\s*$' ){
+            if ( $SkipBlank ){
+                #pass
+            } else {
+                Write-Error "The empty string is detected." -ErrorAction Stop
+            }
         }
         try {
             if ( $Cast -eq 'double' ){

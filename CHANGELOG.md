@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- NA
+- Added [Get-Histogram][] `-SkipBlank` option.
 
 ## [0.7.0] - 2025-04-12
 
