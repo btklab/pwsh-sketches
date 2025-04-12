@@ -28,6 +28,23 @@
     The output format is automatically determined from the output
     file extension.
 
+.DESCRIPTION
+    [plantuml](https://plantuml.com/en/) wrapper script for reading and
+    executing `.pu` files. Designed for use in UTF-8 environments on
+    Japanese Windows systems. It renders graphs (not bar charts, but
+    diagrams with boxes, arrows, nodes, and edges). Equivalent to:
+    `java -jar plantuml.jar -charset "UTF-8" -tsvg a.pu`.
+    When using Japanese, specify `-charset "UTF-8"`.
+
+    Similar to [dot2gviz], this wrapper script was created to simplify
+    long and hard-to-remember command strings. The simplest usage:
+    `pu2java a.pu`. By default, it outputs a `png` image with the same
+    name as the input file to the current directory.
+
+    The `plantuml.jar` file is expected by default at `${HOME}/bin/plantuml/plantuml.jar`.
+    You can specify a custom location for the `jar` file using `-Jar <path/to/the/jar>`.
+
+
 .LINK
     pu2java, dot2gviz, pert, pert2dot, pert2gantt2pu, mind2dot, mind2pu, gantt2pu, logi2dot, logi2dot2, logi2dot3, logi2pu, logi2pu2, flow2pu, seq2pu
 

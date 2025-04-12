@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - NA
 
+## [0.7.0] - 2025-04-12
+
+- Changed [README.md][] Reduce-FileSize: move the synopsis from README.md to each function files.
+
 ## [0.6.0] - 2025-04-08
 
 - Added [Get-Dataset][] function.
@@ -290,7 +294,8 @@ Breaking Changes
 [Calc-CrossTabulation]: src/Calc-CrossTabulation_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.6.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.7.0..HEAD
+[0.7.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.6.0
 [0.6.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.6.0
 [0.5.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.5.0
 [0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0
