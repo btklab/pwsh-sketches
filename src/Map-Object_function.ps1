@@ -242,6 +242,9 @@ function Map-Object {
         [string] $ReplaceNA
         ,
         [Parameter(Mandatory=$false)]
+        [switch] $Descending
+        ,
+        [Parameter(Mandatory=$false)]
         [ValidateSet(
             "string",
             "int",
@@ -251,6 +254,17 @@ function Map-Object {
             "datetime"
         )]
         [string] $Cast = 'string'
+        ,
+        [Parameter(Mandatory=$false)]
+        [ValidateSet(
+            "string",
+            "int",
+            "double",
+            "decimal",
+            "version",
+            "datetime"
+        )]
+        [string] $SortAs = 'string'
         ,
         [Parameter(Mandatory=$false)]
         [string] $DateFormat = 'yyyy-MM-dd'
@@ -313,17 +327,26 @@ function Map-Object {
                     -Expression { $([string]($_."$p")).Replace($SplitDelimiter,$ProxyDelimiter) }
         }
     }
+    # Sort splatting
+    switch -Exact ( $SortAs ) {
+        'string'   { $splatting = @{ Property = { [string]   $_ }; Descending = $Descending } }
+        'int'      { $splatting = @{ Property = { [int]      $_ }; Descending = $Descending } }
+        'double'   { $splatting = @{ Property = { [double]   $_ }; Descending = $Descending } }
+        'decimal'  { $splatting = @{ Property = { [decimal]  $_ }; Descending = $Descending } }
+        'version'  { $splatting = @{ Property = { [version]  $_ }; Descending = $Descending } }
+        'datetime' { $splatting = @{ Property = { [datetime] $_ }; Descending = $Descending } }
+        default    { $splatting = @{ Property = { [string]   $_ }; Descending = $Descending } }
+    }
     $RowValues = @(
         $input `
             | Group-Object $RowProperty `
             | Select-Object -ExpandProperty Name `
-            | Sort-Object
+            | Sort-Object @splatting
             )
-
     # Extract unique values for columns
     $ColumnValues = $input `
         | Select-Object -ExpandProperty $ColumnProperty -Unique `
-        | Sort-Object
+        | Sort-Object -Property { [string] $_ }
 
     # Hashtable to store the cross-tabulation results
     $CrossTab = @{}
