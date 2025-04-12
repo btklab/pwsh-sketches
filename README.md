@@ -10595,7 +10595,7 @@ echo "./%E6%8E%B2%E7%A4%BA%E6%9D%BF/start.txt" | Encode-Uri -Debug
 
 #### [Format-Path] (Alias: fpath) - Remove double-quotes and replace backslashes to slashes from windows path.<a id="Format-Path"></a>
 
-[fpath]: src/Format-Path_function.ps1
+[Format-Path]: src/Format-Path_function.ps1
 
 Formatting file paths in the Windows environment. The operation is simple: it removes double quotes `"` from the file paths and replaces backslashes `\` with forward slashes `/`.
 
