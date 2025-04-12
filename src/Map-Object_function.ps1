@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Map-Object -- Converts long-format data into wide-format data.
+    Map-Object (Alias: long2wide) -- Converts long-format data into wide-format data.
 
     Pivoting/Cross-tabulating with Grouping.
 
@@ -97,6 +97,93 @@
     --------  - - -
     A        17 5 0
     B        15 0 8
+
+.EXAMPLE
+    # Group aggregation by converting between long and wide formats.
+    
+    ## input data (csv)
+    $widedata = @(
+    "name,val1,val2,val3",
+    "A,10,20,30",
+    "B,15,25,35",
+    "A,12,22,32",
+    "C,18,28,38",
+    "B,16,26,36")
+
+    ## convert csv to object
+    $widedata | ConvertFrom-Csv
+
+    name val1 val2 val3
+    ---- ---- ---- ----
+    A    10   20   30
+    B    15   25   35
+    A    12   22   32
+    C    18   28   38
+    B    16   26   36
+
+    ## convert wide-format to long-format
+    $widedata `
+        | ConvertFrom-Csv `
+        | wide2long `
+            -RowIdentifier name `
+            -VariableColumnPrefix val `
+            -ValueColumnName num
+
+    name val  num
+    ---- ---  ---
+    A    val1 10
+    A    val2 20
+    A    val3 30
+    B    val1 15
+    B    val2 25
+    B    val3 35
+    A    val1 12
+    A    val2 22
+    A    val3 32
+    C    val1 18
+    C    val2 28
+    C    val3 38
+    B    val1 16
+    B    val2 26
+    B    val3 36
+    
+    # convert long-format to wide-format
+    $widedata `
+        | ConvertFrom-Csv `
+        | wide2long `
+            -RowIdentifier name `
+            -VariableColumnPrefix val `
+            -ValueColumnName num `
+        | long2wide `
+            -RowProperty name `
+            -ColumnProperty val `
+            -ValueProperty num
+    
+    name val1   val2   val3
+    ---- ----   ----   ----
+    A    10, 12 20, 22 30, 32
+    B    15, 16 25, 26 35, 36
+    C    18     28     38
+    
+    # sum each val<n> columns
+    $widedata `
+        | ConvertFrom-Csv `
+        | wide2long `
+            -RowIdentifier name `
+            -VariableColumnPrefix val `
+            -ValueColumnName num `
+        | long2wide `
+            -RowProperty name `
+            -ColumnProperty val `
+            -ValueProperty num `
+            -Sum
+
+    name  val1  val2  val3
+    ----  ----  ----  ----
+    A    22.00 42.00 62.00
+    B    31.00 51.00 71.00
+    C    18.00 28.00 38.00
+
 #>
 function Map-Object {
     [CmdletBinding()]
@@ -310,5 +397,47 @@ function Map-Object {
         [pscustomobject]$o
         $o = [ordered] @{}
     }
+}
+# set alias
+[String] $tmpAliasName = "long2wide"
+[String] $tmpCmdName   = "Map-Object"
+[String] $tmpCmdPath = Join-Path `
+    -Path $PSScriptRoot `
+    -ChildPath $($MyInvocation.MyCommand.Name) `
+    | Resolve-Path -Relative
+if ( $IsWindows ){ $tmpCmdPath = $tmpCmdPath.Replace('\' ,'/') }
+# is alias already exists?
+if ((Get-Command -Name $tmpAliasName -ErrorAction SilentlyContinue).Count -gt 0){
+    try {
+        if ( (Get-Command -Name $tmpAliasName).CommandType -eq "Alias" ){
+            if ( (Get-Command -Name $tmpAliasName).ReferencedCommand.Name -eq $tmpCmdName ){
+                Set-Alias -Name $tmpAliasName -Value $tmpCmdName -PassThru `
+                    | ForEach-Object{
+                        Write-Host "$($_.DisplayName)" -ForegroundColor Green
+                    }
+            } else {
+                throw
+            }
+        } elseif ( "$((Get-Command -Name $tmpAliasName).Name)" -match '\.exe$') {
+            Set-Alias -Name $tmpAliasName -Value $tmpCmdName -PassThru `
+                | ForEach-Object{
+                    Write-Host "$($_.DisplayName)" -ForegroundColor Green
+                }
+        } else {
+            throw
+        }
+    } catch {
+        Write-Error "Alias ""$tmpAliasName ($((Get-Command -Name $tmpAliasName).ReferencedCommand.Name))"" is already exists. Change alias needed. Please edit the script at the end of the file: ""$tmpCmdPath""" -ErrorAction Stop
+    } finally {
+        Remove-Variable -Name "tmpAliasName" -Force
+        Remove-Variable -Name "tmpCmdName" -Force
+    }
+} else {
+    Set-Alias -Name $tmpAliasName -Value $tmpCmdName -PassThru `
+        | ForEach-Object {
+            Write-Host "$($_.DisplayName)" -ForegroundColor Green
+        }
+    Remove-Variable -Name "tmpAliasName" -Force
+    Remove-Variable -Name "tmpCmdName" -Force
 }
 
