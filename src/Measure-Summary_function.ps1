@@ -18,6 +18,7 @@
                 - Allow value from pipeline
                 - Give an alias to options
                 - Add -Key option
+                - Add count NA feature
                 - Specify the quartile when the number of
                   data is 0 to 8
                 - Add Outlier property
@@ -357,7 +358,7 @@ function Measure-Summary {
         [switch] $ExcludeOutlier
         ,
         [Parameter( Mandatory=$False, ValueFromPipeline=$True )]
-        [PSObject] $InputObject
+        [PSObject[]] $InputObject
     )
     # private function
     function isDouble {
@@ -376,11 +377,14 @@ function Measure-Summary {
             }
         }
     }
+    # get total data count
+    [int] $TotalDataCount = $input.Count
     # get all property names
+    [String[]] $AllPropertyNames = @()
     if ( $Property ){
-        [String[]] $AllPropertyNames = $Property
+        [String[]] $AllPropertyNames += $Property
     } else {
-        [String[]] $AllPropertyNames = ($input[0].PSObject.Properties).Name
+        [String[]] $AllPropertyNames += ($input[0].PSObject.Properties).Name
     }
     foreach ( $p in $AllPropertyNames ){
         if ( -not $Property ){
@@ -402,7 +406,8 @@ function Measure-Summary {
                 | Sort-Object -Property { [double]($_.$p) } -Stable
         }
         #endregion
-
+        [int] $CountNA = $TotalDataCount - $Data.Count
+        #Write-Debug $CountNA
         #region Grab basic measurements from upstream Measure-Object
         if ( $Detail ){
             $Stats = $Data `
@@ -572,7 +577,8 @@ function Measure-Summary {
                         @{N="Confidence95" ;E={[double]($_."Confidence95")}}, `
                         @{N="Outlier"    ;E={[double]($_."Outlier")}}, `
                         @{N="OutlierHi"  ;E={[double]($_."OutlierHi")}}, `
-                        @{N="OutlierLo"  ;E={[double]($_."OutlierLo")}}
+                        @{N="OutlierLo"  ;E={[double]($_."OutlierLo")}}, `
+                        @{N="CountNA"    ;E={[double]($CountNA)}}
             } else {
                 New-Object psobject -Property $hash `
                     | Select-Object -Property `
@@ -609,7 +615,8 @@ function Measure-Summary {
                         @{N="Confidence95" ;E={[double]($_."Confidence95")}}, `
                         @{N="Outlier"    ;E={[double]($_."Outlier")}}, `
                         @{N="OutlierHi"  ;E={[double]($_."OutlierHi")}}, `
-                        @{N="OutlierLo"  ;E={[double]($_."OutlierLo")}}
+                        @{N="OutlierLo"  ;E={[double]($_."OutlierLo")}}, `
+                        @{N="CountNA"    ;E={[double]($CountNA)}}
             } else {
                 New-Object psobject -Property $hash `
                     | Select-Object -Property `

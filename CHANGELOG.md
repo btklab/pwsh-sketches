@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 - Added [Get-Histogram][] `-SkipBlank` option.
+- Added [Measure-Summary][] Count-NA feature.
 
 ## [0.7.0] - 2025-04-12
 
