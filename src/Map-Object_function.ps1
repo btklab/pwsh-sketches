@@ -9,6 +9,7 @@
             [-r|-RowProperty] <String[]>
             [-c|-ColumnProperty] <String>
             [-v|-ValueProperty] <String>
+
             [-Sum]
             [-Mean|-Average]
             [-Median]
@@ -16,11 +17,22 @@
             [-Max]
             [-Min]
             [-Std|-StandardDeviation]
+
             [-Cast <string|int|double|decimal>]
             [-EmptyValue <value>]
             [-ReplaceComma]
-            [-DropNA]
-            [-ReplaceNA <regex>]
+
+            [-rsort|-RowSort <string|int|double|decimal>]
+            [-csort|-ColSort <string|int|double|decimal>]
+            [-vsort|-ValSort <string|int|double|decimal>]
+
+            [-rdrop|-DropRowNA]
+            [-cdrop|-DropColNA]
+            [-vdrop|-DropValNA]
+
+            [-rrep|-ReplaceRowNA <string>]
+            [-crep|-ReplaceColNA <string>]
+            [-vrep|-ReplaceValNA <string>]
 
 .NOTES
     Group-Object (Microsoft.PowerShell.Utility) - PowerShell
@@ -236,43 +248,76 @@ function Map-Object {
         [switch] $ReplaceComma
         ,
         [Parameter(Mandatory=$false)]
-        [switch] $DropNA
-        ,
-        [Parameter(Mandatory=$false)]
-        [string] $ReplaceNA
-        ,
-        [Parameter(Mandatory=$false)]
         [switch] $Descending
         ,
         [Parameter(Mandatory=$false)]
         [ValidateSet(
-            "string",
-            "int",
-            "double",
-            "decimal",
-            "version",
-            "datetime"
+            "string", "int", "double",
+            "decimal", "version", "datetime"
         )]
         [string] $Cast = 'string'
         ,
         [Parameter(Mandatory=$false)]
         [ValidateSet(
-            "string",
-            "int",
-            "double",
-            "decimal",
-            "version",
-            "datetime"
+            "string", "int", "double",
+            "decimal", "version", "datetime"
         )]
-        [string] $SortAs = 'string'
+        [Alias('rsort')]
+        [string] $RowSort = 'string'
+        ,
+        [Parameter(Mandatory=$false)]
+        [ValidateSet(
+            "string", "int", "double",
+            "decimal", "version", "datetime"
+        )]
+        [Alias('csort')]
+        [string] $ColSort = 'string'
+        ,
+        [Parameter(Mandatory=$false)]
+        [ValidateSet(
+            "string", "int", "double",
+            "decimal", "version", "datetime"
+        )]
+        [Alias('vsort')]
+        [string] $ValSort
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('rdrop')]
+        [switch] $DropRowNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('cdrop')]
+        [switch] $DropColNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('vdrop')]
+        [switch] $DropValNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('rrep')]
+        [string] $ReplaceRowNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('crep')]
+        [string] $ReplaceColNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('vrep')]
+        [string] $ReplaceValNA
         ,
         [Parameter(Mandatory=$false)]
         [string] $DateFormat = 'yyyy-MM-dd'
         ,
+        [Parameter(Mandatory=$false)]
+        [string] $SplitDelimiter = ", "
+        ,
+        [Parameter(Mandatory=$false)]
+        [string] $ProxyDelimiter = '@p@r@o@x@y@'
+        ,
         [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
         [object[]] $InputObject
     )
-    # private function
+    # private functions
     ## Function to get the median of an array
     function Get-Median {
         param (
@@ -302,9 +347,55 @@ function Map-Object {
         }
         return $medianVal
     }
+    filter Drop-EmptyRow {
+        [string] $JoinedRowProperty = ''
+        foreach ( $rowprop in $RowProperty ){
+            # replace empty column property value
+            if ( $ReplaceRowNA -and $_.$rowprop -eq '' ){
+                $_.$rowprop = $ReplaceRowNA
+            }
+            # Combine multiple RowProperty values to create row keys
+            if ( $ReplaceComma ){
+                $_.$rowprop = ($_.$rowprop).Replace($SplitDelimiter, $ProxyDelimiter)
+            }
+            $JoinedRowProperty += [string]($_.$rowprop)
+        }
+        if ( $JoinedRowProperty -eq '' ){
+            # empty column property value
+            if ( $DropRowNA ){
+                #pass
+            } else {
+                # raise error
+                #Write-Error "Detect null-value in Property:""$RowProperty"". Please specify the ""-DropRowNA"" or ""-ReplaceRowNA <string>""." -ErrorAction stop
+                # skip raise error. 
+                # Unlike columns, rows don't cause an error even if they have null values.
+                return $_
+            }
+        } else {
+            # not empty: output as-is
+            return $_
+        }
+    }
+    filter Drop-EmptyColumn {
+        if ( $ReplaceColNA -and [string]($_.$ColumnProperty) -eq '' ){
+            # replace empty column property value
+            $_.$ColumnProperty = $ReplaceColNA
+        }
+        [string] $JoinedColProperty = [string] ($_.$ColumnProperty)
+        if ( $JoinedColProperty -eq '' ){
+            # empty column property value
+            if ( $DropColNA ){
+                #pass
+            } else {
+                # raise error
+                Write-Error "Detect null-value in Property:""$ColumnProperty"". Please specify the ""-DropColNA"" or ""-ReplaceColNA <string>""." -ErrorAction stop
+            }
+        } else {
+            # not empty: output as-is
+            return $_
+        }
+    }
     # set variables
-    [string] $ProxyDelimiter = '@p@r@o@x@y@'
-    [string] $SplitDelimiter = ", "
     if ( $Join ){
         [string] $ConcatDelimiter = $Join
     } elseif ( $Join -eq '' ){
@@ -318,17 +409,8 @@ function Map-Object {
             $Cast = 'double'
         }
     }
-    # Combine multiple RowProperty values to create row keys
-    if ( $ReplaceComma) {
-        foreach ( $p in $RowProperty ) {
-            $input = $input `
-                | Edit-Property `
-                    -Property "$p" `
-                    -Expression { $([string]($_."$p")).Replace($SplitDelimiter,$ProxyDelimiter) }
-        }
-    }
-    # Sort splatting
-    switch -Exact ( $SortAs ) {
+    # Extract unique values for rows
+    switch -Exact ( $RowSort ) {
         'string'   { $splatting = @{ Property = { [string]   $_ }; Descending = $Descending } }
         'int'      { $splatting = @{ Property = { [int]      $_ }; Descending = $Descending } }
         'double'   { $splatting = @{ Property = { [double]   $_ }; Descending = $Descending } }
@@ -339,15 +421,27 @@ function Map-Object {
     }
     $RowValues = @(
         $input `
+            | Drop-EmptyRow `
             | Group-Object $RowProperty `
             | Select-Object -ExpandProperty Name `
             | Sort-Object @splatting
-            )
+    )
     # Extract unique values for columns
-    $ColumnValues = $input `
-        | Select-Object -ExpandProperty $ColumnProperty -Unique `
-        | Sort-Object -Property { [string] $_ }
-
+    switch -Exact ( $ColSort ) {
+        'string'   { $splatting = @{ Property = { [string]   $_ } } }
+        'int'      { $splatting = @{ Property = { [int]      $_ } } }
+        'double'   { $splatting = @{ Property = { [double]   $_ } } }
+        'decimal'  { $splatting = @{ Property = { [decimal]  $_ } } }
+        'version'  { $splatting = @{ Property = { [version]  $_ } } }
+        'datetime' { $splatting = @{ Property = { [datetime] $_ } } }
+        default    { $splatting = @{ Property = { [string]   $_ } } }
+    }
+    $ColumnValues = @(
+        $input `
+            | Drop-EmptyColumn `
+            | Select-Object -ExpandProperty $ColumnProperty -Unique `
+            | Sort-Object @splatting
+    )
     # Hashtable to store the cross-tabulation results
     $CrossTab = @{}
 
@@ -358,23 +452,22 @@ function Map-Object {
     }
 
     # Aggregate data and store it in the cross-tabulation table
-    foreach ($Item in $input) {
+    foreach ($Item in @($input | Drop-EmptyRow | Drop-EmptyColumn) ){
         # Combine values of multiple RowProperty to create the row key
         [string] $RowKey = @($RowProperty | ForEach-Object {$Item.$_}) -join $SplitDelimiter
-        [string] $RowKey = $RowKey
         $Column = $Item.$ColumnProperty
-        $Value = $Item.$ValueProperty
-        if ( $DropNA ){
+        $Value  = $Item.$ValueProperty
+        if ( $DropValNA ){
             # check for NA values
             if ( $Value -match '^NA$|^NaN$' ) {
                 # skip NA values
                 $Value = $Null
             }
-        } elseif ( $ReplaceNA ){
+        } elseif ( $ReplaceValNA ){
             # replace NA values
             if ( $Value -match '^NA$|^NaN$' ) {
                 # replace NA values
-                $Value = $Value -replace '^NA$|^NaN$', $ReplaceNA
+                $Value = $Value -replace '^NA$|^NaN$', $ReplaceValNA
             }
         }
         if (-not $CrossTab[$RowKey].ContainsKey($Column)) {
@@ -435,27 +528,34 @@ function Map-Object {
             if ( $Values.Count -eq 0 ) {
                 $Result = $EmptyValue
             } else {
-                switch -Exact ( $Cast ){
-                    'string' {
-                        # values -as string
-                        if ( $Count ){
-                            [int] $Result = $Values.Count
-                        } else {
-                            [string] $Result = $Values -Join $ConcatDelimiter
+                if ( $Cast -eq 'string' ){
+                    # values -as string
+                    if ( $Count ){
+                        [int] $Result = $Values.Count
+                    } elseif ( $ValSort ) {
+                        [string] $Result = switch -Exact ( $ValSort ) {
+                            'string'   {@($Values | Sort-Object -Property {[string]   $_}) -Join $ConcatDelimiter}
+                            'int'      {@($Values | Sort-Object -Property {[int]      $_}) -Join $ConcatDelimiter}
+                            'double'   {@($Values | Sort-Object -Property {[double]   $_}) -Join $ConcatDelimiter}
+                            'decimal'  {@($Values | Sort-Object -Property {[decimal]  $_}) -Join $ConcatDelimiter}
+                            'version'  {@($Values | Sort-Object -Property {[version]  $_}) -Join $ConcatDelimiter}
+                            'datetime' {@($Values | Sort-Object -Property {[datetime] $_}) -Join $ConcatDelimiter}
+                            default    {@($Values | Sort-Object -Property {[string]   $_}) -Join $ConcatDelimiter}
                         }
+                    } else {
+                        [string] $Result = $Values -Join $ConcatDelimiter
                     }
-                    default {
-                        # values -as numeric
-                        $Result = switch -Exact ($AggregateFunction) {
-                            "Sum"     {$Values | Measure-Object -Sum     | Select-Object -ExpandProperty Sum}
-                            "Average" {$Values | Measure-Object -Average | Select-Object -ExpandProperty Average}
-                            "Median"  {Get-Median @($Values)}
-                            "Count"   {$Values.Count}
-                            "Max"     {$Values | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum}
-                            "Min"     {$Values | Measure-Object -Minimum | Select-Object -ExpandProperty Minimum}
-                            "Std"     {$Values | Measure-Object -StandardDeviation | Select-Object -ExpandProperty StandardDeviation}
-                            default   {$Values | Measure-Object -Sum     | Select-Object -ExpandProperty Sum} # Default to Sum
-                        }
+                } else {
+                    # values -as numeric
+                    $Result = switch -Exact ($AggregateFunction) {
+                        "Sum"     {$Values | Measure-Object -Sum     | Select-Object -ExpandProperty Sum}
+                        "Average" {$Values | Measure-Object -Average | Select-Object -ExpandProperty Average}
+                        "Median"  {Get-Median @($Values)}
+                        "Count"   {$Values.Count}
+                        "Max"     {$Values | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum}
+                        "Min"     {$Values | Measure-Object -Minimum | Select-Object -ExpandProperty Minimum}
+                        "Std"     {$Values | Measure-Object -StandardDeviation | Select-Object -ExpandProperty StandardDeviation}
+                        default   {$Values | Measure-Object -Sum     | Select-Object -ExpandProperty Sum} # Default to Sum
                     }
                 }
                 if ( $Result -eq $Null ) {
