@@ -18,8 +18,10 @@
             [-VariableColumnName <String>]
 
 .LINK
-    Map-Object, UnMap-Object,
-    Convert-DictionaryToPSCustomObject (dict2psobject)
+    Map-Object, UnMap-Object, Cross-CrossTabulation,
+    Convert-DictionaryToPSCustomObject (dict2psobject),
+    Edit-Property (editprop), Replace-ForEach,
+    fillretu, addt, addl, addr
 
 .EXAMPLE
     # Sample data (wide format like a cross-tabulation result)
