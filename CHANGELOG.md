@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added [Get-Histogram][] `-SkipBlank` option.
 - Added [Measure-Summary][] Count-NA feature.
-- Added [Map-Object][] `-SortAs <type>` option.
+- Added [Map-Object][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
+- Added [Calc-CrossTabulation][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
 
 ## [0.7.0] - 2025-04-12
 

@@ -11,6 +11,7 @@
             [-r|-RowProperty] <String[]>
             [-c|-ColumnProperty] <String>
             [-v|-ValueProperty] <String>
+
             [-Sum]
             [-Mean|-Average]
             [-Median]
@@ -18,11 +19,18 @@
             [-Max]
             [-Min]
             [-Std|-StandardDeviation]
+
             [-EmptyValue <Double>]
             [-Cast <int|double|decimal>]
             [-ReplaceComma]
-            [-DropNA]
-            [-ReplaceNA <regex>]
+
+            [-rdrop|-DropRowNA]
+            [-cdrop|-DropColNA]
+            [-vdrop|-DropValNA]
+
+            [-rrep|-ReplaceRowNA <string>]
+            [-crep|-ReplaceColNA <string>]
+            [-vrep|-ReplaceValNA <string>]
 
 .LINK
     Convert-DictionaryToPSCustomObject (dict2psobject),
@@ -102,10 +110,34 @@ function Calc-CrossTabulation {
         [switch] $ReplaceComma
         ,
         [Parameter(Mandatory=$false)]
-        [switch] $DropNA
+        [Alias('rdrop')]
+        [switch] $DropRowNA
         ,
         [Parameter(Mandatory=$false)]
-        [string] $ReplaceNA
+        [Alias('cdrop')]
+        [switch] $DropColNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('vdrop')]
+        [switch] $DropValNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('rrep')]
+        [string] $ReplaceRowNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('crep')]
+        [string] $ReplaceColNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [Alias('vrep')]
+        [string] $ReplaceValNA
+        ,
+        [Parameter(Mandatory=$false)]
+        [string] $SplitDelimiter = ", "
+        ,
+        [Parameter(Mandatory=$false)]
+        [string] $ProxyDelimiter = '@p@r@o@x@y@'
         ,
         [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
         [object[]] $InputObject
@@ -140,22 +172,75 @@ function Calc-CrossTabulation {
         }
         return $medianVal
     }
+    filter Drop-EmptyRow {
+        [string] $JoinedRowProperty = ''
+        foreach ( $rowprop in $RowProperty ){
+            # replace empty column property value
+            if ( $ReplaceRowNA -and $_.$rowprop -eq '' ){
+                $_.$rowprop = $ReplaceRowNA
+            }
+            # Combine multiple RowProperty values to create row keys
+            if ( $ReplaceComma ){
+                $_.$rowprop = ($_.$rowprop).Replace($SplitDelimiter, $ProxyDelimiter)
+            }
+            $JoinedRowProperty += [string]($_.$rowprop)
+        }
+        if ( $JoinedRowProperty -eq '' ){
+            # empty column property value
+            if ( $DropRowNA ){
+                #pass
+            } else {
+                # raise error
+                #Write-Error "Detect null-value in Property:""$RowProperty"". Please specify the ""-DropRowNA"" or ""-ReplaceRowNA <string>""." -ErrorAction stop
+                # skip raise error. 
+                # Unlike columns, rows don't cause an error even if they have null values.
+                return $_
+            }
+        } else {
+            # not empty: output as-is
+            return $_
+        }
+    }
+    filter Drop-EmptyColumn {
+        if ( $ReplaceColNA -and [string]($_.$ColumnProperty) -eq '' ){
+            # replace empty column property value
+            $_.$ColumnProperty = $ReplaceColNA
+        }
+        [string] $JoinedColProperty = [string] ($_.$ColumnProperty)
+        if ( $JoinedColProperty -eq '' ){
+            # empty column property value
+            if ( $DropColNA){
+                #pass
+            } else {
+                # raise error
+                Write-Error "Detect null-value in Property:""$ColumnProperty"". Please specify the ""-DropColNA"" or ""-ReplaceColNA <string>""." -ErrorAction stop
+            }
+        } else {
+            # not empty: output as-is
+            return $_
+        }
+    }
     # set variable
-    [string] $ProxyDelimiter = '@p@r@o@x@y@'
-    [string] $SplitDelimiter = ", "
     if ( $Count ) {
         $Cast = 'int'
     }
-    # Combine multiple RowProperty values to create row keys
-    if ( $ReplaceComma) {
-        foreach ( $p in $RowProperty ) {
-            $input = $input | Edit-Property -Property "$p" -Expression { $([string]($_."$p")).Replace($SplitDelimiter,$ProxyDelimiter)}
-        }
-    }
-    $RowValues = @($input | Group-Object $RowProperty | Select-Object -ExpandProperty Name | Sort-Object)
+
+    # Extract unique values for rows
+    $RowValues = @(
+        $input `
+            | Drop-EmptyRow `
+            | Group-Object $RowProperty `
+            | Select-Object -ExpandProperty Name `
+            | Sort-Object
+    )
 
     # Extract unique values for columns
-    $ColumnValues = $input | Select-Object -ExpandProperty $ColumnProperty -Unique | Sort-Object
+    $ColumnValues = @(
+        $input `
+            | Drop-EmptyColumn `
+            | Select-Object -ExpandProperty $ColumnProperty -Unique `
+            | Sort-Object
+    )
 
     # Hashtable to store the cross-tabulation results
     $CrossTab = @{}
@@ -166,23 +251,22 @@ function Calc-CrossTabulation {
     }
 
     # Aggregate data and store it in the cross-tabulation table
-    foreach ($Item in $input) {
+    foreach ($Item in @($input | Drop-EmptyRow | Drop-EmptyColumn) ){
         # Combine values of multiple RowProperty to create the row key
         [string] $RowKey = @($RowProperty | ForEach-Object {$Item.$_}) -join $SplitDelimiter
-        [string] $RowKey = $RowKey
         $Column = $Item.$ColumnProperty
-        $Value = $Item.$ValueProperty
-        if ( $DropNA ){
+        $Value  = $Item.$ValueProperty
+        if ( $DropValNA ){
             # check for NA values
             if ( $Value -match '^NA$|^NaN$' ) {
                 # skip NA values
                 $Value = $Null
             }
-        } elseif ( $ReplaceNA ){
+        } elseif ( $ReplaceValNA ){
             # replace NA values
             if ( $Value -match '^NA$|^NaN$' ) {
                 # replace NA values
-                $Value = $Value -replace '^NA$|^NaN$', $ReplaceNA
+                $Value = $Value -replace '^NA$|^NaN$', $ReplaceValNA
             }
         }
         if (-not $CrossTab[$RowKey].ContainsKey($Column)) {
