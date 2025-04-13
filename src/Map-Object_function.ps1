@@ -39,10 +39,10 @@
     https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/group-object
 
 .LINK
-    Map-Object, UnMap-Object,
+    Map-Object, UnMap-Object, Cross-CrossTabulation,
     Convert-DictionaryToPSCustomObject (dict2psobject),
     Edit-Property (editprop), Replace-ForEach,
-    fillrety, addt, addl, addr
+    fillretu, addt, addl, addr
 
 .EXAMPLE
     $data = @(

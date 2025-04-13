@@ -33,8 +33,10 @@
             [-vrep|-ReplaceValNA <string>]
 
 .LINK
+    Map-Object, UnMap-Object, Cross-CrossTabulation,
     Convert-DictionaryToPSCustomObject (dict2psobject),
-    Edit-Property (editprop), Get-Dataset (dataset)
+    Edit-Property (editprop), Replace-ForEach,
+    fillretu, addt, addl, addr
 
 .EXAMPLE
     $data = @(
