@@ -1,12 +1,15 @@
 <#
 .SYNOPSIS
-    Unique-Object
+    Unique-Object - Select unique objects from a collection of objects.
 
-    Pre-Sorted property needed.
+    Do not need Pre-Sort.
 
-    $obj `
-        | Sort-Object -Property "Property" -Stable `
-        | Unique-Object -Property "Property" [-Count]
+.LINK
+    Select-Object (Microsoft.PowerShell.Utility) - PowerShell
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object
+
+    Group-Object (Microsoft.PowerShell.Utility) - PowerShell
+    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/group-object
 
 .EXAMPLE
     # input
@@ -27,7 +30,6 @@
     # uniq
     "str","a","b","c","d","d","e","f","a" `
         | ConvertFrom-Csv `
-        | Sort-Object -Property "str" -Stable `
         | Unique-Object -Property "str"
 
     str
@@ -42,7 +44,6 @@
     # uniq -Count option
     "str","a","b","c","d","d","e","f","a" `
         | ConvertFrom-Csv `
-        | Sort-Object -Property "str" -Stable `
         | Unique-Object -Property "str" -Count
 
     str Count
@@ -54,21 +55,6 @@
     e       1
     f       1
 
-    # Oops! forgot to pre-sort property
-    "str","a","b","c","d","d","e","f","a" `
-        | ConvertFrom-Csv `
-        | Unique-Object -Property "str" -Count
-
-    str Count
-    --- -----
-    a       1
-    b       1
-    c       1
-    d       2
-    e       1
-    f       1
-    a       1 <--- Undesired result
-
 #>
 function Unique-Object
 {
@@ -79,61 +65,81 @@ function Unique-Object
         [String[]] $Property
         ,
         [Parameter(Mandatory=$False)]
-        [Alias('c')]
-        [Switch] $Count
-        ,
-        [Parameter(Mandatory=$False)]
         [Alias('a')]
         [Switch] $AllProperty
+        ,
+        [Parameter(Mandatory=$False)]
+        [Alias('c')]
+        [Switch] $Count
         ,
         [Parameter(Mandatory=$False, ValueFromPipeline=$True)]
         [PSObject] $InputObject
     )
-    begin {
-        # init variables
-        [bool] $isFirstItem = $True
-        [string] $oldVal = $Null
-        [string] $newVal = $Null
-        [int] $Counter = 0
+    if ( $Count -and $AllProperty ){
+        $splatting = @{
+            Property = $Property
+            NoElement = $False
+        }
+        [string[]] $OutputProperty = @()
+        [string[]] $OutputProperty += "Count"
+        [string[]] $OutputProperty += $Property
+        [string[]] $OutputProperty += "Group"
+        $input | Group-Object @splatting  | ForEach-Object {
+            [string[]] $properties = $_.Values
+            $newObject = $_ | Select-Object -Property "Count", "Group"
+            for ($i = 0; $i -lt $properties.Count; $i++) {
+                [string] $propertyName = $Property[$i]
+                $newObject | Add-Member -MemberType NoteProperty -Name $propertyName -Value $properties[$i]
+            }
+            $newObject | Select-Object -Property $OutputProperty
+            }
+        return
     }
-    process {
-        [string] $propKeyStr = ''
-        foreach ($p in $Property){
-            $propKeyStr += $InputObject.$p
+    if ( $AllProperty ){
+        $splatting = @{
+            Property = $Property
+            NoElement = $False
         }
-        [string] $newVal = $propKeyStr
-        if ( $isFirstItem ){
-            # the first record
-        } else {
-            # the second and subsequent records
-            if ( $newVal -eq $oldVal){
-                # pass
-            } else {
-                if ( $Count ){
-                    $preItem | Add-Member -MemberType NoteProperty -Name "Count" -Value $Counter
-                }
-                $preItem
-                # init variables
-                [int] $Counter = 0
-                [bool] $isFirstItem = $True
+        [string[]] $OutputProperty = @()
+        [string[]] $OutputProperty += $Property
+        [string[]] $OutputProperty += "Group"
+        $input | Group-Object @splatting  | ForEach-Object {
+            [string[]] $properties = $_.Values
+            $newObject = $_ | Select-Object -Property "Group"
+            for ($i = 0; $i -lt $properties.Count; $i++) {
+                [string] $propertyName = $Property[$i]
+                $newObject | Add-Member -MemberType NoteProperty -Name $propertyName -Value $properties[$i]
             }
-        }
-        [string] $oldVal = $newVal
-        if ( $isFirstItem ){
-            if ( $AllProperty ){
-                $preItem = $InputObject
-            } else {
-                $preItem = $InputObject | Select-Object -Property $Property
+            $newObject | Select-Object -Property $OutputProperty
             }
-            $isFirstItem = $False
-        }
-        $Counter++
+        return
     }
-    end {
-            if ( $Count ){
-                $preItem | Add-Member -MemberType NoteProperty -Name "Count" -Value $Counter
+    if ( $Count ){
+        $splatting = @{
+            Property = $Property
+            NoElement = $True
+        }
+        [string[]] $OutputProperty = @()
+        [string[]] $OutputProperty += "Count"
+        [string[]] $OutputProperty += $Property
+        $input | Group-Object @splatting  | ForEach-Object {
+            [string[]] $properties = $_.Values
+            $newObject = $_ | Select-Object -Property "Count"
+            for ($i = 0; $i -lt $properties.Count; $i++) {
+                [string] $propertyName = $Property[$i]
+                $newObject | Add-Member -MemberType NoteProperty -Name $propertyName -Value $properties[$i]
             }
-            $preItem
+            $newObject | Select-Object -Property $OutputProperty
+            }
+        return
+    }
+    # default
+    if ( $True ){
+        $splatting = @{
+            Property = $Property
+            Unique = $True
+        }
+        $input | Select-Object @splatting
+        return
     }
 }
-
