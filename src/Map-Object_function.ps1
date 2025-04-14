@@ -422,7 +422,7 @@ function Map-Object {
     $RowValues = @(
         $input `
             | Drop-EmptyRow `
-            | Group-Object $RowProperty `
+            | Group-Object -Property $RowProperty -NoElement `
             | Select-Object -ExpandProperty Name `
             | Sort-Object @splatting
     )
