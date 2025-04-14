@@ -6,7 +6,6 @@
 
     By default, sequential integer numbers are assigned.
     The default id property name is "id".
-    If there are duplicates, it will be "id<n>".
 
 .LINK
     ForEach-Step, ForEach-Block, ForEach-Label,
@@ -69,21 +68,31 @@ function Add-Id
         [Alias('f')]
         [String] $Format
         ,
+        [Parameter(Mandatory=$False)]
+        [Int] $Start = 1
+        ,
         [Parameter(Mandatory=$False, ValueFromPipeline=$True)]
         [PSObject] $InputObject
     )
-    # set Property name counter
-    [Int] $NameCounter = 1
     [String] $uniqKeyName = $Name
-    # Check for duplicate property names
     [String[]] $PropNames = ($input[0].PSObject.Properties).Name
-    while ( $PropNames -contains $uniqKeyName) {
-        $NameCounter++
-        [String] $uniqKeyName = $Name + [String]$NameCounter
+    # Check for duplicate property names
+    if ( $uniqKeyName -in $PropNames ){
+        Write-Error "Property name '$uniqKeyName' already exists in the input object." -ErrorAction Stop
     }
-    # Set of unique key name
+    # Auto set id
+    if ( $False ){
+        # set Property name counter
+        [Int] $NameCounter = 0
+        # Check for duplicate property names
+        while ( $PropNames -contains $uniqKeyName) {
+            $NameCounter++
+            [String] $uniqKeyName = $Name + [String]$NameCounter
+        }
+    }
     Write-Debug "uniq_key_name: $uniqKeyName"
-    [Int] $counter = 0
+    # main
+    [Int] $counter = $Start - 1
     foreach ( $i in $input ){
         # convert psobject to hash
         $counter++
@@ -106,6 +115,7 @@ function Add-Id
             $hash[$obj.Name] = $obj.Value
         }
         # convert hash to psobject
-        New-Object psobject -Property $hash
+        [pscustomobject] $hash
     }
 }
+
