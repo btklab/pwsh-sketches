@@ -76,12 +76,16 @@ function Unique-Object
     Param(
         [Parameter(Mandatory=$True, Position=0)]
         [Alias('p')]
-        [String[]] $Property,
-        
+        [String[]] $Property
+        ,
         [Parameter(Mandatory=$False)]
         [Alias('c')]
-        [Switch] $Count,
-        
+        [Switch] $Count
+        ,
+        [Parameter(Mandatory=$False)]
+        [Alias('a')]
+        [Switch] $AllProperty
+        ,
         [Parameter(Mandatory=$False, ValueFromPipeline=$True)]
         [PSObject] $InputObject
     )
@@ -99,34 +103,35 @@ function Unique-Object
         }
         [string] $newVal = $propKeyStr
         if ( $isFirstItem ){
-            $isFirstItem = $False
+            # the first record
         } else {
+            # the second and subsequent records
             if ( $newVal -eq $oldVal){
                 # pass
             } else {
                 if ( $Count ){
-                    $preItem `
-                        | Add-Member `
-                            -MemberType NoteProperty `
-                            -Name "Count" `
-                            -Value $Counter
+                    $preItem | Add-Member -MemberType NoteProperty -Name "Count" -Value $Counter
                 }
                 $preItem
+                # init variables
                 [int] $Counter = 0
+                [bool] $isFirstItem = $True
             }
         }
         [string] $oldVal = $newVal
-        $preItem = $InputObject
-        #$preItem = $InputObject | Select-Object -Property $Property
+        if ( $isFirstItem ){
+            if ( $AllProperty ){
+                $preItem = $InputObject
+            } else {
+                $preItem = $InputObject | Select-Object -Property $Property
+            }
+            $isFirstItem = $False
+        }
         $Counter++
     }
     end {
             if ( $Count ){
-                $preItem `
-                    | Add-Member `
-                        -MemberType NoteProperty `
-                        -Name "Count" `
-                        -Value $Counter
+                $preItem | Add-Member -MemberType NoteProperty -Name "Count" -Value $Counter
             }
             $preItem
     }

@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [Map-Object][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
 - Added [Calc-CrossTabulation][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
 - Added [Add-Id][] Check for duplicated property names.
+- Fixed [Unique-Object][] Fix-Algorithm: Retrieve first record on duplicate key (was last).
+
 
 ## [0.7.0] - 2025-04-12
 
