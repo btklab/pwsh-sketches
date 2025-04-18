@@ -126,6 +126,7 @@ if ($IsWindows){
 . $pwshSrcDir/mdgrep_function.ps1
 . $pwshSrcDir/mdfocus_function.ps1
 
+. $pwshSrcDir/Convert-Pandoc_function.ps1
 . $pwshSrcDir/Execute-TinyTeX_function.ps1
 . $pwshSrcDir/Execute-RMarkdown_function.ps1
 . $pwshSrcDir/Inkscape-Converter_function.ps1
