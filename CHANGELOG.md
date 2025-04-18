@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Convert-Pandoc][] function.
 - Added [Get-Histogram][] `-SkipBlank` option.
 - Added [Measure-Summary][] Count-NA feature.
 - Added [Map-Object][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
@@ -299,6 +300,7 @@ Breaking Changes
 [UnMap-Object]: src/UnMap-Object_function.ps1
 [Calc-CrossTabulation]: src/Calc-CrossTabulation_function.ps1
 
+[Convert-Pandoc]: src/Convert-Pandoc_function.ps1
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.7.0..HEAD
 [0.7.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.6.0
