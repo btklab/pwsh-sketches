@@ -31,23 +31,26 @@ function UnZip-GzFile {
                 # Validate that the file exists
                 if (-not (Test-Path -Path $file)) {
                     Write-Error "File not found: $file" -ErrorAction Stop
-                    continue
+                    throw
                 }
                 # Open the GZip stream for reading
                 $reader = [System.IO.Compression.GZipStream]::new(
                     [System.IO.File]::OpenRead($file),
                     [System.IO.Compression.CompressionMode]::Decompress
                 )
-                # Read from the stream and write to standard output
-                $buffer = New-Object byte[] 4096
-                while (($read = $reader.Read($buffer, 0, $buffer.Length)) -gt 0) {
-                    [Console]::OpenStandardOutput().Write($buffer, 0, $read)
+                # Create a StreamReader for text-based reading
+                $streamReader = [System.IO.StreamReader]::new($reader)
+                # Read and output lines of text to the console
+                while (-not $streamReader.EndOfStream) {
+                    [string] $line = $streamReader.ReadLine()
+                    Write-Output $line
                 }
             } catch {
                 Write-Error "Error reading from GZip stream: $file"
             } finally {
                 # Close the stream
-                $reader.Dispose > $Null
+                $streamReader.Dispose() > $Null
+                $reader.Dispose() > $Null
             } 
         }
     }
