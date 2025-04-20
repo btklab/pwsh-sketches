@@ -14,11 +14,11 @@
     This function takes one or more .gz files as input via parameters, decompresses the files, and writes
     their decompressed content directly to the standard output. It's designed to work with PowerShell 7+.
 
-.PARAMETER Files
+.PARAMETER Path
     A string array of one or more paths to .gz files that need to be decompressed.
 
 .EXAMPLE
-    UnZip-GzFile -Files "file1.gz", "file2.gz"
+    UnZip-GzFile -Name "file1.gz", "file2.gz"
     # This will decompress "file1.gz" and "file2.gz", and output the content of each to the console.
 #>
 function UnZip-GzFile {
@@ -29,11 +29,16 @@ function UnZip-GzFile {
             ValueFromPipeline=$True,
             ValueFromPipelineByPropertyName=$True
         )]
-        [string[]] $Files
+        [Alias('p')]
+        [string[]] $Path
         ,
         [Parameter(Mandatory=$False)]
         [Alias('a')]
         [switch] $AutoDetectExtension
+        ,
+        [Parameter(Mandatory=$False)]
+        [Alias('v')]
+        [switch] $WriteFileName
     )
     # private function
     function Expand-GzFileAsText {
@@ -66,14 +71,19 @@ function UnZip-GzFile {
         }
     }
     # main loop
-    foreach ($file in $Files) {
+    foreach ($file in $Path) {
         # Validate that the file exists
         if (-not (Test-Path -Path $file)) {
             Write-Error "File not found: $file" -ErrorAction Stop
         }
-        [string] $ext = Get-Item -LiteralPath $file `
-            | Select-Object -ExpandProperty Extension
-        if ( $AutoDetectExtension -and $ext -notmatch '\.gz$' ){
+        # Get file object
+        [System.IO.FileInfo] $fileInfo = Get-Item -LiteralPath $file
+        [string] $fileExt = $fileInfo.Extension
+        [string] $fileNam = $fileInfo.Name
+        if ( $WriteFileName ) {
+            Write-Host "File: $fileNam" -ForegroundColor Green
+        }
+        if ( $AutoDetectExtension -and $fileExt -notmatch '\.gz$' ){
             Get-Content -LiteralPath $file -Encoding utf8
         } else {
             # Call the private function to handle decompression for each file
