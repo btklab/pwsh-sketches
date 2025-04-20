@@ -2,7 +2,13 @@
 .SYNOPSIS
     UnZip-GzFile (Alias: unzipgz) -- Decompress .gz files to standard output.
 
-    Decompresses one or more .gz files and writes the decompressed content to the console (standard output).
+    Decompresses one or more .gz files and writes the
+    decompressed content to the console (standard output).
+    Specifying the "[-a|-AutoDetectExtension]" switch will
+    only unzip files with the ".gz" extension, and will use
+    Get-Content for all other files as is.
+
+
 
 .DESCRIPTION
     This function takes one or more .gz files as input via parameters, decompresses the files, and writes
@@ -24,35 +30,55 @@ function UnZip-GzFile {
             ValueFromPipelineByPropertyName=$True
         )]
         [string[]] $Files
+        ,
+        [Parameter(Mandatory=$False)]
+        [Alias('a')]
+        [switch] $AutoDetectExtension
     )
-    process {
-        foreach ($file in $Files) {
-            try {
-                # Validate that the file exists
-                if (-not (Test-Path -Path $file)) {
-                    Write-Error "File not found: $file" -ErrorAction Stop
-                    throw
-                }
-                # Open the GZip stream for reading
-                $reader = [System.IO.Compression.GZipStream]::new(
-                    [System.IO.File]::OpenRead($file),
-                    [System.IO.Compression.CompressionMode]::Decompress
-                )
-                # Create a StreamReader for text-based reading
-                $streamReader = [System.IO.StreamReader]::new($reader)
-                # Read and output lines of text to the console
-                while (-not $streamReader.EndOfStream) {
-                    [string] $line = $streamReader.ReadLine()
-                    Write-Output $line
-                }
-            } catch {
-                Write-Error "Error reading from GZip stream: $file"
-            } finally {
-                # Close the stream
-                $streamReader.Dispose() > $Null
-                $reader.Dispose() > $Null
-            } 
+    # private function
+    function Expand-GzFileAsText {
+        [CmdletBinding()]
+        param (
+            [Parameter(Mandatory=$True)]
+            [string] $f
+        )
+        try {
+            # Open the GZip stream for reading
+            $reader = [System.IO.Compression.GZipStream]::new(
+                [System.IO.File]::OpenRead($f),
+                [System.IO.Compression.CompressionMode]::Decompress
+            )
+            # Create a StreamReader for text-based reading
+            $streamReader = [System.IO.StreamReader]::new($reader)
+            # Read and output lines of text to the console
+            while (-not $streamReader.EndOfStream) {
+                [string] $line = $streamReader.ReadLine()
+                Write-Output $line
+                # raise error test
+                #1/0
+            }
+        } catch {
+            Write-Error "$($_.Exception.Message) - reading from GZip stream: $file" -ErrorAction Stop
+        } finally {
+            # Close the stream
+            $streamReader.Dispose() > $Null
+            $reader.Dispose() > $Null
         }
+    }
+    # main loop
+    foreach ($file in $Files) {
+        # Validate that the file exists
+        if (-not (Test-Path -Path $file)) {
+            Write-Error "File not found: $file" -ErrorAction Stop
+        }
+        [string] $ext = Get-Item -LiteralPath $file `
+            | Select-Object -ExpandProperty Extension
+        if ( $AutoDetectExtension -and $ext -notmatch '\.gz$' ){
+            Get-Content -LiteralPath $file -Encoding utf8
+        } else {
+            # Call the private function to handle decompression for each file
+            Expand-GzFileAsText -f $file
+        } 
     }
 }
 # set alias
