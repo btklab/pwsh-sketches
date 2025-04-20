@@ -177,6 +177,7 @@ if ( $IsWindows ){
 }
 . $pwshSrcDir/Decrease-Indent_function.ps1
 . $pwshSrcDir/Unzip-Archive_function.ps1
+. $pwshSrcDir/UnZip-GzFile_function.ps1
 
 ## file watcher
 . $pwshSrcDir/fwatch_function.ps1
