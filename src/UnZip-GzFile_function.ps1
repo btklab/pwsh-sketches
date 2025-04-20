@@ -31,7 +31,6 @@ function UnZip-GzFile {
                 # Validate that the file exists
                 if (-not (Test-Path -Path $file)) {
                     Write-Error "File not found: $file" -ErrorAction Stop
-                    throw
                 }
                 # Open the GZip stream for reading
                 $reader = [System.IO.Compression.GZipStream]::new(
@@ -46,7 +45,7 @@ function UnZip-GzFile {
                     Write-Output $line
                 }
             } catch {
-                Write-Error "Error reading from GZip stream: $file"
+                Write-Error "Error reading from GZip stream: $file - $_.Exception.Message"
             } finally {
                 # Close the stream
                 $streamReader.Dispose() > $Null
