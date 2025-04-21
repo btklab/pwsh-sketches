@@ -2,8 +2,9 @@
 .SYNOPSIS
     UnZip-GzFile (Alias: unzipgz) -- Decompress .gz files to standard output.
 
-    Decompresses one or more .gz files and writes the
-    decompressed content to the console (standard output).
+    Decompresses one or more .gz files and writes the decompressed
+    text content to the console (standard output).
+
     Specifying the "[-a|-AutoDetectExtension]" switch will
     only unzip files with the ".gz" extension, and will use
     Get-Content for all other files as is.

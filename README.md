@@ -789,7 +789,7 @@ a simple and beautiful CSS framework.
 
 [push2loc]: src/push2loc_function.ps1
 
-#### [UnZip-GzFile] (Alias: unzipgz) - Decompress .gz files to standard output.<a id="UnZip-GzFile"></a>
+#### [UnZip-GzFile] (Alias: unzipgz) - Decompress .gz text files to standard output.<a id="UnZip-GzFile"></a>
 
 [UnZip-GzFile]: src/UnZip-GzFile_function.ps1
 
