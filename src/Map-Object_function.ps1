@@ -17,6 +17,7 @@
             [-Max]
             [-Min]
             [-Std|-StandardDeviation]
+            [-Ratio]
 
             [-Cast <string|int|double|decimal>]
             [-EmptyValue <value>]
@@ -242,6 +243,9 @@ function Map-Object {
         [switch] $StandardDeviation
         ,
         [Parameter(Mandatory=$false)]
+        [switch] $Ratio
+        ,
+        [Parameter(Mandatory=$false)]
         $EmptyValue = $Null
         ,
         [Parameter(Mandatory=$false)]
@@ -403,7 +407,7 @@ function Map-Object {
     } else {
         [string] $ConcatDelimiter = $SplitDelimiter
     }
-    if ( $Sum -or $Average -or $Median -or $Max -or $Min -or $StandardDeviation ) {
+    if ( $Sum -or $Average -or $Median -or $Max -or $Min -or $StandardDeviation -or $Ratio ) {
         if ( $Cast -notin @('int', 'double', 'decimal') ) {
             # default calc cast
             $Cast = 'double'
@@ -506,6 +510,8 @@ function Map-Object {
         [string] $AggregateFunction = "Min"
     } elseif ($StandardDeviation) {
         [string] $AggregateFunction = "Std"
+    } elseif ($Ratio) {
+        [string] $AggregateFunction = "Ratio"
     } else {
         [string] $AggregateFunction = 'Sum'
     }
@@ -555,6 +561,11 @@ function Map-Object {
                         "Max"     {$Values | Measure-Object -Maximum | Select-Object -ExpandProperty Maximum}
                         "Min"     {$Values | Measure-Object -Minimum | Select-Object -ExpandProperty Minimum}
                         "Std"     {$Values | Measure-Object -StandardDeviation | Select-Object -ExpandProperty StandardDeviation}
+                        "Ratio"   {
+                            $outCount = $Values.Count
+                            $outSum = $Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum
+                            $outSum / $outCount
+                            }
                         default   {$Values | Measure-Object -Sum     | Select-Object -ExpandProperty Sum} # Default to Sum
                     }
                 }
