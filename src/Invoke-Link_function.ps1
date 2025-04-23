@@ -29,11 +29,6 @@
     and the links that you refer to only occasionally in the following lines,
     you can avoid opening an extra link every time.
 
-    The intent of this specification is to reduce the number of link files.
-    If you put the links that you usually use in the first line of the link
-    file and the links that you refer to only occasionally in the following
-    lines, you can avoid opening an extra link every time.
-
         - Text files (".txt", ".md", etc.): Open each line as a link.
             - "http" or "www" links: Use "Start-Process" (default browser).
             - Directories/other files: Use "Invoke-Item <link>".
