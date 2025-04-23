@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [Convert-Pandoc][] function.
 - Added [Get-Histogram][] `-SkipBlank` option.
 - Added [Measure-Summary][] Count-NA feature.
-- Added [Map-Object][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
+- Added [Map-Object][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort`, `-Ratio`, `-Format` option.
 - Added [Calc-CrossTabulation][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
 - Added [Add-Id][] Check for duplicated property names.
 - Refactored [Unique-Object][] function.

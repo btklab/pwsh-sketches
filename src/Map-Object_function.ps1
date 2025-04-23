@@ -313,6 +313,9 @@ function Map-Object {
         [string] $DateFormat = 'yyyy-MM-dd'
         ,
         [Parameter(Mandatory=$false)]
+        [string] $Format
+        ,
+        [Parameter(Mandatory=$false)]
         [string] $SplitDelimiter = ", "
         ,
         [Parameter(Mandatory=$false)]
@@ -564,9 +567,13 @@ function Map-Object {
                         "Ratio"   {
                             $outCount = $Values.Count
                             $outSum = $Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum
-                            $outSum / $outCount
+                                if ( $outCount -eq 0 ){
+                                    Write-Output 0
+                                } else {
+                                    Write-Output $($outSum / $outCount)
+                                }
                             }
-                        default   {$Values | Measure-Object -Sum     | Select-Object -ExpandProperty Sum} # Default to Sum
+                        default   {$Values | Measure-Object -Sum | Select-Object -ExpandProperty Sum} # Default to Sum
                     }
                 }
                 if ( $Result -eq $Null ) {
@@ -586,6 +593,9 @@ function Map-Object {
                         "datetime" { [datetime] $Result }
                         default    { [string]   $Result }
                     }
+                }
+                if ( $Format -and $Cast -ne 'string' ){
+                    $o[$ColumnValue] = ($o[$ColumnValue]).ToString($Format)
                 }
             } catch {
                 Write-Error $error[0] -ErrorAction stop
