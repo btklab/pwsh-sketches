@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [Calc-CrossTabulation][] `-DropRowNA`, `-DropColNA`, `-RowSort`, `-ColSort` option.
 - Added [Add-Id][] Check for duplicated property names.
 - Refactored [Unique-Object][] function.
+- Added [Get-AppShortcut][] New Act `Rotate Screen`.
 
 
 ## [0.7.0] - 2025-04-12
