@@ -69,8 +69,38 @@ Param(
 $sJson = @"
 [
     {
+        "App": "Windows OS",
+        "Act": "Rotate Screen",
+        "Key": "Ctrl Alt Arrow-Up|Down|Left|Right",
+        "Fn": "",
+        "Esc": "",
+        "Ano": "",
+        "Uri": "",
+        "Note": "",
+        "tag": [
+            "windows",
+            "windows10",
+            "windows11"
+        ]
+    },
+    {
+        "App": "Windows OS",
+        "Act": "Magnifying Glass",
+        "Key": "Win +",
+        "Fn": "",
+        "Esc": "Win Esc",
+        "Ano": "",
+        "Uri": "",
+        "Note": "",
+        "tag": [
+            "windows",
+            "windows10",
+            "windows11"
+        ]
+    },
+    {
         "App": "IME",
-        "Act": "Zenkaku alphanumeric mode",
+        "Act": "Zenkaku Alphanumeric Mode",
         "Key": "Shift <Mu-Henkan>",
         "Fn": "",
         "Esc": "",
@@ -83,7 +113,7 @@ $sJson = @"
     },
     {
         "App": "IME",
-        "Act": "Switch input language",
+        "Act": "Switch Input Language",
         "Key": "Left-Alt Shift",
         "Fn": "",
         "Esc": "",
@@ -96,7 +126,7 @@ $sJson = @"
     },
     {
         "App": "Windows Terminal",
-        "Act": "Split pane",
+        "Act": "Split Pane",
         "Key": "Alt Shift +|-",
         "Fn": "",
         "Esc": "",
@@ -109,7 +139,7 @@ $sJson = @"
     },
     {
         "App": "Windows Terminal",
-        "Act": "Switch pane",
+        "Act": "Switch Pane",
         "Key": "Alt Arrow",
         "Fn": "",
         "Esc": "",
@@ -122,7 +152,7 @@ $sJson = @"
     },
     {
         "App": "Windows Terminal",
-        "Act": "Resize pane",
+        "Act": "Resize Pane",
         "Key": "Alt Shift Arrow",
         "Fn": "",
         "Esc": "",
@@ -135,7 +165,7 @@ $sJson = @"
     },
     {
         "App": "Windows Terminal",
-        "Act": "Close pane",
+        "Act": "Close Pane",
         "Key": "Ctrl Shift W",
         "Fn": "",
         "Esc": "",
@@ -148,7 +178,7 @@ $sJson = @"
     },
     {
         "App": "Windows Terminal",
-        "Act": "Scroll by row",
+        "Act": "Scroll by Row",
         "Key": "Ctrl Shift Arrow-Up|Down",
         "Fn": "",
         "Esc": "",
@@ -161,7 +191,7 @@ $sJson = @"
     },
     {
         "App": "Windows Terminal",
-        "Act": "Scroll by screen",
+        "Act": "Scroll by Screen",
         "Key": "Ctrl Shift PgUp|PgDn",
         "Fn": "",
         "Esc": "",
@@ -174,7 +204,7 @@ $sJson = @"
     },
     {
         "App": "Microsoft Excel",
-        "Act": "Full screen",
+        "Act": "Full Screen",
         "Key": "Alt V U",
         "Fn": "",
         "Esc": "Esc",
@@ -187,7 +217,7 @@ $sJson = @"
     },
     {
         "App": "Microsoft Powerpoint",
-        "Act": "Full screen",
+        "Act": "Full Screen",
         "Key": "Alt W D",
         "Fn": "F5",
         "Esc": "Esc",
@@ -200,7 +230,7 @@ $sJson = @"
     },
     {
         "App": "Microsoft Word",
-        "Act": "Full screen",
+        "Act": "Full Screen",
         "Key": "Alt V U",
         "Fn": "",
         "Esc": "Esc",
@@ -209,21 +239,6 @@ $sJson = @"
         "Note": "",
         "tag": [
             "word"
-        ]
-    },
-    {
-        "App": "Windows OS",
-        "Act": "Magnifying glass",
-        "Key": "Win +",
-        "Fn": "",
-        "Esc": "Win Esc",
-        "Ano": "",
-        "Uri": "",
-        "Note": "",
-        "tag": [
-            "windows",
-            "windows10",
-            "windows11"
         ]
     }
 ]

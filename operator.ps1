@@ -90,6 +90,7 @@ if ($IsWindows){
 . $pwshSrcDir/han_function.ps1
 . $pwshSrcDir/zen_function.ps1
 . $pwshSrcDir/vbStrConv_function.ps1
+. $pwshSrcDir/Convert-CharCase_function.ps1
 
 . $pwshSrcDir/flat_function.ps1
 . $pwshSrcDir/addb_function.ps1
