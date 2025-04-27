@@ -121,7 +121,14 @@ function Convert-CharCase {
         }
         if ( $AsSentence ){
             [string] $WriteLine = $InputString `
-                | Convert-CharCase -Delimiter '@p@r@o@x@y@' -ToLowerInvariant:$ToLowerInvariant
+                | Convert-CharCase -Delimiter '. '  -ToLowerInvariant:$ToLowerInvariant `
+                | Convert-CharCase -Delimiter '." ' -ToLowerInvariant:$ToLowerInvariant `
+                | Convert-CharCase -Delimiter ".' " -ToLowerInvariant:$ToLowerInvariant `
+                | Convert-CharCase -Delimiter '.” ' -ToLowerInvariant:$ToLowerInvariant `
+                | Convert-CharCase -Delimiter '.) ' -ToLowerInvariant:$ToLowerInvariant `
+                | Convert-CharCase -Delimiter '.> ' -ToLowerInvariant:$ToLowerInvariant `
+                | Convert-CharCase -Delimiter '.} ' -ToLowerInvariant:$ToLowerInvariant `
+                | Convert-CharCase -Delimiter '.] ' -ToLowerInvariant:$ToLowerInvariant
             if ( $ReplaceDelimiter ){
                 [string] $WriteLine = $WriteLine.Replace($Delimiter, $ReplaceDelimiter)
             }
