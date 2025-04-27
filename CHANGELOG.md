@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.8.0] - 2025-04-27
+
 - Added [UnZip-GzFile][] function.
 - Added [Convert-Pandoc][] function.
 - Added [Get-Histogram][] `-SkipBlank` option.
@@ -16,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [Add-Id][] Check for duplicated property names.
 - Refactored [Unique-Object][] function.
 - Added [Get-AppShortcut][] New Act `Rotate Screen`.
+- Added [Convert-CharCase][] function.
 
 
 ## [0.7.0] - 2025-04-12
@@ -306,8 +311,11 @@ Breaking Changes
 
 [UnZip-GzFile]: src/UnZip-GzFile_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.7.0..HEAD
-[0.7.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.6.0
+[Convert-CharCase]: src/Convert-CharCase_function.ps1
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.8.0..HEAD
+[0.8.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.8.0
+[0.7.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.7.0
 [0.6.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.6.0
 [0.5.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.5.0
 [0.4.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.4.0
