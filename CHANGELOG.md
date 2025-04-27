@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 - Added [Convert-CharCase][] the corresponding delimiter with the -AsSentence switch.
+- Added [Convert-CharCase][] parameters -ExcludePattern, -MatchPattern.
 
 ## [0.8.0] - 2025-04-27
 
