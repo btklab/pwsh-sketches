@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    Convert-CharCase (Alias: convChar) -- Capitalize the first letter of each word.
+    Convert-CharCase (Alias: convChar) -- Capitalize the first letter for each word.
 
-    Capitalize the first letter of each word by default.
+    Capitalize the first letter for each word by default.
     Accepts input from the pipeline.
 
     Parameters:
@@ -103,6 +103,14 @@ function Convert-CharCase {
         [Alias('t')]
         [switch] $AsTitle
         ,
+        [Parameter(Mandatory=$False)]
+        [Alias('ex')]
+        [string] $ExcludePattern
+        ,
+        [Parameter(Mandatory=$False)]
+        [Alias('only')]
+        [string] $MatchPattern
+        ,
         [Parameter(Mandatory=$False, ValueFromPipeline = $true)]
         [string] $InputString
     )
@@ -117,6 +125,12 @@ function Convert-CharCase {
     process {
         # Returns input string as is if it is null or empty
         if ([string]::IsNullOrEmpty($InputString)) {
+            return $InputString
+        }
+        if ( $ExcludePattern -and $InputString -match $ExcludePattern ){
+            return $InputString
+        }
+        if ( $MatchPattern -and $InputString -notmatch $MatchPattern ){
             return $InputString
         }
         if ( $AsSentence ){
