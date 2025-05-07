@@ -225,6 +225,7 @@ if ( $IsWindows ){
 
 . $pwshSrcDir/Replace-ForEach_function.ps1
 . $pwshSrcDir/Replace-InQuote_function.ps1
+. $pwshSrcDir/Script-InQuote_function.ps1
 
 . $pwshSrcDir/Join2-Object_function.ps1
 
