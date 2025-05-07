@@ -205,7 +205,7 @@ function Apply-Function
                 $groupAry.Add($(New-Object psobject -Property $hash)) > $Null
             } else {
                 if ( $Function ){
-                    [string] $com = '$groupAry' + " | " + $function.ToString().Trim()
+                    [string] $com = '$groupAry' + " | " + $Function.ToString().Trim()
                     Write-Debug $com
                     Invoke-Expression -Command $com
                 } else {
@@ -223,7 +223,7 @@ function Apply-Function
         [string] $oldVal = $newVal
     }
     if ( $Function ){
-        [string] $com = '$groupAry' + " | " + $function.ToString().Trim()
+        [string] $com = '$groupAry' + " | " + $Function.ToString().Trim()
         Write-Debug $com
         Invoke-Expression -Command $com
     } else {
