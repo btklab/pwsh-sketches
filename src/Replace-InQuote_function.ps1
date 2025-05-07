@@ -52,6 +52,14 @@
     203.0.113.12 - - [25/Mar/2025:06:45:02_+0900] "POST_/api/data_HTTP/1.1" 500 432
     198.51.100.42 - - [25/Mar/2025:06:45:04_+0900] "PUT_/upload_HTTP/1.1" 201 5678
 
+    # First match only
+    $logEntries | Replace-InQuote -From " " -To "_" -FirstMatch 
+
+    192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET_/index.html HTTP/1.1" 200 1234
+    203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST_/api/data HTTP/1.1" 500 432
+    198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT_/upload HTTP/1.1" 201 5678
+
+
 .EXAMPLE
     # convert to object
     $logEntries `
@@ -99,6 +107,12 @@ function Replace-InQuote {
         [switch] $SimpleMatch
         ,
         [Parameter(Mandatory=$false)]
+        [switch] $FirstMatch
+        ,
+        [Parameter(Mandatory=$false)]
+        [int] $FirstMatchCount = 1
+        ,
+        [Parameter(Mandatory=$false)]
         [switch] $CaseSensitive
         ,
         [Parameter(Mandatory=$false)]
@@ -137,6 +151,8 @@ function Replace-InQuote {
             }
             return $quartFlag
         }
+        # set variable
+        [regex] $regex = $From
     }
     process {
         # Process block: Input data processing
@@ -163,12 +179,14 @@ function Replace-InQuote {
                 if ($inQuote) {
                     # End of quote
                     $inQuote = $false
-                    if ( $SimpleMatch ) {
-                        $replaced = $currentQuote.Replace($From, $To)
+                    if ( $FirstMatch) {
+                        [string] $replaced = $regex.Replace($currentQuote, $To, $FirstMatchCount)
+                    } elseif ( $SimpleMatch ) {
+                        [string] $replaced = $currentQuote.Replace($From, $To)
                     } elseif ( $CaseSensitive ) {
-                        $replaced = $currentQuote -creplace $From, $To
+                        [string] $replaced = $currentQuote -creplace $regex, $To
                     } else {
-                        $replaced = $currentQuote -replace $From, $To
+                        [string] $replaced = $currentQuote -replace $regex, $To
                     }
                     [string] $writeLine += $replaced
                     [string] $currentQuote = ''
