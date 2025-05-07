@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Replace-InQuote (Alias:qsed) - Replace substrings enclosed in double quotes.
+    Script-InQuote (Alias:qscr) - 
 
     default: Replace spaces to underscores only within strings
              enclosed in double quotes.
 
-    PS> echo 'aaa "b b b" ccc' | Replace-InQuote -From " " -To "_"
+    PS> echo 'aaa "b b b" ccc' | Script-InQuote -From " " -To "_"
 
         aaa "b_b_b" ccc
 
@@ -28,7 +28,7 @@
     https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
 
 .LINK
-    Replace-InQuote, csv2txt
+    Script-InQuote, csv2txt
 
 .EXAMPLE
     # Read from standard input and transform
@@ -39,81 +39,22 @@
     )
 
     # Replace spaces to underscores only within strings enclosed in double quotes.
-    $logEntries | Replace-InQuote -From ' ' -To '_'
+    $logEntries | qscr -Function { %{ $_ -replace ' ', '@@@'}}
 
-    192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET_/index.html_HTTP/1.1" 200 1234
-    203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST_/api/data_HTTP/1.1" 500 432
-    198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT_/upload_HTTP/1.1" 201 5678
-
-    # Format Apachelog into space-delimited data.
-    $logEntries | Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']'
-
-    192.168.1.1 - - [25/Mar/2025:06:45:00_+0900] "GET_/index.html_HTTP/1.1" 200 1234
-    203.0.113.12 - - [25/Mar/2025:06:45:02_+0900] "POST_/api/data_HTTP/1.1" 500 432
-    198.51.100.42 - - [25/Mar/2025:06:45:04_+0900] "PUT_/upload_HTTP/1.1" 201 5678
-
-    # First match only
-    $logEntries | Replace-InQuote -From " " -To "_" -FirstMatch 
-
-    192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET_/index.html HTTP/1.1" 200 1234
-    203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST_/api/data HTTP/1.1" 500 432
-    198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT_/upload HTTP/1.1" 201 5678
-
-
-.EXAMPLE
-    # convert to object
-    $logEntries `
-        | Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']' `
-        | ConvertFrom-Csv -Delimiter " " -Header ( 1..7 | %{ "c$_" } ) `
-        | ft
-
-    c1            c2 c3 c4                           c5                       c6  c7
-    --            -- -- --                           --                       --  --
-    192.168.1.1   -  -  [25/Mar/2025:06:45:00_+0900] GET_/index.html_HTTP/1.1 200 1234
-    203.0.113.12  -  -  [25/Mar/2025:06:45:02_+0900] POST_/api/data_HTTP/1.1  500 432
-    198.51.100.42 -  -  [25/Mar/2025:06:45:04_+0900] PUT_/upload_HTTP/1.1     201 5678
-
-    # Replace underscores with spaces in the strings
-    # of columns c4 and c5 using Replace-ForEach function
-    $logEntries `
-        | Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']' `
-        | ConvertFrom-Csv -Delimiter " " -Header (1..7|%{"c$_"}) `
-        | Replace-ForEach -Property c4, c5 -From "_" -To " " `
-        | ft
-
-    c1            c2 c3 c4                           c5                       c6  c7
-    --            -- -- --                           --                       --  --
-    192.168.1.1   -  -  [25/Mar/2025:06:45:00 +0900] GET /index.html HTTP/1.1 200 1234
-    203.0.113.12  -  -  [25/Mar/2025:06:45:02 +0900] POST /api/data HTTP/1.1  500 432
-    198.51.100.42 -  -  [25/Mar/2025:06:45:04 +0900] PUT /upload HTTP/1.1     201 5678
-
+    192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET@@@/index.html@@@HTTP/1.1" 200 1234
+    203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST@@@/api/data@@@HTTP/1.1" 500 432
+    198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT@@@/upload@@@HTTP/1.1" 201 5678
 
 #>
-function Replace-InQuote {
+function Script-InQuote {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$false, Position=0)]
+        [Parameter(Mandatory=$True, Position=0)]
         [Alias('f')]
-        [string] $From = " "
-        ,
-        [Parameter(Mandatory=$false, Position=1)]
-        [Alias('t')]
-        [string] $To = '_'
+        [scriptblock] $Function
         ,
         [Parameter(Mandatory=$false)]
         [switch] $SkipBlank
-        ,
-        [Parameter(Mandatory=$false)]
-        [switch] $SimpleMatch
-        ,
-        [Parameter(Mandatory=$false)]
-        [switch] $FirstMatch
-        ,
-        [Parameter(Mandatory=$false)]
-        [int] $FirstMatchCount = 1
-        ,
-        [Parameter(Mandatory=$false)]
-        [switch] $CaseSensitive
         ,
         [Parameter(Mandatory=$false)]
         [Alias('q')]
@@ -151,8 +92,6 @@ function Replace-InQuote {
             }
             return $quartFlag
         }
-        # set variable
-        [regex] $regex = $From
     }
     process {
         # Process block: Input data processing
@@ -179,15 +118,14 @@ function Replace-InQuote {
                 if ($inQuote) {
                     # End of quote
                     $inQuote = $false
-                    if ( $FirstMatch) {
-                        [string] $replaced = $regex.Replace($currentQuote, $To, $FirstMatchCount)
-                    } elseif ( $SimpleMatch ) {
-                        [string] $replaced = $currentQuote.Replace($From, $To)
-                    } elseif ( $CaseSensitive ) {
-                        [string] $replaced = $currentQuote -creplace $regex, $To
-                    } else {
-                        [string] $replaced = $currentQuote -replace $regex, $To
-                    }
+                    # apply function to the string
+                    [string[]] $comAry = @()
+                    [string[]] $comAry += '[string] $replaced = $currentQuote'
+                    [string[]] $comAry += $Function.ToString().Trim()
+                    [string[]] $comAry += 'Out-String -Stream'
+                    [string] $com = $comAry -join " | "
+                    Write-Debug "$com"
+                    Invoke-Expression -Command $com
                     [string] $writeLine += $replaced
                     [string] $currentQuote = ''
                     [string] $writeLine += $char
@@ -213,8 +151,8 @@ function Replace-InQuote {
     }
 }
 # set alias
-[String] $tmpAliasName = "qsed"
-[String] $tmpCmdName   = "Replace-InQuote"
+[String] $tmpAliasName = "qscr"
+[String] $tmpCmdName   = "Script-InQuote"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `
