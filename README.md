@@ -283,10 +283,6 @@ The motivation for creating each function and usage.
 
 [Process-InQuote]: src/Process-InQuote_function.ps1
 
-#### [Process-CsvColumn] (Alias: csv2proc) - Runs a custom script on selected CSV columns.<a id="Process-CsvColumn"></a>
-
-[Process-CsvColumn]: src/Process-CsvColumn_function.ps1
-
 ### Statistics
 
 #### [Get-Dataset] (Alias:dataset) - Retrieves the 'iris' dataset from R using Rscript.<a id="Get-Dataset"></a>
@@ -785,6 +781,9 @@ a simple and beautiful CSS framework.
 
 [csv2sqlite]: src/csv2sqlite_function.ps1
 
+#### [Process-CsvColumn] (Alias: csv2proc) - Runs a custom script on selected CSV columns.<a id="Process-CsvColumn"></a>
+
+[Process-CsvColumn]: src/Process-CsvColumn_function.ps1
 
 ### File and directory manipuration
 
