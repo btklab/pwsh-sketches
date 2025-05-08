@@ -2,6 +2,15 @@
 .SYNOPSIS
     Process-CsvColumn (Alias: csv2proc) - Runs a custom script on selected CSV columns.
 
+    Process-CsvColumn (csv2proc)
+        [-c|-Column] <Int32[]>
+        [-s|-ScriptBlock] <ScriptBlock>
+        [-d|-Delimiter <String>]
+        [-Path <String>]
+        [-Encoding <String>]
+        [-nh|-NoHeader]
+        [-KeepQuotes]
+
 .LINK
     csv2txt, csv2sqlite,
     Process-CsvColumn (csv2proc),
@@ -15,6 +24,7 @@
     embedded quotes, and delimiters.
 
         - Quoted fields containing quotes (e.g., "field with ""quotes""")
+        - Remove quotes wherever possible.
 
     Note:
         By default, the first line is treated as a header row. When the -NoHeader option
@@ -28,7 +38,7 @@
     Note:
         This script has limitations in handling complex CSV patterns:
 
-            - Fields containing newlines
+            - Fields containing newlines.
 
 
 .PARAMETER InputObject
@@ -132,6 +142,9 @@ function Process-CsvColumn {
         [Alias('nh')]
         [switch]$NoHeader
         ,
+        [Parameter(Mandatory=$false)]
+        [switch]$KeepQuotes
+        ,
         [Parameter(ValueFromPipeline=$true)]
         [string[]]$InputObject
     )
@@ -159,6 +172,7 @@ function Process-CsvColumn {
             [string[]] $fields = @()
             [string] $currentField = ""
             [bool] $inQuotes = $false
+            [bool] $isQuotingRequired = $false
             [int] $i = 0
             
             while ($i -lt $line.Length) {
@@ -169,14 +183,24 @@ function Process-CsvColumn {
                         # Escaped quote
                         $currentField += '"'
                         $i++
+                        $isQuotingRequired = $true
                     } else {
                         # Toggle quote state
                         $inQuotes = -not $inQuotes
                     }
                 } elseif ($char -eq $delimiter -and -not $inQuotes) {
                     # End of field
-                    $fields += $currentField
+                    if ( $isQuotingRequired -and $KeepQuotes ) {
+                        # If quoting is required, add quotes around the field
+                        $fields += '"' + $currentField + '"'
+                        $isQuotingRequired = $false
+                    } else {
+                        $fields += $currentField
+                    }
                     $currentField = ""
+                } elseif ($char -eq $delimiter -and $inQuotes) {
+                    $isQuotingRequired = $true
+                    $currentField += $char
                 } else {
                     $currentField += $char
                 }
@@ -189,8 +213,15 @@ function Process-CsvColumn {
 
         # Helper function to format CSV field
         function Format-CsvField {
-            param([string]$field)
-            if ($field -match '["' + $Delimiter + '\r\n]') {
+            param(
+                [string]$field
+            )
+            [string] $escapedDelimiter = [regex]::Escape($Delimiter)
+            if ( $field -match '^".+"$' ){
+                # Field needs quoting
+                [string] $strippedField = $field -replace '^"|"$', ''
+                return $('"' + ($strippedField -replace '"', '""') + '"')
+            } elseif ($field -match '["' + $escapedDelimiter + '\r\n]') {
                 # Field needs quoting
                 return $('"' + ($field -replace '"', '""') + '"')
             }
