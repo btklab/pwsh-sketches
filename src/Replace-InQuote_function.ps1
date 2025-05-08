@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Replace-InQuote (Alias:qsed) - Replace substrings enclosed in double quotes.
+    Replace-InQuote (Alias: qsed) - Replace substrings enclosed in double quotes.
 
     default: Replace spaces to underscores only within strings
              enclosed in double quotes.
@@ -28,7 +28,11 @@
     https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
 
 .LINK
-    Replace-InQuote, csv2txt
+    csv2txt, csv2sqlite,
+    Process-CsvColumn (csv2proc),
+    Replace-InQuote (qsed),
+    Process-InQuote (qproc)
+
 
 .EXAMPLE
     # Read from standard input and transform

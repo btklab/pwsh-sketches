@@ -40,7 +40,10 @@
 
 
 .LINK
-    csv2txt, json2txt, Replace-InQuart
+    csv2txt, json2txt, csv2sqlite,
+    Process-CsvColumn (csv2proc),
+    Replace-InQuote (qsed),
+    Process-InQuote (qproc)
 
 .EXAMPLE
     cat a.csv | csv2txt
