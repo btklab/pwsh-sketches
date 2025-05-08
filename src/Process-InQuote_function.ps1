@@ -1,11 +1,11 @@
 <#
 .SYNOPSIS
-    Script-InQuote (Alias:qscr) - 
+    Process-InQuote (Alias:qproc) - 
 
     default: Replace spaces to underscores only within strings
              enclosed in double quotes.
 
-    PS> echo 'aaa "b b b" ccc' | Script-InQuote -From " " -To "_"
+    PS> echo 'aaa "b b b" ccc' | Process-InQuote -From " " -To "_"
 
         aaa "b_b_b" ccc
 
@@ -28,7 +28,10 @@
     https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
 
 .LINK
-    Script-InQuote, csv2txt
+    csv2txt, csv2sqlite,
+    Process-CsvColumn (csv2proc),
+    Replace-InQuote (qsed),
+    Process-InQuote (qproc)
 
 .EXAMPLE
     # Read from standard input and transform
@@ -39,14 +42,14 @@
     )
 
     # Replace spaces to underscores only within strings enclosed in double quotes.
-    $logEntries | qscr -Function { %{ $_ -replace ' ', '@@@'}}
+    $logEntries | qproc -Function { %{ $_ -replace ' ', '@@@'}}
 
     192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET@@@/index.html@@@HTTP/1.1" 200 1234
     203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST@@@/api/data@@@HTTP/1.1" 500 432
     198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT@@@/upload@@@HTTP/1.1" 201 5678
 
 #>
-function Script-InQuote {
+function Process-InQuote {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory=$True, Position=0)]
@@ -151,8 +154,8 @@ function Script-InQuote {
     }
 }
 # set alias
-[String] $tmpAliasName = "qscr"
-[String] $tmpCmdName   = "Script-InQuote"
+[String] $tmpAliasName = "qproc"
+[String] $tmpCmdName   = "Process-InQuote"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `
