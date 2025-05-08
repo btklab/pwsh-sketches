@@ -1,57 +1,36 @@
 <#
 .SYNOPSIS
-    Script-InQuote (Alias:qscr) - 
-
-    default: Replace spaces to underscores only within strings
-             enclosed in double quotes.
-
-    PS> echo 'aaa "b b b" ccc' | Script-InQuote -From " " -To "_"
-
-        aaa "b_b_b" ccc
-
-
-    Function behavior:
-
-    Note that this function allows to specify arbitrary types
-    and numbers of enclosing characters using -Quote or -PunctuationMarks,
-    but it does not differentiate between the types of enclosing characters.
-    This function reads the input line by line, from left to right,
-    character by character, treating the odd-numbered enclosing characters
-    found as opening brackets and the even-numbered enclosing characters
-    found as closing brackets.
-
-.NOTES
-    about_Regular_Expressions - PowerShell
-    https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_regular_expressions
-
-    Regular Expression Language - Quick Reference - .NET
-    https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
+    Process-InQuote (Alias: qproc) - Runs a custom script only to strings enclosed in quotes.
 
 .LINK
-    Script-InQuote, csv2txt
+    csv2txt, csv2sqlite,
+    Process-CsvColumn (csv2proc),
+    Replace-InQuote (qsed),
+    Process-InQuote (qproc)
 
 .EXAMPLE
     # Read from standard input and transform
     $logEntries = @(
-       '192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET /index.html HTTP/1.1" 200 1234',
-       '203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST /api/data HTTP/1.1" 500 432',
-       '198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT /upload HTTP/1.1" 201 5678'
+       '192.168.0.0 - - [25/Mar/2025:06:45:00 +0900] "GET /index.html HTTP/1.1" 200 1234',
+       '192.168.0.1 - - [25/Mar/2025:06:45:02 +0900] "POST /api/data HTTP/1.1" 500 432',
+       '192.168.0.2 - - [25/Mar/2025:06:45:04 +0900] "PUT /upload HTTP/1.1" 201 5678'
     )
 
     # Replace spaces to underscores only within strings enclosed in double quotes.
-    $logEntries | qscr -Function { %{ $_ -replace ' ', '@@@'}}
+    $logEntries | qproc -ScriptBlock { $_ | %{ $_ -replace ' ', '@@@'}}
 
-    192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET@@@/index.html@@@HTTP/1.1" 200 1234
-    203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST@@@/api/data@@@HTTP/1.1" 500 432
-    198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT@@@/upload@@@HTTP/1.1" 201 5678
+        192.168.0.0 - - [25/Mar/2025:06:45:00 +0900] "GET@@@/index.html@@@HTTP/1.1" 200 1234
+        192.168.0.1 - - [25/Mar/2025:06:45:02 +0900] "POST@@@/api/data@@@HTTP/1.1" 500 432
+        192.168.0.2 - - [25/Mar/2025:06:45:04 +0900] "PUT@@@/upload@@@HTTP/1.1" 201 5678
 
 #>
-function Script-InQuote {
+function Process-InQuote {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$True, Position=0)]
-        [Alias('f')]
-        [scriptblock] $Function
+        [Parameter(Mandatory=$true, Position=0)]
+        [Alias('s')]
+        [Alias('Script')]
+        [scriptblock]$ScriptBlock
         ,
         [Parameter(Mandatory=$false)]
         [switch] $SkipBlank
@@ -118,14 +97,12 @@ function Script-InQuote {
                 if ($inQuote) {
                     # End of quote
                     $inQuote = $false
-                    # apply function to the string
-                    [string[]] $comAry = @()
-                    [string[]] $comAry += '[string] $replaced = $currentQuote'
-                    [string[]] $comAry += $Function.ToString().Trim()
-                    [string[]] $comAry += 'Out-String -Stream'
-                    [string] $com = $comAry -join " | "
-                    Write-Debug "$com"
-                    Invoke-Expression -Command $com
+                    # apply scriptblock to the quote enclosed string
+                    try {
+                        [string] $replaced = $ScriptBlock.InvokeWithContext($null, [psvariable]::new('_', $currentQuote))
+                    } catch {
+                        Write-Error $Error[0] -ErrorAction Stop
+                    }
                     [string] $writeLine += $replaced
                     [string] $currentQuote = ''
                     [string] $writeLine += $char
@@ -151,8 +128,8 @@ function Script-InQuote {
     }
 }
 # set alias
-[String] $tmpAliasName = "qscr"
-[String] $tmpCmdName   = "Script-InQuote"
+[String] $tmpAliasName = "qproc"
+[String] $tmpCmdName   = "Process-InQuote"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `

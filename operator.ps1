@@ -156,6 +156,7 @@ if ($IsWindows){
 . $pwshSrcDir/catcsv_function.ps1
 . $pwshSrcDir/csv2txt_function.ps1
 . $pwshSrcDir/csv2sqlite_function.ps1
+. $pwshSrcDir/Process-CsvColumn_function.ps1
 
 ## TOML/JSON
 . $pwshSrcDir/toml2psobject_function.ps1
@@ -225,7 +226,7 @@ if ( $IsWindows ){
 
 . $pwshSrcDir/Replace-ForEach_function.ps1
 . $pwshSrcDir/Replace-InQuote_function.ps1
-. $pwshSrcDir/Script-InQuote_function.ps1
+. $pwshSrcDir/Process-InQuote_function.ps1
 
 . $pwshSrcDir/Join2-Object_function.ps1
 
