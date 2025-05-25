@@ -684,13 +684,13 @@ function Invoke-Link {
                             if ( $invokeLocationCounter -le $invokeLocationLimit ){
                                 if ( $Location ){
                                     Invoke-Item $_
-                                    if ( -not $DryRun ){
+                                    if ( -not $Quiet ){
                                         Write-Host "Invoke-Item ""$_""" -ForegroundColor Green
                                     }
                                 }
                                 if ( $Push ){
                                     Push-Location -LiteralPath $_
-                                    if ( -not $DryRun ){
+                                    if ( -not $Quiet ){
                                         Write-Host "Push-Location -LiteralPath ""$_""" -ForegroundColor Green
                                     }
                                 }
