@@ -55,7 +55,10 @@
 
 .PARAMETER Encoding
     Specifies the encoding for the input file. Default is UTF8.
-    Valid values: ASCII, BigEndianUnicode, Default, Unicode, UTF7, UTF8, UTF32
+    Valid values:
+        ansi, bigendianutf32, utf7, utf8NoBOM
+        ascii, oem, utf8, utf32
+        bigendianunicode, unicode, utf8BOM
 
 .PARAMETER Delimiter
     Specifies the delimiter character for CSV parsing. Default is comma (,).
@@ -135,8 +138,12 @@ function Process-CsvColumn {
         [string]$Path
         ,
         [Parameter(Mandatory=$false)]
-        [ValidateSet('ASCII', 'BigEndianUnicode', 'Default', 'Unicode', 'UTF7', 'UTF8', 'UTF32')]
-        [string]$Encoding = 'UTF8'
+        [ValidateSet(
+            'ansi', 'bigendianutf32', 'utf7', 'utf8NoBOM',
+            'ascii', 'oem', 'utf8', 'utf32',
+            'bigendianunicode', 'unicode', 'utf8BOM'
+        )]
+        [string]$Encoding = 'utf8'
         ,
         [Parameter(Mandatory=$false)]
         [Alias('nh')]
