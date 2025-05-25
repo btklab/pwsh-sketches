@@ -49,12 +49,14 @@
         - Custom link execution app: Use "-App" option.
         - Links in text files: Quotes are optional.
         - File location: Open in Explorer with "-l" or "-Location" (no link execution).
+        - Push location: with "-p" or "-Push" (no link execution).
         - Environment variables: Supported in path strings (e.g., "${HOME}").
 
     Usage:
         i <file> [keyword] [-App <app>] ... Invoke-Item <links-writtein-in-text-file>
         i <file> [keyword] [-App <app>] ... command <links-writtein-in-text-file>
-        i <file> [keyword] [-App <app>] [-l|-Location] ... Open 1st matched file location in explorer
+        i <file> [keyword] [-l|-Location] ... Open 1st matched file location in explorer
+        i <file> [keyword] [-p|-Push] ... Push to 1st matched file location
         i <file> [keyword] [-App <app>] [-d|-DryRun]   ... DryRun (listup links)
         i <file> [keyword] [-App <app>] [-e|-Edit]     ... Edit <linkfile> using text editor
         i <dir>  [keyword]              ... Invoke-Item <dir>
@@ -223,6 +225,10 @@ function Invoke-Link {
         [Parameter( Mandatory=$False )]
         [Alias('l')]
         [switch] $Location,
+        
+        [Parameter( Mandatory=$False )]
+        [Alias('p')]
+        [switch] $Push,
         
         [Parameter( Mandatory=$False )]
         [Alias('e')]
@@ -634,7 +640,7 @@ function Invoke-Link {
                         $linkLine = $linkLine -replace "^'",''
                         $linkLine = $linkLine -replace "'`$",''
                         # test path
-                        if ( $Location ){
+                        if ( $Location -or $Push ){
                             $linkLine = Split-Path "$linkLine" -Parent
                         }
                         if ( $LinkCheck ){
@@ -668,28 +674,40 @@ function Invoke-Link {
             if ( $DryRun ){
                 Write-Host "$File" -ForegroundColor Green
             }
-            if ( $Location -and -not $App ){
-                $linkLines | ForEach-Object {
-                    if ( isLinkHttp $_ ){
-                        #pass
-                    } else {
-                        $invokeLocationCounter++
-                        if ( $invokeLocationCounter -le $invokeLocationLimit ){
-                            Invoke-Item $_ 
-                            if ( -not $DryRub ){
-                                Write-Host "Invoke-Item $_" -ForegroundColor Green
+            if ( $Location -or $Push ){
+                if ( -not $App ){
+                    $linkLines | ForEach-Object {
+                        if ( isLinkHttp $_ ){
+                            #pass
+                        } else {
+                            $invokeLocationCounter++
+                            if ( $invokeLocationCounter -le $invokeLocationLimit ){
+                                if ( $Location ){
+                                    Invoke-Item $_
+                                    if ( -not $DryRun ){
+                                        Write-Host "Invoke-Item ""$_""" -ForegroundColor Green
+                                    }
+                                }
+                                if ( $Push ){
+                                    Push-Location -LiteralPath $_
+                                    if ( -not $DryRun ){
+                                        Write-Host "Push-Location -LiteralPath ""$_""" -ForegroundColor Green
+                                    }
+                                }
                             }
                         }
+                        continue
                     }
-                    continue
                 }
             }
             foreach ( $href in $linkLines ){
                 $hrefList.Add($href)
             }
         }
-        if ( $Location -and -not $App ){
-            continue
+        if ( $Location -or $Push ){
+            if ( -not $App ){
+                continue
+            }
         }
         [String[]] $linkAry = $hrefList.ToArray()
         $hrefList = New-Object 'System.Collections.Generic.List[System.String]'
