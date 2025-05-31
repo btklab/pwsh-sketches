@@ -18,7 +18,7 @@
             [-VariableColumnName <String>]
 
 .LINK
-    Map-Object, UnMap-Object, Cross-CrossTabulation,
+    Map-Object, UnMap-Object,
     Convert-DictionaryToPSCustomObject (dict2psobject),
     Edit-Property (editprop), Replace-ForEach,
     fillretu, addt, addl, addr

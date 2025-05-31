@@ -7,12 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.9.0] - 2025-05-31
+
 - Added [Convert-CharCase][] the corresponding delimiter with the `-AsSentence` switch.
 - Added [Convert-CharCase][] parameters `-ExcludePattern`, `-MatchPattern`.
 - Added [Replace-InQuote][] `-FirstMatch` option.
 - Added [Process-InQuote][] function.
 - Added [Process-CsvColumn][] function.
 - Added [Invoke-Link][] `-Push` option.
+- Changed [pu2java][] default jar file path.
 
 ## [0.8.0] - 2025-04-27
 
@@ -320,7 +325,8 @@ Breaking Changes
 
 [Process-InQuote]: src/Process-InQuote_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.8.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.9.0..HEAD
+[0.9.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.9.0
 [0.8.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.8.0
 [0.7.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.7.0
 [0.6.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.6.0
