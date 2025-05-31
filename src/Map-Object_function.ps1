@@ -40,7 +40,7 @@
     https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/group-object
 
 .LINK
-    Map-Object, UnMap-Object, Cross-CrossTabulation,
+    Map-Object, UnMap-Object,
     Convert-DictionaryToPSCustomObject (dict2psobject),
     Edit-Property (editprop), Replace-ForEach,
     fillretu, addt, addl, addr
