@@ -20,6 +20,7 @@
         - Windwos/Linux
             - ./plantuml.jar
         - Windows:
+            - ${PSScriptRoot}/../../../tools/plantuml/plantuml.jar
             - ${HOME}/bin/plantuml/plantuml.jar
         - Linux:
             - /usr/local/bin/plantuml/plantuml.jar
@@ -165,7 +166,11 @@ function pu2java {
     } elseif (Test-Path "plantuml.jar"){
         [string] $jarFilePath = "./plantuml.jar"
     } elseif ($IsWindows){
-        [string] $jarPath = "$(${HOME})\bin\plantuml\plantuml.jar"
+        if ( Test-Path "$PSScriptRoot/../../../tools/plantuml/plantuml.jar" ){
+            [string] $jarPath = "$PSScriptRoot/../../../tools/plantuml/plantuml.jar"
+        } else {
+            [string] $jarPath = "$(${HOME})\bin\plantuml\plantuml.jar"
+        }
         if ( -not (Test-Path -LiteralPath $jarPath ) ){
             Write-Error "$jarPath is not exist." -ErrorAction Stop
         }
