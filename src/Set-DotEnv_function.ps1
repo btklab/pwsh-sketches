@@ -1,15 +1,15 @@
 <#
 .SYNOPSIS
-    Set-DotEnv (Alias: pwenv) - Set the contents of the .env file for the current process
+    Set-DotEnv (Alias: pwenv) - Set the contents of the .myenv file for the current process
 
-    Read ".env" file  and temporarily add environment variables.
+    Read ".myenv" file  and temporarily add environment variables.
 
-        ".env" file format (UTF8): 
+        ".myenv" file format (UTF8): 
             <key>=<value>
     
-    - By default, the .env file in the current directory is read.
+    - By default, the .myenv file in the current directory is read.
       If the -GPG switch is specified or the file extension is .gpg,
-      (e.g.: .env.gpg) it is automatically treated as a GPG-encrypted
+      (e.g.: .myenv.gpg) it is automatically treated as a GPG-encrypted
       file and decrypted using gpg.exe
     - The default behavior is dryrun. Run with the -Execute option.
     - The scope of the environment variable is the current process.
@@ -24,8 +24,8 @@
       the key is obtained by the shortest match on the left.
 
 .EXAMPLE
-    PS> cat .env
-        # my .env
+    PS> cat .myenv
+        # my .myenv
         MY_MAIL_ADDR=btklab@exa=mple.com
         HOGE="hoge fuga"
 
@@ -57,7 +57,7 @@ function Set-DotEnv {
     param (
         [Parameter( Mandatory=$False, Position=0 )]
         [Alias('p')]
-        [String[]] $Path = @('./.env')
+        [String[]] $Path = @('./.myenv')
         ,
         [Parameter( Mandatory=$False )]
         [Alias('o')]
@@ -135,11 +135,11 @@ function Set-DotEnv {
                 Write-Host "list-keys using gpg.exe on commandline:"
                 Write-Host "  gpg --list-keys"
                 Write-Host ""
-                Write-Host "Encrypt .env using gpg.exe on commandline:"
-                Write-Host "  gpg --encrypt .env [-r <FINGERPRINT>]"
+                Write-Host "Encrypt .myenv using gpg.exe on commandline:"
+                Write-Host "  gpg --encrypt .myenv [-r <FINGERPRINT>]"
                 Write-Host ""
-                Write-Host "Decrypt and output to console .env.gpg using gpg.exe:"
-                Write-Host "  gpg -o - --decrypt .env.gpg"
+                Write-Host "Decrypt and output to console .myenv.gpg using gpg.exe:"
+                Write-Host "  gpg -o - --decrypt .myenv.gpg"
                 Write-Host ""
                 Write-Error "Exection Error." -ErrorAction Stop
             }
