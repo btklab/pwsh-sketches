@@ -878,7 +878,7 @@ a simple and beautiful CSS framework.
 
 [Split-HereString]: src/Split-HereString_function.ps1
 
-#### [Set-DotEnv] (Alias: pwenv) - Set the contents of the .env file for the current process.<a id="Set-DotEnv"></a>
+#### [Set-DotEnv] (Alias: pwenv) - Set the contents of the .myenv file for the current process.<a id="Set-DotEnv"></a>
 
 [Set-DotEnv]: src/Set-DotEnv_function.ps1
 
