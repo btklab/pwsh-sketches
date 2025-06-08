@@ -23,6 +23,21 @@
     - When there are multiple matches of the delimiter "=",
       the key is obtained by the shortest match on the left.
 
+    Install GnuPG or Gpg4win:
+
+      GNU Privacy Guard : winget install --id GnuPG.GnuPG --source winget -e
+      Gpg4win           : winget install --id GnuPG.Gpg4win --source winget -e
+
+    list-keys using gpg.exe on commandline:
+      gpg --list-keys
+
+    Encrypt .myenv using gpg.exe on commandline:
+      gpg --encrypt .myenv [-r <FINGERPRINT>]
+
+    Decrypt and output to console .myenv.gpg using gpg.exe:
+      gpg -o - --decrypt .myenv.gpg
+
+
 .EXAMPLE
     PS> cat .myenv
         # my .myenv
