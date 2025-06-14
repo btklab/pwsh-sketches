@@ -287,6 +287,7 @@ function lcalc2 {
         $rowCounter++
         [string] $line = [string] $_
         if ( $SkipHeader -and $rowCounter -eq 1 ){
+            Write-Output $line
             return
         }
         if ($line -eq ''){
