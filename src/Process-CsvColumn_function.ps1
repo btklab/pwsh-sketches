@@ -114,6 +114,20 @@
         Jane Smith,"Loves ""Python"" and coffee",31.05,Developer,55000
         Bob Johnson,"Works on ""AI, ML"" projects",40.25,Data Scientist,70000
 
+    # Process columns 1 and 2 and rows 2 from a file, replacing "o" with "*" and keeping quotes
+    $csv | csv2proc -Column 1,2 -ScriptBlock { $_ -replace "o", "*" } -IncludeRow 2
+        Name,Comment,Age,Title,Salary
+        J*hn D*e,"He said, ""Hell*!""",30,Engineer,50000
+        Jane Smith,"Loves ""Python"" and coffee",27,Developer,55000
+        Bob Johnson,"Works on ""AI, ML"" projects",35,Data Scientist,70000
+
+    # Process columns 1 and 2 and rows 2 from a file, replacing "o" with "*" and keeping quotes
+    $csv | csv2proc -Column 1,2 -ScriptBlock { $_ -replace "o", "*" } -FirstRow
+        Name,Comment,Age,Title,Salary
+        J*hn D*e,"He said, ""Hell*!""",30,Engineer,50000
+        Jane Smith,"Loves ""Python"" and coffee",27,Developer,55000
+        Bob Johnson,"Works on ""AI, ML"" projects",35,Data Scientist,70000
+
 #>
 function Process-CsvColumn {
     [CmdletBinding()]
@@ -166,11 +180,13 @@ function Process-CsvColumn {
     )
 
     begin {
+        # Initialize state variables before processing input
         [bool]$isFirstLine = $true
         [int]$lineNumber = 0
         [int]$totalLines = 0
         $linesBuffer = @()
 
+        # Parse a single CSV line into fields considering quoted delimiters and escaped quotes
         function Parse-CsvLine {
             param([string]$line, [string]$delimiter)
             $fields = @()
@@ -179,33 +195,42 @@ function Process-CsvColumn {
             for ($i = 0; $i -lt $line.Length; $i++) {
                 $char = $line[$i]
                 if ($char -eq '"') {
+                    # Handle escaped quote inside quoted field
                     if ($inQuotes -and $i + 1 -lt $line.Length -and $line[$i + 1] -eq '"') {
                         $currentField += '"'; $i++
                     } else {
+                        # Toggle quoted field state
                         $inQuotes = -not $inQuotes
                     }
                 } elseif ($char -eq $delimiter -and -not $inQuotes) {
+                    # Field delimiter outside quotes ends the current field
                     $fields += $currentField
                     $currentField = ""
                 } else {
+                    # Regular character, append to current field
                     $currentField += $char
                 }
             }
+            # Add last field
             $fields += $currentField
             return $fields
         }
 
+        # Format a CSV field by quoting if needed and escaping inner quotes
         function Format-CsvField {
             param([string]$field)
             if ($field -match '[",\r\n]') {
+                # Quote and double quotes inside field
                 return '"' + ($field -replace '"', '""') + '"'
             }
             return $field
         }
 
+        # Decide whether the current line should be processed based on row filters and flags
         function ShouldProcessLine {
             param([int]$currentLine)
             if ($FirstRow) {
+                # Process only first data row depending on header presence
                 if ($NoHeader) {
                     return $currentLine -eq 1
                 } else {
@@ -220,6 +245,7 @@ function Process-CsvColumn {
             return $true
         }
 
+        # Process a CSV line by applying the script block to specified columns
         function Process-Line {
             param([string]$line, [int]$lineNumber)
             $fields = Parse-CsvLine -line $line -delimiter $Delimiter
@@ -227,26 +253,32 @@ function Process-CsvColumn {
                 foreach ($colIndex in $Column) {
                     $i = $colIndex - 1
                     if ($i -lt $fields.Count) {
+                        # Apply user scriptblock to the field, with $_ set to the field value
                         $fields[$i] = $ScriptBlock.InvokeWithContext($null, [psvariable]::new('_', $fields[$i]))
                     }
                 }
             }
+            # Recombine fields into a CSV line with proper formatting
             return ($fields | ForEach-Object { Format-CsvField $_ }) -join $Delimiter
         }
     }
 
     process {
+        # Read lines from file if Path specified, else use pipeline input
         $lines = if ($Path) { Get-Content -LiteralPath $Path -Encoding $Encoding } else { $InputObject }
         foreach ($line in $lines) {
             $lineNumber++
             if ($isFirstLine) {
                 if ($NoHeader) {
+                    # If no header, process first line normally
                     Write-Output (Process-Line $line $lineNumber)
                 } else {
+                    # Otherwise output header line as is
                     Write-Output $line
                 }
                 $isFirstLine = $false
             } else {
+                # Process subsequent lines
                 Write-Output (Process-Line $line $lineNumber)
             }
         }
