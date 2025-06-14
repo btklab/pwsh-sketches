@@ -277,10 +277,14 @@ function lcalc2 {
     )
     begin
     {
-        # init var
+        # Initialize row counters
         [int] $NR = 0
         [int] $rowCounter = 0
-        # set input/output delimiter
+        
+        # Determine input and output delimiters.
+        # Prioritize explicit InputDelimiter and OutputDelimiter,
+        # then fall back to Delimiter if only one is specified,
+        # otherwise use Delimiter for both.
         if ( $InputDelimiter -and $OutputDelimiter ){
             [string] $iDelim = $InputDelimiter
             [string] $oDelim = $OutputDelimiter
@@ -294,25 +298,37 @@ function lcalc2 {
             [string] $iDelim = $Delimiter
             [string] $oDelim = $Delimiter
         }
-        # test is iDelim -eq empty string?
+        
+        # Check if the input delimiter is an empty string, indicating char-by-char processing.
         if ($iDelim -eq ''){
             [bool] $emptyDelimiterFlag = $True
         } else {
             [bool] $emptyDelimiterFlag = $False
         }
-        # private functions
+        
+        # --- Helper Functions ---
+        
+        # Converts shorthand field variables (e.g., $1, $NF, $0) in the formula
+        # to their internal array ($self) equivalents for execution.
         function replaceFieldStr ([string] $str){
             $str = " " + $str
+            # Escape dollar signs within single/double quotes to prevent premature evaluation.
             $str = escapeDollarMarkBetweenQuotes $str
+            # Replace $0 with the entire current record.
             $str = $str.Replace('$0','($self -join "$oDelim")')
+            # Replace $NF (last field) with the last element of the $self array.
             $str = $str -replace('([^\\`])\$NF','$1$self[($self.Count - 1)]')
+            # Replace $N (Nth field) with the N-1 element of the $self array.
             $str = $str -replace '([^\\`])\$(\d+)','$1$self[($2-1)]'
+            # Unescape previously escaped dollar signs.
             $str = $str.Replace('\$','$').Replace('`$','$')
             $str = $str.Trim()
             return $str
         }
+        
+        # Escapes dollar signs ($) within quoted strings to prevent them from
+        # being interpreted as variable references before formula evaluation.
         function escapeDollarMarkBetweenQuotes ([string] $str){
-            # escape "$" to "\$" between single quotes
             [bool] $escapeFlag = $False
             [string[]] $strAry = $str.GetEnumerator() | ForEach-Object {
                     [string] $char = [string] $_
@@ -323,6 +339,7 @@ function lcalc2 {
                             $escapeFlag = $False
                         }
                     } else {
+                        # If inside quotes and character is '$', escape it.
                         if (($escapeFlag) -and ($char -eq '$')){
                             $char = '\$'
                         }
@@ -332,8 +349,10 @@ function lcalc2 {
             [string] $ret = $strAry -Join ''
             return $ret
         }
+        
+        # Replaces semicolons (;) within quoted strings with underscores (_)
+        # to prevent them from being treated as statement separators during splitting.
         function escapeSemiColonBetweenQuotes ([string] $str, [string] $quote = "'"){
-            # delete ";" between single quotes
             [bool] $escapeFlag = $False
             [string[]] $strAry = $str.GetEnumerator() | ForEach-Object {
                     [string] $char = [string] $_
@@ -344,6 +363,7 @@ function lcalc2 {
                             $escapeFlag = $False
                         }
                     } else {
+                        # If inside quotes and character is ';', replace it.
                         if (($escapeFlag) -and ($char -eq ';')){
                             $char = '_'
                         }
@@ -353,49 +373,45 @@ function lcalc2 {
             [string] $ret = $strAry -Join ''
             return $ret
         }
+        
+        # Attempts to parse a string value into a Decimal,
+        # preserving zero-padded numbers as strings.
         function tryParseDecimal {
             param(
                 [parameter(Mandatory=$True, Position=0)]
                 [string] $val
             )
             [string] $val = $val.Trim()
+            
+            # Preserve zero-padded numbers as strings to maintain format.
             if ($val -match '^0[0-9]+$'){
-                # Zero-padded numbers are output as-is
-                # without converting to numeric values
                 return $val
             }
+            
+            # Attempt to parse the value as a Decimal.
             $valueObject = New-Object System.Decimal
-            if ($false){
-                switch -Exact ($val) {
-                    "true"  { return $True }
-                    "false" { return $False }
-                    "yes"   { return $True }
-                    "no"    { return $False }
-                    "on"    { return $True }
-                    "off"   { return $False }
-                    "null"  { return $Null }
-                    "nil"   { return $Null }
-                    default {
-                        #pass
-                        }
-                }
-            }
             switch -Exact ($val) {
                 {[Double]::TryParse($val.Replace('_',''), [ref] $valueObject)} {
                     Write-Debug "Converted to Decimal: $valueObject"
                     return $valueObject
                 }
                 default {
+                    # If not a convertible number, return the original string.
                     Write-Debug "Not converted to Decimal: $val"
                     return $val
                 }
             }
         }
-        # set formula
+        
+        # Pre-process the formula script block:
+        # 1. Convert to string.
+        # 2. Replace user-friendly field variables with internal array access.
         [string] $FormulaBlockStr = $Formula.ToString().Trim()
         [string] $FormulaBlockStr = replaceFieldStr $FormulaBlockStr
         Write-Debug "Formula: $FormulaBlockStr"
-        # Count field number in Formula
+        
+        # Count the number of expressions in the formula by splitting on semicolons.
+        # Semicolons within quotes are temporarily replaced to avoid miscounting.
         [string] $FBStrForCountFieldNum = escapeSemiColonBetweenQuotes $FormulaBlockStr "'"
         [string] $FBStrForCountFieldNum = escapeSemiColonBetweenQuotes $FBStrForCountFieldNum '"'
         [int] $CountFieldNumOfFormula = $FBStrForCountFieldNum.Split(";").Count
@@ -404,41 +420,60 @@ function lcalc2 {
     }
     process
     {
+        # In calculator mode, the formula is executed only once in the 'end' block.
         if ( $Calculator ){
             return
         }
+        
         $rowCounter++
         [string] $line = [string] $_
+        
+        # Skip the first line if SkipHeader switch is present.
         if ( $SkipHeader -and $rowCounter -eq 1 ){
             Write-Output $line
             return
         }
+        
+        # Skip empty lines.
         if ($line -eq ''){
             return
         }
-        # main
+        
+        # Increment row number for current record processing.
         $NR++
+        
+        # Split the input line into fields based on the effective input delimiter.
+        # If delimiter is empty, treat input as individual characters.
         if ( $emptyDelimiterFlag ){
             [string[]] $tmpAry = $line.ToCharArray()
         } else {
             [string[]] $tmpAry = $line.Split( $iDelim )
         }
+        
+        # Initialize $self array and populate it with parsed field values.
+        # $self will hold the current record's fields, converted to numbers where possible.
         [object[]] $self = @()
-        # output whole line
         foreach ($element in $tmpAry){
             $self += tryParseDecimal $element
         }
-        #[int] $NF = $self.Count
+        
+        # Execute the pre-processed formula against the current record ($self).
+        # Depending on -OnlyOutputResult, output either only the formula result
+        # or the original record plus the formula result.
         if ( $OnlyOutputResult ){
+            # Execute formula and output only the result, joined by the output delimiter.
             $self = Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
             $self -Join "$oDelim"
         } else {
+            # Append the formula result to the original fields and output the combined line.
             $self += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
             $self -Join "$oDelim"
         }
     }
     end
     {
+        # If in calculator mode, execute the formula once at the end.
+        # This handles cases where no pipeline input is provided.
         if( $Calculator ){
             Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
         }
