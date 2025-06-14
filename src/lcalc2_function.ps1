@@ -2,7 +2,7 @@
 .SYNOPSIS
     lcalc2 - Column-to-column calculator
     
-    Column-to-column calcurations with script block
+    Column-to-column calculations with script block
     on space delimited stdin.
 
         lcalc2 {expr; expr;...} [-d "delim"] [-c|-Calculator]
@@ -14,6 +14,19 @@
       $1,$2,... : Column indexes starting with 1
       $NF       : Rightmost column
       $NR       : Row number of each records
+
+    You can use the [math] type accelerator to call static
+    methods from the System.Math class, such as [math]::Sqrt(),
+    [math]::Pow(), or [math]::Round(), Etc....
+    
+    You can use "Tab-Completion" in the script block
+
+    You can use conditional branching with if statement.
+
+    See EXAMPLE section for more details.
+
+.LINK
+    lcalc, lcalc2, Process-CsvColumn
 
 .DESCRIPTION
 
@@ -82,7 +95,7 @@
     2
 
     # calculator mode does not require
-    # standard input (from pipline)
+    # standard input (from pipeline)
 
     lcalc2 -c {1+[math]::sqrt(4)}
     3
@@ -120,6 +133,112 @@
     1 B 1 10 10
     1 C 1 10 10
 
+    # Calculate and assign a new value to the third column.
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | sm2 +count 1 2 3 3 `
+        | lcalc2  {$3=$3+$4}
+    2 A 21 20
+    1 B 11 10
+    1 C 11 10
+
+.EXAMPLE
+    # Example of using the System.Math class in .NET Framework
+    # You can use the [math] type accelerator to call static
+    # methods from the System.Math class, such as Sqrt, Pow, or Round.
+    # You can also use "Tab-Completion" in the script block
+
+    lcalc2 {[math]::PI} -Calculator
+    3.14159265358979
+
+.EXAMPLE
+    # Example of using the System.Math class in .NET Framework
+    # Replace the third column with its squared values using [math]::Pow()
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | sm2 1 2 3 3
+    A 1 20
+    B 1 10
+    C 1 10
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | sm2 1 2 3 3 `
+        | lcalc2 {$3=[math]::Pow($3,2)}
+    A 1 400
+    B 1 100
+    C 1 100
+
+.EXAMPLE
+    # Records are stored in the $self array.
+    # Following approach allows you to work with the array object directly,
+    # rather than using shorthand variables like $1, $2, etc.
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort
+    A 1 10
+    A 1 10
+    B 1 10
+    C 1 10
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | lcalc2 {$self[1]+0.1}
+    A 1 10 1.1
+    A 1 10 1.1
+    B 1 10 1.1
+    C 1 10 1.1
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | lcalc2 {$self.Count}
+    A 1 10 3
+    A 1 10 3
+    B 1 10 3
+    C 1 10
+
+.EXAMPLE
+    # An example of conditional branching using an if statement.
+    # Apply the process only to the first record.
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort
+    A 1 10
+    A 1 10
+    B 1 10
+    C 1 10
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | lcalc2 {if($NR -eq 1){$3=[math]::Pow($3,2)}else{$3=$3}}
+    A 1 100
+    A 1 10
+    B 1 10
+    C 1 10
+
+    # The following example is equivalent to the one above.
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | lcalc2 {if($NR -eq 1){$3=[math]::Pow($3,2)}}
+    A 1 100
+    A 1 10
+    B 1 10
+    C 1 10
+
+    # If you do not overwrite the values in a column
+    # (i.e., when creating a new column), it is recommended
+    # to use else to specify a placeholder.
+
+    "A 1 10","B 1 10","A 1 10","C 1 10" `
+        | sort `
+        | lcalc2 {if($NR -eq 1){[math]::Pow($3,2)}else{0}}
+    A 1 10 100
+    A 1 10 0
+    B 1 10 0
+    C 1 10 0
+
 #>
 function lcalc2 {
     Param(
@@ -128,7 +247,7 @@ function lcalc2 {
         [ScriptBlock] $Formula,
 
         [Parameter(Mandatory=$False)]
-        [Alias('fs')]
+        [Alias('fs', 'd')]
         [string] $Delimiter = ' ',
 
         [Parameter(Mandatory=$False)]
@@ -140,7 +259,7 @@ function lcalc2 {
         [string] $OutputDelimiter,
 
         [Parameter(Mandatory=$False)]
-        [Alias('c')]
+        [Alias('c', 'calc')]
         [switch] $Calculator,
 
         [Parameter(Mandatory=$False)]
@@ -241,10 +360,12 @@ function lcalc2 {
             )
             [string] $val = $val.Trim()
             if ($val -match '^0[0-9]+$'){
+                # Zero-padded numbers are output as-is
+                # without converting to numeric values
                 return $val
             }
-            $decimalObject = New-Object System.Decimal
-            if ($ParseBoolAndNull){
+            $valueObject = New-Object System.Decimal
+            if ($false){
                 switch -Exact ($val) {
                     "true"  { return $True }
                     "false" { return $False }
@@ -260,10 +381,12 @@ function lcalc2 {
                 }
             }
             switch -Exact ($val) {
-                {[Double]::TryParse($val.Replace('_',''), [ref] $decimalObject)} {
-                    return $decimalObject
+                {[Double]::TryParse($val.Replace('_',''), [ref] $valueObject)} {
+                    Write-Debug "Converted to Decimal: $valueObject"
+                    return $valueObject
                 }
                 default {
+                    Write-Debug "Not converted to Decimal: $val"
                     return $val
                 }
             }
@@ -281,37 +404,37 @@ function lcalc2 {
     }
     process
     {
-        # set variables
+        if ( $Calculator ){
+            return
+        }
         $rowCounter++
         [string] $line = [string] $_
-        if ( -not $Calculator ){
-            if ( $SkipHeader -and $rowCounter -eq 1 ){
-                return
-            }
-            if ($line -eq ''){
-                return
-            }
-            # main
-            $NR++
-            if ( $emptyDelimiterFlag ){
-                [string[]] $tmpAry = $line.ToCharArray()
-            } else {
-                [string[]] $tmpAry = $line.Split( $iDelim )
-            }
-            #[int] $NF = $tmpAry.Count
-            [object[]] $self = @()
-            # output whole line
-            foreach ($element in $tmpAry){
-                $self += tryParseDecimal $element
-            }
-            if ( $OnlyOutputResult ){
-                [object[]] $self2 = @()
-                $self2 += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
-                $self2 -Join "$oDelim"
-            } else {
-                $self += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
-                $self -Join "$oDelim"
-            }
+        if ( $SkipHeader -and $rowCounter -eq 1 ){
+            Write-Output $line
+            return
+        }
+        if ($line -eq ''){
+            return
+        }
+        # main
+        $NR++
+        if ( $emptyDelimiterFlag ){
+            [string[]] $tmpAry = $line.ToCharArray()
+        } else {
+            [string[]] $tmpAry = $line.Split( $iDelim )
+        }
+        [object[]] $self = @()
+        # output whole line
+        foreach ($element in $tmpAry){
+            $self += tryParseDecimal $element
+        }
+        #[int] $NF = $self.Count
+        if ( $OnlyOutputResult ){
+            $self = Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
+            $self -Join "$oDelim"
+        } else {
+            $self += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
+            $self -Join "$oDelim"
         }
     }
     end
