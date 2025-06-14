@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Added [pwmake][] Comments
-- Changed [Set-DotEnv][] Read `.env` to `.myenv`
+- Added [pwmake][] Comments.
+- Changed [Set-DotEnv][] Read `.env` to `.myenv`.
+- Added [Process-CsvColumn][] `-IncludeRow`, `-ExcludeRow`, `-FirstRow` options.
+- Added [lcalc2][] Add comments to improve maintainability.
 
 ## [0.9.0] - 2025-05-31
 
