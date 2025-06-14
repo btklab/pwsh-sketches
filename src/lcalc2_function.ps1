@@ -82,7 +82,7 @@
     2
 
     # calculator mode does not require
-    # standard input (from pipline)
+    # standard input (from pipeline)
 
     lcalc2 -c {1+[math]::sqrt(4)}
     3
@@ -128,7 +128,7 @@ function lcalc2 {
         [ScriptBlock] $Formula,
 
         [Parameter(Mandatory=$False)]
-        [Alias('fs')]
+        [Alias('fs', 'd')]
         [string] $Delimiter = ' ',
 
         [Parameter(Mandatory=$False)]
@@ -281,37 +281,37 @@ function lcalc2 {
     }
     process
     {
-        # set variables
+        if ( $Calculator ){
+            return
+        }
         $rowCounter++
         [string] $line = [string] $_
-        if ( -not $Calculator ){
-            if ( $SkipHeader -and $rowCounter -eq 1 ){
-                return
-            }
-            if ($line -eq ''){
-                return
-            }
-            # main
-            $NR++
-            if ( $emptyDelimiterFlag ){
-                [string[]] $tmpAry = $line.ToCharArray()
-            } else {
-                [string[]] $tmpAry = $line.Split( $iDelim )
-            }
-            #[int] $NF = $tmpAry.Count
-            [object[]] $self = @()
-            # output whole line
-            foreach ($element in $tmpAry){
-                $self += tryParseDecimal $element
-            }
-            if ( $OnlyOutputResult ){
-                [object[]] $self2 = @()
-                $self2 += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
-                $self2 -Join "$oDelim"
-            } else {
-                $self += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
-                $self -Join "$oDelim"
-            }
+        if ( $SkipHeader -and $rowCounter -eq 1 ){
+            return
+        }
+        if ($line -eq ''){
+            return
+        }
+        # main
+        $NR++
+        if ( $emptyDelimiterFlag ){
+            [string[]] $tmpAry = $line.ToCharArray()
+        } else {
+            [string[]] $tmpAry = $line.Split( $iDelim )
+        }
+        #[int] $NF = $tmpAry.Count
+        [object[]] $self = @()
+        # output whole line
+        foreach ($element in $tmpAry){
+            $self += tryParseDecimal $element
+        }
+        if ( $OnlyOutputResult ){
+            [object[]] $self2 = @()
+            $self2 += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
+            $self2 -Join "$oDelim"
+        } else {
+            $self += Invoke-Expression -Command $FormulaBlockStr -ErrorAction Stop
+            $self -Join "$oDelim"
         }
     }
     end
