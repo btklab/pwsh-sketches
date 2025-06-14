@@ -150,10 +150,16 @@ function Process-CsvColumn {
         [switch]$KeepQuotes,
 
         [Parameter(Mandatory=$false)]
+        [Alias('r', 'Row')]
         [int[]]$IncludeRow,
 
         [Parameter(Mandatory=$false)]
+        [Alias('ex', 'exclude')]
         [int[]]$ExcludeRow,
+
+        [Parameter(Mandatory=$false)]
+        [Alias('first')]
+        [switch]$FirstRow,
 
         [Parameter(ValueFromPipeline=$true)]
         [string[]]$InputObject
@@ -162,19 +168,19 @@ function Process-CsvColumn {
     begin {
         [bool]$isFirstLine = $true
         [int]$lineNumber = 0
-        
+        [int]$totalLines = 0
+        $linesBuffer = @()
+
         function Parse-CsvLine {
             param([string]$line, [string]$delimiter)
             $fields = @()
             $currentField = ""
             $inQuotes = $false
-            $isQuotingRequired = $false
             for ($i = 0; $i -lt $line.Length; $i++) {
                 $char = $line[$i]
                 if ($char -eq '"') {
                     if ($inQuotes -and $i + 1 -lt $line.Length -and $line[$i + 1] -eq '"') {
                         $currentField += '"'; $i++
-                        $isQuotingRequired = $true
                     } else {
                         $inQuotes = -not $inQuotes
                     }
@@ -199,6 +205,13 @@ function Process-CsvColumn {
 
         function ShouldProcessLine {
             param([int]$currentLine)
+            if ($FirstRow) {
+                if ($NoHeader) {
+                    return $currentLine -eq 1
+                } else {
+                    return $currentLine -eq 2
+                }
+            }
             if ($IncludeRow) {
                 return $IncludeRow -contains $currentLine
             } elseif ($ExcludeRow) {
@@ -239,6 +252,7 @@ function Process-CsvColumn {
         }
     }
 }
+
 # set alias
 [String] $tmpAliasName = "csv2proc"
 [String] $tmpCmdName   = "Process-CsvColumn"
