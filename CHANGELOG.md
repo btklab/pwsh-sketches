@@ -7,7 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.10.0] - 2025-06-15
+
 - Added [Invoke-GitBash][] (Alias: gitbash) function.
+- Added [Compare-Diff2][] (Alias:pwdiff ) function.
+- Added [Compare-Diff2Lcs][] (Alias: pwdiffu) function.
+- Added [Compare-Diff3][] (Alias: pwdiff3) function.
 - Added [pwmake][] Comments.
 - Added [Process-CsvColumn][] `-IncludeRow`, `-ExcludeRow`, `-FirstRow` options.
 - Added [lcalc2][] Add comments to improve maintainability.
@@ -330,9 +337,13 @@ Breaking Changes
 [Process-InQuote]: src/Process-InQuote_function.ps1
 
 [Invoke-GitBash]: src/Invoke-GitBash_function.ps1
+[Compare-Diff2Lcs]: src/Compare-Diff2Lcs_function.ps1
+[Compare-Diff2]: src/Compare-Diff2_function.ps1
+[Compare-Diff3]: src/Compare-Diff3_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.9.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.10.0..HEAD
+[0.10.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.10.0
 [0.9.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.9.0
 [0.8.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.8.0
 [0.7.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.7.0

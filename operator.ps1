@@ -11,46 +11,60 @@ if ($IsWindows){
     # compartible with multi byte code
     $env:LESSCHARSET = "utf-8"
 }
+
+# private function
+function Set-MyAlias {
+    param( [string] $Name, [string] $Value )
+    return $(Set-Alias -Name $Name -Value $Value -PassThru | ForEach-Object{ Write-Host "$($_.DisplayName)" -ForegroundColor Green })
+}
+
 if ($IsWindows){
+    # for windows
+    # Note: Functions related to the clipboard will be described later.
+
     ## private functions
     function Restart-Explorer {
         Stop-Process -ProcessName explorer -Force
     }
-    Set-Alias -Name rmExplorer -Value Restart-Explorer -PassThru | ForEach-Object{ Write-Host "$($_.DisplayName)" -ForegroundColor Green }
-
+    . Set-MyAlias -Name rmExplorer -Value Restart-Explorer
+    
     ## unix-like commands
+    . $pwshSrcDir/Invoke-GitBash_function.ps1
+    . $pwshSrcDir/Compare-Diff2_function.ps1
+    . $pwshSrcDir/Compare-Diff2Lcs_function.ps1
+    . $pwshSrcDir/Compare-Diff3_function.ps1
+
     . $pwshSrcDir/sed_function.ps1
     . $pwshSrcDir/sed-i_function.ps1
     . $pwshSrcDir/grep_function.ps1
     . $pwshSrcDir/uniq_function.ps1
-
+    
     . $pwshSrcDir/head_function.ps1
     . $pwshSrcDir/tail_function.ps1
     . $pwshSrcDir/tail-f_function.ps1
     . $pwshSrcDir/chead_function.ps1
     . $pwshSrcDir/ctail_function.ps1
-
+    
     . $pwshSrcDir/cat2_function.ps1
     . $pwshSrcDir/tac_function.ps1
     . $pwshSrcDir/rev_function.ps1
-
+    
     ## file and directory manipuration
     . $pwshSrcDir/Rename-Normalize_function.ps1
     . $pwshSrcDir/push2loc_function.ps1
-
+    
     ## misc
     . $pwshSrcDir/say_function.ps1
     . $pwshSrcDir/teatimer_function.ps1
     . $pwshSrcDir/Sleep-ComputerAFM_function.ps1
     . $pwshSrcDir/Shutdown-ComputerAFM_function.ps1
-
+    
     . $pwshSrcDir/Set-DotEnv_function.ps1
 }
 
 ## get/edit funcs
 . $pwshSrcDir/man2_function.ps1
 . $pwshSrcDir/Edit-Function_function.ps1
-
 
 ### pwsh implementation of gnu make command
 . $pwshSrcDir/pwmake_function.ps1
@@ -81,7 +95,6 @@ if ($IsWindows){
 . $pwshSrcDir/ForEach-Block_function.ps1
 . $pwshSrcDir/ForEach-Step_function.ps1
 . $pwshSrcDir/ForEach-Label_function.ps1
-
 
 . $pwshSrcDir/lcalc_function.ps1
 . $pwshSrcDir/lcalc2_function.ps1
@@ -117,7 +130,6 @@ if ($IsWindows){
 . $pwshSrcDir/logi2pu_function.ps1
 . $pwshSrcDir/flow2pu_function.ps1
 . $pwshSrcDir/seq2pu_function.ps1
-
 
 ## image processing
 . $pwshSrcDir/Convert-Image_function.ps1
