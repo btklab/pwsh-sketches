@@ -131,7 +131,7 @@ function Invoke-GitBash {
     if ( $Argument.Count -gt 0 ){
         foreach ( $arg in $Argument ){
             # Only convert arguments that are valid Windows file system paths.
-            if ( Test-Path -Path $arg -and $ReplacePathDelimiter ){
+            if ( (Test-Path -Path $arg) -and $ReplacePathDelimiter ){
                 [string] $replacedPath = replacePathDelim $arg
                 $replacedArguments += $replacedPath
             } else {
