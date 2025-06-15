@@ -7,10 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Invoke-GitBash][] (Alias: gitbash) function.
 - Added [pwmake][] Comments.
-- Changed [Set-DotEnv][] Read `.env` to `.myenv`.
 - Added [Process-CsvColumn][] `-IncludeRow`, `-ExcludeRow`, `-FirstRow` options.
 - Added [lcalc2][] Add comments to improve maintainability.
+- Changed [Set-DotEnv][] Read `.env` to `.myenv`.
 
 ## [0.9.0] - 2025-05-31
 
@@ -327,6 +328,9 @@ Breaking Changes
 [Convert-CharCase]: src/Convert-CharCase_function.ps1
 
 [Process-InQuote]: src/Process-InQuote_function.ps1
+
+[Invoke-GitBash]: src/Invoke-GitBash_function.ps1
+
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.9.0..HEAD
 [0.9.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.9.0
