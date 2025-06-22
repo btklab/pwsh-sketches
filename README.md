@@ -936,7 +936,7 @@ a simple and beautiful CSS framework.
 
 [Set-DotEnv]: src/Set-DotEnv_function.ps1
 
-#### [pwmake] - Pwsh implementation of GNU make command.<a id="pwmake"></a>
+#### [pwmake] - Pwsh implementation of GNU Make command.<a id="pwmake"></a>
 
 [pwmake]: src/pwmake_function.ps1
 
