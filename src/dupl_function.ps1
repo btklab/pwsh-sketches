@@ -6,6 +6,14 @@
     This function duplicates each input object the number of times
     specified by the -Count parameter. It supports pipeline input.
 
+    The main design pattern of this command was abstracted from
+    greymd(Yasuhiro, Yamada)'s "egzact".
+    Here is the original copyright notice for "egzact":
+
+        The MIT License Copyright (c) 2016 Yasuhiro, Yamada
+        https://github.com/greymd/egzact/blob/master/LICENSE
+
+
 .PARAMETER Count
     Specifies duplication count for each object. Must be >= 1.
     Default is 2.

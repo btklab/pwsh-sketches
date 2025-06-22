@@ -2,6 +2,8 @@
 .SYNOPSIS
     wrap - Wrap each fields in specified format.
 
+    "*" is placeholder
+
         "A B C D" | wrap '[*]'
         [A] [B] [C] [D]
         
@@ -14,8 +16,7 @@
         "ABCD" | wrap '[*]' -fs ''
         [A][B][C][D]
 
-    "*" is placeholder
-    
+
 .DESCRIPTION
 
     The main design pattern of this command was abstracted from
