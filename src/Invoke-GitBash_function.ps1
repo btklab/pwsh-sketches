@@ -25,9 +25,6 @@
     Arguments to pass to the Git Bash command. Windows paths are automatically
     converted to use forward slashes.
 
-.PARAMETER InputObject
-    Input from the pipeline to be redirected to the Git Bash command's standard input.
-
 .EXAMPLE
     # Run 'git diff' with specific files, automatically handling Windows paths.
     # This shows the differences between two files using Git's diff utility.
@@ -55,19 +52,13 @@
 function Invoke-GitBash {
     param (
         [Parameter(Mandatory=$false, Position=0)]
-        [Alias("c","com")]
         [string] $Command = "show", # Default command to run if none is specified
         
         [Parameter(ValueFromRemainingArguments=$true)]
-        [Alias("a","Args")]
         [string[]] $Argument, # Catches all unassigned arguments
         
-        [Parameter(Mandatory=$false)]
-        [Alias("rp")]
-        [switch] $ReplacePathDelimiter = $true, # Flag to replace backslashes with forward slashes
-        
         [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
-        [string[]] $InputObject # Accepts pipeline input
+        [string[]] $TextObject # Accepts pipeline input
     )
     
     # private function
@@ -131,7 +122,7 @@ function Invoke-GitBash {
     if ( $Argument.Count -gt 0 ){
         foreach ( $arg in $Argument ){
             # Only convert arguments that are valid Windows file system paths.
-            if ( (Test-Path -Path $arg) -and $ReplacePathDelimiter ){
+            if ( (Test-Path -Path $arg) ){
                 [string] $replacedPath = replacePathDelim $arg
                 $replacedArguments += $replacedPath
             } else {
@@ -145,7 +136,7 @@ function Invoke-GitBash {
     
     # Execute the Git Bash command.
     # Handles cases with and without pipeline input or arguments.
-    if ( $InputObject.Count -gt 0 ){
+    if ( $TextObject.Count -gt 0 ){
         # Redirect pipeline input if provided.
         if ( $Argument.Count -gt 0 ){
             $input | & $exePath $replacedArguments

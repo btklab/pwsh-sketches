@@ -1,8 +1,24 @@
 <#
 .SYNOPSIS
-    pwmake - PowerShell implementation of GNU make command
+    pwmake - PowerShell implementation of GNU Make command
+
+    Implementation of core GNU Make command features,
+    including dependency resolution via topological sorting,
+    with some modified specifications:
+    
+        - Syntax: Leading whitespace on command lines may be either
+          a <tab> or a <spaces>.
+        - Abbreviation: Targets prefixed with "@" can be treated
+          as ".PHONY <target>" without explicitly declaring ".PHONY".
+        - Help messages: Appending "## help message" at the end
+          of a target line enables it to be displayed in help output.
+        - to define variables, use ${} instead of $()
+            - if @() is used, it is interpreted as a Subexpression
+              operator (described later)
+
 
     Reads and executes a Makefile in the current directory.
+    File names must not contain spaces.
 
     Usage:
         - man pwmake
@@ -31,6 +47,17 @@
             # $params is also predefined [string[]] variable
             echo $Parameters
             echo $Parameters[0]
+        ```
+
+    Instead of writing ".PHONY <Target>", you can also place "@"
+    at the beginning of the target.
+
+        ```Makefile
+        file := index.md
+
+        # "@" is equivalent to .PHONY <target>
+        @all: ${file} ## echo filename
+            echo ${file}
         ```
 
     Execution examples:
@@ -69,10 +96,13 @@
         ```
 
     Detail:
-        - Makefile format roughly follows GNU make
-            - but spaces at the beginning of the line are
-              accepted with Tab or Space
-            - to define variables, use ${} instead of $()
+        - Syntax: Leading whitespace on command lines may be either
+          a <tab> or a <spaces>.
+        - Abbreviation: Targets prefixed with "@" can be treated
+          as ".PHONY <target>" without explicitly declaring ".PHONY".
+        - Help messages: Appending "## help message" at the end
+          of a target line enables it to be displayed in help output.
+        - to define variables, use ${} instead of $()
             - if @() is used, it is interpreted as a Subexpression
               operator (described later)
         - If no target is specified in args, the first target is executed.
@@ -107,9 +137,9 @@
             
         Comment example:
             
-            home := $($HOME) ## comment
+            home := $($HOME) # comment
 
-            target: deps  ## comment
+            target: deps  ## comment (help message)
                 command |
                     sed 's;^#;;' |
                     # grep -v 'hoge' | <-- allowed comment out
@@ -126,10 +156,10 @@
             ```powershell
             PS> pwmake -ShowHelp
             ##
-            ## target synopsis
-            ## ------ --------
-            ## help   help message
-            ## new    create directory and set skeleton files
+            ## isPhony target synopsis
+            ## ------- ------ --------
+            ## PHONY   help   help message
+            ## FILE    new    create directory and set skeleton files
             ```
             
     Note:
@@ -176,14 +206,44 @@
 
     ```Makefile
     .PHONY: all
-    all: hoge.txt
+    all: hoge.txt ## Generate hoge.txt
 
-    hoge.txt: log.txt
+    hoge.txt: log.txt ## Generate hoge.txt from log.txt
         1..10 | grep 10 >> hoge.txt
 
-    log.txt:
-        (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') | sed 's;2022;2000;' | md2html >> log.txt
+    log.txt: ## Generate log.txt
+        (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') | sed 's;2022;2000;' >> log.txt
     ```
+
+    pwmake -ShowHelp
+
+    isPhony target   synopsis
+    ------- ------   --------
+    PHONY   all      Generate hoge.txt
+    FILE    hoge.txt Generate hoge.txt from log.txt
+    FILE    log.txt  Generate log.txt
+
+.EXAMPLE
+    # Makefile example2: use "@" to define phony target.
+    # Equivalent to the previous Makefile.
+
+    ```Makefile
+    @all: hoge.txt ## Generate hoge.txt
+
+    hoge.txt: log.txt ## Generate hoge.txt from log.txt
+        1..10 | grep 10 >> hoge.txt
+
+    log.txt: ## Generate log.txt
+        (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') | sed 's;2022;2000;' >> log.txt
+    ```
+
+    pwmake -ShowHelp
+
+    isPhony target   synopsis
+    ------- ------   --------
+    PHONY   all      Generate hoge.txt
+    FILE    hoge.txt Generate hoge.txt from log.txt
+    FILE    log.txt  Generate log.txt
 
 .EXAMPLE
     # Get help of each task and DryRun Makefile
@@ -197,8 +257,7 @@
     pdffile := ${file}.pdf
     date    := $((Get-Date).ToString('yyyy-MM-dd (ddd) HH:mm:ss'))
 
-    .PHONY: all
-    all: ${pdffile} ## Generate pdf file and open.
+    @all: ${pdffile} ## Generate pdf file and open.
         @echo ${date}
 
     ${pdffile}: ${dvifile} ## Generate pdf file from dvi file.
@@ -217,12 +276,12 @@
     PS > pwmake -FilePath Makefile -ShowHelp
     PS > pwmake -ShowHelp
 
-    target synopsis
-    ------ --------
-    all    Generate pdf file and open.
-    a.pdf  Generate pdf file from dvi file.
-    a.dvi  Generate dvi file from tex file.
-    clean  Remove cache files.
+    isPhony target synopsis
+    ------- ------ --------
+    PHONY   all    Generate pdf file and open.
+    FILE    a.pdf  Generate pdf file from dvi file.
+    FILE    a.dvi  Generate dvi file from tex file.
+    PHONY   clean  Remove cache files.
 
     # DryRun
     PS > pwmake -DryRun
@@ -340,10 +399,10 @@
     # Rename extension of script files and Zip archive
     PS > pwmake -FilePath ~/Documents/Makefile -ShowHelp
 
-    target synopsis
-    ------ --------
-    all    Add ".txt" to the extension of the script file and Zip archive
-    clean  Remove "*.txt" items in Documents directory
+    isPhony target synopsis
+    ------- ------ --------
+    PHONY   all    Add ".txt" to the extension of the script file and Zip archive
+    PHONY   clean  Remove "*.txt" items in Documents directory
 
     # Show Makefile
     PS > cat ~/Documents/Makefile
@@ -437,10 +496,10 @@ function pwmake {
         ## Example output:
         ##   PS> pwmake -ShowHelp
         ##
-        ##   target synopsis
-        ##   ------ --------
-        ##   help   help message
-        ##   new    create directory and set skeleton files
+        ##   isPhony target synopsis
+        ##   ------- ------ --------
+        ##   PHONY   help   help message
+        ##   FILE    new    create directory and set skeleton files
         ##
         $variableDictionary = @{}
         if ($variableBlock) {
@@ -457,15 +516,25 @@ function pwmake {
                 }
                 $variableDictionary.Add($key, $value)
             }
-        }        
-        Select-String '^[a-zA-Z0-9_\-\{\}\$\.\ ]+?:' -Path $makefileFullPath -Raw `
+        }
+        [string[]] $collectedPhonyTargetsForShowHelp = @()
+        Select-String '^[a-zA-Z0-9_\-\{\}\$\.\ \@]+?:' -Path $makefileFullPath -Raw `
             | ForEach-Object {
                 [string] $helpString = [string]$_
                 if ($helpString -match ':='){
                     ## Skip variable definition lines
                     return
-                } elseif ($helpString -match '^\.phony'){
-                    ## Skip PHONY definition lines
+                } elseif ($helpString -match '^\.PHONY'){
+                    ## Collect PHONY targets
+                    ## and Skip PHONY definition lines
+                    [string[]] $tmpCommandBlock, [string[]] $tmpPhonyTargets = Collect-PhonyTargets $helpString
+                    if ($tmpPhonyTargets.Count -gt 0){
+                        foreach ($phonyTarget in $tmpPhonyTargets){
+                            if ($phonyTarget -notin $collectedPhonyTargetsForShowHelp){
+                                [string[]] $collectedPhonyTargetsForShowHelp += $phonyTarget
+                            }
+                        }
+                    }
                     return
                 } elseif ($helpString -match ' ## '){
                     [string] $helpString = $helpString -replace ':.*? ## ', ' ## '
@@ -484,9 +553,30 @@ function pwmake {
                 } `
             | ForEach-Object {
                 [string[]] $helpArray = $_.split(' ## ', 2)
-                return [pscustomobject]@{
-                    target = $helpArray[0]
-                    synopsis = $helpArray[1]}
+                $helpTarget = $helpArray[0].trim()
+                if ($helpTarget -match '^\@'){
+                    ## If the target starts with '@', isPhony is set to 'PHONY'
+                    $helpObject = @{
+                        isPhony = 'PHONY'
+                        target = $helpArray[0] -replace '^\@', ''
+                        synopsis = $helpArray[1]
+                    }
+                } elseif ( $helpTarget -in $collectedPhonyTargetsForShowHelp ) {
+                    ## If the target is in the collected PHONY targets
+                    $helpObject = @{
+                        isPhony = 'PHONY'
+                        target = $helpArray[0]
+                        synopsis = $helpArray[1]
+                    }
+                } else {
+                    ## If the target is not a PHONY target, but a FILE target.
+                    $helpObject = @{
+                        isPhony = 'FILE'
+                        target = $helpArray[0]
+                        synopsis = $helpArray[1]
+                    }
+                }
+                return $([pscustomobject] $helpObject)
             }
     }
 
@@ -701,17 +791,27 @@ function pwmake {
 
     ## Function to collect PHONY targets and remove them from the command block
     function Collect-PhonyTargets ([string[]]$commandBlock) {
-        [string[]] $phonyTargets = @();
-        [string[]] $filteredCommandBlock = @();
+        [string[]] $phonyList = @()
+        [string[]] $phonyTargets = @()
+        [string[]] $filteredCommandBlock = @()
         foreach ($line in $commandBlock) {
             if ($line -match '^\.PHONY:'){
-                [string[]] $phonyList = ($line -replace '^\.PHONY:\s*') -split $DependencyDelimiter;
-                [string[]] $phonyTargets += $phonyList;
+                # Set .PHONY targets
+                [string[]] $phonyList = ($line -replace '^\.PHONY:\s*') -split $DependencyDelimiter
+                [string[]] $phonyTargets += $phonyList
+            } elseif ($line -match '^@[^ \{\(\:]+:'){
+                # Set .PHONY targets.
+                # If the target starts with '@'
+                [string[]] $phonyList = ($line -replace '^@([^ \{\(\:]+):.*$', '$1').Trim()
+                [string[]] $phonyTargets += $phonyList
+                # Remove '@' from the beginning of the line
+                [string[]] $filteredCommandBlock += $line -replace '^@', ''
             } else {
-                [string[]] $filteredCommandBlock += $line;
+                # Normal command line or target line
+                [string[]] $filteredCommandBlock += $line
             }
         }
-        return $filteredCommandBlock, $phonyTargets;
+        return $filteredCommandBlock, $phonyTargets
     }
 
     ## Function to replace '%' in the command block with the target string
@@ -1015,7 +1115,7 @@ function pwmake {
     ## Display help
     if ($ShowHelp){
         Parse-MakefileHelp $variableBlock $FilePath;
-        return;
+        return
     }
 
     ## Resolve variables in argument block

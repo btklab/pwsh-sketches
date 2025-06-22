@@ -114,6 +114,16 @@ if ($IsWindows){
 . $pwshSrcDir/conv_function.ps1
 . $pwshSrcDir/wrap_function.ps1
 
+. $pwshSrcDir/combi_function.ps1
+. $pwshSrcDir/combi2_function.ps1
+. $pwshSrcDir/cycle_function.ps1
+. $pwshSrcDir/dupl_function.ps1
+. $pwshSrcDir/perm_function.ps1
+. $pwshSrcDir/perm2_function.ps1
+. $pwshSrcDir/nest_function.ps1
+. $pwshSrcDir/stair_function.ps1
+. $pwshSrcDir/subset_function.ps1
+
 . $pwshSrcDir/PullOut-String_function.ps1
 
 ### gdate includes thisyear, nextyear, lastyear
