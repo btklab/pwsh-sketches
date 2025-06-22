@@ -39,7 +39,7 @@ cat README.md `
     | Set-Clipboard
 ```
 
-- [Add-Id][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Calc-CrossTabulation][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [Compare-Diff2Lcs][], [Compare-Diff2][], [Compare-Diff3][], [Convert-CharCase][], [Convert-DictionaryToPSCustomObject][], [Convert-Image][], [Convert-Pandoc][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [ForEach-Block][], [ForEach-Label][], [ForEach-Step][], [Format-Path][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-Dataset][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-GitBash][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Map-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [Process-CsvColumn][], [Process-InQuote][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-InQuote][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [UnMap-Object][], [UnZip-GzFile][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [decil][], [delf][], [dot2gviz][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nextyear][], [pawk][], [percentile][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [summary][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
+- [Add-Id][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Calc-CrossTabulation][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [Compare-Diff2Lcs][], [Compare-Diff2][], [Compare-Diff3][], [Convert-CharCase][], [Convert-DictionaryToPSCustomObject][], [Convert-Image][], [Convert-Pandoc][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [ForEach-Block][], [ForEach-Label][], [ForEach-Step][], [Format-Path][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-Dataset][], [Get-DateAlternative][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Inkscape-Converter][], [Invoke-GitBash][], [Invoke-Link][], [Join-Until][], [Join-While][], [Join2-Object][], [Map-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [Process-CsvColumn][], [Process-InQuote][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-InQuote][], [Replace-NA][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [UnMap-Object][], [UnZip-GzFile][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [combi2][], [combi][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [cycle][], [decil][], [delf][], [dot2gviz][], [dupl][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nest][], [nextyear][], [pawk][], [percentile][], [perm2][], [perm][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [stair][], [subset][], [summary][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
 
 **General:** This repository provides filter commands for pattern matching on unstructured strings. Input and output are `UTF-8`, space-delimited, line-oriented strings (text objects) via the pipeline, similar to Unix/Linux shell tools. Some functions also accept or output PowerShell objects.
 
@@ -249,39 +249,39 @@ The motivation for creating each function and usage.
 
 [wrap]: src/wrap_function.ps1
 
-### [combi] - Generates combinations.<a od="combi"></a>
+#### [combi] - Generates combinations.<a od="combi"></a>
 
 [combi]: src/combi_function.ps1
 
-### [combi2] - Generates combinations.<a od="combi2"></a>
+#### [combi2] - Generates combinations.<a od="combi2"></a>
 
 [combi2]: src/combi2_function.ps1
 
-### [cycle] - Rotates elements in a pattern.<a od="cycle"></a>
+#### [cycle] - Rotates elements in a pattern.<a od="cycle"></a>
 
 [cycle]: src/cycle_function.ps1
 
-### [dupl] - Duplicates input objects by a specified count.<a od="dupl"></a>
+#### [dupl] - Duplicates input objects by a specified count.<a od="dupl"></a>
 
 [dupl]: src/dupl_function.ps1
 
-### [perm] - Permutation of "r" from "n".<a od="perm"></a>
+#### [perm] - Permutation of "r" from "n".<a od="perm"></a>
 
 [perm]: src/perm_function.ps1
 
-### [perm2] - Permutation of 2 from "n".<a od="perm2"></a>
+#### [perm2] - Permutation of 2 from "n".<a od="perm2"></a>
 
 [perm2]: src/perm2_function.ps1
 
-### [nest] - Nests fields from an input string using a specified pattern.<a od="nest"></a>
+#### [nest] - Nests fields from an input string using a specified pattern.<a od="nest"></a>
 
 [nest]: src/nest_function.ps1
 
-### [stair] - Stair columns separated by spaces.<a od="stair"></a>
+#### [stair] - Stair columns separated by spaces.<a od="stair"></a>
 
 [stair]: src/stair_function.ps1
 
-### [subset] - Generates all field subsets.<a od="subset"></a>
+#### [subset] - Generates all field subsets.<a od="subset"></a>
 
 [subset]: src/subset_function.ps1
 
