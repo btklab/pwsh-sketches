@@ -45,6 +45,12 @@
     # This demonstrates redirecting PowerShell output to a Git Bash utility.
     Get-Content .\my_log.txt | gitbash grep "error"
 
+.EXAMPLE
+    # Primality test using OpenSSL's prime command
+    gitbash openssl prime 118737626399742196143742577819117
+
+    5DAADF689D6A2383234167C3DED (118737626399742196143742577819117) is prime
+
 .LINK
     https://git-scm.com/docs/git-diff
     https://git-scm.com/docs/git-bash

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [rev2][] Comment for better maintainability.
 - Added [pwmake][] Use `@` prefix for targets as a shorthand for `.PHONY`.
 - Changed [Invoke-GitBash][] (Alias: gitbash) Rename -InputObject to -TextObject.
+- Changed [tateyoko][], [Invoke-GitBash][] Refactor code.
 
 
 ## [0.10.0] - 2025-06-15

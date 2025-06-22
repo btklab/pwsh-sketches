@@ -38,58 +38,96 @@
     2,5,8
     3,,9
 
+.EXAMPLE
+    "1,2,3", "4,5", "7,8,9" | tateyoko -d "," -Placeholder "NA"
+    1,4,7
+    2,5,8
+    3,NA,9
+
 #>
 function tateyoko{
-    Param (    
-        [Parameter( Mandatory=$False )]
+    [CmdletBinding()]
+    Param (
+        # Delimiter for splitting input lines into columns. Defaults to space.
+        [Parameter(Mandatory=$false)]
         [Alias('d')]
+        [Alias('fs')]
         [string] $Delimiter = ' ',
-        
-        [parameter( ValueFromPipeline=$True )]
+
+        # Placeholder string to use for missing fields during transposition. Defaults to an empty string.
+        [Parameter(Mandatory=$false)]
+        [Alias('p')]
+        [string] $Placeholder = '',
+
+        [Parameter(Mandatory=$false)]
+        [Alias('t')]
+        [switch] $Trim,
+
+        # Input text, received line by line from the pipeline.
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
         [string[]] $Text
     )
-    begin
-    {
-        [string[]] $RowAry = @()
+
+    begin {
+        # Initialize an empty array for future row processing (though RowList is used for accumulation).
+        [string[]] $RowAry = @() 
+        # Stores the maximum number of columns found in any input row, used for padding output.
         [int] $MaxColNum = 1
-        [string] $writeLine = ''
+        # List to accumulate all input rows before transposing.
         $RowList = New-Object 'System.Collections.Generic.List[System.String]'
     }
-    process
-    {
-        # 1st pass
+
+    process {
+        # Get the current line from the pipeline.
         [string] $readLine = [string] $_
+        # Add the read line to the list of all rows.
         $RowList.Add($readLine)
-        # get max col num
-        if ( $Delimiter -eq '' ){
+
+        # Determine how to split the line based on the delimiter.
+        if ($Delimiter -eq '') {
+            # If no delimiter, treat each character as a column.
             [string[]] $ColAry = $readLine.ToCharArray()
         } else {
-            [string[]] $ColAry = $readLine.Split( $Delimiter )
+            # Split the line by the specified delimiter.
+            [string[]] $ColAry = $readLine.Split($Delimiter)
         }
-        [int] $tmpColNum = @($ColAry).Count
-        if( $tmpColNum -gt $MaxColNum ){
-            [int] $MaxColNum = $tmpColNum
+
+        # Update MaxColNum if the current row has more columns.
+        # This ensures all columns are captured for transposition, even with irregular input.
+        [int] $tmpColNum = $ColAry.Count
+        if ($tmpColNum -gt $MaxColNum) {
+            $MaxColNum = $tmpColNum
         }
     }
-    end
-    {
-        # get max row
-        [string[]] $RowAry = $RowList.ToArray()
-        [int] $MaxRowNum = @($RowAry).Count
-        # transpose rows and columns
-        for( $j = 0; $j -lt $MaxColNum; $j++ ){
-            $outputList = New-Object 'System.Collections.Generic.List[System.String]'
-            [string[]]$outputAry = @()
-            for( $i = 0; $i -lt $MaxRowNum; $i++ ){
-                $outputList.Add(@($RowAry)[$i].Split($Delimiter)[$j])
+
+    end {
+        # Iterate through each potential column, from 0 to MaxColNum-1.
+        for ($i = 0; $i -lt $MaxColNum; $i++) {
+            # Buffer to hold elements for the current transposed output line.
+            [string[]] $LineBuf = @()
+            # Iterate through each original input row.
+            foreach ($row in $RowList) {
+                # Re-split the row to access individual fields.
+                if ($Delimiter -eq '') {
+                    $fields = $row.ToCharArray()
+                } else {
+                    $fields = $row.Split($Delimiter)
+                }
+                # Check if the current row has a field at the current column index ($i).
+                if ($i -lt $fields.Count) {
+                    # Add the field to the output line buffer.
+                    $LineBuf += $fields[$i]
+                } else {
+                    # If no field exists, add the specified placeholder string for alignment.
+                    $LineBuf += $Placeholder
+                }
             }
-            [string[]] $outputAry = $outputList.ToArray()
-            [string] $writeLine = $outputAry -Join $Delimiter
-            # trim
-            [string] $writeLine = $writeLine -Replace "($Delimiter)+$",''
-            # output
-            Write-Output $writeLine
-            [string] $writeLine = ''
+            # Join the elements of the buffer with the delimiter and output the transposed line.
+            if ( $Trim) {
+                ($LineBuf -join $Delimiter).Trim() | Write-Output
+            } else {
+                $LineBuf -join $Delimiter | Write-Output
+            }
         }
     }
 }
