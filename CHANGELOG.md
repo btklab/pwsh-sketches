@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- NA
+- Added [rev2][] Comment for better maintainability.
+- Added [pwmake][] Use `@` prefix for targets as a shorthand for `.PHONY`.
+
 
 ## [0.10.0] - 2025-06-15
 
