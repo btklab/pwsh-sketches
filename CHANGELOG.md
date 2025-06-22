@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [combi][], [combi2][], [cycle][], [dupl][], [perm][], [perm2][], [nest][], [stair][], [subset][] functions inspired by  greymd/egzact: Generate flexible patterns on the shell <https://github.com/greymd/egzact>
 - Added [rev2][] Comment for better maintainability.
 - Added [pwmake][] Use `@` prefix for targets as a shorthand for `.PHONY`.
 - Changed [Invoke-GitBash][] (Alias: gitbash) Rename -InputObject to -TextObject.
@@ -343,6 +344,16 @@ Breaking Changes
 [Compare-Diff2Lcs]: src/Compare-Diff2Lcs_function.ps1
 [Compare-Diff2]: src/Compare-Diff2_function.ps1
 [Compare-Diff3]: src/Compare-Diff3_function.ps1
+
+[combi]: src/combi_function.ps1
+[combi2]: src/combi2_function.ps1
+[cycle]: src/cycle_function.ps1
+[dupl]: src/dupl_function.ps1
+[perm]: src/perm_function.ps1
+[perm2]: src/perm2_function.ps1
+[nest]: src/nest_function.ps1
+[stair]: src/stair_function.ps1
+[subset]: src/subset_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.10.0..HEAD

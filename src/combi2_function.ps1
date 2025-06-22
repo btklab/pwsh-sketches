@@ -1,26 +1,23 @@
 <#
 .SYNOPSIS
-    wrap - Wrap each fields in specified format.
+    combi2 - Generates combinations.
 
-        "A B C D" | wrap '[*]'
-        [A] [B] [C] [D]
-        
-        "A B C D" | wrap '[?]' -Placeholder '?'
-        [A] [B] [C] [D]
-        
-        "A B C D" | wrap '[*]' -fs "_"
-        [A B C D]
+    Combination of 2 from "n".
 
-        "ABCD" | wrap '[*]' -fs ''
-        [A][B][C][D]
+    Usage
+        cat input | combi2
 
-    "*" is placeholder
-    
+    Example
+        "A B C" | combi2
+        A B
+        A C
+        B C
+
 .DESCRIPTION
 
     The main design pattern of this command was abstracted from
     greymd(Yasuhiro, Yamada)'s "egzact",
-    Here is the original copyright notice for "egzact":
+    Here is the original copyright notice for "egzact": 
     
         The MIT License Copyright (c) 2016 Yasuhiro, Yamada
         https://github.com/greymd/egzact/blob/master/LICENSE
@@ -41,43 +38,24 @@
     Alias: -ofs
     If fs is already set, this option is primarily used.
 
-.EXAMPLE
-    "A B C D" | wrap '[*]'
-    [A] [B] [C] [D]
-
-    "A B C D" | wrap '[?]' -Placeholder '?'
-    [A] [B] [C] [D]
-
-    "A B C D" | wrap '[*]' -fs "_"
-    [A B C D]
-
-    "ABCD" | wrap '[*]' -fs ""
-    [A][B][C][D]
-
-.EXAMPLE
-    "A B C D","E F G H" | wrap '<td>*</td>' | addt '<table>','<tr>' | addb '</tr>','</table>'
-    <table>
-    <tr>
-    <td>A</td> <td>B</td> <td>C</td> <td>D</td>
-    <td>E</td> <td>F</td> <td>G</td> <td>H</td>
-    </tr>
-    </table>
-
 .LINK
-    flat, rev2, addt, addb, addr, addl
+    perm, combi, dcombi, combi2
+
+.EXAMPLE
+    Write-Output "A B C" | combi2
+    A B
+    A C
+    B C
+
+    Write-Output "A B C" | combi 2
+    A B
+    A C
+    B C
 
 #>
-function wrap {
+function combi2 {
 
     param (
-        [Parameter( Mandatory=$False, Position=0 )]
-        [Alias('f')]
-        [string] $Format,
-        
-        [Parameter( Mandatory=$False )]
-        [Alias('p')]
-        [string] $Placeholder = '*',
-        
         [Parameter( Mandatory=$False )]
         [Alias('fs')]
         [string] $Delimiter = ' ',
@@ -115,27 +93,29 @@ function wrap {
         } else {
             [bool] $emptyDelimiterFlag = $False
         }
-        # private functions
-
+        # create zero-padding string
+        [string] $strZero = '0' * $Num
     }
 
     process {
+        # init variables
+        [string] $writeLine = ''
         [string] $readLine = [string] $_
-        if ( $readLine -eq '' ){
-            # skip empty line
-            Write-Output ''
-            return
-        }
         if ( $emptyDelimiterFlag ){
             [string[]] $splitReadLine = $readLine.ToCharArray()
         } else {
             [string[]] $splitReadLine = $readLine.Split( $iDelim )
         }
-        [string[]] $tmpAry = foreach ( $l in $splitReadLine ){
-                "$Format".Replace($Placeholder, $l)
+        # main
+        for( $i = 0; $i -lt $splitReadLine.Count; $i++ ){
+            for( $j = 0; $j -lt $splitReadLine.Count; $j++ ){
+                if ( $splitReadLine[$i] -lt $splitReadLine[$j]){
+                    [string] $writeLine = @( $splitReadLine[$i,$j] ) -join $oDelim
+                    Write-Output $writeLine
+                    [string] $writeLine = ''
+                }
             }
-        [string] $writeLine = $tmpAry -join $oDelim
-        Write-Output $writeLine
+        }
     }
-}
 
+}

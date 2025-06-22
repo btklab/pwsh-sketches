@@ -1,21 +1,18 @@
 <#
 .SYNOPSIS
-    wrap - Wrap each fields in specified format.
+    perm2 - Permutation of 2 from "n".
 
-        "A B C D" | wrap '[*]'
-        [A] [B] [C] [D]
-        
-        "A B C D" | wrap '[?]' -Placeholder '?'
-        [A] [B] [C] [D]
-        
-        "A B C D" | wrap '[*]' -fs "_"
-        [A B C D]
+    By default, it reads input as space-delimited tokens.
 
-        "ABCD" | wrap '[*]' -fs ''
-        [A][B][C][D]
+    Usage
+        "A B C" | perm2
 
-    "*" is placeholder
-    
+    Example
+        "A B C" | perm2
+        A B
+        A C
+        B C
+
 .DESCRIPTION
 
     The main design pattern of this command was abstracted from
@@ -24,7 +21,6 @@
     
         The MIT License Copyright (c) 2016 Yasuhiro, Yamada
         https://github.com/greymd/egzact/blob/master/LICENSE
-
 
 .PARAMETER Delimiter
     Input/Output field separator.
@@ -41,43 +37,22 @@
     Alias: -ofs
     If fs is already set, this option is primarily used.
 
-.EXAMPLE
-    "A B C D" | wrap '[*]'
-    [A] [B] [C] [D]
-
-    "A B C D" | wrap '[?]' -Placeholder '?'
-    [A] [B] [C] [D]
-
-    "A B C D" | wrap '[*]' -fs "_"
-    [A B C D]
-
-    "ABCD" | wrap '[*]' -fs ""
-    [A][B][C][D]
-
-.EXAMPLE
-    "A B C D","E F G H" | wrap '<td>*</td>' | addt '<table>','<tr>' | addb '</tr>','</table>'
-    <table>
-    <tr>
-    <td>A</td> <td>B</td> <td>C</td> <td>D</td>
-    <td>E</td> <td>F</td> <td>G</td> <td>H</td>
-    </tr>
-    </table>
-
 .LINK
-    flat, rev2, addt, addb, addr, addl
+    perm, combi, dcombi, perm2
+
+.EXAMPLE
+    Write-Output "A B C" | perm2
+    A B
+    A C
+    B A
+    B C
+    C A
+    C B
 
 #>
-function wrap {
+function perm2 {
 
     param (
-        [Parameter( Mandatory=$False, Position=0 )]
-        [Alias('f')]
-        [string] $Format,
-        
-        [Parameter( Mandatory=$False )]
-        [Alias('p')]
-        [string] $Placeholder = '*',
-        
         [Parameter( Mandatory=$False )]
         [Alias('fs')]
         [string] $Delimiter = ' ',
@@ -115,27 +90,36 @@ function wrap {
         } else {
             [bool] $emptyDelimiterFlag = $False
         }
-        # private functions
-
+        # create zero-padding string
+        [string] $strZero = '0' * $Num
     }
 
     process {
+        # init variables
+        [string] $writeLine = ''
         [string] $readLine = [string] $_
-        if ( $readLine -eq '' ){
-            # skip empty line
-            Write-Output ''
-            return
-        }
         if ( $emptyDelimiterFlag ){
             [string[]] $splitReadLine = $readLine.ToCharArray()
         } else {
             [string[]] $splitReadLine = $readLine.Split( $iDelim )
         }
-        [string[]] $tmpAry = foreach ( $l in $splitReadLine ){
-                "$Format".Replace($Placeholder, $l)
+        # main
+        $hash = @{}
+        for( $i = 0; $i -lt $splitReadLine.Count; $i++ ){
+            for( $j = 0; $j -lt $splitReadLine.Count; $j++ ){
+                $sortedKey = @( $splitReadLine[$i,$j] | Sort-Object ) -join "@"
+                Write-Debug $sortedKey
+                if ( $hash.ContainsKey( $sortedKey ) ){
+                    [string] $writeLine = ''
+                    continue
+                } else {
+                    $hash.add( $sortedKey , 0 )
+                }
+                [string] $writeLine = @( $splitReadLine[$i,$j] ) -join $oDelim
+                Write-Output $writeLine
+                [string] $writeLine = ''
             }
-        [string] $writeLine = $tmpAry -join $oDelim
-        Write-Output $writeLine
+        }
     }
-}
 
+}

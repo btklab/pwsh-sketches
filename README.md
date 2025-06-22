@@ -220,13 +220,6 @@ The motivation for creating each function and usage.
 
 [tarr]: src/tarr_function.ps1
 
-#### [flat] - Flat columns.<a id="flat"></a>
-
-[flat]: src/flat_function.ps1
-
-#### [wrap] - Wrap each fields in specified format.<a id="wrap"></a>
-
-[wrap]: src/wrap_function.ps1
 
 #### [Add-LineBreak] , [Add-LineBreakEndOfFile] - Add LineFeed.<a id="Add-LineBreak"></a>.<a id="Add-LineBreakEndOfFile"></a>
 
@@ -247,6 +240,51 @@ The motivation for creating each function and usage.
 #### [conv] - Convolution operation or find N-gram of text.<a id="conv"></a>
 
 [conv]: src/conv_function.ps1
+
+#### [flat] - Flat columns.<a id="flat"></a>
+
+[flat]: src/flat_function.ps1
+
+#### [wrap] - Wrap each fields in specified format.<a id="wrap"></a>
+
+[wrap]: src/wrap_function.ps1
+
+### [combi] - Generates combinations.<a od="combi"></a>
+
+[combi]: src/combi_function.ps1
+
+### [combi2] - Generates combinations.<a od="combi2"></a>
+
+[combi2]: src/combi2_function.ps1
+
+### [cycle] - Rotates elements in a pattern.<a od="cycle"></a>
+
+[cycle]: src/cycle_function.ps1
+
+### [dupl] - Duplicates input objects by a specified count.<a od="dupl"></a>
+
+[dupl]: src/dupl_function.ps1
+
+### [perm] - Permutation of "r" from "n".<a od="perm"></a>
+
+[perm]: src/perm_function.ps1
+
+### [perm2] - Permutation of 2 from "n".<a od="perm2"></a>
+
+[perm2]: src/perm2_function.ps1
+
+### [nest] - Nests fields from an input string using a specified pattern.<a od="nest"></a>
+
+[nest]: src/nest_function.ps1
+
+### [stair] - Stair columns separated by spaces.<a od="stair"></a>
+
+[stair]: src/stair_function.ps1
+
+### [subset] - Generates all field subsets.<a od="subset"></a>
+
+[subset]: src/subset_function.ps1
+
 
 #### [keta] - Padding per columns.<a id="keta"></a>
 
