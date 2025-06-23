@@ -556,21 +556,21 @@ function pwmake {
                 $helpTarget = $helpArray[0].trim()
                 if ($helpTarget -match '^\@'){
                     ## If the target starts with '@', isPhony is set to 'PHONY'
-                    $helpObject = @{
+                    $helpObject = [ordered] @{
                         isPhony = 'PHONY'
                         target = $helpArray[0] -replace '^\@', ''
                         synopsis = $helpArray[1]
                     }
                 } elseif ( $helpTarget -in $collectedPhonyTargetsForShowHelp ) {
                     ## If the target is in the collected PHONY targets
-                    $helpObject = @{
+                    $helpObject = [ordered] @{
                         isPhony = 'PHONY'
                         target = $helpArray[0]
                         synopsis = $helpArray[1]
                     }
                 } else {
                     ## If the target is not a PHONY target, but a FILE target.
-                    $helpObject = @{
+                    $helpObject = [ordered] @{
                         isPhony = 'FILE'
                         target = $helpArray[0]
                         synopsis = $helpArray[1]
