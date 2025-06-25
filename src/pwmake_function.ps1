@@ -134,6 +134,10 @@
             - "-f <file>" reads external Makefile.
                 - the root directory of relative path in the external Makefile
                   is the Makefile path.
+        - pwmake -f <directory>
+            - If you run make -f <directory>, it lists the files in <directory>.
+            - If you run make -f <file> and <file> contains an asterisk '*' or
+              a question mark '?', it lists the matching files.
             
         Comment example:
             
@@ -437,6 +441,32 @@
                 Write-Host "Remove: $($_.Name)" \
                 Remove-Item -LiteralPath $_.FullName \
             }
+
+.EXAMPLE
+    # list up files in directory
+    
+    pwmake -f ../makefiles/
+
+    Directory: C:/Users/btklab/cms/makefiles
+
+    calendar.Makefile
+    clip2graph-graphviz.Makefile
+    clip2img_from_clipboard.Makefile
+    dictjugler.Makefile
+    dilemma.pu.Makefile
+    ...
+    supersimpler.Makefile
+    weather_ical.Makefile
+
+.EXAMPLE
+    # list up files if filename contains '*' or '?'
+    
+    pwmake -f ../makefiles/update-*
+
+    Directory: C:/Users/btklab/cms/makefiles
+
+    update-sketches.Makefile
+    update-hogefuga.Makefile
 
 #>
 function pwmake {
@@ -1089,7 +1119,17 @@ function pwmake {
     #endregion
 
     #region Main Logic
-
+    # test path
+    if ($FilePath -eq '' -or $FilePath -eq $Null) {
+        Write-Error "FilePath is not specified." -ErrorAction stop
+        return
+    } elseif ( Test-Path -LiteralPath $FilePath -PathType Container){
+        Get-ChildItem -LiteralPath $FilePath | Format-Wide 
+        return
+    } elseif ( $FilePath -match '\*|\?' ){
+        Get-ChildItem -Path $FilePath | Format-Wide 
+        return
+    }
     ## Initialization
     [string] $makefile = $FilePath;
     

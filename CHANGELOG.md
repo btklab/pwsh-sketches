@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.11.0] - 2025-06-25
+
 - Added [combi][], [combi2][], [cycle][], [dupl][], [perm][], [perm2][], [nest][], [stair][], [subset][] functions inspired by  greymd/egzact: Generate flexible patterns on the shell <https://github.com/greymd/egzact>
 - Added [rev2][] Comment for better maintainability.
 - Added [pwmake][] Use `@` prefix for targets as a shorthand for `.PHONY`.
+- Changed [pwmake][] the behavior to list files when a directory is specified with the `-f` option.
+to list files when a directory is passed as an argument to the `-f` option.
 - Changed [Invoke-GitBash][] (Alias: gitbash) Rename -InputObject to -TextObject.
 - Changed [tateyoko][], [Invoke-GitBash][] Refactor code.
 
@@ -357,7 +363,8 @@ Breaking Changes
 [subset]: src/subset_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.10.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.11.0..HEAD
+[0.11.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.11.0
 [0.10.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.10.0
 [0.9.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.9.0
 [0.8.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.8.0
