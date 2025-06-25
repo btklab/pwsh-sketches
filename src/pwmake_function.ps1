@@ -16,7 +16,6 @@
             - if @() is used, it is interpreted as a Subexpression
               operator (described later)
 
-
     Reads and executes a Makefile in the current directory.
     File names must not contain spaces.
 
@@ -619,19 +618,19 @@ function pwmake {
                 [string] $makefileLine = [string] $_
                 if ($makefileLine -match '^include '){
                     ## Include other Makefiles
-                    [string] $includePath = $makefileLine -replace '^include ','';
-                    [string] $includePath = $includePath.trim();
-                    [string[]] $fileList = $includePath -split ' ';
+                    [string] $includePath = $makefileLine -replace '^include ',''
+                    [string] $includePath = $includePath.trim()
+                    [string[]] $fileList = $includePath -split ' '
                     foreach ($file in $fileList){
-                        [string] $fullPath = Join-Path "$parentDirectory" "$file";
-                        Get-Content -Path "$fullPath" -Encoding utf8;
+                        [string] $fullPath = Join-Path "$parentDirectory" "$file"
+                        Get-Content -Path "$fullPath" -Encoding utf8
                         Write-Output ''; # Add empty line at the end of included file
                     }
                 } else {
-                    Write-Output "$makefileLine";
+                    Write-Output "$makefileLine"
                 }
             }
-        return $lines;
+        return $lines
     }
 
     ## Function to remove comments from command lines
@@ -642,181 +641,181 @@ function pwmake {
                 if ($line -match '^\s+'){ # If it's a command line
                     if ($deleteCommentsAtEndOfCommandLine){
                         # Remove end-of-line comments (e.g., command # comment)
-                        [string[]] $cleanedLines += $line -replace '#.*$', '';
+                        [string[]] $cleanedLines += $line -replace '#.*$', ''
                     } else {
-                        [string[]] $cleanedLines += $line;
+                        [string[]] $cleanedLines += $line
                     }
                 } else { # If it's a target line or variable definition line
                     # Remove end-of-line comments (e.g., target: deps ## comment)
-                    [string[]] $cleanedLines += $line -replace '#.*[^"'']$', '';
+                    [string[]] $cleanedLines += $line -replace '#.*[^"'']$', ''
                 }
             } else { # If the line starts with a comment, skip the entire line
-                continue;
+                continue
             }
         }
-        return $cleanedLines;
+        return $cleanedLines
     }
 
     ## Function to process line break escape characters at the end of lines
     function Process-LineBreakEscapes ([string[]]$lines) {
-        [string] $previousLine = '';
-        [string[]] $processedLines = @();
+        [string] $previousLine = ''
+        [string[]] $processedLines = @()
         foreach ($line in $lines) {
             if ($line -match ' \\$' ){ # Backslash
-                [string] $previousLine = $previousLine + ($line -replace '\s+\\$', "`n");
+                [string] $previousLine = $previousLine + ($line -replace '\s+\\$', "`n")
             } elseif ($line -match ' \`$' ){ # Backtick
-                [string] $previousLine = $previousLine + ($line -replace '\s+\`$', "`n");
+                [string] $previousLine = $previousLine + ($line -replace '\s+\`$', "`n")
             } elseif ($line -match ' \|$' ){ # Pipe
-                [string] $previousLine = $previousLine + ($line -replace '\s+\|$'," |`n");
+                [string] $previousLine = $previousLine + ($line -replace '\s+\|$'," |`n")
             } else {
                 if ($previousLine -ne ''){
-                    [string[]] $processedLines += $previousLine + $line;
-                    [string] $previousLine = '';
+                    [string[]] $processedLines += $previousLine + $line
+                    [string] $previousLine = ''
                 } else {
-                    [string[]] $processedLines += $line;
+                    [string[]] $processedLines += $line
                 }
             }
         }
         if ($previousLine -ne ''){
-            [string[]] $processedLines += ($previousLine -replace '\s*$','');
+            [string[]] $processedLines += ($previousLine -replace '\s*$','')
         }
-        return $processedLines;
+        return $processedLines
     }
 
     ## Function to split Makefile lines into argument and command blocks
     function Separate-MakefileBlocks ([string[]]$lines) {
-        [bool] $isVariableBlock = $true;
-        [string[]] $variableBlock = @();
-        [string[]] $commandBlock = @();
+        [bool] $isVariableBlock = $true
+        [string[]] $variableBlock = @()
+        [string[]] $commandBlock = @()
         foreach ($line in $lines) {
             if ($line -match '.'){
                 if ($line -notmatch '='){
-                    [bool] $isVariableBlock = $False;
+                    [bool] $isVariableBlock = $False
                 }
             }
             if ($isVariableBlock){
                 if (($line -ne '') -and ($line -match ':=')){
-                    [string[]] $variableBlock += ($line -replace '\s*:=\s*',':=');
+                    [string[]] $variableBlock += ($line -replace '\s*:=\s*',':=')
                 } elseif (($line -ne '') -and ($line -match '=')){
-                    [string[]] $variableBlock += ($line -replace '\s*=\s*','=');
+                    [string[]] $variableBlock += ($line -replace '\s*=\s*','=')
                 }
             } else {
-                [string[]] $commandBlock += $line;
+                [string[]] $commandBlock += $line
             }
         }
         [string[]] $commandBlock += ''; # Add empty line for CreateTargetDictionaries function
-        return $variableBlock, $commandBlock;
+        return $variableBlock, $commandBlock
     }
 
     ## Function to apply variables specified in command line arguments to Makefile lines
     function Apply-OverrideVariables ([string[]]$lines, [string[]]$overrideVariables, [string] $makefileParentDirectory) {
-        $variableDictionary = @{};
+        $variableDictionary = @{}
         foreach ($variable in $overrideVariables) {
             if ($variable -notmatch '='){
-                Write-Error "Please use the format ""<name>=<val>"" when setting variables: $variable" -ErrorAction Stop;
+                Write-Error "Please use the format ""<name>=<val>"" when setting variables: $variable" -ErrorAction Stop
             }
-            [string[]] $variableArray = $variable -split "=", 2;
-            [string] $key = $variableArray[0].trim();
-            [string] $value = $variableArray[1].trim();
-            $variableDictionary.Add($key, $value);
+            [string[]] $variableArray = $variable -split "=", 2
+            [string] $key = $variableArray[0].trim()
+            [string] $value = $variableArray[1].trim()
+            $variableDictionary.Add($key, $value)
         }
 
-        [string[]] $processedLines = @();
+        [string[]] $processedLines = @()
         foreach ($line in $lines) {
-            [string] $currentLine = $line;
+            [string] $currentLine = $line
             foreach ($key in $variableDictionary.Keys){
-                [string] $before = '${' + $key + '}';
-                [string] $after = $variableDictionary[$key];
-                [string] $currentLine = $currentLine.Replace($before, $after);
+                [string] $before = '${' + $key + '}'
+                [string] $after = $variableDictionary[$key]
+                [string] $currentLine = $currentLine.Replace($before, $after)
             }
-            [string[]] $processedLines += $currentLine;
+            [string[]] $processedLines += $currentLine
         }
-        return $processedLines;
+        return $processedLines
     }
 
     ## Function to get key and value from a variable definition line
     function Get-VariableAndValue ([string]$variableDefinition, $variableDictionary, [string] $makefileParentDirectory) {
-        [string] $key = '';
-        [string] $value = '';
+        [string] $key = ''
+        [string] $value = ''
 
         if ($variableDefinition -match ':='){
             ## ':=' defines a simply-expanded variable
-            [string[]] $variableArray = $variableDefinition -split ":=", 2;
-            [string] $key = $variableArray[0].trim();
-            [string] $value = $variableArray[1].trim();
+            [string[]] $variableArray = $variableDefinition -split ":=", 2
+            [string] $key = $variableArray[0].trim()
+            [string] $value = $variableArray[1].trim()
             
             # Check for reserved variable names
             if ($key -match '^parameter$' -or $key -match '^parameters$' -or $key -match '^PSScriptRoot$'){
-                Write-Error "Variable name ""$key"" is reserved. Please use another keyword." -ErrorAction Stop;
+                Write-Error "Variable name ""$key"" is reserved. Please use another keyword." -ErrorAction Stop
             }
 
             ## Replace ${var}
             if ($value -match '\$\{'){
                 if ($variableDictionary){
                     foreach ($k in $variableDictionary.Keys){
-                        [string] $before = '${' + $k + '}';
-                        [string] $after = $variableDictionary[$k];
-                        [string] $value = $value.Replace($before, $after);
+                        [string] $before = '${' + $k + '}'
+                        [string] $after = $variableDictionary[$k]
+                        [string] $value = $value.Replace($before, $after)
                     }
                 }
             }
             ## Execute shell command
             if ($value -match '\$\(..*\)'){
                ## If $value contains $(command), execute $value as a shell command before variable assignment
-               [string] $commandToExecute = $value -replace '^.*(\$\(..*\)).*$', '$1';
-               [string] $executedResult = Invoke-Expression "$commandToExecute";
-               [string] $value = $value.Replace($commandToExecute, $executedResult);
+               [string] $commandToExecute = $value -replace '^.*(\$\(..*\)).*$', '$1'
+               [string] $executedResult = Invoke-Expression "$commandToExecute"
+               [string] $value = $value.Replace($commandToExecute, $executedResult)
             }
         } else {
             ## '=' defines a recursively-expanded variable
-            [string[]] $variableArray = $variableDefinition -split "=", 2;
-            [string] $key = $variableArray[0].trim();
-            [string] $value = $variableArray[1].trim();
+            [string[]] $variableArray = $variableDefinition -split "=", 2
+            [string] $key = $variableArray[0].trim()
+            [string] $value = $variableArray[1].trim()
             
             # Check for reserved variable names
             if ($key -match '^parameter$' -or $key -match '^parameters$' -or $key -match '^PSScriptRoot$'){
-                Write-Error "Variable name ""$key"" is reserved. Please use another keyword." -ErrorAction Stop;
+                Write-Error "Variable name ""$key"" is reserved. Please use another keyword." -ErrorAction Stop
             }
         }
         ## Replace predefined variables
-        [string] $value = $value.Replace('${PSScriptRoot}', $makefileParentDirectory);
-        [string] $value = $value.Replace('{$PSScriptRoot}', $makefileParentDirectory);
-        [string] $value = $value.Replace('$PSScriptRoot', $makefileParentDirectory);
-        return $key, $value;
+        [string] $value = $value.Replace('${PSScriptRoot}', $makefileParentDirectory)
+        [string] $value = $value.Replace('{$PSScriptRoot}', $makefileParentDirectory)
+        [string] $value = $value.Replace('$PSScriptRoot', $makefileParentDirectory)
+        return $key, $value
     }
 
     ## Function to resolve variables in the argument block
     function Resolve-VariableBlockVariables ([string[]]$variableBlock, [string] $makefileParentDirectory) {
-        $resolvedVariables = @{};
-        [string[]] $processedVariableBlock = @();
+        $resolvedVariables = @{}
+        [string[]] $processedVariableBlock = @()
         foreach ($variableDefinition in $variableBlock) {
-            $key, $value = Get-VariableAndValue "$variableDefinition" $resolvedVariables $makefileParentDirectory;
+            $key, $value = Get-VariableAndValue "$variableDefinition" $resolvedVariables $makefileParentDirectory
             if ($resolvedVariables){
                 foreach ($k in $resolvedVariables.Keys){
-                    [string] $before = '${' + $k + '}';
-                    [string] $after = $resolvedVariables[$k];
-                    [string] $value = $value.Replace($before, $after);
+                    [string] $before = '${' + $k + '}'
+                    [string] $after = $resolvedVariables[$k]
+                    [string] $value = $value.Replace($before, $after)
                 }
             }
-            $resolvedVariables.Add($key, $value);
-            [string[]] $processedVariableBlock += "$key=$value";
+            $resolvedVariables.Add($key, $value)
+            [string[]] $processedVariableBlock += "$key=$value"
         }
-        return $processedVariableBlock, $resolvedVariables;
+        return $processedVariableBlock, $resolvedVariables
     }
 
     ## Function to resolve variables in the command block
     function Resolve-CommandBlockVariables ([string[]]$commandBlock, $resolvedVariables) {
-        [string[]] $processedCommandBlock = @();
+        [string[]] $processedCommandBlock = @()
         foreach ($line in $commandBlock) {
-            [string] $currentLine = $line;
+            [string] $currentLine = $line
             foreach ($key in $resolvedVariables.Keys){
-                [string] $before = '${' + $key + '}';
-                [string] $after = $resolvedVariables[$key];
-                [string] $currentLine = $currentLine.Replace($before, $after);
+                [string] $before = '${' + $key + '}'
+                [string] $after = $resolvedVariables[$key]
+                [string] $currentLine = $currentLine.Replace($before, $after)
             }
-            [string[]] $processedCommandBlock += $currentLine;
+            [string[]] $processedCommandBlock += $currentLine
         }
-        return $processedCommandBlock;
+        return $processedCommandBlock
     }
 
     ## Function to collect PHONY targets and remove them from the command block
@@ -847,109 +846,109 @@ function pwmake {
     ## Function to replace '%' in the command block with the target string
     function Replace-PercentInCommandBlock ([string[]]$commandBlock, [string]$targetName) {
         ## Shortest string with extension removed from the target string
-        [string] $replacement = $targetName -replace '\.[^.\\/]*$', '';
-        [string] $replacement += '.';
+        [string] $replacement = $targetName -replace '\.[^.\\/]*$', ''
+        [string] $replacement += '.'
         
-        [string[]] $processedCommandBlock = @();
+        [string[]] $processedCommandBlock = @()
         foreach ($line in $commandBlock) {
             if ($line -match '%\.'){
                 if ($line -match '^[^\s].*:'){ # If it's a target line
-                    [string[]] $processedCommandBlock += $line.Replace('%.',"$replacement");
+                    [string[]] $processedCommandBlock += $line.Replace('%.',"$replacement")
                 } else { # If it's a command line
-                    [string[]] $processedCommandBlock += $line;
+                    [string[]] $processedCommandBlock += $line
                 }
             } else {
-                [string[]] $processedCommandBlock += $line;
+                [string[]] $processedCommandBlock += $line
             }
         }
-        return $processedCommandBlock;
+        return $processedCommandBlock
     }
 
     ## Function to clean up the command block and add empty lines before target lines
     function Clean-CommandBlock ([string[]]$commandBlock) {
-        [string[]] $cleanedBlock = @();
-        [bool]$isFirstTargetLine = $true;
+        [string[]] $cleanedBlock = @()
+        [bool]$isFirstTargetLine = $true
         foreach ($line in $commandBlock) {
             if ($line -ne ''){
                 if ($isFirstTargetLine){
-                    [string[]] $cleanedBlock += $line;
-                    [bool] $isFirstTargetLine = $False;
+                    [string[]] $cleanedBlock += $line
+                    [bool] $isFirstTargetLine = $False
                 } elseif ($line -match '^[^\s].*:'){
                     [string[]] $cleanedBlock += ''; # Add empty line before a normal target line
-                    [string[]] $cleanedBlock += $line;
+                    [string[]] $cleanedBlock += $line
                 } else {
                     if ($line -notmatch '^\s'){
-                        Write-Error "Unexpected line: $line" -ErrorAction Stop;
+                        Write-Error "Unexpected line: $line" -ErrorAction Stop
                     }
-                    [string[]] $cleanedBlock += $line;
+                    [string[]] $cleanedBlock += $line
                 }
             }
         }
         [string[]] $cleanedBlock += ''; # Add empty line at the end
-        return $cleanedBlock;
+        return $cleanedBlock
     }
 
     ## Function to create target and dependency dictionaries
     function Create-TargetDictionaries ([string[]]$commandBlock, [string]$targetDefinitionDelimiter, [string]$dependencyDelimiter) {
-        $commandDictionary = @{};
-        $targetDependencyDictionary = @{};
-        [string[]] $targetLines = @();
-        [string] $firstTargetFound = '';
-        [string[]] $currentCommands = @();
-        [string] $currentTarget = '';
+        $commandDictionary = @{}
+        $targetDependencyDictionary = @{}
+        [string[]] $targetLines = @()
+        [string] $firstTargetFound = ''
+        [string[]] $currentCommands = @()
+        [string] $currentTarget = ''
 
         foreach ($line in $commandBlock) {
             if ($line -eq ''){ # Block separator (empty line)
                 if ($currentTarget -ne ''){
-                    $commandDictionary.Add($currentTarget, $currentCommands);
-                    [string[]] $currentCommands = @();
-                    [string] $currentTarget = '';
+                    $commandDictionary.Add($currentTarget, $currentCommands)
+                    [string[]] $currentCommands = @()
+                    [string] $currentTarget = ''
                 }
             } else {
                 if ($line -match '^[^\s+].*:' -and $line -notmatch '^\.PHONY:'){ # Target: dependency line
-                    [string[]] $targetLines += $line;
-                    $targetPart, $dependencyPart = $line -split $targetDefinitionDelimiter, 2;
-                    [string] $targetName = $targetPart.trim();
-                    [string] $dependencies = $dependencyPart.trim();
-                    [string[]] $dependencyArray = @();
+                    [string[]] $targetLines += $line
+                    $targetPart, $dependencyPart = $line -split $targetDefinitionDelimiter, 2
+                    [string] $targetName = $targetPart.trim()
+                    [string] $dependencies = $dependencyPart.trim()
+                    [string[]] $dependencyArray = @()
                     if ($dependencies -ne '') {
-                        [string[]] $dependencyArray = $dependencies -split $dependencyDelimiter;
+                        [string[]] $dependencyArray = $dependencies -split $dependencyDelimiter
                     }
-                    $targetDependencyDictionary.Add($targetName, $dependencyArray);
+                    $targetDependencyDictionary.Add($targetName, $dependencyArray)
                     
                     if ($firstTargetFound -eq ''){
-                        [string] $firstTargetFound = $targetName;
+                        [string] $firstTargetFound = $targetName
                     }
-                    [string] $currentTarget = $targetName;
+                    [string] $currentTarget = $targetName
                 } elseif ($line -match '^\s') { # Command line
-                    [string[]] $currentCommands += $line.trim();
+                    [string[]] $currentCommands += $line.trim()
                 } else {
-                    Write-Error "Unexpected line: $line" -ErrorAction Stop;
+                    Write-Error "Unexpected line: $line" -ErrorAction Stop
                 }
             }
         }
-        return $targetLines, $commandDictionary, $targetDependencyDictionary, $firstTargetFound;
+        return $targetLines, $commandDictionary, $targetDependencyDictionary, $firstTargetFound
     }
 
     ## Function to get the dependencies dictionary
     function Get-DependenciesDictionary ([string[]]$targetLines, [string]$targetDefinitionDelimiter, [string]$dependencyDelimiter) {
-        $dependenciesDictionary = @{};
+        $dependenciesDictionary = @{}
         foreach ($line in $targetLines) {
-            $targetPart, $dependencyPart = $line -split $targetDefinitionDelimiter, 2;
-            [string] $targetName = $targetPart.trim();
-            [string] $dependencies = $dependencyPart.trim();
-            [string[]] $dependencyArray = @();
+            $targetPart, $dependencyPart = $line -split $targetDefinitionDelimiter, 2
+            [string] $targetName = $targetPart.trim()
+            [string] $dependencies = $dependencyPart.trim()
+            [string[]] $dependencyArray = @()
             if ($dependencies -ne '') {
-                [string[]] $dependencyArray = $dependencies -split $dependencyDelimiter;
+                [string[]] $dependencyArray = $dependencies -split $dependencyDelimiter
             }
-            $dependenciesDictionary.Add($targetName, $dependencyArray);
+            $dependenciesDictionary.Add($targetName, $dependencyArray)
         }
-        return $dependenciesDictionary;
+        return $dependenciesDictionary
     }
 
     ## Function to check if a target exists
     function Test-TargetExistence ([string]$target, $dependencies) {
-        return $dependencies.ContainsKey($target);
+        return $dependencies.ContainsKey($target)
     }
 
     ## Function to topologically sort targets using Tarjan's algorithm
@@ -959,25 +958,25 @@ function pwmake {
         if ($marked[$target]){ return $sorted; } # Skip if already marked
         $marked[$target] = $True; # Mark the current node
 
-        [string[]] $dependenciesList = $dependencies[$target];
+        [string[]] $dependenciesList = $dependencies[$target]
         if ($dependenciesList.Count -gt 0) {
             foreach ($dependency in $dependenciesList){
-                [string[]] $sorted = Sort-TargetsTopologically $dependency $dependencies $marked $sorted;
+                [string[]] $sorted = Sort-TargetsTopologically $dependency $dependencies $marked $sorted
             }
         }
         [string[]] $sorted += $target; # Add the processed node to the sorted list
-        return $sorted;
+        return $sorted
     }
 
     ## Function to check if a target contains a PHONY target
     function Test-TargetContainsPhony ([string]$target, [string[]]$phonyTargets) {
-        [string[]] $targetArray = $target -split $DependencyDelimiter;
+        [string[]] $targetArray = $target -split $DependencyDelimiter
         foreach ($t in $targetArray){
             foreach ($phony in $phonyTargets){
                 if ($t -eq $phony){ return $True; }
             }
         }
-        return $False;
+        return $False
     }
 
     ## Function to check if a dependency contains a PHONY target
@@ -986,16 +985,16 @@ function pwmake {
             if (Test-TargetContainsPhony $dependency $phonyTargets){ return $True; }
             if ( -not (Test-Path -LiteralPath "$dependency") ){ return $True; }
         }
-        return $False;
+        return $False
     }
 
     ## Function to check if a target file does not exist
     function Test-TargetFileDoesNotExist ([string]$target) {
-        [string[]] $targetArray = "$target" -split $DependencyDelimiter;
+        [string[]] $targetArray = "$target" -split $DependencyDelimiter
         foreach ($t in $targetArray){
             if ( -not (Test-Path -LiteralPath "$t") ){ return $True; }
         }
-        return $False;
+        return $False
     }
 
     ## Function to check if a dependency file does not exist
@@ -1004,83 +1003,83 @@ function pwmake {
             if (Test-TargetContainsPhony $dependency $phonyTargets){ return $True; }
             if ( -not (Test-Path -LiteralPath "$dependency") ){ return $True; }
         }
-        return $False;
+        return $False
     }
 
     ## Function to get the last write time of files
     function Get-FileLastWriteTime ([string[]]$files, [string]$comparisonType = "older") {
         if (-not $files) { return $null; }
-        [datetime] $resultDate = (Get-Item -LiteralPath $files[0]).LastWriteTime;
+        [datetime] $resultDate = (Get-Item -LiteralPath $files[0]).LastWriteTime
         foreach ($file in $files){
-            [datetime]$tempDate = (Get-Item -LiteralPath "$file").LastWriteTime;
+            [datetime]$tempDate = (Get-Item -LiteralPath "$file").LastWriteTime
             if ($comparisonType -eq 'older'){
                 if ($tempDate -lt $resultDate){ $resultDate = $tempDate; }
             } else {
                 if ($tempDate -gt $resultDate){ $resultDate = $tempDate; }
             }
         }
-        return $resultDate;
+        return $resultDate
     }
 
     ## Function to check if the target file is older than its dependencies
     function Test-TargetFileOlderThanDependencies ([string]$target, [string[]]$dependencies) {
-        [string[]] $targetArray = $target -split $DependencyDelimiter;
-        [datetime] $targetFileOlderDate = Get-FileLastWriteTime $targetArray "older";
-        [datetime] $dependencyFileNewerDate = Get-FileLastWriteTime $dependencies "newer";
+        [string[]] $targetArray = $target -split $DependencyDelimiter
+        [datetime] $targetFileOlderDate = Get-FileLastWriteTime $targetArray "older"
+        [datetime] $dependencyFileNewerDate = Get-FileLastWriteTime $dependencies "newer"
         
-        Write-Debug "Target's oldest last write time: $($targetFileOlderDate.ToString('yyyy-MM-dd HH:mm:ss'))";
-        Write-Debug "Dependency's newest last write time: $($dependencyFileNewerDate.ToString('yyyy-MM-dd HH:mm:ss'))";
+        Write-Debug "Target's oldest last write time: $($targetFileOlderDate.ToString('yyyy-MM-dd HH:mm:ss'))"
+        Write-Debug "Dependency's newest last write time: $($dependencyFileNewerDate.ToString('yyyy-MM-dd HH:mm:ss'))"
 
         if ($targetFileOlderDate -lt $dependencyFileNewerDate){
-            return $True;
+            return $True
         } else {
-            return $False;
+            return $False
         }
     }
 
     ## Function to determine if a target should be executed
     function Should-ExecuteTarget ([string]$target, $targetDependencyDictionary, $phonyTargets) {
-        $dependencies = $targetDependencyDictionary[$target];
-        [bool]$hasDependencies = ($dependencies -ne $null) -and ($dependencies.Length -gt 0) -and ($dependencies[0] -ne '');
+        $dependencies = $targetDependencyDictionary[$target]
+        [bool]$hasDependencies = ($dependencies -ne $null) -and ($dependencies.Length -gt 0) -and ($dependencies[0] -ne '')
 
         if (-not $hasDependencies){
             ## If the target has no dependencies
             if (Test-TargetContainsPhony "$target" $phonyTargets){
-                Write-Debug "Check: Test-TargetContainsPhony: $target";
-                return $True;
+                Write-Debug "Check: Test-TargetContainsPhony: $target"
+                return $True
             }
             if (Test-TargetFileDoesNotExist "$target"){
-                Write-Debug "Check: Test-TargetFileDoesNotExist: $target";
-                return $True;
+                Write-Debug "Check: Test-TargetFileDoesNotExist: $target"
+                return $True
             }
-            Write-Debug "Check: TargetFileExists: $target";
+            Write-Debug "Check: TargetFileExists: $target"
         } else {
             ## If the target has dependencies
             ### Test targets
             if (Test-TargetContainsPhony "$target" $phonyTargets){
-                Write-Debug "Check: Test-TargetContainsPhony: $target";
-                return $True;
+                Write-Debug "Check: Test-TargetContainsPhony: $target"
+                return $True
             }
             if (Test-TargetFileDoesNotExist "$target"){
-                Write-Debug "Check: Test-TargetFileDoesNotExist: $target";
-                return $True;
+                Write-Debug "Check: Test-TargetFileDoesNotExist: $target"
+                return $True
             }
             ## Test dependencies
             if (Test-DependencyContainsPhony $dependencies $phonyTargets){
-                Write-Debug "Check: Test-DependencyContainsPhony: $($target): $($dependencies)";
-                return $True;
+                Write-Debug "Check: Test-DependencyContainsPhony: $($target): $($dependencies)"
+                return $True
             }
             if (Test-DependencyFileDoesNotExist $dependencies $phonyTargets){
-                Write-Debug "Check: Test-DependencyFileDoesNotExist: $($target): $($dependencies)";
-                return $True;
+                Write-Debug "Check: Test-DependencyFileDoesNotExist: $($target): $($dependencies)"
+                return $True
             }
             if (Test-TargetFileOlderThanDependencies "$target" $dependencies){
-                Write-Debug "Check: Test-TargetFileOlderThanDependencies: $($target): $($dependencies)";
-                return $True;
+                Write-Debug "Check: Test-TargetFileOlderThanDependencies: $($target): $($dependencies)"
+                return $True
             }
-            Write-Debug "Check: TargetFileNewerThanDependencies: $($target): $($dependencies)";
+            Write-Debug "Check: TargetFileNewerThanDependencies: $($target): $($dependencies)"
         }
-        return $False;
+        return $False
     }
 
     ## Function to replace automatic variables in the command line
@@ -1094,26 +1093,26 @@ function pwmake {
         ##     $PSScriptRoot : Parent path of Makefile
 
         ## Set dependency line
-        [string[]] $dependencies = $targetDependencyDictionary[$target];
-        [string] $dependencyString = '';
+        [string[]] $dependencies = $targetDependencyDictionary[$target]
+        [string] $dependencyString = ''
         if ($dependencies -ne $null -and $dependencies.Length -gt 0 -and $dependencies[0] -ne '') {
-            [string] $dependencyString = $dependencies -join $dependencyDelimiter;
+            [string] $dependencyString = $dependencies -join $dependencyDelimiter
         }
 
         ## Set replacement strings
-        [string] $autoVariableTargetAll   = $target;
-        [string] $autoVariableTargetFirst = ($target -split $dependencyDelimiter)[0];
-        [string] $autoVariableDependencyAll      = $dependencyString;
-        [string] $autoVariableDependencyFirst    = ($dependencyString -split $dependencyDelimiter)[0];
+        [string] $autoVariableTargetAll   = $target
+        [string] $autoVariableTargetFirst = ($target -split $dependencyDelimiter)[0]
+        [string] $autoVariableDependencyAll      = $dependencyString
+        [string] $autoVariableDependencyFirst    = ($dependencyString -split $dependencyDelimiter)[0]
 
         ## Replace automatic variables
-        [string] $commandLine = $commandLine.Replace('$@',"$autoVariableTargetFirst");
-        [string] $commandLine = $commandLine.Replace('$<',"$autoVariableDependencyFirst");
-        [string] $commandLine = $commandLine.Replace('$^',"$autoVariableDependencyAll");
-        [string] $commandLine = $commandLine.Replace('${PSScriptRoot}', $makefileParentDirectory);
-        [string] $commandLine = $commandLine.Replace('{$PSScriptRoot}', $makefileParentDirectory);
-        [string] $commandLine = $commandLine.Replace('$PSScriptRoot', $makefileParentDirectory);
-        return $commandLine;
+        [string] $commandLine = $commandLine.Replace('$@',"$autoVariableTargetFirst")
+        [string] $commandLine = $commandLine.Replace('$<',"$autoVariableDependencyFirst")
+        [string] $commandLine = $commandLine.Replace('$^',"$autoVariableDependencyAll")
+        [string] $commandLine = $commandLine.Replace('${PSScriptRoot}', $makefileParentDirectory)
+        [string] $commandLine = $commandLine.Replace('{$PSScriptRoot}', $makefileParentDirectory)
+        [string] $commandLine = $commandLine.Replace('$PSScriptRoot', $makefileParentDirectory)
+        return $commandLine
     }
 
     #endregion
@@ -1131,36 +1130,36 @@ function pwmake {
         return
     }
     ## Initialization
-    [string] $makefile = $FilePath;
+    [string] $makefile = $FilePath
     
     ## Check Makefile existence
     if (-not (Test-Path -LiteralPath $makefile)){
-        Write-Error "Makefile ""$makefile"" not found." -ErrorAction Stop;
+        Write-Error "Makefile ""$makefile"" not found." -ErrorAction Stop
     }
-    [string] $makefileParentDirectory = (Resolve-Path -LiteralPath "$makefile" | Split-Path -Parent).Replace('\', '/');
+    [string] $makefileParentDirectory = (Resolve-Path -LiteralPath "$makefile" | Split-Path -Parent).Replace('\', '/')
 
     ## Parse Makefile
-    [string[]] $rawLines = Read-AndExpandMakefile "$makefile";
-    [string[]] $cleanedLines = Remove-MakefileComments $rawLines $DeleteCommentsAtEndOfCommandLine;
-    [string[]] $processedLines = Process-LineBreakEscapes $cleanedLines;
+    [string[]] $rawLines = Read-AndExpandMakefile "$makefile"
+    [string[]] $cleanedLines = Remove-MakefileComments $rawLines $DeleteCommentsAtEndOfCommandLine
+    [string[]] $processedLines = Process-LineBreakEscapes $cleanedLines
 
     ## Variable replacement (overrides from command line arguments)
     if ($OverrideVariables){
-        [string[]] $processedLines = Apply-OverrideVariables $processedLines $OverrideVariables $makefileParentDirectory;
+        [string[]] $processedLines = Apply-OverrideVariables $processedLines $OverrideVariables $makefileParentDirectory
     }
     
     ## Separate blocks
-    [string[]] $variableBlock, [string[]] $commandBlock = Separate-MakefileBlocks $processedLines;
+    [string[]] $variableBlock, [string[]] $commandBlock = Separate-MakefileBlocks $processedLines
 
     ## Display help
     if ($ShowHelp){
-        Parse-MakefileHelp $variableBlock $FilePath;
+        Parse-MakefileHelp $variableBlock $FilePath
         return
     }
 
     ## Resolve variables in argument block
-    [string[]] $resolvedVariableBlock, $resolvedVariables = Resolve-VariableBlockVariables $variableBlock $makefileParentDirectory;
-    [string[]] $commandBlock = Resolve-CommandBlockVariables $commandBlock $resolvedVariables;
+    [string[]] $resolvedVariableBlock, $resolvedVariables = Resolve-VariableBlockVariables $variableBlock $makefileParentDirectory
+    [string[]] $commandBlock = Resolve-CommandBlockVariables $commandBlock $resolvedVariables
 
     ## Replace '%'
     # At this point, the target is not yet determined, so either pass an empty string temporarily or
@@ -1168,45 +1167,45 @@ function pwmake {
     # However, if '%' affects the target name itself, it would need to be processed here.
 
     ## Collect PHONY targets
-    [string[]] $commandBlock, [string[]] $phonyTargets = Collect-PhonyTargets $commandBlock;
+    [string[]] $commandBlock, [string[]] $phonyTargets = Collect-PhonyTargets $commandBlock
 
     ## Clean up command block
-    [string[]] $commandBlock = Clean-CommandBlock $commandBlock;
+    [string[]] $commandBlock = Clean-CommandBlock $commandBlock
 
     ## Debug output (DryRun mode)
     if ($DryRun){
-        Write-Output "######## override args ##########";
-        if($OverrideVariables){$OverrideVariables}else{"None"};
-        Write-Output '';
-        Write-Output "######## variable block ##########";
-        if($resolvedVariableBlock){$resolvedVariableBlock}else{"None"};
-        Write-Output '';
-        Write-Output "######## phonies ##########";
-        if($phonyTargets){$phonyTargets}else{"None"};
-        Write-Output '';
-        Write-Output "######## command block ##########";
-        $commandBlock;
+        Write-Output "######## override args ##########"
+        if($OverrideVariables){$OverrideVariables}else{"None"}
+        Write-Output ''
+        Write-Output "######## variable block ##########"
+        if($resolvedVariableBlock){$resolvedVariableBlock}else{"None"}
+        Write-Output ''
+        Write-Output "######## phonies ##########"
+        if($phonyTargets){$phonyTargets}else{"None"}
+        Write-Output ''
+        Write-Output "######## command block ##########"
+        $commandBlock
     }
 
     ## Create target and dependency dictionaries
-    [string[]]$targetLines, $commandDictionary, $targetDependencyDictionary, [string]$firstTarget = Create-TargetDictionaries $commandBlock $TargetDefinitionDelimiter $DependencyDelimiter;
+    [string[]]$targetLines, $commandDictionary, $targetDependencyDictionary, [string]$firstTarget = Create-TargetDictionaries $commandBlock $TargetDefinitionDelimiter $DependencyDelimiter
 
     ## Determine execution target
-    [string] $executionTarget = $TargetName;
+    [string] $executionTarget = $TargetName
     if (-not $executionTarget){
-        [string] $executionTarget = $firstTarget;
+        [string] $executionTarget = $firstTarget
     }
 
     ## Check target existence
     if (-not (Test-TargetExistence $executionTarget $commandDictionary)){
-        Write-Error "Target ""$executionTarget"" does not exist in $makefile." -ErrorAction Stop;
+        Write-Error "Target ""$executionTarget"" does not exist in $makefile." -ErrorAction Stop
     }
 
     ## Get dependencies dictionary
-    $dependenciesDictionary = Get-DependenciesDictionary $targetLines $TargetDefinitionDelimiter $DependencyDelimiter;
+    $dependenciesDictionary = Get-DependenciesDictionary $targetLines $TargetDefinitionDelimiter $DependencyDelimiter
 
     ## Get topologically sorted target list
-    [string[]] $sortedTargets = Sort-TargetsTopologically "$executionTarget" $dependenciesDictionary;
+    [string[]] $sortedTargets = Sort-TargetsTopologically "$executionTarget" $dependenciesDictionary
     
     ## Replace '%' (after final target is determined)
     # For each target in sortedTargets, perform '%' replacement again.
@@ -1217,54 +1216,54 @@ function pwmake {
     try {
         ## Change current directory (if PushAndPop is specified)
         if ($PushAndPop){
-            [String] $currentLocation = (Resolve-Path -Relative .).Replace('\','/');
-            [String] $targetLocation = (Resolve-Path -Relative $makefileParentDirectory).Replace('\','/');
-            Push-Location -LiteralPath $makefileParentDirectory;
-            Write-Host "";
-            Write-Host "Changed directory to ""$targetLocation""." -ForegroundColor Blue;
-            Write-Host "";
+            [String] $currentLocation = (Resolve-Path -Relative .).Replace('\','/')
+            [String] $targetLocation = (Resolve-Path -Relative $makefileParentDirectory).Replace('\','/')
+            Push-Location -LiteralPath $makefileParentDirectory
+            Write-Host ""
+            Write-Host "Changed directory to ""$targetLocation""." -ForegroundColor Blue
+            Write-Host ""
         }
 
         ## Debug log (DryRun mode)
         if ($DryRun){
-            Write-Output "######## topological sorted target lines ##########";
+            Write-Output "######## topological sorted target lines ##########"
             foreach ($line in $sortedTargets) {
-                Write-Output "$line";
+                Write-Output "$line"
             }
-            Write-Output "";
-            Write-Output "######## topological sorted command lines ##########";
+            Write-Output ""
+            Write-Output "######## topological sorted command lines ##########"
             foreach ($tempTarget in $sortedTargets) {
                 foreach($commandLine in $commandDictionary[$tempTarget]) {
                     if ($commandLine -notmatch '^\s*$'){
-                        $commandLine = Replace-AutomaticVariables "$commandLine" "$tempTarget" $targetDependencyDictionary $makefileParentDirectory $DependencyDelimiter;
-                        Write-Output "$commandLine";
+                        $commandLine = Replace-AutomaticVariables "$commandLine" "$tempTarget" $targetDependencyDictionary $makefileParentDirectory $DependencyDelimiter
+                        Write-Output "$commandLine"
                     }
                 }
             }
         }
 
         ## Execute commands
-        [bool]$isCommandExecuted = $False;
+        [bool]$isCommandExecuted = $False
         if ($DryRun){
-            Write-Output "";
-            Write-Output "######## execute commands ##########";
+            Write-Output ""
+            Write-Output "######## execute commands ##########"
         }
         
         foreach ($targetToExecute in $sortedTargets) {
             ## Check if target exists
             if (-not (Test-TargetExistence $targetToExecute $commandDictionary)){
                 if (Test-TargetFileDoesNotExist "$targetToExecute"){
-                    Write-Error "Error: File does not exist: '$targetToExecute'." -ErrorAction Stop;
+                    Write-Error "Error: File does not exist: '$targetToExecute'." -ErrorAction Stop
                 } else {
                     continue; # Skip if target file exists
                 }
             }
             
             ## Get command lines for the target
-            [string[]]$commandsForTarget = $commandDictionary[$targetToExecute];
+            [string[]]$commandsForTarget = $commandDictionary[$targetToExecute]
             
             ## Determine if the target should be executed
-            [bool] $shouldExecute = Should-ExecuteTarget "$targetToExecute" $targetDependencyDictionary $phonyTargets;
+            [bool] $shouldExecute = Should-ExecuteTarget "$targetToExecute" $targetDependencyDictionary $phonyTargets
             
             if (-not $shouldExecute){
                 continue; # Do not execute commands
@@ -1272,38 +1271,38 @@ function pwmake {
             
             ## Skip if no commands exist
             if ($commandsForTarget.Count -eq 0){
-                continue;
+                continue
             }
 
             ## Execute command lines
             foreach ($commandLine in $commandsForTarget){
                 ## Replace automatic variables
-                [string] $processedCommandLine = Replace-AutomaticVariables "$commandLine" "$targetToExecute" $targetDependencyDictionary $makefileParentDirectory $DependencyDelimiter;
+                [string] $processedCommandLine = Replace-AutomaticVariables "$commandLine" "$targetToExecute" $targetDependencyDictionary $makefileParentDirectory $DependencyDelimiter
                 
                 if (($processedCommandLine -eq '') -or ($processedCommandLine -match '^\s*$')){
-                    continue;
+                    continue
                 }
 
                 ## Main execution
                 if ($DryRun){
-                    Write-Output "$processedCommandLine";
+                    Write-Output "$processedCommandLine"
                 } else {
-                    [bool] $echoCommand = $True;
+                    [bool] $echoCommand = $True
                     if ($processedCommandLine -match '^@[^\(\{]'){
-                        [bool] $echoCommand = $False;
-                        [string] $processedCommandLine = $processedCommandLine -replace '^@', '';
+                        [bool] $echoCommand = $False
+                        [string] $processedCommandLine = $processedCommandLine -replace '^@', ''
                     }
                     if ($echoCommand){
-                        Write-Host "> $processedCommandLine" -ForegroundColor Green;
+                        Write-Host "> $processedCommandLine" -ForegroundColor Green
                     }
                     try {
-                        [bool] $isCommandExecuted = $True;
-                        Invoke-Expression "$processedCommandLine";
+                        [bool] $isCommandExecuted = $True
+                        Invoke-Expression "$processedCommandLine"
                     } catch {
                         if ($ErrorActionPreference -eq "stop"){
-                            Write-Error $_.Exception.Message -ErrorAction Stop;
+                            Write-Error $_.Exception.Message -ErrorAction Stop
                         } else {
-                            Write-Warning $_.Exception.Message;
+                            Write-Warning $_.Exception.Message
                         }
                     }
                 }
@@ -1312,13 +1311,13 @@ function pwmake {
         }
         
         if ((-not $isCommandExecuted) -and (-not $DryRun)){
-            Write-Host "make: '$executionTarget' is up to date.";
+            Write-Host "make: '$executionTarget' is up to date."
         }
     } finally {
         if ($PushAndPop){
-            Pop-Location;
-            Write-Host "";
-            Write-Host "Returned to original directory ""$currentLocation""." -ForegroundColor Blue;
+            Pop-Location
+            Write-Host ""
+            Write-Host "Returned to original directory ""$currentLocation""." -ForegroundColor Blue
         }
     }
     #endregion
