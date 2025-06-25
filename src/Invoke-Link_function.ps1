@@ -187,9 +187,9 @@
 
     ## search by tag
     i ./work/apps/ | ? tag -match hoge
-        Id Tag                 Name               Line
-        -- ---                 ----               ----
-         1 #app, #hoge, #fuga  ./work/apps/chrome # chrome #app
+        Id  Name               Line          Tag
+        --  ----               ----          ---
+         1  ./work/apps/chrome # chrome #app #app, #hoge, #fuga
 
 .LINK
     linkcheck
@@ -512,16 +512,16 @@ function Invoke-Link {
                             [String] $tagStr += ","
                             $hash = [ordered] @{
                                 Id   = $fileCounter
-                                Tag  = $tagStr
                                 Name = $relativePath
                                 Line = Get-Content -Path $_.FullName -TotalCount 1 -Encoding utf-8
+                                Tag  = $tagStr
                             }
                         } else {
                             $hash = [ordered] @{
                                 Id   = $fileCounter
-                                Tag  = '#' + $parentDirName
                                 Name = $relativePath
                                 Line = $Null
+                                Tag  = '#' + $parentDirName
                             }
                         }
                         if ( $Grep -and $NotMatch ){
