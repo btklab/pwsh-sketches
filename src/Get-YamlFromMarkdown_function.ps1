@@ -21,8 +21,7 @@
     Parse-YAML, Get-YamlFromMarkdown, Convert-DictionaryToPSCustomObject (dict2psobject)
 
 .PARAMETER Path
-    File path to a Markdown document.  If omitted, input is read from pipeline
-    or STDIN.
+    File path to a Markdown document.
 
 .PARAMETER StartDelimiter
     String that marks the start of YAML front-matter (default '---').
@@ -73,23 +72,36 @@ function Get-YamlFromMarkdown {
 
     [CmdletBinding()]
     param(
-        [Parameter(Position = 0, ValueFromPipelineByPropertyName = $true)]
+        [Parameter(Mandatory=$false, Position=0)]
         [string] $Path,
-
-        [Parameter(ValueFromPipeline)]
+        
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
         [string] $InputObject,
-
+        
+        [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [string] $StartDelimiter = '---',
-
+        
+        [Parameter(Mandatory=$false)]
         [ValidateNotNullOrEmpty()]
         [string] $EndDelimiter   = '---',
-
+        
+        [Parameter(Mandatory=$false)]
         [switch] $AllowMultiple,
+        
+        [Parameter(Mandatory=$false)]
         [switch] $NormalizeLineEndings,
+        
+        [Parameter(Mandatory=$false)]
         [switch] $TrimIndentation,
+        
+        [Parameter(Mandatory=$false)]
         [int]    $TabToSpaces    = 0,
+        
+        [Parameter(Mandatory=$false)]
         [switch] $TrimEmptyLines,
+        
+        [Parameter(Mandatory=$false)]
         [switch] $ReturnString
     )
 
