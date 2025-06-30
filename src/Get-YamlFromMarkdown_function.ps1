@@ -96,10 +96,13 @@ function Get-YamlFromMarkdown {
         [switch] $TrimIndentation,
         
         [Parameter(Mandatory=$false)]
-        [int]    $TabToSpaces    = 0,
+        [int]    $TabToSpaces    = 4,
         
         [Parameter(Mandatory=$false)]
         [switch] $TrimEmptyLines,
+        
+        [Parameter(Mandatory=$false)]
+        [switch] $IndentList,
         
         [Parameter(Mandatory=$false)]
         [switch] $ReturnString
@@ -142,6 +145,12 @@ function Get-YamlFromMarkdown {
             else {
                 # Fallback to STDIN
                 $rawContent = [Console]::In.ReadToEnd()
+            }
+            if ( $IndentList -and $rawContent -match "`n\- " ) {
+                # If IndentList is set, ensure list items are indented
+                # This is a workaround for the common case where lists are not indented
+                # properly in Markdown, which can cause YAML parsing issues.
+                $rawContent = $rawContent -replace "`n\- ", "`n  - "
             }
         }
 
@@ -225,11 +234,13 @@ function Get-YamlFromMarkdown {
         # 5. Output results per ReturnString flag
         if ($ReturnString) {
             # Join multiple blocks with two newlines
-            $results -join "`n`n"
+            $results.ToArray() -join "`n`n"
         }
         else {
             # Emit each block as a separate string
-            $results
+            $results.ToArray() | ForEach-Object {
+                $_ -split "`n"
+            }
         }
     }
 }
