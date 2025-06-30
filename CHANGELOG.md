@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 - Added [Get-YamlFromMarkdown][] function.
+- Added [Infer-ObjectSchema][] function.
 
 ## [0.11.0] - 2025-06-25
 
@@ -363,6 +364,7 @@ Breaking Changes
 [subset]: src/subset_function.ps1
 
 [Get-YamlFromMarkdown]: src/Get-YamlFromMarkdown_function.ps1
+[Infer-ObjectSchema]: src/Infer-ObjectSchema_function.ps1
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.11.0..HEAD
 [0.11.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.11.0
