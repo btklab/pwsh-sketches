@@ -221,6 +221,8 @@ if ( $IsWindows ){
 . $pwshSrcDir/ysort_function.ps1
 . $pwshSrcDir/ycalc_function.ps1
 
+. $pwshSrcDir/Infer-ObjectSchema_function.ps1
+
 # statistics - Anomaly detection
 . $pwshSrcDir/Add-Id_function.ps1
 . $pwshSrcDir/Shorten-PropertyName_function.ps1
