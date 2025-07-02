@@ -4,6 +4,9 @@
 
     Infers the schema (property names and their most likely data types)from objects.
 
+.LINK
+    Sort-Property, Infer-ObjectSchema
+
 .DESCRIPTION
     This function analyzes a sample of input objects to determine the data type for each property.
     It prioritizes numeric types (int, double) over date/time, boolean, and finally string,

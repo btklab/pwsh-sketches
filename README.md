@@ -735,7 +735,7 @@ Statistical analysis procedures using this toolset:
 
 [Execute-RMarkdown]: src/Execute-RMarkdown_function.ps1
 
-#### [math2tex] (Alias: chem2tex) - Add LaTeX preables to the mathematical and chemical formula in LaTex format..<a id="math2tex"></a>
+#### [math2tex] (Alias: chem2tex) - Add the LaTeX preamble to the mathematical and chemical formula in LaTex format.<a id="math2tex"></a>
 
 [math2tex]: src/math2tex_function.ps1
 

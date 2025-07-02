@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
-    math2tex (Alias: chem2tex) - Add LaTeX preables to the mathematical and chemical formula in LaTex format.
+    math2tex (Alias: chem2tex) - Add the LaTeX preamble to the mathematical and chemical formula in LaTex format.
 
-    Add LaTeX preables to the mathematical and chemical formula in LaTex format.
+    Add the LaTeX preable to the mathematical and chemical formula in LaTex format.
     By using this function with the "tinytex" (Execute-TinyTeX) command,
     you can generate a PDF file containing only mathematical or chemical
     formula.
