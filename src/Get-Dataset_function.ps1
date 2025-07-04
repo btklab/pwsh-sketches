@@ -8,6 +8,8 @@
         install: winget install --id RProject.R --source winget -e
         and add to the PATH environment variable
 
+.LINK
+    Sort-Property, Infer-ObjectSchema, Get-Dataset
 
 .EXAMPLE
     # Show top 5 dataset names
@@ -33,6 +35,42 @@
     4.6          3.1         1.5          0.2         setosa
     5            3.6         1.4          0.2         setosa
 
+.EXAMPLE
+    # Get the palmerpenguins dataset
+    Get-Dataset penguins -Library palmerpenguins | ft
+
+    species island    bill_length_mm bill_depth_mm flipper_length_mm
+    ------- ------    -------------- ------------- -----
+    Adelie  Torgersen 39.1           18.7          181
+    Adelie  Torgersen 39.5           17.4          186
+    Adelie  Torgersen 40.3           18            195
+    Adelie  Torgersen NA             NA            NA
+    Adelie  Torgersen 36.7           19.3          193
+    Adelie  Torgersen 39.3           20.6          190
+    Adelie  Torgersen 38.9           17.8          181
+    Adelie  Torgersen 39.2           19.6          195
+    Adelie  Torgersen 34.1           18.1          193
+    Adelie  Torgersen 42             20.2          190
+
+.EXAMPLE
+    # Get the palmerpenguins dataset and infer the object schema
+    Get-Dataset penguins -Library palmerpenguins | Infer-ObjectSchema
+
+    dataset -> Get-Dataset
+    Warning message:
+    package 'palmerpenguins' was built under R version 4.4.3
+    
+    Name                           Value
+    ----                           -----
+    flipper_length_mm              int
+    year                           int
+    bill_length_mm                 double
+    bill_depth_mm                  double
+    sex                            string
+    species                        string
+    body_mass_g                    int
+    island                         string
+
 #>
 function Get-Dataset {
     [CmdletBinding()]
@@ -44,6 +82,10 @@ function Get-Dataset {
         [Parameter(Mandatory = $false, HelpMessage = "Path to Rscript.exe")]
         [Alias('Path')]
         [string] $RPath
+        ,
+        [Parameter(Mandatory = $false, HelpMessage = "Library to import")]
+        [Alias('l')]
+        [string[]] $Library
         ,
         [Parameter(Mandatory = $false, HelpMessage = "Output the data as is")]
         [switch] $AsIs
@@ -71,7 +113,12 @@ function Get-Dataset {
         return
     }
     # R script to output iris dataset as CSV
-    [string] $rScript = "write.csv($Name, stdout(), row.names = FALSE)"
+    [string[]]$rScriptAry = @()
+    if ( $Library.Count -gt 0 ){
+        $rScriptAry += "library(" + ($Library -join ",") + ")"
+    }
+    $rScriptAry += "write.csv($Name, stdout(), row.names = FALSE)"
+    [string] $rScript = $rScriptAry -join "; "
     try {
         # Execute Rscript.exe and capture the output
         if ( $AsIs ){
