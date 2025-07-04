@@ -219,6 +219,11 @@ function Shorten-PropertyName
         [string[]] $splitNames = $oldName -split $escapedDelimiter
         # collect delimited names
         foreach ( $splitName in $splitNames ){
+            if ( $splitNames.Count -eq 1 ){
+                # no delimiter
+                $tmpNameAry += $splitName
+                continue
+            }
             if ( $splitName.Length -eq 0 ){
                 # empty string
                 $tmpNameAry += $splitName
@@ -235,7 +240,7 @@ function Shorten-PropertyName
                         [int] $sNum = 0
                         [int] $eNum = $Length[0]
                     }
-                } elseif ( $SubString.Count -gt 1 ){
+                } elseif ( $Length.Count -gt 1 ){
                     [int] $sNum = $Length[0]
                     [int] $eNum = $Length[1]
                 } else {
