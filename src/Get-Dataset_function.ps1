@@ -8,6 +8,8 @@
         install: winget install --id RProject.R --source winget -e
         and add to the PATH environment variable
 
+.LINK
+    Sort-Property, Infer-ObjectSchema, Get-Dataset
 
 .EXAMPLE
     # Show top 5 dataset names
@@ -49,6 +51,25 @@
     Adelie  Torgersen 39.2           19.6          195
     Adelie  Torgersen 34.1           18.1          193
     Adelie  Torgersen 42             20.2          190
+
+.EXAMPLE
+    # Get the palmerpenguins dataset and infer the object schema
+    Get-Dataset penguins -Library palmerpenguins | Infer-ObjectSchema
+
+    dataset -> Get-Dataset
+    Warning message:
+    package 'palmerpenguins' was built under R version 4.4.3
+    
+    Name                           Value
+    ----                           -----
+    flipper_length_mm              int
+    year                           int
+    bill_length_mm                 double
+    bill_depth_mm                  double
+    sex                            string
+    species                        string
+    body_mass_g                    int
+    island                         string
 
 #>
 function Get-Dataset {

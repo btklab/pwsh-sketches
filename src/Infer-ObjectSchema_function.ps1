@@ -5,7 +5,7 @@
     Infers the schema (property names and their most likely data types)from objects.
 
 .LINK
-    Sort-Property, Infer-ObjectSchema
+    Sort-Property, Infer-ObjectSchema, Get-Dataset
 
 .DESCRIPTION
     This function analyzes a sample of input objects to determine the data type for each property.
@@ -54,6 +54,25 @@
         }
     }
     Infer-ObjectSchema -InputObject $largeData -SampleSize 50
+
+.EXAMPLE
+    # Get the palmerpenguins dataset and infer the object schema
+    Get-Dataset penguins -Library palmerpenguins | Infer-ObjectSchema
+
+    dataset -> Get-Dataset
+    Warning message:
+    package 'palmerpenguins' was built under R version 4.4.3
+    
+    Name                           Value
+    ----                           -----
+    flipper_length_mm              int
+    year                           int
+    bill_length_mm                 double
+    bill_depth_mm                  double
+    sex                            string
+    species                        string
+    body_mass_g                    int
+    island                         string
 
 .NOTES
     - This function assumes that all objects in the input collection have the same set of properties.
