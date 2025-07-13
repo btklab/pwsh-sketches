@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [Get-Dataset][] `-Library` option.
 - Fixed [Shorten-PropertyName][] Property names that do not contain delimiters are now output as-is.
 - Fixed [Measure-Summary][] Incorrect mapping of 'Qt75' column to 'Max' value in summary table
+- Changed [pwmake][] Replace leading tabs with spaces.
 
 ## [0.11.0] - 2025-06-25
 
