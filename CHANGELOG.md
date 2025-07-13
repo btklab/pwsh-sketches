@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Replace-TabLeading][] function.
 - Added [Get-YamlFromMarkdown][] function.
 - Added [Infer-ObjectSchema][] function.
 - Added [Get-Dataset][] `-Library` option.
@@ -368,6 +369,7 @@ Breaking Changes
 
 [Get-YamlFromMarkdown]: src/Get-YamlFromMarkdown_function.ps1
 [Infer-ObjectSchema]: src/Infer-ObjectSchema_function.ps1
+[Replace-TabLeading]: src/Replace-TabLeading_function.ps1
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.11.0..HEAD
 [0.11.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.11.0
