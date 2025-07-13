@@ -12,7 +12,7 @@
     4. Navigate to APIs & Services > OAuth consent screen
         - Fill in the required fields (App name, User support email, etc.)
         - UserType: External
-    5. Set Scope: Data Access > Cerate Scope > Check "https://mail.google.com/auth/gmail.modify"
+    5. Set Scope: Data Access > Cerate Scope > Check "https://www.googleapis.com/auth/gmail.readonly"
     6. Create credentials: APIs & Services > Credentials > Create Credentials > OAuth 2.0 Client IDs
         - Application type: Desktop app
     7. Download the JSON credentials file
