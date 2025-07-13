@@ -637,6 +637,13 @@ function pwmake {
     function Remove-MakefileComments ([string[]]$lines, [switch]$deleteCommentsAtEndOfCommandLine) {
         [string[]] $cleanedLines = @()
         foreach ($line in $lines) {
+            # Replace leading tabs with spaces
+            # Process each line and replace leading tabs
+            # with two spaces per tab (1 tab → 2 spaces)
+            if ($line -match "^(?<tabs>(`t)+)") {
+                [int] $tabCount = $matches['tabs'].Length
+                [string] $line = (' ' * 2 * $tabCount) + $line.Substring($tabCount)
+            }
             if ($line -notmatch '^\s*#'){ # If the line does not start with a comment
                 if ($line -match '^\s+'){ # If it's a command line
                     if ($deleteCommentsAtEndOfCommandLine){
@@ -1150,7 +1157,6 @@ function pwmake {
     
     ## Separate blocks
     [string[]] $variableBlock, [string[]] $commandBlock = Separate-MakefileBlocks $processedLines
-
     ## Display help
     if ($ShowHelp){
         Parse-MakefileHelp $variableBlock $FilePath

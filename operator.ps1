@@ -174,6 +174,11 @@ if ($IsWindows){
 . $pwshSrcDir/Encode-Uri_function.ps1
 . $pwshSrcDir/Format-Path_function.ps1
 . $pwshSrcDir/watercss_function.ps1
+. $pwshSrcDir/Decode-MimeHeader_function.ps1
+
+## mail
+. $pwshSrcDir/Get-Gmail_function.ps1
+. $pwshSrcDir/Get-Gcalendar_function.ps1
 
 ## csv
 . $pwshSrcDir/catcsv_function.ps1
@@ -203,6 +208,8 @@ if ( $IsWindows ){
 . $pwshSrcDir/Decrease-Indent_function.ps1
 . $pwshSrcDir/Unzip-Archive_function.ps1
 . $pwshSrcDir/UnZip-GzFile_function.ps1
+
+. $pwshSrcDir/Replace-TabLeading_function.ps1
 
 ## file watcher
 . $pwshSrcDir/fwatch_function.ps1

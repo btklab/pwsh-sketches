@@ -568,7 +568,7 @@ function Measure-Summary {
                         @{N="Min"        ;E={[double]($_."Minimum")}}, `
                         @{N="Qt25"       ;E={[double]($_."Qt25")}}, `
                         @{N="Median"     ;E={[double]($_."Median")}}, `
-                        @{N="Qt75"       ;E={[double]($_."Max")}}, `
+                        @{N="Qt75"       ;E={[double]($_."Qt75")}}, `
                         @{N="Max"        ;E={[double]($_."Maximum")}}, `
                         @{N="IQR"        ;E={[double]($_."IQR")}}, `
                         @{N="HiIQR"      ;E={[double]($_."HiIQR")}}, `
@@ -606,7 +606,7 @@ function Measure-Summary {
                         @{N="Min"        ;E={[double]($_."Minimum")}}, `
                         @{N="Qt25"       ;E={[double]($_."Qt25")}}, `
                         @{N="Median"     ;E={[double]($_."Median")}}, `
-                        @{N="Qt75"       ;E={[double]($_."Max")}}, `
+                        @{N="Qt75"       ;E={[double]($_."Qt75")}}, `
                         @{N="Max"        ;E={[double]($_."Maximum")}}, `
                         @{N="IQR"        ;E={[double]($_."IQR")}}, `
                         @{N="HiIQR"      ;E={[double]($_."HiIQR")}}, `
