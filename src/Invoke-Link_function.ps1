@@ -6,18 +6,33 @@
     Processing priority: pipeline > arguments > clipboard.
 
         Usage:
+            ## Read and execute links written in a text file.
             i <file> [keyword] [-Doc|-All|-First <n>]
                 ... Invoke-Item <links-writtein-in-text-file>
         
+            ## Invoke links by specifying the app.
             i <file> [keyword] [-Doc|-All|-First <n>] -App <application>
                 ... application <links-writtein-in-text-file>
 
-        Link file structure:
+            ## Read and execute links from the clipboard.
+            clip link (<uri> or <filepath> or <directorypath>)
+            i
+                ... uri  : Start-Process <url>
+                ... file : Invoke-Item <links-writtein-in-text-file>
+                ... dir  : Get-ChildItem <dir>
+        
+            ## Read and execute links from the pipeline.
+            <uri> or <filepath> | i
+                ... uri  : Start-Process <url>
+                ... file : Invoke-Item <links-writtein-in-text-file>
+                ... dir  : Get-ChildItem <dir>
+        
+        Linkfile structure:
             # amazon                          <- (optional) title / comment
-            Tag: #amazon #shop                <- (optional) tag
+            Tag: #amazon #shop                <- (optional) tags
             https://www.amazon.co.jp/         <- 1st (top) uri
             https://music.amazon.co.jp/       <- 2nd uri
-            # comment
+            #this is comment
             https://www.amazon.co.jp/photos/  <- 3rd uri
 
     By default, only the **first** (top) link in the link file is opened.
@@ -365,6 +380,7 @@ function Invoke-Link {
     [int] $execCounter = 0
     [int] $invokeLocationCounter = 0
     [int] $invokeLocationLimit = 1
+    [string] $valueFrom = ''
     # test bulk input
     if ( -not $AllowBulkInput ){
         $bulkList = New-Object 'System.Collections.Generic.List[System.String]'
@@ -391,6 +407,7 @@ function Invoke-Link {
     [int] $fileCounter = 0
     [string[]] $readLineAry = @()
     if ( $input.Count -gt 0 ){
+        [string] $valueFrom = "pipeline"
         ## get file path from pipeline text
         [string[]] $readLineAry = $input `
             | ForEach-Object {
@@ -411,10 +428,12 @@ function Invoke-Link {
         }
     } elseif ( $Files.Count -gt 0 ){
         ## get filepath from option
+        [string] $valueFrom = "file"
         [string[]] $readLineAry = $Files | `
             ForEach-Object { (Get-Item -LiteralPath $_).FullName }
     } else {
         ## get filepath from clipboard
+        [string] $valueFrom = "clipboard"
         if ( $True ){
             ### get filepath as object
             Add-Type -AssemblyName System.Windows.Forms
@@ -430,6 +449,8 @@ function Invoke-Link {
     if ( $readLineAry.Count -lt 1 ){
         Write-Error "no input file." -ErrorAction Stop
     }
+    Write-Verbose "ValueFrom: ""$valueFrom"""
+    Write-Verbose $("ReadLine:" + "`n  " + ($readLineAry -join "`n  "))
     ## sort file paths
     #[string[]] $sortedReadLineAry = $readLineAry | Sort-Object
     ## parse paths
@@ -601,7 +622,6 @@ function Invoke-Link {
                     }
                     continue
                 }
-                ## is file .ps1 script?
             }
             ## is -not shortcut and -not ps1 script?
             [string[]] $linkLines = @()
