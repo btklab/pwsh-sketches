@@ -766,6 +766,10 @@ Statistical analysis procedures using this toolset:
 
 [Get-OGP]: src/Get-OGP_function.ps1
 
+#### [Decode-MimeHeader] - Decodes a MIME-encoded header.<a id="Decode-MimeHeader"></a>
+
+[Decode-MimeHeader]: src/Decode-MimeHeader_function.ps1
+
 #### [Decode-Uri] (Alias: decuri) -Decode utf-8 encoded uri.<a id="Decode-Uri"></a>
 
 [Decode-Uri]: src/Decode-Uri_function.ps1
