@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.12.0] - 2025-07-13
+
+- Added [Get-Gmail][] function.
+- Added [Get-Gcalendar][] function.
 - Added [Decode-MimeHeader][] function.
 - Added [Replace-TabLeading][] function.
 - Added [Get-YamlFromMarkdown][] function.
@@ -374,7 +380,11 @@ Breaking Changes
 [Replace-TabLeading]: src/Replace-TabLeading_function.ps1
 [Decode-MimeHeader]: src/Decode-MimeHeader_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.11.0..HEAD
+[Get-Gmail]: src/Get-Gmail_function.ps1
+[Get-Gcalendar]: src/Get-Gcalendar_function.ps1
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.12.0..HEAD
+[0.12.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.12.0
 [0.11.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.11.0
 [0.10.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.10.0
 [0.9.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.9.0

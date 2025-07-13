@@ -178,6 +178,7 @@ if ($IsWindows){
 
 ## mail
 . $pwshSrcDir/Get-Gmail_function.ps1
+. $pwshSrcDir/Get-Gcalendar_function.ps1
 
 ## csv
 . $pwshSrcDir/catcsv_function.ps1
