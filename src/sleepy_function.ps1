@@ -51,11 +51,15 @@ function sleepy {
         [double] $Seconds,
 
         [Parameter(Mandatory=$False)]
+        [Alias('to')]
+        [datetime] $Until,
+
+        [Parameter(Mandatory=$False)]
         [Alias('p')]
         [switch] $Past,
 
         [Parameter(Mandatory=$False)]
-        [Alias('t')]
+        [Alias('t', 'tea')]
         [switch] $TeaTimer,
 
         [Parameter(Mandatory=$False)]
@@ -102,7 +106,7 @@ function sleepy {
     # past timer (minutes)
     $pMin = 59
     # set time span (seconds)
-    if ($Hours){
+    if($Hours){
         [double] $addSec = $Hours * 60 * 60
         [string] $dStr = "$Hours hr"
     } elseif ($Minutes){
@@ -116,11 +120,32 @@ function sleepy {
         [double] $addSec = 25 * 60
         [string] $dStr = "25 min"
     }
-    # set start time
+    # Record the current time as the start of the interval
     [datetime] $sDateTime = Get-Date
-    # calc end time from start time
-    [datetime] $eDateTime = $sDateTime.AddSeconds($addSec)
-    # set span
+    # Determine the end time based on the optional $Until parameter
+    if ( $Until ){
+        # If $Until is in the future, use it directly
+        if ( $Until -ge $sDateTime ){
+            [datetime] $eDateTime = $Until
+        } else {
+            # If $Until has already passed today, assume it refers to the next day
+            [datetime] $eDateTime = $Until.AddDays(1)
+        }
+    
+        # Calculate the timespan between start and end
+        [timespan] $untilTimeSpan = New-TimeSpan -Start $sDateTime -End $eDateTime
+    
+        # Total seconds from now until the adjusted $Until
+        [double] $addSec = $untilTimeSpan.TotalSeconds
+    
+        # Format the timespan into a display string (e.g., "1h 30m")
+        [string] $dStr = span2str $untilTimeSpan
+    }
+    else {
+        # If $Until is not specified, use the existing $addSec value to compute end time
+        [datetime] $eDateTime = $sDateTime.AddSeconds($addSec)
+    }
+    # Final timespan object representing the entire interval
     $eSpan = New-TimeSpan -Start $sDateTime -End $eDateTime
     # now time
     [datetime] $nDateTime = Get-Date
