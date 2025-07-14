@@ -1,40 +1,101 @@
 <#
 .SYNOPSIS
-    sleepy - Sleep with progress bar
+    sleepy - Sleep with progress bar.
 
-    thanks:
-        mattn/sleepy - GitHub https://github.com/mattn/sleepy
-        License: The MIT License (MIT): Copyright (c) 2022 Yasuhiro Matsumoto
+    A versatile timer and clock utility for PowerShell
+    that displays a progress bar.
+
+    This function can act as a countdown timer, a stopwatch, or a clock. 
+    It's designed to be a helpful tool for managing time directly from the command line, 
+    with a visual progress bar to track the passage of time. 
+    By default, it functions as a 25-minute Pomodoro timer. 
+    It can also be integrated with the 'teatimer' function for notifications.
+
+    Originally inspired by mattn/sleepy: https://github.com/mattn/sleepy
+    License: The MIT License (MIT): Copyright (c) 2022 Yasuhiro Matsumoto
 
 .LINK
     Write-Progress
     https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-progress
 
 .PARAMETER Minutes
-    Default set to 25 minutes (as pomodoro timer)
+    Specifies the duration of the timer in minutes.
+    If no duration parameter (-Hours, -Seconds, -Until) is provided, this defaults to 25 minutes for the Pomodoro Technique.
 
-.PARAMETER TeaTimer
-    Call teatimer function after specified time has elapsed. 
+.PARAMETER Hours
+    Specifies the duration of the timer in hours.
+
+.PARAMETER Seconds
+    Specifies the duration of the timer in seconds.
+
+.PARAMETER Until
+    Specifies the exact time when the timer should end (e.g., "17:00", "22:30").
+    If the specified time has already passed for the current day, it defaults to the next day.
 
 .PARAMETER Past
-    Display elapsed time since the specified time.
+    When enabled, the function will start counting up the elapsed time after the initial countdown has finished. 
+    This is useful for tracking how much time has passed since a task was due.
+
+.PARAMETER TeaTimer
+    Calls the 'teatimer' function to create a notification when the timer completes.
+    This requires the 'teatimer' function to be available in your environment.
+
+.PARAMETER Infinit
+    Runs as an infinite stopwatch, counting up from the moment it's started.
+
+.PARAMETER Clock
+    Runs in clock mode, displaying the current time and date.
 
 .PARAMETER FirstBell
-    Set firstbell (preliminary bell)
-    Specify minutes in advance should the bell ring?
+    Rings a preliminary bell a specified number of minutes before the timer ends.
+    This also requires the 'teatimer' function.
+
+.PARAMETER Message
+    Displays start and end messages in the console.
+
+.PARAMETER Span
+    Specifies the update interval for the progress bar in seconds. Default is 1 second.
 
 .EXAMPLE
-    # examples
+    # Example 1: Start a default 25-minute Pomodoro timer.
+    sleepy
 
-    # count 3 sec and past timer
-    sleepy -s 3 -p
+.EXAMPLE
+    # Example 2: Set a timer for 10 seconds.
+    sleepy -s 10
 
-    # infinit
+.EXAMPLE
+    # Example 3: Set a timer for 1.5 hours.
+    sleepy -h 1.5
+
+.EXAMPLE
+    # Example 4: Set a timer that ends at 10:30 PM today.
+    sleepy -to "22:30"
+
+.EXAMPLE
+    # Example 5: Count down for 5 seconds, then count up the elapsed time after it finishes.
+    sleepy -s 5 -p
+
+.EXAMPLE
+    # Example 6: Use as an infinite stopwatch.
     sleepy -i
 
-    # clock mode
+.EXAMPLE
+    # Example 7: Use as a simple clock, updating every 300ms.
     sleepy -c
 
+.EXAMPLE
+    # Example 8: Set a 15-minute timer with a preliminary notification 5 minutes before the end.
+    # This requires the 'teatimer' command to be available.
+    sleepy -m 15 -f 5
+
+.EXAMPLE
+    # Example 9: Set a 30-second timer and trigger a 'teatimer' notification upon completion.
+    sleepy -s 30 -t
+
+.EXAMPLE
+    # Example 10: Display start and end messages for a 3-second timer.
+    sleepy -s 3 -Message
 #>
 function sleepy {
     Param(
@@ -130,14 +191,11 @@ function sleepy {
         } else {
             # If $Until has already passed today, assume it refers to the next day
             [datetime] $eDateTime = $Until.AddDays(1)
-        }
-    
+        }    
         # Calculate the timespan between start and end
         [timespan] $untilTimeSpan = New-TimeSpan -Start $sDateTime -End $eDateTime
-    
         # Total seconds from now until the adjusted $Until
         [double] $addSec = $untilTimeSpan.TotalSeconds
-    
         # Format the timespan into a display string (e.g., "1h 30m")
         [string] $dStr = span2str $untilTimeSpan
     }
@@ -218,7 +276,7 @@ function sleepy {
         [string] $tStr = span2str $tSpan
         $splatting = @{
             Activity = "$($tStr) / $($eStr)"
-            Status = " $perc% done"
+            Status = "Progress: $perc%"
             PercentComplete = $perc
             SecondsRemaining = $dSec
             Id = 1
