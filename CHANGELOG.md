@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Get-Gmail][], [Get-Gcalendar][] -Detail option.
 - Added [sleepy][] -Until option.
 - Fixed [Get-Gmail][] Incorrect uri.
 - Updated [Invoke-Link][] Synopsis.
