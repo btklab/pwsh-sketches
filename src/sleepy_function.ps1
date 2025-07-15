@@ -96,6 +96,10 @@
 .EXAMPLE
     # Example 10: Display start and end messages for a 3-second timer.
     sleepy -s 3 -Message
+
+.EXAMPLE
+    # Example 11: Specify Start and End
+    sleepy -t -p -Start 09:00 -End 17:00
 #>
 function sleepy {
     Param(
@@ -112,7 +116,7 @@ function sleepy {
         [double] $Seconds,
 
         [Parameter(Mandatory=$False)]
-        [Alias('to')]
+        [Alias('To', 'End')]
         [datetime] $Until,
 
         [Parameter(Mandatory=$False)]
@@ -137,6 +141,10 @@ function sleepy {
 
         [Parameter(Mandatory=$False)]
         [switch] $Message,
+
+        [Parameter(Mandatory=$False)]
+        [Alias('Begin', 'From')]
+        [datetime] $Start,
 
         [Parameter(Mandatory=$False)]
         [Alias('d')]
@@ -182,7 +190,11 @@ function sleepy {
         [string] $dStr = "25 min"
     }
     # Record the current time as the start of the interval
-    [datetime] $sDateTime = Get-Date
+    if ( $Start ){
+        [datetime] $sDateTime = $Start
+    } else {
+        [datetime] $sDateTime = Get-Date
+    }
     # Determine the end time based on the optional $Until parameter
     if ( $Until ){
         # If $Until is in the future, use it directly
