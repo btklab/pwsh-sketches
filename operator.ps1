@@ -153,6 +153,7 @@ if ($IsWindows){
 . $pwshSrcDir/Execute-TinyTeX_function.ps1
 . $pwshSrcDir/Execute-RMarkdown_function.ps1
 . $pwshSrcDir/Inkscape-Converter_function.ps1
+. $pwshSrcDir/Invoke-Vivliostyle_function.ps1
 
 . $pwshSrcDir/math2tex_function.ps1
 . $pwshSrcDir/tex2pdf_function.ps1
@@ -214,6 +215,8 @@ if ( $IsWindows ){
 ## file watcher
 . $pwshSrcDir/fwatch_function.ps1
 
+## file and directory
+. $pwshSrcDir/Get-FullPath_function.ps1
 
 ## office
 
