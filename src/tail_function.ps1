@@ -1,8 +1,10 @@
 <#
 .SYNOPSIS
     Tail-Object (Alias: tail) - Output the last part of files
-      
-        tail [-n num] [file]...
+
+        Usage: tail [-n num] [file]...
+            1..10 | tail -n 5
+            ls | tail
 
     If no file is specified, read from stdin.
 
