@@ -2,6 +2,10 @@
 .SYNOPSIS
     Head-Object (Alias: head) - Output the first part of files
 
+        Usage:
+            1..10 | head -n 5
+            ls | head
+
     Output only the specified number of lines from the beginning
     of lines.
 
@@ -10,7 +14,7 @@
     If file is not specified, it is read from the pipeline input.
 
 .LINK
-    head, tail
+    head, tail, chead, ctail, tail-f
 
 .EXAMPLE
     head *.* -n 3

@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Refactored [ctail][], [chead][] function.
 - Added [Get-FullPath][] function.
 - Added [Invoke-Vivliostyle][] function.
 - Added [Get-Gmail][], [Get-Gcalendar][] -Detail option.
