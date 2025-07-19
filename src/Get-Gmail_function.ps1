@@ -117,6 +117,10 @@ function Get-Gmail {
         [switch]$Todo,
 
         [Parameter(Mandatory = $false)]
+        [Alias('d')]
+        [switch]$Detail,
+
+        [Parameter(Mandatory = $false)]
         [Alias('s')]
         [string]$Subject,
 
@@ -390,29 +394,34 @@ function Get-Gmail {
             }
             $email = [ordered]@{
                 Id           = $IdCounter
-                Date         = $datetime.ToString('yyyy-MM-dd')
+                DateTime     = $datetime.ToString('yyyy-MM-dd HH:mm')
                 Week         = $datetime.ToString('(ddd)')
                 u            = if ($msg.labelIds -contains "UNREAD") { '*' } else { $null }
                 Subject      = $msgHeaders["Subject"]
-                Snippet      = $msg.snippet
-                Label        = $msg.labelIds
-                From         = $msgHeaders["From"]
-                To           = $msgHeaders["To"]
-                ThreadId     = $msg.threadId
-                Size         = $msg.sizeEstimate
-                InternalDate = $msg.internalDate
-                DateTime     = $datetime.ToString('yyyy-MM-dd HH:mm')
-                Time         = $datetime.ToString('HH:mm')
+            }
+            if ( $Detail ){
+                $email.Snippet      = $msg.snippet
+                $email.Label        = $msg.labelIds
+                $email.From         = $msgHeaders["From"]
+                $email.To           = $msgHeaders["To"]
+                $email.ThreadId     = $msg.threadId
+                $email.Size         = $msg.sizeEstimate
+                $email.InternalDate = $msg.internalDate
+                $email.Date         = $datetime.ToString('yyyy-MM-dd')
+                $email.Time         = $datetime.ToString('HH:mm')
             }
             
             # Decode body if requested and available.
-            if ($Body -and $msg.payload.body.data) {
+            if ( ($Detail -or $Body) -and $msg.payload.body.data) {
                 $email.Body = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($msg.payload.body.data.Replace('-', '+').Replace('_', '/')))
             }
             
             # Extract links from body or snippet.
             $textToScanForLinks = if ($email.Body) { $email.Body } else { $msg.snippet }
-            $email.Link = Extract-UriAsArray -Text $textToScanForLinks
+            [string[]] $emailLinkAry = Extract-UriAsArray -Text $textToScanForLinks
+            if ( $Detail ){
+                $email.Link = $emailLinkAry
+            }
 
             if ( $Todo ){
                 [string[]] $todoAry = @()
@@ -438,8 +447,8 @@ function Get-Gmail {
                 [PSCustomObject]$email
             }
             # If InvokeLink is true, open links in the default browser.
-            if ($InvokeLink -and $email.Link.Count -gt 0) {
-                foreach ($extUri in $email.Link) {
+            if ($InvokeLink -and $emailLinkAry.Count -gt 0) {
+                foreach ($extUri in $emailLinkAry) {
                     Write-Verbose "Opening link: $extUri"
                     try { Start-Process $extUri } catch { Write-Warning "Failed to open link: $_" }
                 }

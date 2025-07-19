@@ -137,6 +137,10 @@ function Get-Gcalendar {
         [switch]$NowTime,
 
         [Parameter(Mandatory = $false)]
+        [Alias('d')]
+        [switch]$Detail,
+
+        [Parameter(Mandatory = $false)]
         [switch]$iCal
     )
     [bool] $isTimeMinSpecified = $false
@@ -489,20 +493,22 @@ function Get-Gcalendar {
                         #Id          = $event.id
                         Start       = $nowDateTime
                         Week        = (Get-Date $nowDateTime).ToString('(ddd)')
-                        Delta       = '---'
-                        Subject     = '+now [---]'
-                        Location    = $null
-                        Recurse     = $false
-                        Color       = $null
-                        Birthday    = $null
-                        Creator     = $null
-                        Status      = $null
-                        End         = $nowDateTime
-                        Created     = $nowDateTime
-                        Updated     = $nowDateTime
-                        Organizer   = $null
-                        HtmlLink    = $null
-                        Description = $null
+                        Delta       = '+---'
+                        Subject     = '+---'
+                    }
+                    if ( $Detail ){
+                        $eventObject.Location    = $null
+                        $eventObject.Recurse     = $false
+                        $eventObject.Color       = $null
+                        $eventObject.Birthday    = $null
+                        $eventObject.Creator     = $null
+                        $eventObject.Status      = $null
+                        $eventObject.End         = $nowDateTime
+                        $eventObject.Created     = $nowDateTime
+                        $eventObject.Updated     = $nowDateTime
+                        $eventObject.Organizer   = $null
+                        $eventObject.HtmlLink    = $null
+                        $eventObject.Description = $null
                     }
                     $events += [PSCustomObject]$eventObject
                 }
@@ -512,18 +518,20 @@ function Get-Gcalendar {
                     Week        = (Get-Date $StartTimeStr).ToString('(ddd)')
                     Delta       = $timeDelta
                     Subject     = $event.summary
-                    Location    = $event.location
-                    Recurse     = $recurseFlag
-                    Color       = $event.colorId
-                    Birthday    = $birthdayFlag
-                    Creator     = $event.creator.email
-                    Status      = $event.status
-                    End         = $endDateTime
-                    Created     = (Get-Date $event.created)
-                    Updated     = (Get-Date $event.updated)
-                    Organizer   = $event.organizer.email
-                    HtmlLink    = $event.htmlLink
-                    Description = $event.description
+                }
+                if ( $Detail ){
+                    $eventObject.Location    = $event.location
+                    $eventObject.Recurse     = $recurseFlag
+                    $eventObject.Color       = $event.colorId
+                    $eventObject.Birthday    = $birthdayFlag
+                    $eventObject.Creator     = $event.creator.email
+                    $eventObject.Status      = $event.status
+                    $eventObject.End         = $endDateTime
+                    $eventObject.Created     = (Get-Date $event.created)
+                    $eventObject.Updated     = (Get-Date $event.updated)
+                    $eventObject.Organizer   = $event.organizer.email
+                    $eventObject.HtmlLink    = $event.htmlLink
+                    $eventObject.Description = $event.description
                 }
                 $events += [PSCustomObject]$eventObject
             }
@@ -576,18 +584,20 @@ function Get-Gcalendar {
                 Week        = (Get-Date $nowDateTime).ToString('(ddd)')
                 Delta       = '---'
                 Subject     = '+now [---]'
-                Location    = $null
-                Recurse     = $false
-                Color       = $null
-                Birthday    = $null
-                Creator     = $null
-                Status      = $null
-                End         = $nowDateTime
-                Created     = $nowDateTime
-                Updated     = $nowDateTime
-                Organizer   = $null
-                HtmlLink    = $null
-                Description = $null
+            }
+            if ( $Detail ){
+                $eventObject.Location    = $null
+                $eventObject.Recurse     = $false
+                $eventObject.Color       = $null
+                $eventObject.Birthday    = $null
+                $eventObject.Creator     = $null
+                $eventObject.Status      = $null
+                $eventObject.End         = $nowDateTime
+                $eventObject.Created     = $nowDateTime
+                $eventObject.Updated     = $nowDateTime
+                $eventObject.Organizer   = $null
+                $eventObject.HtmlLink    = $null
+                $eventObject.Description = $null
             }
             $events += [PSCustomObject]$eventObject
         }

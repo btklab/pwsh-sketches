@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Get-FullPath][] function.
+- Added [Invoke-Vivliostyle][] function.
+- Added [Get-Gmail][], [Get-Gcalendar][] -Detail option.
 - Added [sleepy][] -Until option.
 - Fixed [Get-Gmail][] Incorrect uri.
 - Updated [Invoke-Link][] Synopsis.
@@ -384,6 +387,9 @@ Breaking Changes
 
 [Get-Gmail]: src/Get-Gmail_function.ps1
 [Get-Gcalendar]: src/Get-Gcalendar_function.ps1
+
+[Invoke-Vivliostyle]: src/Invoke-Vivliostyle_function.ps1
+[Get-FullPath]: src/Get-FullPath_function.ps1
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.12.0..HEAD
 [0.12.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.12.0
