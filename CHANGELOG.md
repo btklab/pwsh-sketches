@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Refactored [ctail][], [chead][] function.
+- Added [Edit-Property][] Multiple EXPRESSIONS can be specified.
 - Added [Get-FullPath][] function.
 - Added [Invoke-Vivliostyle][] function.
 - Added [Get-Gmail][], [Get-Gcalendar][] -Detail option.
 - Added [sleepy][] -Until option.
 - Fixed [Get-Gmail][] Incorrect uri.
+- Refactored [ctail][], [chead][] function.
 - Updated [Invoke-Link][] Synopsis.
 
 ## [0.12.0] - 2025-07-13
