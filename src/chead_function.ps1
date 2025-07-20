@@ -13,7 +13,7 @@
     Specifies the number of lines to cut from the beginning of the input.
     The default is 1. This parameter has an alias of '-n'.
 
-.PARAMETER Until
+.PARAMETER Match
     Specifies a regular expression. The function will cut all lines from the beginning
     of the input until it finds a line that matches this pattern. The matching line
     is also cut. This parameter cannot be used with -Lines.
@@ -48,14 +48,14 @@
 
 .EXAMPLE
     # Example 3: Cut lines until a line containing '3' is found.
-    'Line 1', 'Line 2', 'Line 3', 'Line 4' | chead -Until '3'
+    'Line 1', 'Line 2', 'Line 3', 'Line 4' | chead -Match '3'
     # Output:
     # Line 4
 
 .EXAMPLE
     # Example 4: Using a more complex regex to cut until a line starting with 'c'.
     'apple', 'banana', 'cherry', 'date' | Set-Content -Path 'b.txt'
-    chead -Until '^c' -Path 'b.txt'
+    chead -Match '^c' -Path 'b.txt'
     # Output:
     # date
 
@@ -73,8 +73,8 @@ function chead {
 
         # Parameter set for cutting until a regex match.
         [Parameter(Mandatory=$false)]
-        [Alias('u')]
-        [string] $Until,
+        [Alias('m')]
+        [string] $Match,
 
         # Common parameter for file input.
         [Parameter(Mandatory=$false, Position=0)]
@@ -83,21 +83,21 @@ function chead {
 
         # Common parameter for pipeline input.
         [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
-        [psobject[]] $InputObject
+        [string[]] $InputObject
     )
 
     # This nested helper function defines the core logic for processing a stream of text.
     # Using a helper function avoids duplicating the processing logic for file and pipeline inputs,
     # making the code cleaner and easier to maintain.
-    function Process-Content {
+    function CutHeadFrom-Content {
         param (
-            [Parameter(Mandatory=$true)]
-            [object[]] $Content
+            [Parameter(Mandatory=$false)]
+            [string[]] $Content
         )
 
         # Decide which cutting method to use based on the active parameter set.
         # A switch statement is a clean way to handle mutually exclusive modes of operation.
-        if ( $Until ) {
+        if ( $Match ) {
             # Method: Cut until a line matches the regex pattern.
             # This flag tracks whether we have found the target line yet.
             [bool] $foundMatch = $false
@@ -108,7 +108,7 @@ function chead {
                     Write-Output $line
                 }
                 # Check if the current line matches the user-provided regex.
-                elseif ($line -match $Until) {
+                elseif ($line -match $Match) {
                     # A match is found. Set the flag so that all subsequent lines will be outputted.
                     # This matching line itself is skipped because this block will terminate
                     # and the next iteration will enter the 'if ($foundMatch)' block.
@@ -132,13 +132,17 @@ function chead {
         foreach ($file in $Path) {
             # Read the entire content of the file. Note: Get-Content reads the file
             # into an array of strings, which is suitable for the Process-Content function.
-            $fileContent = Get-Content -LiteralPath $file
-            Process-Content -Content $fileContent
+            [string[]] $fileContent = Get-Content -LiteralPath $file -Encoding utf8
+            if ( $fileContent.Count -gt 0 ){
+                CutHeadFrom-Content -Content $fileContent
+            }
         }
     } else {
         # Input is from the pipeline.
         # The automatic variable '$input' contains all objects passed through the pipeline.
         # We pass this collection directly to our processing function.
-        Process-Content -Content $input
+        if ( $input.Count -gt 0 ){
+            CutHeadFrom-Content -Content @($input)
+        }
     }
 }

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [Get-Gmail][], [Get-Gcalendar][] -Detail option.
 - Added [sleepy][] -Until option.
 - Fixed [Get-Gmail][] Incorrect uri.
+- Added [ctail][], [chead][] `-Match` option.
 - Refactored [ctail][], [chead][] function.
 - Updated [Invoke-Link][] Synopsis.
 
