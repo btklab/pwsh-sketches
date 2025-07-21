@@ -56,6 +56,9 @@
 .PARAMETER Span
     Specifies the update interval for the progress bar in seconds. Default is 1 second.
 
+.PARAMETER CountDown
+    When specified, the progress bar will decrease from 100% to 0% instead of increasing.
+
 .EXAMPLE
     # Example 1: Start a default 25-minute Pomodoro timer.
     sleepy
@@ -100,6 +103,10 @@
 .EXAMPLE
     # Example 11: Specify Start and End
     sleepy -t -p -Start 09:00 -End 17:00
+
+.EXAMPLE
+    # Example 12: Set a 1-minute timer with a countdown progress bar.
+    sleepy -m 1 -CountDown
 #>
 function sleepy {
     Param(
@@ -148,7 +155,11 @@ function sleepy {
 
         [Parameter(Mandatory=$False)]
         [Alias('d')]
-        [double] $Span = 1
+        [double] $Span = 1,
+
+        [Parameter(Mandatory=$False)]
+        [Alias('cd')]
+        [switch] $CountDown
     )
     # private function
     # is command exist?
@@ -236,7 +247,7 @@ function sleepy {
                 Id = 1
             }
             Write-Progress @splatting
-            Start-Sleep -Milliseconds 300
+            Start-Sleep -Milliseconds 200
         }
         return
     }
@@ -265,7 +276,7 @@ function sleepy {
         if (-not (isCommandExist "teatimer")){
             Write-Error "command: ""teatimer"" is not available." -ErrorAction Stop
         }
-        [int] $fBell = -1 *  $FirstBell
+        [int] $fBell = -1 * $FirstBell
         teatimer -Text "last $FirstBell minutes" -Title "First bell" -At $eDateTime.AddMinutes($fBell).ToString('yyyy-MM-dd HH:mm:ss') -Quiet
     }
     while ($nDateTime -le $eDateTime) {
@@ -274,20 +285,36 @@ function sleepy {
         $rSpan = New-TimeSpan -Start $nDateTime -End $eDateTime
         [int] $tSec = $tSpan.TotalSeconds
         [int] $dSec = $rSpan.TotalSeconds
-        # progres percentage
-        [double] $tprc = $tSec / $addSec * 100
-        if ( $tprc -gt 100 ){
-            $tprc = 100
-        }
-        if ($tprc -le 0.5){
-            [int] $perc = 1
+        
+        if ($CountDown) {
+            # Countdown logic: percentage based on remaining time
+            [double] $perc_double = $dSec / $addSec * 100
+            if ($perc_double -lt 0) { $perc_double = 0 }
+            [int] $perc = [int]$perc_double
+            
+            # Use Ceiling to avoid showing 1 second less due to timing and rounding.
+            # Calculate the remaining seconds and round up to the nearest integer.
+            $displaySeconds = [Math]::Ceiling($rSpan.TotalSeconds)
+            if ($displaySeconds -lt 0) { $displaySeconds = 0 }
+            # Create a new TimeSpan object from the calculated seconds for display.
+            $displayTimeSpan = [TimeSpan]::FromSeconds($displaySeconds)
+            
+            [string] $rStr = span2str $displayTimeSpan
+            [string] $eStr = span2str $eSpan
+            $activityText = "$($rStr) of $($eStr)"
         } else {
-            [int] $perc = $tprc
+            # Original count-up logic: percentage based on elapsed time
+            [double] $perc_double = $tSec / $addSec * 100
+            if ($perc_double -gt 100) { $perc_double = 100 }
+            if ($perc_double -le 0.5) { $perc = 1 } else { $perc = [int]$perc_double }
+            
+            [string] $eStr = span2str $eSpan
+            [string] $tStr = span2str $tSpan
+            $activityText = "$($tStr) / $($eStr)"
         }
-        [string] $eStr = span2str $eSpan
-        [string] $tStr = span2str $tSpan
+
         $splatting = @{
-            Activity = "$($tStr) / $($eStr)"
+            Activity = $activityText
             Status = "Progress: $perc%"
             PercentComplete = $perc
             SecondsRemaining = $dSec
@@ -327,3 +354,4 @@ function sleepy {
         }
     }
 }
+
