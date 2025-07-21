@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [sleepy][] `-CountDown` option.'
 - Added [Edit-Property][] Multiple EXPRESSIONS can be specified.
 - Added [Get-FullPath][] function.
 - Added [Invoke-Vivliostyle][] function.
