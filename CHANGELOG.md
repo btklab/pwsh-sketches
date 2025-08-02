@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Group-Aggregate][] function.
 - Changed [head][], [tail][], [chead][], [ctail][] Optimized for memory usage.
 - Added [Add-HtmlHeader][] function.
 - Added [Resize-Window][] function.
@@ -401,6 +402,8 @@ Breaking Changes
 [Get-RelativePath]: src/Get-RelativePath_function.ps1
 [Resize-Window]: src/Resize-Window_function.ps1
 [Add-HtmlHeader]: src/Add-HtmlHeader_function.ps1
+
+[Group-Aggregate]: src/Group-Aggregate_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.12.0..HEAD
