@@ -1,80 +1,96 @@
 <#
 .SYNOPSIS
-    Get-FullPath - Converts a file path to its absolute path.
+    Get-FullPath - Generate the absolute path of a non-existent file or directory.
 
 .DESCRIPTION
-    This function takes a string representing a file or directory path and converts it into a
-    fully qualified, absolute path. It correctly handles both relative and absolute input paths.
+    This function takes a string representing a file or directory
+    path and converts it into a fully qualified, absolute path.
+    It handles both relative and absolute input paths correctly.
 
-    A key feature of this function is that it does not require the path to exist on the file
-    system, making it suitable for generating paths for files that have not yet been created.
+    Note: The function supports both existing and non-existing paths.
 
 .PARAMETER Path
     The file or directory path to convert. This can be a relative path (e.g., ".\reports\report.txt")
     or an absolute path (e.g., "C:\data\archive.zip"). This parameter accepts pipeline input.
 
+.PARAMETER Parent
+    If specified, the function returns the absolute path of the parent directory of the given path.
+
 .EXAMPLE
-    PS C:\Users\Anne> ConvertTo-FullPath -Path "Documents\project.plan"
+    PS C:\Users\Anne> Get-FullPath -Path "Documents\project.plan"
 
     C:\Users\Anne\Documents\project.plan
 
-    # This example shows how a relative path is converted to a full path
-    # based on the user's current location.
+    # Converts a relative path to its absolute form.
 
 .EXAMPLE
-    PS C:\> ".\temp\log.txt", "D:\backups\config.json" | ConvertTo-FullPath
+    PS C:\> ".\temp\log.txt", "D:\backups\config.json" | Get-FullPath
 
     C:\temp\log.txt
     D:\backups\config.json
 
-    # This example demonstrates using the pipeline to resolve multiple paths.
-    # It correctly converts both a relative path and an absolute path, even if they do not exist.
+    # Converts multiple paths from the pipeline.
+
+.EXAMPLE
+    PS C:\Users\Anne> Get-FullPath -Path "Documents\project.plan" -Parent
+
+    C:\Users\Anne\Documents
+
+    # Returns the parent directory's absolute path.
 
 .NOTES
     Author: Your Name
-    Date:   2025-07-17
+    Date:   2025-07-27
 
-    This function uses [System.IO.Path]::GetFullPath() from the .NET Framework.
-    This method was chosen specifically because it resolves a path string without accessing the
-    file system to verify its existence. This is the key difference from PowerShell's native
-    `Resolve-Path` cmdlet, which would throw an error if the path does not point to an existing item.
+    This function uses [System.IO.Path]::GetFullPath() to convert the path
+    without checking the file system. This avoids errors from non-existent paths
+    and differs from Resolve-Path, which fails if the target does not exist.
 
 .OUTPUTS
     System.String
+    Returns a fully qualified path string.
 #>
 function Get-FullPath {
     [CmdletBinding()]
     [OutputType([string])]
     param(
         [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
-        [string]$Path
+        [string]$Path,
+
+        [Parameter(Mandatory = $false)]
+        [switch]$Parent,
+
+        [Parameter(Mandatory = $false)]
+        [Alias('d')]
+        [string]$Delimiter = '/'
     )
 
     process {
         try {
-            # This is the core logic of the function.
-            # We use the .NET GetFullPath() method because, unlike PowerShell's Resolve-Path,
-            # it purely operates on the path string. It doesn't touch the file system,
-            # so it won't fail if the path doesn't exist yet. This makes it ideal
-            # for pre-calculating paths for new files or directories.
             if ([string]::IsNullOrWhiteSpace($Path)) {
                 return
             }
-            [System.IO.Path]::IsPathRooted($Path)
-            if ( [System.IO.Path]::IsPathRooted($Path)) {
-                [string] $fullPath = [System.IO.Path]::GetFullPath($Path)
+
+            # Resolve the path to absolute
+            if ([System.IO.Path]::IsPathRooted($Path)) {
+                $fullPath = [System.IO.Path]::GetFullPath($Path)
             } else {
-                [string] $currentDirectory = (Convert-Path -Path .)
-                [string] $joinedPath = Join-Path $currentDirectory $Path
-                [string] $fullPath = [System.IO.Path]::GetFullPath($joinedPath)
+                $currentDirectory = (Get-Location).Path
+                $fullPath = [System.IO.Path]::GetFullPath(
+                    [System.IO.Path]::Combine($currentDirectory, $Path)
+                )
             }
+
+            # If -Parent is specified, get the parent directory
+            if ($Parent) {
+                $fullPath = [System.IO.Path]::GetDirectoryName($fullPath)
+            }
+            $fullPath = $fullPath.Replace('\', $Delimiter)
+
             return $fullPath
         }
         catch {
-            # This catch block handles rare cases where the input path string itself is
-            # invalid (e.g., contains illegal characters), not that the path doesn't exist.
-            #Write-Error "Failed to convert the path '$Path'. The path may contain invalid characters."
+            Write-Error "Failed to convert the path '$Path'. Error: $($_.Exception.Message)"
         }
     }
 }
-
