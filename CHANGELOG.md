@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Add-HtmlHeader][] function.
 - Added [Resize-Window][] function.
 - Added [sleepy][] `-CountDown` option.
 - Added [Edit-Property][] Multiple EXPRESSIONS can be specified.
@@ -398,7 +399,7 @@ Breaking Changes
 [Get-FullPath]: src/Get-FullPath_function.ps1
 [Get-RelativePath]: src/Get-RelativePath_function.ps1
 [Resize-Window]: src/Resize-Window_function.ps1
-
+[Add-HtmlHeader]: src/Add-HtmlHeader_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.12.0..HEAD
