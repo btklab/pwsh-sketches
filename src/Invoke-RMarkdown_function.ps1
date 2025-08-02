@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Execute-RMarkdown (Alias: rmarkdown) - Execute Rscript -e "rmarkdown::render(input='a.Rmd')"
+    Invoke-RMarkdown (Alias: rmarkdown) - Invoke Rscript -e "rmarkdown::render(input='a.Rmd')"
 
     Compiler for .Rmd file using RMarkdown.
 
@@ -10,13 +10,13 @@
         Rscript --vanilla --slave -e "library(rmarkdown);" -e "rmarkdown::render(input='a.Rmd', encoding='UTF-8', output_format='all');"
 
 .LINK
-    Execute-RMarkdown (rmarkdown), Execute-TinyTeX (tinytex), math2tex, tex2pdf, inkconv
+    Invoke-RMarkdown (rmarkdown), Invoke-TinyTeX (tinytex), math2tex, tex2pdf, inkconv
 
 .NOTES
     R: The R Project for Statistical Computing
         https://www.r-project.org/
     #>
-function Execute-RMarkdown {
+function Invoke-RMarkdown {
 
     [CmdletBinding()]
     param (
@@ -118,7 +118,7 @@ function Execute-RMarkdown {
 }
 # set alias
 [String] $tmpAliasName = "rmarkdown"
-[String] $tmpCmdName   = "Execute-RMarkdown"
+[String] $tmpCmdName   = "Invoke-RMarkdown"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `

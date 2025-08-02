@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Renamed `Execute-Lang` to [Invoke-Lang][]
+- Renamed `Execute-Litedown` to [Invoke-Litedown][]
+- Renamed `Execute-RMarkdown` to [Invoke-RMarkdown][]
+- Renamed `Execute-TinyTeX` to [Invoke-TinyTeX][]
 - Added [Group-Aggregate][] function.
 - Changed [head][], [tail][], [chead][], [ctail][] Optimized for memory usage.
 - Added [Add-HtmlHeader][] function.
@@ -133,7 +137,7 @@ Breaking Changes
 ## [0.2.0] - 2025-03-09
 
 - Added [Set-Lang][] function.
-- Added [Execute-Lang][] function.
+- Added `Execute-Lang` function.
 - Added [pwmake][] `-PushAndPop` option.
 - Changed [pwmake][] command line break handling from concatenation to line break.
 - Changed [pwmake][] fix test filepath.
@@ -311,8 +315,8 @@ Breaking Changes
 [Grep-Block]: src/Grep-Block_function.ps1
 [Sort-Block]: src/Sort-Block_function.ps1
 
-[Execute-TinyTeX]: src/Execute-TinyTeX_function.ps1
-[Execute-RMarkdown]: src/Execute-RMarkdown_function.ps1
+[Invoke-TinyTeX]: src/Invoke-TinyTeX_function.ps1
+[Invoke-RMarkdown]: src/Invoke-RMarkdown_function.ps1
 
 [math2tex]: src/math2tex_function.ps1
 [Inkscape-Converter]: src/Inkscape-Converter_function.ps1
@@ -344,7 +348,7 @@ Breaking Changes
 [Encode-Uri]: src/Encode-Uri_function.ps1
 
 [Set-Lang]: src/Set-Lang_function.ps1
-[Execute-Lang]: src/Execute-Lang_function.ps1
+[Invoke-Lang]: src/Invoke-Lang_function.ps1
 
 [Sponge-Property]: src/Sponge-Property_function.ps1
 [Sponge-Script]: src/Sponge-Script_function.ps1
@@ -406,7 +410,8 @@ Breaking Changes
 [Group-Aggregate]: src/Group-Aggregate_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.12.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.13.0..HEAD
+[0.13.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.13.0
 [0.12.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.12.0
 [0.11.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.11.0
 [0.10.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.10.0

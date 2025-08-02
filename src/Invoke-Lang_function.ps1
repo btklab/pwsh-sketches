@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Execute-Lang (alias: lang) - Execute a command with a temporary language environment.
+    Invoke-Lang (alias: lang) - Invoke a command with a temporary language environment.
 
     The temporary language is specified by the "-Language" option.
     The default value is -Language "en-US".
@@ -46,7 +46,7 @@
     # run command in "en-US" and raise error
     lang {Get-Data; Get-Culture | ft } -lang "en-US"
 
-        Execute-Lang: An error occurred: The term 'Get-Data' is not recognized as a name of a cmdlet, function, script file, or executable program.
+        Invoke-Lang: An error occurred: The term 'Get-Data' is not recognized as a name of a cmdlet, function, script file, or executable program.
         Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
 
     # check language settings
@@ -57,7 +57,7 @@
     1041             ja-JP            Japanese
 
 .LINK
-    Execute-Lang, Set-Lang
+    Invoke-Lang, Set-Lang
 
 .NOTES
     Install-Language (LanguagePackManagement)
@@ -67,7 +67,7 @@
     https://learn.microsoft.com/en-us/dotnet/api/system.threading.thread.currentculture
 
 #>
-function Execute-Lang {
+function Invoke-Lang {
     [CmdletBinding()]
     param (
         [Parameter( Mandatory=$True, Position=0 )]
@@ -102,7 +102,7 @@ function Execute-Lang {
 }
 # set alias
 [String] $tmpAliasName = "lang"
-[String] $tmpCmdName   = "Execute-Lang"
+[String] $tmpCmdName   = "Invoke-Lang"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `
