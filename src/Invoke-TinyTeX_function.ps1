@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Execute-TinyTeX (Alias: tinytex) - Execute Rscript -e "tinytex::lualatex('a.tex')"
+    Invoke-TinyTeX (Alias: tinytex) - Invoke Rscript -e "tinytex::lualatex('a.tex')"
 
     Compiler for .tex file using tinytex.
 
@@ -38,7 +38,7 @@
     tinytex -InstallPackage "psnfss"
 
 .LINK
-    Execute-TinyTeX (Alias: tinytex), math2tex, tex2pdf, inkconv
+    Invoke-RMarkdown (rmarkdown), Invoke-TinyTeX (tinytex), math2tex, tex2pdf, inkconv
 
 
 .NOTES
@@ -54,7 +54,7 @@
     CTAN: Package haranoaji
         https://ctan.org/pkg/haranoaji
 #>
-function Execute-TinyTeX {
+function Invoke-TinyTeX {
 
     [CmdletBinding()]
     param (
@@ -256,7 +256,7 @@ function Execute-TinyTeX {
 }
 # set alias
 [String] $tmpAliasName = "tinytex"
-[String] $tmpCmdName   = "Execute-TinyTeX"
+[String] $tmpCmdName   = "Invoke-TinyTeX"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `

@@ -150,8 +150,8 @@ if ($IsWindows){
 . $pwshSrcDir/mdfocus_function.ps1
 
 . $pwshSrcDir/Convert-Pandoc_function.ps1
-. $pwshSrcDir/Execute-TinyTeX_function.ps1
-. $pwshSrcDir/Execute-RMarkdown_function.ps1
+. $pwshSrcDir/Invoke-TinyTeX_function.ps1
+. $pwshSrcDir/Invoke-RMarkdown_function.ps1
 . $pwshSrcDir/Inkscape-Converter_function.ps1
 . $pwshSrcDir/Invoke-Vivliostyle_function.ps1
 
@@ -242,6 +242,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Replace-NA_function.ps1
 . $pwshSrcDir/Apply-Function_function.ps1
 . $pwshSrcDir/GroupBy-Object_function.ps1
+. $pwshSrcDir/Group-Aggregate_function.ps1
 . $pwshSrcDir/Measure-Stats_function.ps1
 . $pwshSrcDir/Add-Stats_function.ps1
 . $pwshSrcDir/Measure-Quartile_function.ps1
@@ -294,7 +295,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Get-AppShortcut_function.ps1
 
 . $pwshSrcDir/Set-Lang_function.ps1
-. $pwshSrcDir/Execute-Lang_function.ps1
+. $pwshSrcDir/Invoke-Lang_function.ps1
 
 . $pwshSrcDir/Convert-DictionaryToPSCustomObject_function.ps1
 . $pwshSrcDir/Split-HereString_function.ps1

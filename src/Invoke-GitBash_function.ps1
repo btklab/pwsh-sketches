@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Invoke-GitBash (Alias: gitbash) - Executes Git Bash commands on Windows.
+    Invoke-GitBash (Alias: gitbash) - Invoke Git Bash commands on Windows.
 
     This function provides a convenient way to run Git Bash commands directly from
     PowerShell, automatically handling path conversions for Windows-style arguments.

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    i : Invoke-Link - Open file/web links written in a text file
+    i : Invoke-Link - Open file/web links written in a text file.
 
     Open file or web links from a text file, pipeline, or clipboard.
     Processing priority: pipeline > arguments > clipboard.
