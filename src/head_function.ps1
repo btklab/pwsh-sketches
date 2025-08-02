@@ -21,6 +21,24 @@
     Get-ChildItem | head
 
 .EXAMPLE
+    head *.* -n 3
+    
+    ==> timeline-date-val.txt <==
+    date val1 val2
+    2018-01 107.3 272.1
+    2018-02 98.1 262.1
+    
+    ==> tips.csv <==
+    "total_bill","tip","sex","smoker","day","time","size"
+    16.99,1.01,"Female","No","Sun","Dinner",2
+    10.34,1.66,"Male","No","Sun","Dinner",3
+    
+    ==> titanic.csv <==
+    survived,pclass,sex,age,sibsp,parch,fare,embarked,class,who,adult_male,deck,embark_town,alive,alone
+    0,3,male,22.0,1,0,7.25,S,Third,man,True,,Southampton,no,False
+    1,1,female,38.0,1,0,71.2833,C,First,woman,False,C,Cherbourg,yes,False
+
+.EXAMPLE
     # Display the first 3 lines of every .txt and .csv file in the current directory.
     head *.txt, *.csv -n 3
 #>

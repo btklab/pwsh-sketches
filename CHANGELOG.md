@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Changed [head][], [tail][], [chead][], [ctail][] Optimized for memory usage.
 - Added [Add-HtmlHeader][] function.
 - Added [Resize-Window][] function.
 - Added [sleepy][] `-CountDown` option.

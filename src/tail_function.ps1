@@ -21,6 +21,24 @@
     Get-ChildItem | tail
 
 .EXAMPLE
+    tail *.*
+
+    ==> timeline-date-val.txt <==
+    2020-04 366.5 544.1
+    2020-05 605.8 770.3
+    2020-06 706.9 836.6
+
+    ==> tips.csv <==
+    22.67,2,"Male","Yes","Sat","Dinner",2
+    17.82,1.75,"Male","No","Sat","Dinner",2
+    18.78,3,"Female","No","Thur","Dinner",2
+
+    ==> titanic.csv <==
+    0,3,female,,1,2,23.45,S,Third,woman,False,,Southampton,no,False
+    1,1,male,26.0,0,0,30.0,C,First,man,True,C,Cherbourg,yes,True
+    0,3,male,32.0,0,0,7.75,Q,Third,man,True,,Queenstown,no,True
+
+.EXAMPLE
     # Display the last 3 lines of every .txt and .csv file.
     tail *.txt, *.csv -n 3
 #>
