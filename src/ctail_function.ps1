@@ -1,140 +1,122 @@
 <#
 .SYNOPSIS
-    ctail - Cut the last part of files.
+    ctail - Cuts the tail of files or pipeline input.
 
-        Usage:
-            1..5 | ctail -n 2
-            ls | ctail
-
-    Cuts lines from the end of the input. This can be a specified number of lines,
-    or all lines after a line that matches a regular expression.
+.DESCRIPTION
+    Streams input from either the pipeline or one or more files.
+    You can remove a fixed number of lines from the end (-Lines),
+    or stop at the first regex match and drop the rest (-Match).
+    Processes one line at a time for minimal memory usage.
 
 .PARAMETER Lines
-    Specifies the number of lines to cut from the end of the input.
-    The default is 1. This parameter has an alias of '-n'.
+    Number of lines to remove from the end of the input.
 
-.PARAMETER After
-    Specifies a regular expression. The function will output all lines until it finds
-    a line that matches this pattern. The matching line WILL be included as the last
-    line of output. All subsequent lines are cut.
-
-.PARAMETER OnAndAfter
-    Specifies a regular expression. The function will output all lines until it finds
-    a line that matches this pattern. The matching line and all subsequent lines
-    WILL BE CUT from the output.
+.PARAMETER Match
+    Regular expression at which to cut off the rest of the input.
 
 .PARAMETER Path
-    Specifies the path to one or more files to be processed.
-    Wildcards are not permitted. This parameter has an alias of '-p'.
+    One or more file paths to read instead of using the pipeline.
 
 .PARAMETER InputObject
-    Accepts input from the pipeline.
-
-.LINK
-    head, tail, chead, ctail, tail-f
+    Objects streamed in from the pipeline.
 
 .EXAMPLE
-    # Example 1: Cut the last line (default behavior).
-    1..5 | ctail
-
-    # Output:
-    # 1
-    # 2
-    # 3
-    # 4
+    # Remove the last two lines from pipeline input
+    1..5 | ctail -n 2
 
 .EXAMPLE
-    # Example 2: Cut the last 2 lines from a file.
-    1..5 | Set-Content -Path 'a.txt'
-    ctail -n 2 -Path 'a.txt'
-
-    # Output:
-    # 1
-    # 2
-    # 3
-
-.EXAMPLE
-    # Example 3: Use -Match to output everything before the line with '3'.
-    'Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5' | ctail -Match '3'
-
-    # Output:
-    # Line 1
-    # Line 2
+    # Output everything before the first line containing "ERROR"
+    ctail -Match 'ERROR' -Path 'application.log'
 #>
 function ctail {
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Lines')]
     param (
-        # Parameter set for cutting a specific number of lines from the end.
-        [Parameter(Mandatory=$false)]
+        # Number of lines to drop from the end
+        [Parameter(ParameterSetName = 'Lines')]
         [Alias('n')]
         [int] $Lines = 1,
 
-        # Parameter set for cutting on and after a regex match.
-        [Parameter(Mandatory=$false)]
+        # Regex at which to stop and drop all following lines
+        [Parameter(ParameterSetName = 'Match')]
         [Alias('m')]
         [string] $Match,
 
-        # Common parameter for file input.
-        [Parameter(Mandatory=$false, Position=0)]
+        # File paths to process instead of pipeline
+        [Parameter(ParameterSetName = 'Lines', Position = 0, ValueFromPipelineByPropertyName = $true)]
+        [Parameter(ParameterSetName = 'Match',  Position = 0, ValueFromPipelineByPropertyName = $true)]
         [Alias('p')]
         [string[]] $Path,
 
-        # Common parameter for pipeline input.
-        [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
-        [string[]] $InputObject
+        # Pipeline input
+        [Parameter(ParameterSetName = 'Lines', ValueFromPipeline = $true)]
+        [Parameter(ParameterSetName = 'Match',  ValueFromPipeline = $true)]
+        [object] $InputObject
     )
 
-    # This nested helper function contains the core logic for processing a stream of text.
-    # This approach avoids code duplication for file and pipeline inputs, enhancing maintainability.
-    function CutTailFrom-Content {
-        param (
-            [Parameter(Mandatory=$false)]
-            [string[]] $Content
-        )
+    Begin {
+        # This determines when to end outputting lines.
+        [bool]$foundMatch = $false
+        # Buffer used in Lines mode to hold up to $Lines previous lines
+        $buffer = New-Object 'System.Collections.Generic.Queue[string]'
+        # If -Path is specified, read each file line by line
+        if ($PSBoundParameters.ContainsKey('Path')) {
+            foreach ($file in $Path) {
+                # Reset buffer for each file
+                $buffer.Clear()
 
-        # A switch statement provides a clean way to select the operation mode
-        # based on the parameter set used by the caller.
-        if ( $Match ) {
-            # Method: Output lines until a regex match is found, then stop.
-            foreach ($line in $Content) {
-                # Check if the current line matches the specified regex.
-                if ($Match -and ($line -match $Match) ) {
-                    # Match found. We break the loop immediately, which stops
-                    # any further lines from being output. This effectively
-                    # "cuts" the rest of the file.
-                    break
+                # Stream each line to avoid loading the entire file
+                Get-Content -LiteralPath $file -Encoding utf8 -ReadCount 1 | ForEach-Object {
+                    [string]$line = $_
+                    switch ($PSCmdlet.ParameterSetName) {
+
+                        'Match' {
+                            # Stop reading once the match is found
+                            if ($line -match $Match) {
+                                break
+                            }
+                            Write-Output $line
+                        }
+
+                        'Lines' {
+                            # Same queue logic as pipeline mode
+                            $buffer.Enqueue($line)
+                            if ($buffer.Count -gt $Lines) {
+                                Write-Output $buffer.Dequeue()
+                            }
+                        }
+                    }
                 }
-                # Output the current line.
-                Write-Output $line
-
             }
-            break
-        } else {
-            # Method: Cut a fixed number of lines from the end.
-            # 'Select-Object -SkipLast' is the most direct and efficient
-            # cmdlet for this purpose.
-            $Content | Select-Object -SkipLast $Lines
-            break
+            return
         }
     }
 
-    # Determine the input source: files or pipeline.
-    if ($Path) {
-        # Input is from one or more files specified by the -Path parameter.
-        foreach ($file in $Path) {
-            # Read all content from the file into an array of strings.
-            [string[]] $fileContent = Get-Content -LiteralPath $file -Encoding utf8
-            # Pass the content to our core logic function.
-            if ( $fileContent.Count -gt 0 ){
-                CutTailFrom-Content -Content $fileContent
+    Process {
+        # If no -Path was provided, treat pipeline input here
+        if (-not $PSBoundParameters.ContainsKey('Path')) {
+            switch ($PSCmdlet.ParameterSetName) {
+
+                'Match' {
+                    # Drop all following lines once we hit the regex
+                    if ( $foundMatch ) {
+                        return
+                    }
+                    if ($InputObject -match $Match) {
+                        [bool]$foundMatch = $true
+                        return
+                    }
+                    Write-Output $InputObject
+                }
+
+                'Lines' {
+                    # Enqueue each incoming line;
+                    # once buffer exceeds $Lines, dequeue and output
+                    $buffer.Enqueue($InputObject)
+                    if ($buffer.Count -gt $Lines) {
+                        Write-Output $buffer.Dequeue()
+                    }
+                }
             }
-        }
-    } else {
-        # Input is from the pipeline.
-        # The automatic variable '$input' holds all pipeline input.
-        # We pass this collection directly to our processing function.
-        if ( $input.Count -gt 0 ){
-            CutTailFrom-Content -Content @($input)
         }
     }
 }
