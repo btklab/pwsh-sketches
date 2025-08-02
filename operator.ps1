@@ -176,6 +176,7 @@ if ($IsWindows){
 . $pwshSrcDir/Format-Path_function.ps1
 . $pwshSrcDir/watercss_function.ps1
 . $pwshSrcDir/Decode-MimeHeader_function.ps1
+. $pwshSrcDir/Add-HtmlHeader_function.ps1
 
 ## mail
 . $pwshSrcDir/Get-Gmail_function.ps1
@@ -217,6 +218,7 @@ if ( $IsWindows ){
 
 ## file and directory
 . $pwshSrcDir/Get-FullPath_function.ps1
+. $pwshSrcDir/Get-RelativePath_function.ps1
 
 ## office
 
@@ -298,4 +300,6 @@ if ( $IsWindows ){
 . $pwshSrcDir/Split-HereString_function.ps1
 . $pwshSrcDir/Sponge-Script_function.ps1
 . $pwshSrcDir/Sponge-Property_function.ps1
+
+. $pwshSrcDir/Resize-Window_function.ps1
 

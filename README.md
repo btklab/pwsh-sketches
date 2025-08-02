@@ -39,7 +39,7 @@ cat README.md `
     | Set-Clipboard
 ```
 
-- [Add-Id][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Calc-CrossTabulation][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [Compare-Diff2Lcs][], [Compare-Diff2][], [Compare-Diff3][], [Convert-CharCase][], [Convert-DictionaryToPSCustomObject][], [Convert-Image][], [Convert-Pandoc][], [Decode-MimeHeader][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [ForEach-Block][], [ForEach-Label][], [ForEach-Step][], [Format-Path][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-Dataset][], [Get-DateAlternative][], [Get-FullPath][], [Get-Gcalendar][], [Get-Gmail][], [Get-Histogram][], [Get-OGP][], [Get-Ticket][], [Get-YamlFromMarkdown][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Infer-ObjectSchema][], [Inkscape-Converter][], [Invoke-GitBash][], [Invoke-Link][], [Invoke-Vivliostyle][], [Join-Until][], [Join-While][], [Join2-Object][], [Map-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [Process-CsvColumn][], [Process-InQuote][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-InQuote][], [Replace-NA][], [Replace-TabLeading][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [UnMap-Object][], [UnZip-GzFile][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [combi2][], [combi][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [cycle][], [decil][], [delf][], [dot2gviz][], [dupl][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nest][], [nextyear][], [pawk][], [percentile][], [perm2][], [perm][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [stair][], [subset][], [summary][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
+- [Add-HtmlHeader][], [Add-Id][], [Add-LineBreakEndOfFile][], [Add-LineBreak][], [Add-Quartile][], [Add-Stats][], [Apply-Function][], [Auto-Clip][], [Calc-CrossTabulation][], [Cast-Date][], [Cast-Decimal][], [Cast-Double][], [Cast-Integer][], [ClipImageFrom-File][], [Compare-Diff2Lcs][], [Compare-Diff2][], [Compare-Diff3][], [Convert-CharCase][], [Convert-DictionaryToPSCustomObject][], [Convert-Image][], [Convert-Pandoc][], [Decode-MimeHeader][], [Decode-Uri][], [Decrease-Indent][], [Delete-Field][], [Detect-XrsAnomaly][], [Drop-NA][], [Edit-Function][], [Edit-Property][], [Encode-Uri][], [Execute-Lang][], [Execute-RMarkdown][], [Execute-TinyTeX][], [ForEach-Block][], [ForEach-Label][], [ForEach-Step][], [Format-Path][], [Get-AppShortcut][], [Get-ClipboardAlternative][], [Get-Dataset][], [Get-DateAlternative][], [Get-FullPath][], [Get-Gcalendar][], [Get-Gmail][], [Get-Histogram][], [Get-OGP][], [Get-RelativePath][], [Get-Ticket][], [Get-YamlFromMarkdown][], [GetValueFrom-Key][], [Grep-Block][], [GroupBy-Object][], [Infer-ObjectSchema][], [Inkscape-Converter][], [Invoke-GitBash][], [Invoke-Link][], [Invoke-Vivliostyle][], [Join-Until][], [Join-While][], [Join2-Object][], [Map-Object][], [Measure-Quartile][], [Measure-Stats][], [Measure-Summary][], [Override-Yaml][], [Plot-BarChart][], [Process-CsvColumn][], [Process-InQuote][], [PullOut-String][], [Rename-Normalize][], [Replace-ForEach][], [Replace-InQuote][], [Replace-NA][], [Replace-TabLeading][], [Resize-Window][], [Select-Field][], [Set-DotEnv][], [Set-Lang][], [Set-NowTime2Clipboard][], [Shorten-PropertyName][], [Shutdown-ComputerAFM][], [Sleep-ComputerAFM][], [Sort-Block][], [Split-HereString][], [Sponge-Property][], [Sponge-Script][], [Tee-Clip][], [Test-isAsciiLine][], [Transpose-Property][], [Trim-EmptyLine][], [UnMap-Object][], [UnZip-GzFile][], [Unique-Object][], [Unzip-Archive][], [addb][], [addl][], [addr][], [addt][], [cat2][], [catcsv][], [chead][], [clip2file][], [clip2hyperlink][], [clip2img][], [clip2normalize][], [clip2push][], [clip2shortcut][], [combi2][], [combi][], [conv][], [count][], [csv2sqlite][], [csv2txt][], [ctail][], [cycle][], [decil][], [delf][], [dot2gviz][], [dupl][], [filehame][], [fillretu][], [flat][], [flow2pu][], [fval][], [fwatch][], [gantt2pu][], [getfirst][], [getlast][], [grep][], [gyo][], [han][], [head][], [image2md][], [json2txt][], [juni][], [keta][], [kinsoku][], [lastyear][], [lcalc2][], [lcalc][], [linkcheck][], [linkextract][], [list2table][], [logi2dot][], [logi2pu][], [man2][], [map2][], [math2tex][], [mdfocus][], [mdgrep][], [mind2dot][], [mind2pu][], [movw][], [nest][], [nextyear][], [pawk][], [percentile][], [perm2][], [perm][], [pu2java][], [push2loc][], [pwmake][], [pwsync][], [retu][], [rev2][], [rev][], [say][], [sed-i][], [sed][], [self][], [seq2pu][], [sleepy][], [sm2][], [stair][], [subset][], [summary][], [tac][], [tail-f][], [tail][], [tarr][], [tateyoko][], [teatimer][], [tenki][], [tex2pdf][], [thisyear][], [toml2psobject][], [uniq][], [vbStrConv][], [watercss][], [wrap][], [yarr][], [ycalc][], [ysort][], [zen][]
 
 **General:** This repository provides filter commands for pattern matching on unstructured strings. Input and output are `UTF-8`, space-delimited, line-oriented strings (text objects) via the pipeline, similar to Unix/Linux shell tools. Some functions also accept or output PowerShell objects.
 
@@ -751,6 +751,10 @@ Statistical analysis procedures using this toolset:
 
 [Execute-RMarkdown]: src/Execute-RMarkdown_function.ps1
 
+#### [Add-HtmlHeader] - Wraps in a simple HTML5 structure.<a id="Add-HtmlHeader"></a>
+
+[Add-HtmlHeader]: src/Add-HtmlHeader_function.ps1
+
 #### [math2tex] (Alias: chem2tex) - Add the LaTeX preamble to the mathematical and chemical formula in LaTex format.<a id="math2tex"></a>
 
 [math2tex]: src/math2tex_function.ps1
@@ -869,9 +873,13 @@ a simple and beautiful CSS framework.
 
 ### File and directory manipuration
 
-#### [Get-FullPath] - Converts a file path to its absolute path.<a id="Get-FullPath"></a>
+#### [Get-FullPath] - Generate the absolute path of a non-existent file or directory.<a id="Get-FullPath"></a>
 
 [Get-FullPath]: src/Get-FullPath_function.ps1
+
+#### [Get-RelativePath] - Generate the relative path of a non-existent file or directory.<a id="Get-RelativePath"></a>
+
+[Get-RelativePath]: src/Get-RelativePath_function.ps1
 
 #### [fwatch] - A filewatcher using LastWriteTime and FileHash.<a id="fwatch"></a>
 
@@ -1027,6 +1035,10 @@ a simple and beautiful CSS framework.
 #### [Get-AppShortcut] - List up app-shortcuts.<a id="Get-AppShortcut"></a>
 
 [Get-AppShortcut]: src/Get-AppShortcut_function.ps1
+
+#### [Resize-Window] - Resizes a window.<a id="Resize-Window"></a>
+
+[Resize-Window]: src/Resize-Window_function.ps1
 
 ## CREDITS
 

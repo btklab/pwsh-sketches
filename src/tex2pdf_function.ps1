@@ -14,7 +14,7 @@ function tex2pdf {
         [string] $file,
 
         [Parameter(Mandatory=$False)]
-        [switch] $lualatex,
+        [switch] $lualatex = $True,
 
         [Parameter(Mandatory=$False)]
         [switch] $uplatex
