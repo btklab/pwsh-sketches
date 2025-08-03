@@ -495,7 +495,7 @@ Statistical analysis procedures using this toolset:
     - [Group-Aggregate]
     - [GroupBy-Object]
     - [Apply-Function]
-1. **Calculate** and add basic statistics and add to each record with:
+1. **Calculate** and add basic statistics with:
     - [Measure-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/measure-object) (built-in Cmdlet)
     - [Measure-Summary]
     - [Add-Stats]
