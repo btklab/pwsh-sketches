@@ -463,11 +463,11 @@ Statistical analysis procedures using this toolset:
 1. **Get** sample dataset with:
     - [Get-Dataset]
 1. **Clean** text/csv data with:
-    - [pwsh-sketches] (this repository)
+    - [pwsh-sketches](https://github.com/btklab/pwsh-sketches) (this repository)
 1. **Convert** text/csv dataset to PSObject with:
-    - [ConvertFrom-Csv] (built-in Cmdlet)
-    - [Import-Csv] (built-in Cmdlet)
-    - [Import-Excel] (external module)
+    - [ConvertFrom-Csv](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-csv) (built-in Cmdlet)
+    - [Import-Csv](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/import-csv) (built-in Cmdlet)
+    - [ImportExcel](https://github.com/dfinke/ImportExcel) (external module)
 1. **Infer** the schema of the dataset with:
     - [Infer-ObjectSchema]
 1. **Shorten** long column names to make data exploration easier (Optional):
@@ -475,19 +475,19 @@ Statistical analysis procedures using this toolset:
 1. **Replace** record with:
     - [Replace-ForEach]
 1. **Join** datasets with:
-    - [Join-Object] (external module)
+    - [Join-Object](https://devblogs.microsoft.com/powershell/join-object/) (external module)
     - [Join2-Object]
 1. **Select** the required columns with:
-    - [Select-Object] (built-in Cmdlet)
+    - [Select-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object) (built-in Cmdlet)
     - [Select-Field]
     - [Delete-Field]
 1. **Filter** the required records with:
-    - [Where-Object] (built-in Cmdlet)
-1. **Drop** NA, NaN, Null record from data with:
+    - [Where-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/where-object) (built-in Cmdlet)
+1. **Drop** `NA`, `NaN`, `Null` record from data with:
     - [Drop-NA]
     - [Replace-NA]
-1. **Sort** data stably by category with:
-    - [Sort-Object <property> -Stable]
+1. **Sort** data stably by property with:
+    - [Sort-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/sort-object) `-Property <property-name> -Stable`
 1. **Arrange** data
     - [Unique-Object]
     - [Transpose-Property]
@@ -496,7 +496,7 @@ Statistical analysis procedures using this toolset:
     - [GroupBy-Object]
     - [Apply-Function]
 1. **Calculate** and add basic statistics and add to each record with:
-    - [Measure-Object] (built-in Cmdlet)
+    - [Measure-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/measure-object) (built-in Cmdlet)
     - [Measure-Summary]
     - [Add-Stats]
     - [Add-Quartile]
@@ -1131,4 +1131,3 @@ a simple and beautiful CSS framework.
         - License: Creative Commons Zero v1.0 Universal
 
 
-[pwsh-sketches]: https://github.com/btklab/pwsh-sketches
