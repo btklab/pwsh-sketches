@@ -458,55 +458,26 @@ count species xrs detect   b_l_m BarChart
         - License: Creative Commons Zero v1.0 Universal
 
 
-Statistical analysis procedures using this toolset:
+**Statistical analysis procedure**:
 
-1. **Get** sample dataset with:
-    - [Get-Dataset]
-1. **Clean** text/csv data with:
-    - [pwsh-sketches](https://github.com/btklab/pwsh-sketches) (this repository)
-1. **Convert** text/csv dataset to PSObject with:
-    - [ConvertFrom-Csv](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-csv) (built-in Cmdlet)
-    - [Import-Csv](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/import-csv) (built-in Cmdlet)
-    - [ImportExcel](https://github.com/dfinke/ImportExcel) (external module)
-1. **Infer** the schema of the dataset with:
-    - [Infer-ObjectSchema]
-1. **Shorten** long column names to make data exploration easier (Optional):
-    - [Shorten-PropertyName]
-1. **Replace** record with:
-    - [Replace-ForEach]
-1. **Join** datasets with:
-    - [Join-Object](https://devblogs.microsoft.com/powershell/join-object/) (external module)
-    - [Join2-Object]
-1. **Select** the required columns with:
-    - [Select-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object) (built-in Cmdlet)
-    - [Select-Field]
-    - [Delete-Field]
-1. **Filter** the required records with:
-    - [Where-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/where-object) (built-in Cmdlet)
-1. **Drop** `NA`, `NaN`, `Null` record from data with:
-    - [Drop-NA]
-    - [Replace-NA]
-1. **Sort** data stably by property with:
-    - [Sort-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/sort-object) `-Property <property-name> -Stable`
-1. **Arrange** data
-    - [Unique-Object]
-    - [Transpose-Property]
-1. **GroupBy** category and add to each record with:
-    - [Group-Aggregate]
-    - [GroupBy-Object]
-    - [Apply-Function]
-1. **Calculate** and add basic statistics and add to each record with:
-    - [Measure-Object](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/measure-object) (built-in Cmdlet)
-    - [Measure-Summary]
-    - [Add-Stats]
-    - [Add-Quartile]
-    - [Measure-Stats]
-    - [Measure-Quartile]
-1. **Detect** anomaly record (using X-Rs control method) with:
-    - [Detect-XrsAnomaly]
-1. **Visualize** the results in charts with:
-    - [Get-Histogram]
-    - [Plot-BarChart]
+1. **Data Import & Structuring**
+    - Load data from various sources and define its structure with: [Get-Dataset][], [Import-Csv][], [ConvertFrom-Csv][], [ImportExcel][]
+2. **Data Wrangling & Preparation**
+    - Clean, filter, join, and reshape the dataset for analysis with: [pwsh-sketches][], [Infer-ObjectSchema][], [Select-Object][], [Where-Object][], [Sort-Object][], [Join-Object][], [Join2-Object][], [Select-Field][], [Delete-Field][], [Shorten-PropertyName][], [Replace-ForEach][], [Drop-NA][], [Replace-NA][], [Unique-Object][], [Transpose-Property][]
+3. **Analysis & Aggregation**
+    - Group data and calculate summary statistics to derive insights with: [Measure-Object][], [GroupBy-Object][], [Group-Aggregate][], [Apply-Function][], [Measure-Summary][], [Add-Stats][], [Add-Quartile][], [Measure-Stats][], [Measure-Quartile][], [Detect-XrsAnomaly][]
+4. **Visualization**
+    - Create charts and plots to visualize the results with: [Get-Histogram][], [Plot-BarChart]
+
+[ConvertFrom-Csv]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/convertfrom-cs
+[Import-Csv]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/import-csv
+[ImportExcel]: https://github.com/dfinke/ImportExcel
+[pwsh-sketches]: https://github.com/btklab/pwsh-sketches
+[Join-Object]: https://devblogs.microsoft.com/powershell/join-object/
+[Select-Object]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/select-object
+[Where-Object]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/where-object
+[Sort-Object]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/sort-object
+[Measure-Object]: https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/measure-object
 
 
 #### [Shorten-PropertyName] - Shorten long property names.<a id="Shorten-PropertyName"></a>
