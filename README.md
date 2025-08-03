@@ -460,47 +460,53 @@ count species xrs detect   b_l_m BarChart
 
 Statistical analysis procedures using this toolset:
 
-1. **Convert** dataset to PSObject with:
-    - `ConvertFrom-Csv` (built-in Cmdlet)
-    - `Import-Csv` (built-in Cmdlet)
-    - `Import-Excel` (external module)
-2. **Shorten** long column names to make data exploration easier (Optional):
-    - `Shorten-PropertyName`
-3. **Replace** record with (Optional):
-    - `Replace-ForEach`
-4. **Join** datasets with:
-    - `Join-Object` (external module)
-    - `Join2-Object`
-5. **Select** the required columns with:
-    - `Select-Object` (built-in Cmdlet)
-    - `Select-Field`
-    - `Delete-Field`
-6. **Filter** the required records with:
-    - `Where-Object` (built-in Cmdlet)
-7. **Drop** NA, NaN, Null record from data with:
-    - `Drop-NA`
-    - `Replace-NA`
-8. **Sort** data stably by category with:
-    - `Sort-Object <property> -Stable`
-9. **Arrange** data
-    - `Unique-Object`
-    - `Transpose-Property`
-10. **GroupBy** category and add to each record with:
-    - `Group-Aggregate`
-    - `Apply-Function`
-    - `GroupBy-Object`
-11. **Calculate** and add basic statistics and add to each record with:
-    - `Measure-Object` (built-in Cmdlet)
-    - `Measure-Summary`
-    - `Add-Stats`
-    - `Add-Quartile`
-    - `Measure-Stats`
-    - `Measure-Quartile`
-12. **Detect** anomaly record (using X-Rs control method) with:
-    - `Detect-XrsAnomaly`
-13. **Visualize** the results in charts with:
-    - `Get-Histogram`
-    - `Plot-BarChart`
+1. **Get** sample dataset with:
+    - [Get-Dataset]
+1. **Clean** text/csv data with:
+    - [pwsh-sketches] (this repository)
+1. **Convert** text/csv dataset to PSObject with:
+    - [ConvertFrom-Csv] (built-in Cmdlet)
+    - [Import-Csv] (built-in Cmdlet)
+    - [Import-Excel] (external module)
+1. **Infer** the schema of the dataset with:
+    - [Infer-ObjectSchema]
+1. **Shorten** long column names to make data exploration easier (Optional):
+    - [Shorten-PropertyName]
+1. **Replace** record with:
+    - [Replace-ForEach]
+1. **Join** datasets with:
+    - [Join-Object] (external module)
+    - [Join2-Object]
+1. **Select** the required columns with:
+    - [Select-Object] (built-in Cmdlet)
+    - [Select-Field]
+    - [Delete-Field]
+1. **Filter** the required records with:
+    - [Where-Object] (built-in Cmdlet)
+1. **Drop** NA, NaN, Null record from data with:
+    - [Drop-NA]
+    - [Replace-NA]
+1. **Sort** data stably by category with:
+    - [Sort-Object <property> -Stable]
+1. **Arrange** data
+    - [Unique-Object]
+    - [Transpose-Property]
+1. **GroupBy** category and add to each record with:
+    - [Group-Aggregate]
+    - [GroupBy-Object]
+    - [Apply-Function]
+1. **Calculate** and add basic statistics and add to each record with:
+    - [Measure-Object] (built-in Cmdlet)
+    - [Measure-Summary]
+    - [Add-Stats]
+    - [Add-Quartile]
+    - [Measure-Stats]
+    - [Measure-Quartile]
+1. **Detect** anomaly record (using X-Rs control method) with:
+    - [Detect-XrsAnomaly]
+1. **Visualize** the results in charts with:
+    - [Get-Histogram]
+    - [Plot-BarChart]
 
 
 #### [Shorten-PropertyName] - Shorten long property names.<a id="Shorten-PropertyName"></a>
@@ -1124,3 +1130,5 @@ a simple and beautiful CSS framework.
         - [GitHub - allisonhorst/palmerpenguins: A great intro dataset for data exploration &amp; visualization (alternative to iris).](https://github.com/allisonhorst/palmerpenguins)
         - License: Creative Commons Zero v1.0 Universal
 
+
+[pwsh-sketches]: https://github.com/btklab/pwsh-sketches
