@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- NA
+- Added [Sanitize-]
 
 ## [0.13.0] - 2025-08-03
 
@@ -412,6 +412,7 @@ Breaking Changes
 [Add-HtmlHeader]: src/Add-HtmlHeader_function.ps1
 
 [Group-Aggregate]: src/Group-Aggregate_function.ps1
+[Sanitize-FileName]: src/Sanitize-FileName_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.13.0..HEAD
