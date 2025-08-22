@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Added [Sanitize-]
+- Added [Sanitize-FileName][] function.
+- Refactored [uniq][] function.
 
 ## [0.13.0] - 2025-08-03
 
@@ -24,8 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added [Get-FullPath][] function.
 - Added [Get-RelativePath][] function.
 - Added [Invoke-Vivliostyle][] function.
-- Added [Get-Gmail][], [Get-Gcalendar][] -Detail option.
-- Added [sleepy][] -Until option.
+- Added [Get-Gmail][], [Get-Gcalendar][] `-Detail` option.
+- Added [sleepy][] `-Until` option.
 - Fixed [Get-Gmail][] Incorrect uri.
 - Added [ctail][], [chead][] `-Match` option.
 - Refactored [ctail][], [chead][] function.
