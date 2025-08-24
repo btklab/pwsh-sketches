@@ -57,7 +57,7 @@ function ctail {
         # This determines when to end outputting lines.
         [bool]$foundMatch = $false
         # Buffer used in Lines mode to hold up to $Lines previous lines
-        $buffer = New-Object 'System.Collections.Generic.Queue[string]'
+        $buffer = New-Object 'System.Collections.Generic.Queue[object]'
         # If -Path is specified, read each file line by line
         if ($PSBoundParameters.ContainsKey('Path')) {
             foreach ($file in $Path) {
