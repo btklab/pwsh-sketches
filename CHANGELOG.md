@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Refactored [addb][], [addt][] function.
 - Changed [ctail][] Supports object input via pipeline.
 - Added [Sanitize-FileName][] function.
 - Refactored [uniq][] function.
