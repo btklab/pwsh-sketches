@@ -24,23 +24,36 @@
 .LINK
     addt, addb, addl, addr
 
-
 #>
 function addb {
+  # Enable common parameters like -Verbose, -Debug, and -ErrorAction.
+  # This makes the function more robust and consistent with standard PowerShell cmdlets.
+  [CmdletBinding()]
   Param (
-    [Parameter(Position=0, Mandatory=$True)]
+    # The text to append to the end of the entire output.
+    [Parameter(Position=0, Mandatory=$true)]
     [AllowEmptyString()]
-    [string[]] $AddText,
+    [string[]] $TextToAdd,
 
-    [Parameter(ValueFromPipeline=$True)]
-    [string[]] $Body
+    # The input objects coming from the pipeline.
+    [Parameter(ValueFromPipeline=$true)]
+    [string[]] $InputObject
   )
+
+  # The 'process' block is executed for each object that comes from the pipeline.
+  # We simply pass the input object through to the next command.
+  # This approach allows for efficient streaming of data, which is crucial
+  # for handling large inputs without consuming excessive memory.
   process {
-    Write-Output $_
+    Write-Output $InputObject
   }
+
+  # The 'end' block is executed only once, after all pipeline input has been processed.
+  # This is the perfect place to append our text, ensuring it appears at the very end.
   end {
-    foreach ($t in $AddText){
-      Write-Output "$t"
+    # Loop through each line of the text to be added and output it.
+    foreach ($line in $TextToAdd){
+      Write-Output $line
     }
   }
 }
