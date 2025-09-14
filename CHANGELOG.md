@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.14.0] - 2025-09-14
+
+- Refactored [Get-OGP][] function.
 - Refactored [addb][], [addt][] function.
 - Changed [ctail][] Supports object input via pipeline.
 - Added [Sanitize-FileName][] function.
@@ -418,7 +423,8 @@ Breaking Changes
 [Sanitize-FileName]: src/Sanitize-FileName_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.13.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.14.0..HEAD
+[0.14.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.14.0
 [0.13.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.13.0
 [0.12.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.12.0
 [0.11.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.11.0
