@@ -173,6 +173,7 @@ if ($IsWindows){
 . $pwshSrcDir/Get-OGP_function.ps1
 . $pwshSrcDir/Decode-Uri_function.ps1
 . $pwshSrcDir/Encode-Uri_function.ps1
+. $pwshSrcDir/Convert-Uri2Html_function.ps1
 . $pwshSrcDir/Format-Path_function.ps1
 . $pwshSrcDir/watercss_function.ps1
 . $pwshSrcDir/Decode-MimeHeader_function.ps1
@@ -286,6 +287,7 @@ if ( $IsWindows ){
 
 . $pwshSrcDir/Sort-Block_function.ps1
 . $pwshSrcDir/Grep-Block_function.ps1
+. $pwshSrcDir/Get-Block_function.ps1
 
 ## misc
 . $pwshSrcDir/Test-isAsciiLine_function.ps1
