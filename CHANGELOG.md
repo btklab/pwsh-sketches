@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - NA
 
+## [0.15.0] - 2025-10-05
+
+- Added [Invoke-Link][] label-based block selection.
+- Added [Get-Block][] function.
+- Added [Convert-Uri2Html][] (Alias: uri2html) function.
+
 ## [0.14.0] - 2025-09-14
 
 - Refactored [Get-OGP][] function.
@@ -422,8 +428,12 @@ Breaking Changes
 [Group-Aggregate]: src/Group-Aggregate_function.ps1
 [Sanitize-FileName]: src/Sanitize-FileName_function.ps1
 
+[Get-Block]: src/Get-Block_function.ps1
+[Convert-Uri2Html]: src/Convert-Uri2Html_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.14.0..HEAD
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.15.0..HEAD
+[0.15.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.15.0
 [0.14.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.14.0
 [0.13.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.13.0
 [0.12.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.12.0
