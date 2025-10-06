@@ -135,6 +135,12 @@
     Suppresses the output of execution commands (e.g., 'Invoke-Item "..."')
     during normal execution.
 
+.PARAMETER Force
+    Allows opening more than 10 links at a time, overriding the default safety limit.
+
+.PARAMETER AllowPs1Execution
+    Allows the execution of .ps1 script files, which is disabled by default for security.
+
 .EXAMPLE
     # link file format example
     cat mylinks.txt
@@ -152,7 +158,8 @@
     > Start-Process -FilePath "https://www.google.com/"
     
     # (-All) open all uris in the entire file.
-    i mylinks.txt -All
+    # If there are more than 10 links, it will be blocked without -Force.
+    i mylinks.txt -All -Force
 
     > Start-Process -FilePath "https://www.google.com/"
     > Start-Process -FilePath "https://www.nikkei.com/"
@@ -171,6 +178,9 @@
     > target synopsis
     > ------ --------
     > news   Major news sites
+    
+    # Execute a .ps1 script (requires explicit permission)
+    i myscript.ps1 -AllowPs1Execution
 
 #>
 function Invoke-Link {
@@ -273,8 +283,17 @@ function Invoke-Link {
         [switch] $DryRun,
         
         [Parameter( Mandatory=$False )]
+        [int] $Delay = 500,
+        
+        [Parameter( Mandatory=$False )]
         [Alias('q')]
-        [switch] $Quiet
+        [switch] $Quiet,
+
+        [Parameter( Mandatory=$False )]
+        [switch] $Force,
+
+        [Parameter( Mandatory=$False )]
+        [switch] $AllowPs1Execution
     )
     # private functions
     # Determines if a line is a comment, empty, a tag line, or a label line.
@@ -474,10 +493,14 @@ function Invoke-Link {
                     }
                     continue
                 }
-                # PowerShell scripts are executed in the current scope.
+                # PowerShell scripts are executed directly, but only if explicitly allowed.
                 if ( $ext -eq '.ps1' ){
                     if ( $DryRun ){
-                        $exeComStr
+                        Write-Output "$exeComStr"
+                        continue
+                    }
+                    if ( -not $AllowPs1Execution ){
+                        Write-Warning "Execution of '$File' was blocked for security reasons. Use the -AllowPs1Execution switch to run .ps1 scripts."
                         continue
                     }
                     if ( $ShowHelp ){
@@ -665,6 +688,11 @@ function Invoke-Link {
                 $finalLinks = $cleanLinks | Select-Object -First $First
             }
 
+            # Safety check: prevent opening too many links at once.
+            if ( (-not $Force) -and ($finalLinks.Count -gt 10) ){
+                Write-Error "Attempting to open $($finalLinks.Count) links. The default limit is 10. Use the -Force switch to open all links." -ErrorAction Stop
+            }
+
             if ( $Location -or $Push ){
                  if ( -not $App ){
                     $finalLinks | ForEach-Object {
@@ -712,7 +740,7 @@ function Invoke-Link {
                 if (-not $DryRun) {
                     Write-Host $com
                 } else {
-                     Write-Output $com
+                    Write-Output $com
                 }
 
                 if ( -not $DryRun ){
@@ -747,6 +775,7 @@ function Invoke-Link {
                             return
                         }
                     }
+                    Start-Sleep -Milliseconds $Delay
                 }
             }
         }
@@ -796,3 +825,4 @@ if ((Get-Command -Name $tmpAliasName -ErrorAction SilentlyContinue).Count -gt 0)
     Remove-Variable -Name "tmpAliasName" -Force
     Remove-Variable -Name "tmpCmdName" -Force
 }
+
