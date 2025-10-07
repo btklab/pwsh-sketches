@@ -42,6 +42,9 @@
 
     The `-ShowHelp` switch lists all labels and their comments within the file.
 
+.LINK
+    pwmake
+
 .PARAMETER Files
     Specifies the path to the link file(s), or accepts input from the
     pipeline or clipboard.
@@ -145,40 +148,48 @@
     # link file format example
     cat mylinks.txt
 
-    > ## Unlabeled links
-    > https://www.google.com/
-    > 
-    > @news : Major news sites
-    > https://www.nikkei.com/
-    > https://www.asahi.com/
+    Output:
+        ## Unlabeled links
+        https://www.google.com/
+
+        @news : Major news sites
+        https://www.nikkei.com/
+        https://www.asahi.com/
     
     # (Default) open the first uri in the entire file.
     i mylinks.txt
 
-    > Start-Process -FilePath "https://www.google.com/"
+    Output:
+        Start-Process -FilePath "https://www.google.com/"
     
     # (-All) open all uris in the entire file.
     # If there are more than 10 links, it will be blocked without -Force.
     i mylinks.txt -All -Force
 
-    > Start-Process -FilePath "https://www.google.com/"
-    > Start-Process -FilePath "https://www.nikkei.com/"
-    > Start-Process -FilePath "https://www.asahi.com/"
+    Output:
+        Start-Process -FilePath "https://www.google.com/"
+        Start-Process -FilePath "https://www.nikkei.com/"
+        Start-Process -FilePath "https://www.asahi.com/"
     
+.EXAMPLE
     # (-Label) open the first uri in the 'news' block
     i mylinks.txt news
     ## or
     i mylinks.txt -Label news
+
+    Output:
+        Start-Process -FilePath "https://www.nikkei.com/"
     
-    > Start-Process -FilePath "https://www.nikkei.com/"
-    
+.EXAMPLE
     # (-ShowHelp) Show all labels and comments in the file
     i mylinks.txt -ShowHelp
 
-    > target synopsis
-    > ------ --------
-    > news   Major news sites
+    Output:
+        target synopsis
+        ------ --------
+        news   Major news sites
     
+.EXAMPLE
     # Execute a .ps1 script (requires explicit permission)
     i myscript.ps1 -AllowPs1Execution
 
@@ -449,7 +460,82 @@ function Invoke-Link {
                 Get-ChildItem -LiteralPath $File -Recurse:$Recurse -File `
                     | ForEach-Object {
                         $fileCounter++
-                        # ... (directory listing logic remains unchanged) ...
+                        if ( $InvokeById.Count -gt 0){
+                            if ($InvokeById.Contains($fileCounter)){
+                                [String] $relPath = getRelativePath $_.FullName
+                                Write-Output "Invoke-Link: $relPath"
+                                Invoke-Link -Files $_.FullName
+                            }
+                            return
+                        }
+                        if ( $Id.Count -gt 0){
+                            i ($Id.Contains($fileCounter)){
+                                Get-Item -LiteralPath $_.FullName
+                            }
+                            return
+                        }
+                        # set path
+                        [String] $parentPath    = Split-Path -Parent $_
+                        [String] $childPath     = Split-Path -Leaf $_
+                        [String] $joinedPath    = Join-Path -Path $parentPath -ChildPath $childPath
+                        [String] $relativePath  = getRelativePath $joinedPath
+                        [String] $parentDirName = Split-Path -Parent $_ | Split-Path -Leaf
+                        # remove extension
+                        if ( $RemoveExtension -and $_.Name -notmatch '^\.') {
+                            [String] $relativePath = $relativePath -replace '\.[^\.]+$', ''
+                        }
+                        if ( Test-Path -LiteralPath $_.FullName -PathType Container){
+                            continue
+                        } elseif ( -not ($_.Extension) -or $_.Extension -match '\.txt$|\.md$' ){
+                            # get tag
+                            [String] $pat = ' #[^ #]+'
+                            $splatting = @{
+                                Pattern       = $pat
+                                CaseSensitive = $False
+                                Encoding      = "utf8"
+                                AllMatches    = $True
+                                Path          = $_.FullName
+                            }
+                            #[String[]] $tagAry = getMatchesValue $line ' #[^ ]+|^#[^ ]+'
+                            [String[]] $tagAry = (Select-String @splatting).Matches.Value `
+                                | ForEach-Object {
+                                    [String] $tmpTagStr = $("$_".Trim())
+                                    if ( $tmpTagStr -ne '' ){
+                                        Write-Output $("$_".Trim())
+                                    }
+                                }
+                            # set tag
+                            [String] $tagStr = '#' + $parentDirName
+                            if ( $tagAry.Count -gt 0 ){
+                                [String] $tagStr += ", "
+                                [String] $tagStr += $tagAry -join ", "
+                            }
+                            [String] $tagStr += ","
+                            $hash = [ordered] @{
+                                Id   = $fileCounter
+                                Name = $childPath
+                                Line = Get-Content -Path $_.FullName -TotalCount 1 -Encoding utf-8
+                                Tag  = $tagStr
+                                #Dir  = $parentDirName
+                            }
+                        } else {
+                            $hash = [ordered] @{
+                                Id   = $fileCounter
+                                Name = $childPath
+                                Line = $Null
+                                Tag  = '#' + $parentDirName
+                                #Dir  = $parentDirName
+                            }
+                        }
+                        if ( $Grep -and $NotMatch ){
+                            [pscustomobject] $Hash `
+                                | Where-Object Name -notmatch $Grep
+                        } elseif ( $Grep ){
+                            [pscustomobject] $Hash `
+                                | Where-Object Name -match $Grep
+                        } else {
+                            [pscustomobject] $Hash
+                        }
                     }
                 continue
             }
@@ -479,9 +565,9 @@ function Invoke-Link {
                     if ( $ShowHelp ){
                         #Write-Verbose "Labels in file: $File"
                         $helpObject = [ordered] @{
-                            file     = Resolve-Path -LiteralPath $File -Relative
                             target   = $null
                             synopsis = $null
+                            file     = (Get-Item -LiteralPath $File).Name
                         }
                         [pscustomobject] $helpObject
                         continue
@@ -506,9 +592,9 @@ function Invoke-Link {
                     if ( $ShowHelp ){
                         #Write-Verbose "Labels in file: $File"
                         $helpObject = [ordered] @{
-                            file     = Resolve-Path -LiteralPath $File -Relative
                             target   = $null
                             synopsis = $null
+                            file     = (Get-Item -LiteralPath $File).Name
                         }
                         [pscustomobject] $helpObject
                         continue
@@ -555,9 +641,9 @@ function Invoke-Link {
                         #Write-Host ("{0,-20} : {1}" -f $labelName, $labelComment)
                         ## If the target is in the collected PHONY targets
                         $helpObject = [ordered] @{
-                            file     = Resolve-Path -LiteralPath $File -Relative
                             target   = $labelName
                             synopsis = $labelComment
+                            file     = (Get-Item -LiteralPath $File).Name
                         }
                         [pscustomobject] $helpObject
                     }
