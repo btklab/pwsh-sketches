@@ -10,7 +10,7 @@
         inkconv in.pdf out.png -w 400 | ii
 
     Dependencies: inkscape.exe
-        winget install --id Inkscape.Inkscape --source winget
+        winget install --id Inkscape.Inkscape --source winget -e
 
 .LINK
     Execute-TinyTex (Alias: tinytex), math2tex, tex2pdf, inkconv
@@ -74,7 +74,7 @@ function Inkscape-Converter {
         if ($IsWindows){
             Write-Error 'Install inkscape' -ErrorAction Continue
             Write-Error '  uri: https://inkscape.org//' -ErrorAction Continue
-            Write-Error '  winget install --id Inkscape.Inkscape --source winget' -ErrorAction Stop
+            Write-Error '  winget install --id Inkscape.Inkscape --source winget -e' -ErrorAction Stop
         } else {
             Write-Error 'Install inkscape' -ErrorAction Continue
             Write-Error '  uri: https://inkscape.org//' -ErrorAction Continue
