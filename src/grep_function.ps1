@@ -312,6 +312,29 @@ function Grep-Object {
     if ((-not $Pattern) -and (-not $File)){
         Write-Error "do not set regex pattern or pattern-files." -ErrorAction Stop
     }
+    # private function
+    function replaceRelativePathInline ( [string] $line ){
+        # extract path and get generate relative path
+        if ( $line -notmatch '^.+:[0-9]+:' ){
+            return
+        }
+        if ( $isWindows ){
+            # drive letter and colon
+            [string] $prefix        = $line -replace '^(..)(.:[^:]+):[0-9]+:.*$', '$1'
+            [string] $extractedPath = $line -replace '^(..)(.:[^:]+):[0-9]+:.*$', '$2'
+        } else {
+            # no colon in the path
+            [string] $prefix        = $line -replace '^(..)([^:]+):[0-9]+:.*$', '$1'
+            [string] $extractedPath = $line -replace '^(..)([^:]+):[0-9]+:.*$', '$1'
+        }
+        [String] $relPath = Resolve-Path -LiteralPath $extractedPath -Relative
+        if ( $IsWindows ){ [String] $relPath = $relPath.Replace('\', '/') }
+        [string] $regexStr = [regex]::Escape($extractedPath)
+        [string] $regexStr = '^' + $regexStr + ':'
+        [string] $relPath = $prefix + $relPath + ':'
+        [string] $replacedLine = $line -replace "$regexStr", "$relPath"
+        return $replacedLine
+    }
     # set params
     [string[]] $pat = @()
     if ($File){
@@ -338,7 +361,8 @@ function Grep-Object {
         $splatting.Set_Item('Context', $Context)
     }
     if ($Path){
-        $splatting.Set_Item('Path', (Get-ChildItem -Path $Path -Recurse:$Recurse))
+        [object[]] $pathFiles = Get-ChildItem -Path $Path -Recurse:$Recurse
+        $splatting.Set_Item('Path', $pathFiles)
     }
     # main
     if ($Path){
@@ -347,9 +371,15 @@ function Grep-Object {
         } elseif ($FileNameOnly){
             (Select-String @splatting).FileName | Sort-Object -Stable -Unique; return
         } elseif ($FileNameAndLineNumber){
-            Select-String @splatting | Out-String -Stream  ; return
+            Select-String @splatting `
+                | Out-String -Stream
+                return
         } elseif ($Context){
-            Select-String @splatting | Out-String -Stream  ; return
+            if ( $pathFiles.Count -gt 1 ){
+                Select-String @splatting | Out-String -Stream  ; return
+            } else {
+                (Select-String @splatting).Line ; return
+            }
         } else {
             #if ( $LeaveHeaderAndBoarder ){
             #    Get-Content -Path $Path -TotalCount 2 -Encoding utf8
