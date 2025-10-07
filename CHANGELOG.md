@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added [Invoke-Link][] several options for safety and security.
 - Fixed [grep][] Branch behavior of the -Context option depending on the number of input files.
+- Changed [Invoke-Link][] Remove unnecessary file names from the output when the -ShowHelp option is specified.
 
 ## [0.15.0] - 2025-10-05
 

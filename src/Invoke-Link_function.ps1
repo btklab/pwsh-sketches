@@ -567,7 +567,7 @@ function Invoke-Link {
                         $helpObject = [ordered] @{
                             target   = $null
                             synopsis = $null
-                            file     = (Get-Item -LiteralPath $File).Name
+                            #file     = (Get-Item -LiteralPath $File).Name
                         }
                         [pscustomobject] $helpObject
                         continue
@@ -594,7 +594,7 @@ function Invoke-Link {
                         $helpObject = [ordered] @{
                             target   = $null
                             synopsis = $null
-                            file     = (Get-Item -LiteralPath $File).Name
+                            #file     = (Get-Item -LiteralPath $File).Name
                         }
                         [pscustomobject] $helpObject
                         continue
@@ -643,7 +643,7 @@ function Invoke-Link {
                         $helpObject = [ordered] @{
                             target   = $labelName
                             synopsis = $labelComment
-                            file     = (Get-Item -LiteralPath $File).Name
+                            #file     = (Get-Item -LiteralPath $File).Name
                         }
                         [pscustomobject] $helpObject
                     }
