@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 - Added [Invoke-Link][] several options for safety and security.
+- Fixed [grep][] Branch behavior of the -Context option depending on the number of input files.
 
 ## [0.15.0] - 2025-10-05
 
