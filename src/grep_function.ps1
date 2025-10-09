@@ -375,11 +375,7 @@ function Grep-Object {
                 | Out-String -Stream
                 return
         } elseif ($Context){
-            if ( $pathFiles.Count -gt 1 ){
-                Select-String @splatting | Out-String -Stream  ; return
-            } else {
-                (Select-String @splatting).Line ; return
-            }
+            Select-String @splatting | Out-String -Stream  ; return
         } else {
             #if ( $LeaveHeaderAndBoarder ){
             #    Get-Content -Path $Path -TotalCount 2 -Encoding utf8
