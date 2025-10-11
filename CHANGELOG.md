@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Read-Immersive][] function.
+- Added [Invoke-Link][] immersive reader mode.
 - Added [Invoke-Link][] several options for safety and security.
 - Fixed [grep][] Branch behavior of the -Context option depending on the number of input files.
 - Changed [Invoke-Link][] Remove unnecessary file names from the output when the -ShowHelp option is specified.
@@ -432,6 +434,8 @@ Breaking Changes
 
 [Get-Block]: src/Get-Block_function.ps1
 [Convert-Uri2Html]: src/Convert-Uri2Html_function.ps1
+
+[Read-Immersive]: src/Read-Immersive_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.15.0..HEAD

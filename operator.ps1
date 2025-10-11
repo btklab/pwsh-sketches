@@ -285,6 +285,8 @@ if ( $IsWindows ){
 . $pwshSrcDir/Get-Ticket_function.ps1
 . $pwshSrcDir/Invoke-Link_function.ps1
 
+. $pwshSrcDir/Read-Immersive_function.ps1
+
 . $pwshSrcDir/Sort-Block_function.ps1
 . $pwshSrcDir/Grep-Block_function.ps1
 . $pwshSrcDir/Get-Block_function.ps1

@@ -144,6 +144,12 @@
 .PARAMETER AllowPs1Execution
     Allows the execution of .ps1 script files, which is disabled by default for security.
 
+.PARAMETER ImmersiveEdge
+    For HTTP(S) links, prepends "read:" to open them in Microsoft Edge's Immersive Reader.
+
+.PARAMETER ImmersiveFirefox
+    For HTTP(S) links, prepends "about:reader?url=" and URL-encodes the link to open it in Firefox's Reader View.
+
 .EXAMPLE
     # link file format example
     cat mylinks.txt
@@ -170,7 +176,14 @@
         Start-Process -FilePath "https://www.google.com/"
         Start-Process -FilePath "https://www.nikkei.com/"
         Start-Process -FilePath "https://www.asahi.com/"
-    
+
+.EXAMPLE
+    # Open a link in Edge's Immersive Reader
+    i "https://www.example.com" -ImmersiveEdge
+
+    Output:
+        Start-Process -FilePath "read:https://www.example.com"
+
 .EXAMPLE
     # (-Label) open the first uri in the 'news' block
     i mylinks.txt news
@@ -192,6 +205,16 @@
 .EXAMPLE
     # Execute a .ps1 script (requires explicit permission)
     i myscript.ps1 -AllowPs1Execution
+
+.EXAMPLE
+    # Open a single web link in Microsoft Edge's Immersive Reader
+    "https://github.com/btklab" | i -ImmersiveEdge
+    "https://github.com/btklab" | i -ie
+
+.EXAMPLE
+    # Open a single web link in Firefox's Reader View
+    "https://github.com/btklab" | i -ImmersiveFirefox -App firefox
+    "https://github.com/btklab" | i -if -App firefox
 
 #>
 function Invoke-Link {
@@ -304,8 +327,21 @@ function Invoke-Link {
         [switch] $Force,
 
         [Parameter( Mandatory=$False )]
-        [switch] $AllowPs1Execution
+        [switch] $AllowPs1Execution,
+
+        # --- Immersive Reader Parameters ---
+        [Parameter( Mandatory=$False )]
+        [Alias('ie')]
+        [switch] $ImmersiveEdge,
+
+        [Parameter( Mandatory=$False )]
+        [Alias('if')]
+        [switch] $ImmersiveFirefox
     )
+    # parse option
+    if ( $ImmersiveFirefox) {
+        $App = "firefox"
+    }
     # private functions
     # Determines if a line is a comment, empty, a tag line, or a label line.
     # These lines should not be treated as executable links.
@@ -808,23 +844,39 @@ function Invoke-Link {
             
             # Final loop to execute each selected link.
             foreach ( $href in $finalLinks ){
-                # Determine the command to run based on the link type and -App parameter.
-                if ( $App ){
-                    [string] $com = $App
-                } else {
-                    if ( isLinkHttp $href ){
-                        [string] $com = "Start-Process -FilePath"
-                    } elseif ($AsFileObject) {
-                        [string] $com = "Get-Item -LiteralPath"
-                    } else {
-                        [string] $com = "Invoke-Item"
+                # --- Immersive Reader Logic ---
+                # If an immersive reader switch is used for an HTTP link, modify the href.
+                if ( $href -match '^https?://' ) {
+                    if ( $ImmersiveEdge ) {
+                        # Prepend the protocol for Edge's Immersive Reader.
+                        $href = "read:$href"
+                    } elseif ( $ImmersiveFirefox ) {
+                        # URL-encode the link and prepend the format for Firefox's Reader View.
+                        # Using [uri]::EscapeDataString for robust encoding.
+                        $encodedHref = [uri]::EscapeDataString($href)
+                        $href = "about:reader?url=$encodedHref"
                     }
                 }
-                [string] $com = "$com ""$href"""
+
+                # Determine the command to run based on the link type and -App parameter.
+                if ( $App ){
+                    [string] $com = "$App ""$href"""
+                } else {
+                    if ( (isLinkHttp $href) -or ($href -match '^read:https?://') -or ($href -match '^about:reader\?url=http') ){
+                        [string] $com = "Start-Process -FilePath ""$href"""
+                    } elseif ($AsFileObject) {
+                        [string] $com = "Get-Item -LiteralPath ""$href"""
+                    } else {
+                        [string] $com = "Invoke-Item ""$href"""
+                    }
+                }
+                #[string] $com = "$com ""$href"""
                 
                 # Display the command for clarity, even if not in DryRun mode.
                 if (-not $DryRun) {
-                    Write-Host $com
+                    if (-not $Quiet) {
+                        Write-Host $com -ForegroundColor Green
+                    }
                 } else {
                     Write-Output $com
                 }
@@ -911,4 +963,3 @@ if ((Get-Command -Name $tmpAliasName -ErrorAction SilentlyContinue).Count -gt 0)
     Remove-Variable -Name "tmpAliasName" -Force
     Remove-Variable -Name "tmpCmdName" -Force
 }
-
