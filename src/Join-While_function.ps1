@@ -20,7 +20,9 @@
         "*" to "\*"
 
 .LINK
-    Join-While, Join-Until, Trim-EmptyLine, list2txt, csv2txt
+  Join-While, Join-Until, Trim-EmptyLine,
+  Join-Step, Join-BlankLine,
+  list2txt, csv2txt
 
 .PARAMETER Regex
     Specify the end string that coonects

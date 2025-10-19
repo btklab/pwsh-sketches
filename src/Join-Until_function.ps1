@@ -9,7 +9,9 @@
       -DisableTrim    ... Disable Trim all lines before and after joining.
 
 .LINK
-    Join-While, Join-Until, Trim-EmptyLine, list2txt, csv2txt
+    Join-While, Join-Until, Trim-EmptyLine,
+    Join-Step, Join-BlankLine,
+    list2txt, csv2txt
 
 .EXAMPLE
     # Concatenate lines until a comma appears at the end.

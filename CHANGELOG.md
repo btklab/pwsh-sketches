@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Added [Join-BlankLine][] function.
+- Added [Join-Step][] function.
 - Added [Read-Immersive][] function.
 - Added [Invoke-Link][] immersive reader mode.
 - Added [Invoke-Link][] several options for safety and security.
@@ -436,6 +438,9 @@ Breaking Changes
 [Convert-Uri2Html]: src/Convert-Uri2Html_function.ps1
 
 [Read-Immersive]: src/Read-Immersive_function.ps1
+
+[Join-BlankLine]: src/Join-BlankLine_function.ps1
+[Join-Step]: src/Join-Step_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.15.0..HEAD
