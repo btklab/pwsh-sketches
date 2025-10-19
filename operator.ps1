@@ -159,6 +159,8 @@ if ($IsWindows){
 . $pwshSrcDir/tex2pdf_function.ps1
 . $pwshSrcDir/Join-While_function.ps1
 . $pwshSrcDir/Join-Until_function.ps1
+. $pwshSrcDir/Join-Step_function.ps1
+. $pwshSrcDir/Join-Blank_function.ps1
 . $pwshSrcDir/kinsoku_function.ps1
 . $pwshSrcDir/filehame_function.ps1
 . $pwshSrcDir/table2md_function.ps1
