@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-  Join-BlankLine (Alias: joinb) - Blank-line records to delimited single-line or vice versa.
+  Join-Blank (Alias: joinb) - Blank-line records to delimited single-line or vice versa.
   
   Converts text between a multi-line list format, where records are separated by blank lines, 
   and a single-line, delimited format. It also performs the reverse operation (-Reverse).
@@ -27,24 +27,40 @@
   Switches the operation to 'FromList' mode, converting single-line delimited records back into a multi-line list format.
 
 .EXAMPLE
-  PS> Get-Content list_data.txt | Join-BlankLine
-  Description: Converts list_data.txt, where records are separated by blank lines, into space-delimited single-line records.
+    1..9 | %{if($_ % 4 -eq 0){$_;""}else{$_}}
+    
+    1
+    2
+    3
+    4
+
+    5
+    6
+    7
+    8
+
+    9
+
+    1..9 | %{ if($_ % 4 -eq 0){$_;""}else{$_} } | Join-Blank
+
+    1 2 3 4
+    5 6 7 8
+    9
 
 .EXAMPLE
-  PS> Get-Content list_data.txt | Join-BlankLine -Delimiter '|'
-  Description: Converts list-formatted data into pipe-separated single-line records.
+    1..9 | %{ if($_ % 4 -eq 0){$_;""}else{$_} } | Join-Blank -d ","
 
-.EXAMPLE
-  PS> Get-Content delimited_data.txt | Join-BlankLine -Reverse -Delimiter ','
-  Description: Converts comma-separated data back into a list format (fields on newlines, records separated by blank lines).
+    1,2,3,4
+    5,6,7,8
+    9
 
 .LINK
   Join-While, Join-Until, Trim-EmptyLine,
-  Join-Step, Join-BlankLine,
+  Join-Step, Join-Blank,
   list2txt, csv2txt
 
 #>
-function Join-BlankLine {
+function Join-Blank {
     [CmdletBinding(DefaultParameterSetName = 'ToList')]
     [OutputType([string])]
     param(
@@ -136,7 +152,7 @@ function Join-BlankLine {
 }
 # set alias
 [String] $tmpAliasName = "joinb"
-[String] $tmpCmdName   = "Join-BlankLine"
+[String] $tmpCmdName   = "Join-Blank"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `

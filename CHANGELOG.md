@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Added [Join-BlankLine][] function.
+- NA
+
+## [0.16.0] - 2025-10-19
+
+- Added [Join-Blank][] function.
 - Added [Join-Step][] function.
 - Added [Read-Immersive][] function.
 - Added [Invoke-Link][] immersive reader mode.
@@ -439,7 +443,7 @@ Breaking Changes
 
 [Read-Immersive]: src/Read-Immersive_function.ps1
 
-[Join-BlankLine]: src/Join-BlankLine_function.ps1
+[Join-Blank]: src/Join-Blank.ps1
 [Join-Step]: src/Join-Step_function.ps1
 
 

@@ -29,12 +29,18 @@
   Switches the operation to 'FromList' mode, converting single-line delimited records back into a multi-line list format.
 
 .EXAMPLE
-  PS> Get-Content fixed_data.txt | Join-Step -Step 3 -Delimiter ','
-  Description: Reads fixed_data.txt and treats every 3 lines as a single record, joining them with commas.
+    1..9 | Join-Step 4
+
+    1 2 3 4
+    5 6 7 8
+    9
 
 .EXAMPLE
-  PS> Get-Content delimited_data.txt | Join-Step -Reverse -Delimiter ','
-  Description: Converts comma-separated data back into a list format (fields on newlines, records separated by blank lines).
+    1..9 | Join-Step 4 -d ","
+    
+    1,2,3,4
+    5,6,7,8
+    9
 
 .LINK
   Join-While, Join-Until, Trim-EmptyLine,
