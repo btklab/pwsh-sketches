@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - NA
 
+## [0.16.1] - 2025-10-19
+
+- Fixed [Join-Blank][], [Join-Step][] Explicitly declare variable types.
+
 ## [0.16.0] - 2025-10-19
 
 - Added [Join-Blank][] function.
@@ -447,7 +451,9 @@ Breaking Changes
 [Join-Step]: src/Join-Step_function.ps1
 
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.15.0..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.16.1..HEAD
+[0.16.1]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.1
+[0.16.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.0
 [0.15.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.15.0
 [0.14.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.14.0
 [0.13.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.13.0
