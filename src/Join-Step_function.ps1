@@ -53,9 +53,15 @@ function Join-Step {
     [OutputType([string])]
     param(
         # --- ToList Parameter Set: Requires Step to define record length ---
-        [Parameter(ParameterSetName = 'ToList', Mandatory = $true)]
+        [Parameter(ParameterSetName = 'ToList', Mandatory = $true, Position = 0)]
         [Alias('s')]
         [int]$Step,
+
+        # Delimiter is available in both sets
+        [Parameter(Mandatory = $false, ParameterSetName = 'ToList')]
+        [Parameter(Mandatory = $false, ParameterSetName = 'FromList')]
+        [Alias('d')]
+        [string]$Delimiter = ' ',
 
         # --- FromList (Reverse) Parameter Set: Only needs the Delimiter ---
         [Parameter(ParameterSetName = 'FromList', Mandatory = $true)]
@@ -65,12 +71,6 @@ function Join-Step {
         # --- Do not replace delimiter ---
         [Parameter(ParameterSetName = 'ToList')]
         [switch]$AsIs,
-
-        # Delimiter is available in both sets
-        [Parameter(Mandatory = $false, ParameterSetName = 'ToList')]
-        [Parameter(Mandatory = $false, ParameterSetName = 'FromList')]
-        [Alias('d')]
-        [string]$Delimiter = ' ',
 
         # Accepts input from the pipeline, line by line
         [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
@@ -84,7 +84,7 @@ function Join-Step {
         
         # Flag to ensure the first record in FromList mode is not preceded by a blank line.
         if ($PSCmdlet.ParameterSetName -eq 'FromList') {
-            $isFirstRecord = $true
+            [bool] $isFirstRecord = $true
         }
     }
 
@@ -99,9 +99,9 @@ function Join-Step {
                 
                 # Sanitize input: Replace delimiter characters with '_' to preserve field count integrity.
                 if ( $AsIs ){
-                    $sanitizedLine = $InputObject
+                    [string] $sanitizedLine = $InputObject
                 } else {
-                    $sanitizedLine = $InputObject.Replace($Delimiter, '\_')
+                    [string] $sanitizedLine = $InputObject.Replace($Delimiter, '\_')
                 }
                 $recordBuffer.Add($sanitizedLine)
 
@@ -121,14 +121,14 @@ function Join-Step {
                 }
 
                 # Split the input line into individual fields based on the delimiter.
-                $fields = $InputObject.Split($Delimiter)
+                [string[]] $fields = $InputObject.Split($Delimiter)
 
                 # Output each field on its own line.
                 foreach ($field in $fields) {
                     Write-Output $field
                 }
                 
-                $isFirstRecord = $false
+                [bool] $isFirstRecord = $false
             }
         }
     }

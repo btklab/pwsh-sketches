@@ -94,7 +94,7 @@ function Join-Blank {
         
         # Flag to ensure the first record in FromList mode is not preceded by a blank line.
         if ($PSCmdlet.ParameterSetName -eq 'FromList') {
-            $isFirstRecord = $true
+            [bool] $isFirstRecord = $true
         }
     }
 
@@ -114,9 +114,9 @@ function Join-Blank {
                 else {
                     # Data line: Sanitize and add to the current record buffer.
                     if ( $AsIs ){
-                        $sanitizedLine = $InputObject
+                        [string] $sanitizedLine = $InputObject
                     } else {
-                        $sanitizedLine = $InputObject.Replace($Delimiter, '\_')
+                        [string] $sanitizedLine = $InputObject.Replace($Delimiter, '\_')
                     }
                     $recordBuffer.Add($sanitizedLine)
                 }
@@ -130,14 +130,14 @@ function Join-Blank {
                 }
 
                 # Split the input line into individual fields based on the delimiter.
-                $fields = $InputObject.Split($Delimiter)
+                [string[]] $fields = $InputObject.Split($Delimiter)
 
                 # Output each field on its own line.
                 foreach ($field in $fields) {
                     Write-Output $field
                 }
                 
-                $isFirstRecord = $false
+                [bool] $isFirstRecord = $false
             }
         }
     }
