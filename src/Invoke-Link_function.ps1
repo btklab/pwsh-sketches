@@ -8,11 +8,11 @@
     Usage:
         ## Read and execute links written in a text file.
         i <file> [label] [-Doc|-All|-First <n>] [-Grep <regex>]
-            ... Invoke-Item <links-writtein-in-text-file>
+            ... Invoke-Item <links-written-in-text-file>
     
         ## Invoke links by specifying the app.
         i <file> [label] [-Doc|-All|-First <n>] [-Grep <regex>] -App <application>
-            ... application <links-writtein-in-text-file>
+            ... application <links-written-in-text-file>
 
         ## Show labels in a file.
         i <file> [-ShowHelp|-sh]
@@ -43,7 +43,7 @@
     The `-ShowHelp` switch lists all labels and their comments within the file.
 
 .LINK
-    pwmake
+    Invoke-Link, Get-LabelBlock, pwmake
 
 .PARAMETER Files
     Specifies the path to the link file(s), or accepts input from the

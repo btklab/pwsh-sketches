@@ -292,6 +292,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Sort-Block_function.ps1
 . $pwshSrcDir/Grep-Block_function.ps1
 . $pwshSrcDir/Get-Block_function.ps1
+. $pwshSrcDir/Get-LabelBlock_function.ps1
 
 ## misc
 . $pwshSrcDir/Test-isAsciiLine_function.ps1
