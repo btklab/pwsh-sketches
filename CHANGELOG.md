@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- NA
+- Added [Get-LabelBlock][] function.
 
 ## [0.16.1] - 2025-10-19
 
@@ -449,6 +449,8 @@ Breaking Changes
 
 [Join-Blank]: src/Join-Blank.ps1
 [Join-Step]: src/Join-Step_function.ps1
+
+[Get-LabelBlock]: src/Get-LabelBlock_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.16.1..HEAD
