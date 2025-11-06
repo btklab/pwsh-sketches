@@ -1,6 +1,10 @@
 <#
 .SYNOPSIS
-    Grep-Object (alias: grep) - Searches for regex patterns
+    Glip-Object (alias: glip) - Searches for regex patterns and clips output
+
+    Functions similarly to Grep-Object, but "clips" all standard
+    output to the clipboard in addition to printing it to the
+    console.
 
     Output lines that match regex pattern.
 
@@ -11,9 +15,9 @@
     [-s|-SimpleMatch] switch recognizes the pattern as a
     string.
 
-    cat file1,file2,... | grep '<regex>' [-v][-f][-s][-C <int>][-l]
-    cat file1,file2,... | grep '<regex>' [-o][-l]
-    grep '<regex>' -H file1,file2,...
+    cat file1,file2,... | glip '<regex>' [-v][-f][-s][-C <int>][-l]
+    cat file1,file2,... | glip '<regex>' [-o][-l]
+    glip '<regex>' -H file1,file2,...
 
         -v: output not-match line (invert match)
         -o: output only match strings
@@ -26,42 +30,6 @@
                 of lines, and match lines
         -l: Leave header line (pipeline input only)
         -l2: Leave header line and boarder line  (pipeline input only)
-    
-    The search speed is slow because of the wrapping
-    of Select-String commandlet.
-
-    ## speed test
-
-    Select-String (fast)
-    PS> 1..10 | %{ Measure-Command{ 1..100000 | sls 99999 }} | ft
-    Days Hours Minutes Seconds Milliseconds
-    ---- ----- ------- ------- ------------
-    0    0     0       0       437
-    0    0     0       0       386
-    0    0     0       0       394
-    0    0     0       0       385
-    0    0     0       0       407
-    0    0     0       0       715
-    0    0     0       0       424
-    0    0     0       0       424
-    0    0     0       0       443
-    0    0     0       0       423
-
-    grep (slow)
-    1..10 | %{ Measure-Command{ 1..100000 | grep 99999 }} | ft
-    Days Hours Minutes Seconds Milliseconds
-    ---- ----- ------- ------- ------------
-    0    0     0       1       84
-    0    0     0       1       74
-    0    0     0       1       287
-    0    0     0       1       81
-    0    0     0       1       186
-    0    0     0       1       186
-    0    0     0       1       79
-    0    0     0       1       382
-    0    0     0       1       178
-    0    0     0       1       183
-
 
 .LINK
     glip, grep, sed
@@ -255,7 +223,7 @@
     6.3,2.9,5.6,1.8,virginica
 
 #>
-function Grep-Object {
+function Glip-Object {
     Param(
         [Parameter(Mandatory=$False,Position=0)]
         [string[]] $Pattern,
@@ -367,51 +335,82 @@ function Grep-Object {
     # main
     if ($Path){
         if ($AllMatches){
-            (Select-String @splatting).Matches.Value; return
+            (Select-String @splatting).Matches.Value `
+                | Set-Clipboard; Get-Clipboard
+            return
         } elseif ($FileNameOnly){
-            (Select-String @splatting).FileName | Sort-Object -Stable -Unique; return
+            (Select-String @splatting).FileName `
+                | Sort-Object -Stable -Unique `
+                | Set-Clipboard; Get-Clipboard
+            return
         } elseif ($FileNameAndLineNumber){
             Select-String @splatting `
-                | Out-String -Stream
+                | Out-String -Stream `
+                | Set-Clipboard; Get-Clipboard
                 return
         } elseif ($Context){
-            Select-String @splatting | Out-String -Stream  ; return
+            Select-String @splatting `
+                | Out-String -Stream `
+                | Set-Clipboard; Get-Clipboard
+                return
         } else {
             #if ( $LeaveHeaderAndBoarder ){
             #    Get-Content -Path $Path -TotalCount 2 -Encoding utf8
             #} elseif ( $LeaveHeader ){
             #    Get-Content -Path $Path -TotalCount 1 -Encoding utf8
             #}
-            (Select-String @splatting).Line; return
+            (Select-String @splatting).Line `
+                | Set-Clipboard; Get-Clipboard
+            return
         }
     }
     if ($AllMatches){
-        ($input | Select-String @splatting).Matches.Value; return
+        ($input | Select-String @splatting).Matches.Value `
+            | Set-Clipboard; Get-Clipboard
+        return
     }
     if ($Context){
         if ( $LeaveHeaderAndBoarder ){
-            $input[0..1] | ForEach-Object { "  $_" }
-            $input[(2..($input.Count))] | Select-String @splatting | Out-String -Stream ; return
+            @(   
+                ($input[0..1] | ForEach-Object { "  $_" }),
+                ($input[(2..($input.Count))] | Select-String @splatting | Out-String -Stream )
+            )  | Set-Clipboard; Get-Clipboard
+            return
         } elseif ( $LeaveHeader ){
-            $input[0] | ForEach-Object { "  $_" }
-            $input[(1..($input.Count))] | Select-String @splatting | Out-String -Stream ; return
+            @(
+                ($input[0] | ForEach-Object { "  $_" }),
+                ($input[(1..($input.Count))] | Select-String @splatting | Out-String -Stream )
+            )
+            return
         } else {
-            $input | Select-String @splatting | Out-String -Stream ; return
+            $input `
+                | Select-String @splatting `
+                | Out-String -Stream `
+                | Set-Clipboard; Get-Clipboard
+            return
         }
     }
     if ( $LeaveHeaderAndBoarder ){
-        $input[0..1]
-        ($input[(2..($input.Count))] | Select-String @splatting).Line ; return
+        @(
+            ( $input[0..1] ),
+            ( ($input[(2..($input.Count))] | Select-String @splatting).Line )
+        ) | Set-Clipboard; Get-Clipboard
+        return
     } elseif ( $LeaveHeader ){
-        $input[0]
-        ($input[(1..($input.Count))] | Select-String @splatting).Line ; return
+        @(
+            ($input[0] ),
+            (($input[(1..($input.Count))] | Select-String @splatting).Line )
+        ) | Set-Clipboard; Get-Clipboard
+        return
     } else {
-        ($input | Select-String @splatting).Line ; return
+        ($input | Select-String @splatting).Line `
+            | Set-Clipboard; Get-Clipboard
+        return
     }
 }
 # set alias
-[String] $tmpAliasName = "grep"
-[String] $tmpCmdName   = "Grep-Object"
+[String] $tmpAliasName = "glip"
+[String] $tmpCmdName   = "Glip-Object"
 [String] $tmpCmdPath = Join-Path `
     -Path $PSScriptRoot `
     -ChildPath $($MyInvocation.MyCommand.Name) `

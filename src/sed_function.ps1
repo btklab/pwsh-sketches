@@ -49,7 +49,7 @@
 
 
 .LINK
-    grep, sed, sed-i
+    glip, grep, sed, sed-i
 
 .EXAMPLE
     # g flag - replace all strings matching a pattern
