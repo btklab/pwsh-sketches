@@ -7,12 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- NA
+
+## [0.17.0] - 2025-11-15
+
 - Changed [Group-Aggregate][] Separate the C# file.
 - Fixed [Get-OGP][] Disallow scraping of amazon.co.jp.
 - Fixed [Get-LabelBlock][] skip trim when comment field is empty.
 - Added [Get-LabelBlock][] function.
 - Added [glip][] function.
 - Added [Summary-Object][] function.
+- Added [Get-ScrapingPolicy][] function.
 
 ## [0.16.1] - 2025-10-19
 
@@ -460,8 +465,10 @@ Breaking Changes
 [glip]: src/glip_function.ps1
 
 [Summary-Object]: src/Summary-Object_function.ps1
+[Get-ScrapingPolicy]: src/Get-ScrapingPolicy_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.16.1..HEAD
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.17.0..HEAD
+[0.17.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.17.0
 [0.16.1]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.1
 [0.16.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.0
 [0.15.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.15.0

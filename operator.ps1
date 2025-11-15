@@ -177,6 +177,7 @@ if ($IsWindows){
 . $pwshSrcDir/linkcheck_function.ps1
 . $pwshSrcDir/linkextract_function.ps1
 . $pwshSrcDir/Get-OGP_function.ps1
+. $pwshSrcDir/Get-ScrapingPolicy_function.ps1
 . $pwshSrcDir/Decode-Uri_function.ps1
 . $pwshSrcDir/Encode-Uri_function.ps1
 . $pwshSrcDir/Convert-Uri2Html_function.ps1
