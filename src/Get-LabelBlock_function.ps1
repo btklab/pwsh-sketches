@@ -237,7 +237,11 @@ function Get-LabelBlock {
                     $o = [ordered]@{}
                     $o['Name']    = 'stdin'
                     $o['Label']   = $splitLabel[0].Trim()
-                    $o['Comment'] = $splitLabel[1].Trim()
+                    if ( $splitLabel.Count -gt 1 ) {
+                        $o['Comment'] = $splitLabel[1].Trim()
+                    } else {
+                        $o['Comment'] = ''
+                    }
                     [pscustomobject]$o
                     #Write-Output $line # Label lines aren't empty, no trim check needed
                 }
@@ -338,7 +342,11 @@ function Get-LabelBlock {
                             $o = [ordered]@{}
                             $o['Name']    = $m.Filename
                             $o['Label']   = $splitLabel[0].Trim()
-                            $o['Comment'] = $splitLabel[1].Trim()
+                            if ( $splitLabel.Count -gt 1 ) {
+                                $o['Comment'] = $splitLabel[1].Trim()
+                            } else {
+                                $o['Comment'] = ''
+                            }
                             [pscustomobject]$o
                         }
                         continue

@@ -60,6 +60,10 @@ if ($IsWindows){
     . $pwshSrcDir/Shutdown-ComputerAFM_function.ps1
     
     . $pwshSrcDir/Set-DotEnv_function.ps1
+
+    ## culture
+    . $pwshSrcDir/Set-Lang_function.ps1
+    . $pwshSrcDir/Invoke-Lang_function.ps1
 }
 
 ## get/edit funcs
@@ -246,6 +250,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Apply-Function_function.ps1
 . $pwshSrcDir/GroupBy-Object_function.ps1
 . $pwshSrcDir/Group-Aggregate_function.ps1
+. $pwshSrcDir/Summary-Object_function.ps1
 . $pwshSrcDir/Measure-Stats_function.ps1
 . $pwshSrcDir/Add-Stats_function.ps1
 . $pwshSrcDir/Measure-Quartile_function.ps1
@@ -300,9 +305,6 @@ if ( $IsWindows ){
 . $pwshSrcDir/tenki_function.ps1
 . $pwshSrcDir/sleepy_function.ps1
 . $pwshSrcDir/Get-AppShortcut_function.ps1
-
-. $pwshSrcDir/Set-Lang_function.ps1
-. $pwshSrcDir/Invoke-Lang_function.ps1
 
 . $pwshSrcDir/Convert-DictionaryToPSCustomObject_function.ps1
 . $pwshSrcDir/Split-HereString_function.ps1
