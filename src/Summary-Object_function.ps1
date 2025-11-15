@@ -76,12 +76,14 @@ function Summary-Object {
                 Write-Error "The required C# file was not found. Ensure 'Summary-Object_function.cs' is in the same directory as this script. Searched path: $csFilePath"
                 return
             }
-
             try {
                 # Compile the C# file.
-                # We must also reference the System.Management.Automation DLL
-                # because the C# code uses [PSObject].
-                Add-Type -Path $csFilePath -ReferencedAssemblies "System.Management.Automation"
+                # We must reference System (for System.Collections.Specialized),
+                # System.Management.Automation (for PSObject) 
+                # and System.Core (for System.Linq, which is used heavily).
+                
+                # Add-Type -Path $csFilePath -ReferencedAssemblies "System", "System.Management.Automation", "System.Core"
+                Add-Type -Path $csFilePath
             }
             catch {
                 Write-Error "Failed to compile C# file: $csFilePath. Error: $_"
@@ -91,14 +93,16 @@ function Summary-Object {
 
         # Instantiate the C# aggregator class.
         # Pass the user-provided -Property parameter to its constructor.
-        $script:aggregator = [SummaryObject.StatisticsAggregator]::new($Property)
+        $aggregator = [SummaryObject.StatisticsAggregator]::new($Property)
     }
+
 
     process {
         # Process block: This runs for *every* object in the pipeline.
         # We simply pass the current object ($InputObject) to the C# class.
         # All heavy lifting and state management happens in C#.
-        $script:aggregator.AddObject($InputObject)
+        $aggregator.AddObject($InputObject)
+
     }
 
     end {
@@ -106,8 +110,8 @@ function Summary-Object {
         
         # Get the final list of results from the C# aggregator.
         # Each result is a Dictionary<string, object>.
-        #$results = $script:aggregator.GetResult()
-        [System.Collections.Hashtable[]]$results = $script:aggregator.GetResult()
+        [System.Collections.Hashtable[]]$results = $aggregator.GetResult()
+        
         # Iterate the results and convert each dictionary to a PSCustomObject
         # for standard, user-friendly PowerShell output.
         $splatting = @{
