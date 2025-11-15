@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Fixed [Get-OGP][] Stop scraping amazon.co.jp.
 - Fixed [Get-LabelBlock][] skip trim when comment field is empty.
 - Added [Get-LabelBlock][] function.
 - Added [glip][] function.
