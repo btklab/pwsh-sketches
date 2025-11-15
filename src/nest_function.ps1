@@ -108,26 +108,26 @@ function nest {
 
         # Split the pattern into prefix and suffix based on the '*' placeholder.
         $splitPattern = $Pattern -split '\*'
-        $script:PatternPrefix = $splitPattern[0]
-        $script:PatternSuffix = $splitPattern[1]
+        $PatternPrefix = $splitPattern[0]
+        $PatternSuffix = $splitPattern[1]
 
         # Determine the effective input and output delimiters based on provided parameters.
         if ($PSBoundParameters.ContainsKey('InputDelimiter') -and $PSBoundParameters.ContainsKey('OutputDelimiter')) {
             # Both delimiters are explicitly provided
-            $script:iDelim = $InputDelimiter
-            $script:oDelim = $OutputDelimiter
+            $iDelim = $InputDelimiter
+            $oDelim = $OutputDelimiter
         } elseif ($PSBoundParameters.ContainsKey('InputDelimiter')) {
             # Only InputDelimiter is provided, use it for both input and output
-            $script:iDelim = $InputDelimiter
-            $script:oDelim = $InputDelimiter
+            $iDelim = $InputDelimiter
+            $oDelim = $InputDelimiter
         } elseif ($PSBoundParameters.ContainsKey('OutputDelimiter')) {
             # Only OutputDelimiter is provided, use default space for input and custom for output
-            $script:iDelim = ' '
-            $script:oDelim = $OutputDelimiter
+            $iDelim = ' '
+            $oDelim = $OutputDelimiter
         } else {
             # Neither is provided, use default space for both
-            $script:iDelim = ' '
-            $script:oDelim = ' '
+            $iDelim = ' '
+            $oDelim = ' '
         }
     }
 
@@ -139,13 +139,13 @@ function nest {
         # 2. Normalize multiple internal spaces to a single space if default delimiter is used.
         #    If a custom input delimiter is used, we only trim and let the split handle it.
         $cleanedInput = $inputString.Trim()
-        if ($script:iDelim -eq ' ') {
+        if ($iDelim -eq ' ') {
             $cleanedInput = $cleanedInput -replace '\s+', ' '
         }
 
         # Split the cleaned input string into individual fields using the determined input delimiter.
         # Filter out empty strings that might result from splitting multiple delimiters next to each other.
-        [string[]] $fields = $cleanedInput -split $script:iDelim | Where-Object { $_ -ne '' }
+        [string[]] $fields = $cleanedInput -split $iDelim | Where-Object { $_ -ne '' }
 
         if ($fields.Count -eq 0) {
             # If there are no fields after cleaning, output an empty string.
@@ -158,22 +158,22 @@ function nest {
         if ($Reverse) {
             # Nesting from right to left (rightmost field is deepest)
             # Start with the deepest (rightmost) field
-            $result = $script:PatternPrefix + $fields[$fields.Count - 1] + $script:PatternSuffix
+            $result = $PatternPrefix + $fields[$fields.Count - 1] + $PatternSuffix
 
             # Iterate backwards from the second-to-last field to the first.
             for ($i = $fields.Count - 2; $i -ge 0; $i--) {
                 # Construct the new nested string: prefix + current field + output delimiter + previous result + suffix
-                $result = $script:PatternPrefix + $fields[$i] + $script:oDelim + $result + $script:PatternSuffix
+                $result = $PatternPrefix + $fields[$i] + $oDelim + $result + $PatternSuffix
             }
         } else {
             # Default nesting from left to right (leftmost field is deepest)
             # Start with the deepest (leftmost) field
-            $result = $script:PatternPrefix + $fields[0] + $script:PatternSuffix
+            $result = $PatternPrefix + $fields[0] + $PatternSuffix
 
             # Iterate forwards from the second field to the last.
             for ($i = 1; $i -lt $fields.Count; $i++) {
                 # Construct the new nested string: prefix + previous result + output delimiter + current field + suffix
-                $result = $script:PatternPrefix + $result + $script:oDelim + $fields[$i] + $script:PatternSuffix
+                $result = $PatternPrefix + $result + $oDelim + $fields[$i] + $PatternSuffix
             }
         }
 
