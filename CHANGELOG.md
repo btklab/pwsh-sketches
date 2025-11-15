@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed [Get-LabelBlock][] skip trim when comment field is empty.
 - Added [Get-LabelBlock][] function.
 - Added [glip][] function.
+- Added [Summary-Object][] function.
 
 ## [0.16.1] - 2025-10-19
 
@@ -457,6 +458,8 @@ Breaking Changes
 [Get-LabelBlock]: src/Get-LabelBlock_function.ps1
 
 [glip]: src/glip_function.ps1
+
+[Summary-Object]: src/Summary-Object_function.ps1
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.16.1..HEAD
 [0.16.1]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.1

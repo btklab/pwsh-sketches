@@ -250,6 +250,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Apply-Function_function.ps1
 . $pwshSrcDir/GroupBy-Object_function.ps1
 . $pwshSrcDir/Group-Aggregate_function.ps1
+. $pwshSrcDir/Summary-Object_function.ps1
 . $pwshSrcDir/Measure-Stats_function.ps1
 . $pwshSrcDir/Add-Stats_function.ps1
 . $pwshSrcDir/Measure-Quartile_function.ps1
