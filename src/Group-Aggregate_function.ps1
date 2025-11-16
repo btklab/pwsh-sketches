@@ -88,11 +88,11 @@
 function Group-Aggregate {
     [CmdletBinding(DefaultParameterSetName = 'Pipeline')]
     param(
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true, Position=0)]
         [Alias('g')]
         [string[]]$GroupBy,
 
-        [Parameter(Mandatory=$true)]
+        [Parameter(Mandatory=$true, Position=1)]
         [Alias('a')]
         [string[]]$Aggregate,
 
@@ -105,7 +105,7 @@ function Group-Aggregate {
         [Alias('p')]
         [string]$Path = '',
 
-        [Parameter(Mandatory=$true, ValueFromPipeline = $true, ParameterSetName = 'Pipeline')]
+        [Parameter(Mandatory=$false, ValueFromPipeline = $true, ParameterSetName = 'Pipeline')]
         [object]$InputObject,
 
         [Parameter(Mandatory=$false)]
