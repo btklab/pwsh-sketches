@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [unreleased]
 
 - Fixed [Group-Aggregate], [Summary-Object] Avoid function conflicts in the script scope.
+- Added [Summary-Object] -Path parameter.
+
 
 ## [0.17.0] - 2025-11-15
 
