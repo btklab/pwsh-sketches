@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Refactored [csv2txt] Optimize main loop by rewriting in C#.
-- Fixed [Group-Aggregate], [Summary-Object] Avoid function conflicts in the script scope.
-- Added [Summary-Object] -Path parameter.
+- NA
+
+## [0.18.0] - 2025-11-23
+
+- Added [Build-CSharpAssembly][] function.
+- Added [csv2unquote][] function.
+- Refactor [Replace-InQuote][] Optimize main loop by rewriting in C#.
+- Refactored [csv2txt][] Optimize main loop by rewriting in C#.
+- Fixed [Group-Aggregate][], [Summary-Object][] Avoid function conflicts in the script scope.
+- Added [Summary-Object][] -Path parameter.
 
 
 ## [0.17.0] - 2025-11-15
@@ -470,7 +477,11 @@ Breaking Changes
 [Summary-Object]: src/Summary-Object_function.ps1
 [Get-ScrapingPolicy]: src/Get-ScrapingPolicy_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.17.0..HEAD
+[csv2unquote]: src/csv2unquote_function.ps1
+[Build-CSharpAssembly]: src/Build-CSharpAssembly_function.ps1
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.18.0..HEAD
+[0.18.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.18.0
 [0.17.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.17.0
 [0.16.1]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.1
 [0.16.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.0
