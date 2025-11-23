@@ -97,7 +97,6 @@ function Replace-InQuote {
 
     begin {
         # --- Load C# Backend ---
-        # Compile C# if not already loaded
         if (-not ('ScopedRegexReplacer' -as [type])) {
             $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
             
