@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Refactored [csv2txt] Optimize main loop by rewriting in C#.
 - Fixed [Group-Aggregate], [Summary-Object] Avoid function conflicts in the script scope.
 - Added [Summary-Object] -Path parameter.
 
