@@ -1,24 +1,31 @@
 <#
 .SYNOPSIS
-    Replace-InQuote (Alias: qsed) - Replace substrings enclosed in double quotes.
+    Replace-InQuote (Alias: qsed) - Scoped Regular Expression Replacer.
 
-    default: Replace spaces to underscores only within strings
-             enclosed in double quotes.
+    Performs text replacement ONLY within specified delimiters
+    (e.g., quotes, brackets).
 
-    PS> echo 'aaa "b b b" ccc' | Replace-InQuote -From " " -To "_"
+    It ignores text outside these delimiters.
 
-        aaa "b_b_b" ccc
+.DESCRIPTION
+    This tool allows for surgical text modification. Instead of running a replace
+    operation on the whole line, it first isolates text blocks wrapped in 
+    start/end tokens (default is double quotes), and applies the replacement 
+    only there.
 
+    It is powered by a C# class using MatchEvaluators for high performance.
 
-    Function behavior:
+    Common Use Cases:
+    1. Replacing commas with dots inside CSV quotes without breaking the CSV structure.
+    2. Redacting sensitive info inside brackets [Secret].
+    3. Normalizing whitespace inside parentheses.
 
-    Note that this function allows to specify arbitrary types
-    and numbers of enclosing characters using -Quote or -PunctuationMarks,
-    but it does not differentiate between the types of enclosing characters.
-    This function reads the input line by line, from left to right,
-    character by character, treating the odd-numbered enclosing characters
-    found as opening brackets and the even-numbered enclosing characters
-    found as closing brackets.
+    LIMITATIONS:
+    - Nested delimiters (e.g., "(outer (inner) outer)") are NOT supported. 
+    The regex uses non-greedy matching and will stop at the first closing delimiter.
+
+.LINK
+    csv2txt, csv2unquote, Replace-InQuote
 
 .NOTES
     about_Regular_Expressions - PowerShell
@@ -27,193 +34,160 @@
     Regular Expression Language - Quick Reference - .NET
     https://learn.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference
 
-.LINK
-    csv2txt, csv2sqlite,
-    Process-CsvColumn (csv2proc),
-    Replace-InQuote (qsed),
-    Process-InQuote (qproc)
+.PARAMETER Pattern
+    The Regex pattern to search for INSIDE the delimiters.
 
+.PARAMETER Replacement
+    The string to replace the matches with.
 
-.EXAMPLE
-    # Read from standard input and transform
-    $logEntries = @(
-       '192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET /index.html HTTP/1.1" 200 1234',
-       '203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST /api/data HTTP/1.1" 500 432',
-       '198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT /upload HTTP/1.1" 201 5678'
-    )
+.PARAMETER StartToken
+    The delimiter that starts the scope. Default is double quote (").
 
-    # Replace spaces to underscores only within strings enclosed in double quotes.
-    $logEntries | Replace-InQuote -From ' ' -To '_'
+.PARAMETER EndToken
+    The delimiter that ends the scope. Default is double quote (").
 
-    192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET_/index.html_HTTP/1.1" 200 1234
-    203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST_/api/data_HTTP/1.1" 500 432
-    198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT_/upload_HTTP/1.1" 201 5678
-
-    # Format Apachelog into space-delimited data.
-    $logEntries | Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']'
-
-    192.168.1.1 - - [25/Mar/2025:06:45:00_+0900] "GET_/index.html_HTTP/1.1" 200 1234
-    203.0.113.12 - - [25/Mar/2025:06:45:02_+0900] "POST_/api/data_HTTP/1.1" 500 432
-    198.51.100.42 - - [25/Mar/2025:06:45:04_+0900] "PUT_/upload_HTTP/1.1" 201 5678
-
-    # First match only
-    $logEntries | Replace-InQuote -From " " -To "_" -FirstMatch 
-
-    192.168.1.1 - - [25/Mar/2025:06:45:00 +0900] "GET_/index.html HTTP/1.1" 200 1234
-    203.0.113.12 - - [25/Mar/2025:06:45:02 +0900] "POST_/api/data HTTP/1.1" 500 432
-    198.51.100.42 - - [25/Mar/2025:06:45:04 +0900] "PUT_/upload HTTP/1.1" 201 5678
-
+.PARAMETER Path
+    Path to the input file. Triggers high-speed file processing mode.
 
 .EXAMPLE
-    # convert to object
-    $logEntries `
-        | Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']' `
-        | ConvertFrom-Csv -Delimiter " " -Header ( 1..7 | %{ "c$_" } ) `
-        | ft
+    # Scenario: Clean up a CSV where fields contain commas.
+    # Input:  "Smith, John", "Doe, Jane"
+    # Action: Replace ',' with '.' ONLY inside the quotes.
+    $data | Replace-InQuote -Pattern "," -Replacement "."
 
-    c1            c2 c3 c4                           c5                       c6  c7
-    --            -- -- --                           --                       --  --
-    192.168.1.1   -  -  [25/Mar/2025:06:45:00_+0900] GET_/index.html_HTTP/1.1 200 1234
-    203.0.113.12  -  -  [25/Mar/2025:06:45:02_+0900] POST_/api/data_HTTP/1.1  500 432
-    198.51.100.42 -  -  [25/Mar/2025:06:45:04_+0900] PUT_/upload_HTTP/1.1     201 5678
+    # Output: "Smith. John", "Doe. Jane"
 
-    # Replace underscores with spaces in the strings
-    # of columns c4 and c5 using Replace-ForEach function
-    $logEntries `
-        | Replace-InQuote -From " " -To "_" -PunctuationMarks '[',']' `
-        | ConvertFrom-Csv -Delimiter " " -Header (1..7|%{"c$_"}) `
-        | Replace-ForEach -Property c4, c5 -From "_" -To " " `
-        | ft
+.EXAMPLE
+    # Scenario: Replace spaces with underscores inside brackets [ ].
+    "Data [Type A] [Type B]" | Replace-InQuote -Start "[" -End "]" -Pattern "\s" -Replacement "_"
 
-    c1            c2 c3 c4                           c5                       c6  c7
-    --            -- -- --                           --                       --  --
-    192.168.1.1   -  -  [25/Mar/2025:06:45:00 +0900] GET /index.html HTTP/1.1 200 1234
-    203.0.113.12  -  -  [25/Mar/2025:06:45:02 +0900] POST /api/data HTTP/1.1  500 432
-    198.51.100.42 -  -  [25/Mar/2025:06:45:04 +0900] PUT /upload HTTP/1.1     201 5678
+    # Output: "Data [Type_A] [Type_B]"
 
+.EXAMPLE
+    # Scenario: Remove all digits inside single quotes.
+    "ID: 'A123' Code: 'B456'" | Replace-InQuote -Start "'" -End "'" -Pattern "\d" -Replacement ""
+
+    # Output: "ID: 'A' Code: 'B'"
 
 #>
 function Replace-InQuote {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$false, Position=0)]
-        [Alias('f')]
-        [string] $From = " "
-        ,
-        [Parameter(Mandatory=$false, Position=1)]
-        [Alias('t')]
-        [string] $To = '_'
-        ,
+        [Parameter(Mandatory=$true, Position=0)]
+        [Alias("f","from")]
+        [string]$Pattern,
+
+        [Parameter(Mandatory=$true, Position=1)]
+        [Alias("t","to")]
+        [string]$Replacement,
+
         [Parameter(Mandatory=$false)]
-        [switch] $SkipBlank
-        ,
+        [string]$StartToken = '"',
+
         [Parameter(Mandatory=$false)]
-        [switch] $SimpleMatch
-        ,
+        [string]$EndToken = '"',
+
         [Parameter(Mandatory=$false)]
-        [switch] $FirstMatch
-        ,
-        [Parameter(Mandatory=$false)]
-        [int] $FirstMatchCount = 1
-        ,
-        [Parameter(Mandatory=$false)]
-        [switch] $CaseSensitive
-        ,
-        [Parameter(Mandatory=$false)]
-        [Alias('q')]
-        [string] $Quote = '"'
-        ,
-        [Parameter(Mandatory=$false)]
-        [Alias('p')]
-        [string[]] $PunctuationMarks
-        ,
-        [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
-        [string[]] $TextObject
+        [Alias("p")]
+        [string]$Path,
+
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+        [object]$InputObject
     )
+
     begin {
-        # Begin block: Initialization process
-        # private function
-        function isPuncMark {
-            param (
-                [Parameter(Mandatory=$false)]
-                [string] $c
-            )
-            [bool] $quartFlag = $False
-            if ( $Quote -eq '' ) {
-                # skip
-            } else {
-                if ( $c -eq $Quote ) {
-                    $quartFlag = $true
+        # --- Load C# Backend ---
+        # Compile C# if not already loaded
+        if (-not ('ScopedRegexReplacer' -as [type])) {
+            $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
+            
+            # Paths to DLL and Source
+            [string] $libFileName = "Replace-InQuote_function"
+            [string] $dllFileName = "$libFileName.dll"
+            [string] $csFileName  = "$libFileName.cs"
+            [string] $dllPath = Join-Path $scriptDir $dllFileName
+            [string] $csPath  = Join-Path $scriptDir $csFileName
+    
+            # Try loading the DLL first (Recommended for production)
+            if (Test-Path $dllPath) {
+                Write-Verbose "Loading compiled assembly: $dllPath"
+                try {
+                    Add-Type -Path $dllPath
+                }
+                catch {
+                    Write-Error "Failed to load assembly '$dllPath': $_"
+                    return
                 }
             }
-            if ( $PunctuationMarks.Count -eq 0 ){
-                # skip
-            } else {
-                if ( $c -in $PunctuationMarks ) {
-                    $quartFlag = $true
+            # Fallback to C# source compilation (Dev/Test only)
+            elseif (Test-Path $csPath) {
+                Write-Verbose "Compiled assembly not found. Falling back to runtime compilation of: $csPath"
+                Write-Warning "Compiling C# source at runtime. For better security and performance, run '${libFileName}_build.ps1' to generate the DLL."
+                try {
+                    Add-Type -Path $csPath
+                }
+                catch {
+                    Write-Error "Failed to compile C# file: $_"
+                    return
                 }
             }
-            return $quartFlag
+            else {
+                Write-Error "Could not find '$dllFileName' or '$csFileName' in $scriptDir."
+                return
+            }
         }
-        # set variable
-        [regex] $regex = $From
+
+        # Initialize Logic for Pipeline Mode
+        if (-not $Path) {
+            Write-Verbose "Mode: Pipeline Stream"
+            # We create the instance once to reuse the compiled Regex
+            $replacer = [ScopedRegexReplacer]::new($StartToken, $EndToken, $Pattern, $Replacement)
+        }
+        else {
+            Write-Verbose "Mode: High-Speed File Access"
+        }
     }
+
     process {
-        # Process block: Input data processing
-        [string] $line = $_
-        if ( $line -eq '' ) {
-            if ( $SkipBlank ){
-                # skip empty line
-            } else {
-                Write-Output ''
-            }
-            return
-        }
-        [string[]] $lineAry = $line.ToCharArray()
-        # Process each line
-        [bool] $inQuote = $false
-        [string] $currentQuote = ''
-        [string] $writeLine = ''
-        [string] $punctuationMark = ''
-        for ($i = 0; $i -lt $lineAry.Count; $i++) {
-            [string] $char = $lineAry[$i]
-            Write-Debug "$char $(isPuncMark $char)"
-            if ( isPuncMark $char ) {
-                # Double quote found
-                if ($inQuote) {
-                    # End of quote
-                    $inQuote = $false
-                    if ( $FirstMatch) {
-                        [string] $replaced = $regex.Replace($currentQuote, $To, $FirstMatchCount)
-                    } elseif ( $SimpleMatch ) {
-                        [string] $replaced = $currentQuote.Replace($From, $To)
-                    } elseif ( $CaseSensitive ) {
-                        [string] $replaced = $currentQuote -creplace $regex, $To
-                    } else {
-                        [string] $replaced = $currentQuote -replace $regex, $To
-                    }
-                    [string] $writeLine += $replaced
-                    [string] $currentQuote = ''
-                    [string] $writeLine += $char
-                } else {
-                    # Start of quote
-                    [bool] $inQuote = $true
-                    [string] $writeLine += $char
-                }
-            } else {
-                # Not a double quote
-                if ($inQuote) {
-                    [string] $currentQuote += $char
-                } else {
-                    [string] $writeLine += $char
+        if (-not $Path) {
+            # Handle Pipeline Input
+            if ($InputObject -is [System.IO.FileInfo]) {
+                # Case: Piped file object (Get-ChildItem)
+                $lines = Get-Content -Path $InputObject.FullName
+                foreach ($line in $lines) {
+                    Write-Output $replacer.ProcessLine($line)
                 }
             }
+            else {
+                # Case: Piped String
+                $lineString = [string]$InputObject
+                Write-Output $replacer.ProcessLine($lineString)
+            }
         }
-        Write-Output $writeLine
     }
+
     end {
-        # End block: Post-processing
-        #  - Nothing specific
+        if ($Path) {
+            # Handle Direct File Input (Fastest)
+            $resolvedPath = (Resolve-Path $Path).Path
+            
+            try {
+                $results = [ScopedRegexReplacer]::ProcessFile(
+                    $resolvedPath, 
+                    $StartToken, 
+                    $EndToken, 
+                    $Pattern, 
+                    $Replacement
+                )
+                
+                foreach ($line in $results) {
+                    Write-Output $line
+                }
+            }
+            catch {
+                Write-Error "File Processing Error: $_"
+            }
+        }
     }
 }
 # set alias
