@@ -193,6 +193,7 @@ if ($IsWindows){
 ## csv
 . $pwshSrcDir/catcsv_function.ps1
 . $pwshSrcDir/csv2txt_function.ps1
+. $pwshSrcDir/csv2unquote_function.ps1
 . $pwshSrcDir/csv2sqlite_function.ps1
 . $pwshSrcDir/Process-CsvColumn_function.ps1
 
@@ -299,6 +300,10 @@ if ( $IsWindows ){
 . $pwshSrcDir/Grep-Block_function.ps1
 . $pwshSrcDir/Get-Block_function.ps1
 . $pwshSrcDir/Get-LabelBlock_function.ps1
+
+## build
+. $pwshSrcDir/Build-CSharpAssembly_function.ps1
+
 
 ## misc
 . $pwshSrcDir/Test-isAsciiLine_function.ps1
