@@ -1,160 +1,189 @@
 <#
-.SYNOPSIS
-    csv2txt - Convert CSV to SSV
+    .SYNOPSIS
+    csv2txt - Convert CSV to SSV (Space-Separated Values)
+    
+    Converts Comma-Separated-Values to Space-Separated-Values
+    using a high-performance C# backend.
 
-    Convert Comma-Separated-Values to Space-Separated-Values
+    csv2txt [-z|-NA] [-Path <String>]
+        -z    : Fill blank data with "0"
+        -NA  : Fill blank data with "NA"
+        -Path : Specify input file path directly (Fastest mode)
 
-    csv2txt [-z|-NaN]
-        -z : Fill blank data with zeros
-        -NaN : Fill blank data with "NaN"
+    LF in cells in CSV output from Excel are converted to "\n" (literal string).
 
-    LF in cells in CSV output from Excel are
-    converted to "\n".
-
-    Notes:
+    Notes on conversion rules:
         - Output is space delimited
-        - "\" convert to "\\"
-        - LF convert to "\n"
+        - "\" converts to "\\"
+        - LF converts to "\n"
         - Space in the data is converted to "_"
-        - "_" in data is convert to "\_"
-        - Empty fields are represented by "_"
+        - "_" in data is converted to "\_"
+        - Empty fields are represented by "_" (default), "0", or "NA"
+
+    .DESCRIPTION
     
-    Structure of the input CSV file
-        - Separate fields with commas
-        - Put line breaks at the end of records
-        - Fields with commas/double quotes/line breaks
-          should always be enclosed in double quotes.
-          even if these sybols are not present,
-          they may be enclosed in double quotes
-        - Double quotes in data should be escaped
-          with consecutive double quotes like ""
-
-.DESCRIPTION
-
-    The main design pattern of this command was abstracted from
-    ryuichiueda's "MyCommands/csv2txt.py",
-    Here is the original copyright notice for "MyCommands/csv2txt.py":
+    This function replaces the original slow string-processing approach
+    with a compiled C# class.It supports two modes of operation:
     
-        The MIT License Copyright (c) 2014, Ryuichi Ueda
-        https://github.com/ryuichiueda/MyCommands/blob/master/LICENSE.md
+    1. Pipeline Mode: Accepts strings or file objects from the pipeline.
 
+       Example: cat data.csv | csv2txt
 
-.LINK
-    csv2txt, json2txt, csv2sqlite,
-    Process-CsvColumn (csv2proc),
-    Replace-InQuote (qsed),
-    Process-InQuote (qproc)
+    2. Direct File Mode (-Path): Reads the file directly using C# stream readers.
+       This is significantly faster for large files as it avoids PowerShell overhead.
 
-.EXAMPLE
-    cat a.csv | csv2txt
+       Example: csv2txt -Path data.csv
+
+    .PARAMETER Path
+        The path to the CSV file. using this parameter triggers the high-speed file processing mode.
     
-    PS > cat a.csv | csv2txt -z
+    .PARAMETER z
+        Switch to fill empty CSV cells with "0".
     
-    PS > cat a.csv | csv2txt -NaN
-
+    .PARAMETER NA
+        Switch to fill empty CSV cells with "NA".
+        
+    .EXAMPLE
+        # Standard pipeline usage
+       cat data.csv | csv2txt
+    
+    .EXAMPLE
+        # Using the null placeholder options
+        cat data.csv | csv2txt -z
+        cat data.csv | csv2txt -NA
+    
+    .EXAMPLE
+        # High-speed mode for large files
+        csv2txt -Path large_dataset.csv
+    
 #>
 function csv2txt {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory=$false)]
+        [Alias("p")]
+        [string]$Path,
 
-    begin
-    {
-        if( [string] ($args[0]) -eq "-z"){
-            [string] $nulldata = '0'
-        }elseif( [string] ($args[0]) -eq "-NaN"){
-            [string] $nulldata = 'NaN'
-        }else{
-            [string] $nulldata = '_'
+        [Parameter(Mandatory=$false)]
+        [Alias("z")]
+        [switch]$Zero,
+
+        [Parameter(Mandatory=$false)]
+        [switch]$NA,
+
+        [Parameter(Mandatory=$false, ValueFromPipeline=$true)]
+        [object]$InputObject
+    )
+
+    begin {
+        # --- 1. Determine the Null Placeholder ---
+        $nullData = "_"
+        if ($Zero) { $nullData = "0" }
+        if ($NA) { $nullData = "NA" }
+
+        # --- 2. Load C# Class ---
+        # Locate the C# file relative to this script
+        $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
+        $csFilePath = Join-Path $scriptDir "csv2txt_function.cs"
+
+        if (-not (Test-Path $csFilePath)) {
+            Write-Error "Required file 'csv2txt_function.cs' not found in $scriptDir."
+            return
         }
 
-        # init var
-        [int] $cnt = 0
-        [string] $tmpBuf = ''
-    }
-
-    process
-    {
-        # Count whether the double quote is even or odd
-        $strLen = $_.Length
-        for($i = 0; $i -lt $strLen; $i++){
-            [string] $strWord = $_[$i]
-            if($strWord -eq '"'){ $cnt += 1 }
-            # counting double quotes as even or odd
-            # if the number of double quotes is odd,
-            # convert the comma to another symbol.
-            # Also, convert "\" to different symbol
-            if($cnt % 2 -eq 1){
-                if($strWord -eq ','){
-                    [string] $addWord = '\c'
-                }elseif($strWord -eq '\'){
-                    [string] $addWord = '@y@y@'
-                }else{
-                    [string] $addWord = $strWord
+        # Compile C# if not already loaded
+        if (-not ('CsvToSsvConverter' -as [type])) {
+            $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
+            
+            # Paths to DLL and Source
+            $dllFileName = "csv2txt_function.dll"
+            $csFileName  = "csv2txt_function.cs"
+            $dllPath = Join-Path $scriptDir $dllFileName
+            $csPath  = Join-Path $scriptDir $csFileName
+    
+            # Try loading the DLL first (Recommended for production)
+            if (Test-Path $dllPath) {
+                Write-Verbose "Loading compiled assembly: $dllPath"
+                try {
+                    Add-Type -Path $dllPath
                 }
-            }else{
-                # if the number of double quotes is even
-                if($strWord -eq '\'){
-                    [string] $addWord = '@y@y@'
-                }else{
-                    [string] $addWord = $strWord
+                catch {
+                    Write-Error "Failed to load assembly '$dllPath': $_"
+                    return
                 }
             }
-            $tmpBuf = [string]$tmpBuf + [string]$addWord
+            # Fallback to C# source compilation (Dev/Test only)
+            elseif (Test-Path $csPath) {
+                Write-Verbose "Compiled assembly not found. Falling back to runtime compilation of: $csPath"
+                Write-Warning "Compiling C# source at runtime. For better security and performance, run 'Build-ExpandDateDll.ps1' to generate the DLL."
+                try {
+                    Add-Type -Path $csPath
+                }
+                catch {
+                    Write-Error "Failed to compile C# file: $_"
+                    return
+                }
+            }
+            else {
+                Write-Error "Could not find '$dllFileName' or '$csFileName' in $scriptDir."
+                return
+            }
         }
-        # if the double-quote counter is even, output,
-        # otherwise read next line
-        if($cnt % 2 -eq 0){
 
-            # various string conversion
-            # Remove double-quote at the beginning of a line
-            $tmpBuf = $tmpBuf -Replace '^"', ''
+        # --- 3. Initialize Processing Strategy ---
+        if ($Path) {
+            # Direct File Mode: No setup needed here, handled in 'end' block
+            Write-Verbose "Mode: Direct File Processing (High Speed)"
+        }
+        else {
+            # Pipeline Mode: Initialize the stateful converter
+            Write-Verbose "Mode: Pipeline Processing"
+            $converter = [CsvToSsvConverter]::new($nullData)
+        }
+    }
 
-            # Remove double-quote at the end of a line
-            $tmpBuf = $tmpBuf -Replace '"$', ''
+    process {
+        if (-not $Path) {
+            # Pipeline Mode Logic
+            if ($InputObject -is [System.IO.FileInfo]) {
+                # If user piped 'ls *.csv', read the file content
+                $lines = Get-Content -Path $InputObject.FullName
+                foreach ($line in $lines) {
+                    $result = $converter.ProcessLine($line)
+                    if ($null -ne $result) {
+                        Write-Output $result
+                    }
+                }
+            }
+            else {
+                # Standard string input
+                $lineString = [string]$InputObject
+                $result = $converter.ProcessLine($lineString)
+                if ($null -ne $result) {
+                    Write-Output $result
+                }
+            }
+        }
+    }
 
-            # Convert '",' to ',' in a line
-            $tmpBuf = $tmpBuf.Replace('",', ',')
+    end {
+        if ($Path) {
+            # Direct File Mode Logic
+            # Resolve absolute path for C#
+            $resolvedPath = (Resolve-Path $Path).Path
 
-            # Convert ',"' to ',' in a line
-            $tmpBuf = $tmpBuf.Replace(',"', ',')
+            try {
+                # Execute static high-speed method
+                $results = [CsvToSsvConverter]::ProcessFile($resolvedPath, $nullData)
 
-            # Replace double quote to another symbol
-            $tmpBuf = $tmpBuf.Replace('""', '\d')
-
-            # Replace underscore
-            $tmpBuf = $tmpBuf.Replace('_', '\_')
-
-            # Replace spaces
-            $tmpBuf = $tmpBuf.Replace(' ', '_')
-
-            # Replace comma at the end of lines
-            $addNull = ',' + [string]$nulldata
-            $tmpBuf = $tmpBuf -Replace ',$', $addNull
-
-            # Replace comma at the beginning of lines
-            $addNull = [string]$nulldata + ','
-            $tmpBuf = $tmpBuf -Replace '^,', $addNull
-
-            # Replace consecutive commas (empty data cell)
-            $addNull = ',' + [string]$nulldata + ','
-            $tmpBuf = $tmpBuf.Replace(',,', $addNull)
-            $tmpBuf = $tmpBuf.Replace(',,', $addNull)
-
-            # Replace reamaining commas
-            $tmpBuf = $tmpBuf.Replace(',', '\s')
-
-            # Re-converts symbols
-            # \s separator
-            $tmpBuf = $tmpBuf.Replace('\s', ' ')
-            # \c commas
-            $tmpBuf = $tmpBuf.Replace('\c', ',')
-            # \d double-quotes
-            $tmpBuf = $tmpBuf.Replace('\d', '"')
-            # Replace "@y@y@" to "\\"
-            $tmpBuf = $tmpBuf.Replace('@y@y@', '\\')
-            # output
-            Write-Output $tmpBuf
-            $tmpBuf = ''
-        }else{
-            $tmpBuf = [string]$tmpBuf + '\n'
+                # Output results
+                foreach ($line in $results) {
+                    Write-Output $line
+                }
+            }
+            catch {
+                Write-Error "Error processing file '$resolvedPath': $_"
+            }
         }
     }
 }
