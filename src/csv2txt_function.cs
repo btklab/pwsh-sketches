@@ -9,7 +9,7 @@ using System.Text;
 /// </summary>
 public class CsvToSsvConverter
 {
-    // Configuration: What string to use when a field is empty (e.g., "_", "0", "NaN")
+    // Configuration: What string to use when a field is empty (e.g., "_", "0", "NA")
     private readonly string _nullPlaceholder;
 
     // State: Accumulates text across multiple lines if a CSV field contains a newline inside quotes.
@@ -93,7 +93,6 @@ public class CsvToSsvConverter
             {
                 if (inQuote)
                 {
-                    //buffer.Append("\\n");
                     buffer.Append("\\n");
                 }
 

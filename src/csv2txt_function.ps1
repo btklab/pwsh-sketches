@@ -1,5 +1,5 @@
 <#
-    .SYNOPSIS
+.SYNOPSIS
     csv2txt - Convert CSV to SSV (Space-Separated Values)
     
     Converts Comma-Separated-Values to Space-Separated-Values
@@ -20,7 +20,7 @@
         - "_" in data is converted to "\_"
         - Empty fields are represented by "_" (default), "0", or "NA"
 
-    .DESCRIPTION
+.DESCRIPTION
     
     This function replaces the original slow string-processing approach
     with a compiled C# class.It supports two modes of operation:
@@ -34,28 +34,30 @@
 
        Example: csv2txt -Path data.csv
 
-    .PARAMETER Path
-        The path to the CSV file. using this parameter triggers the high-speed file processing mode.
+.LINK
+    csv2txt, csv2unquote, Replace-InQuote
+
+.PARAMETER Path
+    The path to the CSV file. using this parameter triggers the high-speed file processing mode.
     
-    .PARAMETER z
-        Switch to fill empty CSV cells with "0".
+.PARAMETER Zero
+    Switch to fill empty CSV cells with "0".
     
-    .PARAMETER NA
-        Switch to fill empty CSV cells with "NA".
-        
-    .EXAMPLE
-        # Standard pipeline usage
-       cat data.csv | csv2txt
+.PARAMETER NA
+    Switch to fill empty CSV cells with "NA".
     
-    .EXAMPLE
-        # Using the null placeholder options
-        cat data.csv | csv2txt -z
-        cat data.csv | csv2txt -NA
-    
-    .EXAMPLE
-        # High-speed mode for large files
-        csv2txt -Path large_dataset.csv
-    
+.EXAMPLE
+    # Standard pipeline usage
+    cat data.csv | csv2txt
+
+.EXAMPLE
+    # Using the null placeholder options
+    cat data.csv | csv2txt -z
+    cat data.csv | csv2txt -NA
+
+.EXAMPLE
+    # High-speed mode for large files
+    csv2txt -Path large_dataset.csv    
 #>
 function csv2txt {
     [CmdletBinding()]
@@ -82,24 +84,16 @@ function csv2txt {
         if ($NA) { $nullData = "NA" }
 
         # --- 2. Load C# Class ---
-        # Locate the C# file relative to this script
-        $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
-        $csFilePath = Join-Path $scriptDir "csv2txt_function.cs"
-
-        if (-not (Test-Path $csFilePath)) {
-            Write-Error "Required file 'csv2txt_function.cs' not found in $scriptDir."
-            return
-        }
-
         # Compile C# if not already loaded
         if (-not ('CsvToSsvConverter' -as [type])) {
             $scriptDir = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
             
             # Paths to DLL and Source
-            $dllFileName = "csv2txt_function.dll"
-            $csFileName  = "csv2txt_function.cs"
-            $dllPath = Join-Path $scriptDir $dllFileName
-            $csPath  = Join-Path $scriptDir $csFileName
+            [string] $libFileName = "csv2txt_function"
+            [string] $dllFileName = "$libFileName.dll"
+            [string] $csFileName  = "$libFileName.cs"
+            [string] $dllPath = Join-Path $scriptDir $dllFileName
+            [string] $csPath  = Join-Path $scriptDir $csFileName
     
             # Try loading the DLL first (Recommended for production)
             if (Test-Path $dllPath) {
@@ -115,7 +109,7 @@ function csv2txt {
             # Fallback to C# source compilation (Dev/Test only)
             elseif (Test-Path $csPath) {
                 Write-Verbose "Compiled assembly not found. Falling back to runtime compilation of: $csPath"
-                Write-Warning "Compiling C# source at runtime. For better security and performance, run 'Build-ExpandDateDll.ps1' to generate the DLL."
+                Write-Warning "Compiling C# source at runtime. For better security and performance, run '${libFileName}_build.ps1' to generate the DLL."
                 try {
                     Add-Type -Path $csPath
                 }
