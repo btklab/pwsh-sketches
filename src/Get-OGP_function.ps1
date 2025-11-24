@@ -38,8 +38,20 @@
       2. <meta property="og:url"... />
       3. The original input URI
 
-    thanks: goark/ml: Make Link with Markdown Format
-    <https://github.com/goark/ml>
+.NOTES
+    Title:      Get-OGP
+    Author:     btklab
+    Created:    2025-11-24
+    
+    --- Acknowledgements / License Info ---
+
+    This script is inspired by and partially ported from "goark/ml".
+    
+    Original Project: https://github.com/goark/ml
+    Original Author:  goark
+    Original License: Apache License 2.0
+    
+    http://www.apache.org/licenses/LICENSE-2.0
 
 
 .PARAMETER Uri
