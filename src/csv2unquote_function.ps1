@@ -141,3 +141,45 @@ function csv2unquote {
         }
     }
 }
+# set alias
+[String] $tmpAliasName = "Sanitize-Csv"
+[String] $tmpCmdName   = "csv2unquote"
+[String] $tmpCmdPath = Join-Path `
+    -Path $PSScriptRoot `
+    -ChildPath $($MyInvocation.MyCommand.Name) `
+    | Resolve-Path -Relative
+if ( $IsWindows ){ $tmpCmdPath = $tmpCmdPath.Replace('\' ,'/') }
+# is alias already exists?
+if ((Get-Command -Name $tmpAliasName -ErrorAction SilentlyContinue).Count -gt 0){
+    try {
+        if ( (Get-Command -Name $tmpAliasName).CommandType -eq "Alias" ){
+            if ( (Get-Command -Name $tmpAliasName).ReferencedCommand.Name -eq $tmpCmdName ){
+                Set-Alias -Name $tmpAliasName -Value $tmpCmdName -PassThru `
+                    | ForEach-Object{
+                        Write-Host "$($_.DisplayName)" -ForegroundColor Green
+                    }
+            } else {
+                throw
+            }
+        } elseif ( "$((Get-Command -Name $tmpAliasName).Name)" -match '\.exe$') {
+            Set-Alias -Name $tmpAliasName -Value $tmpCmdName -PassThru `
+                | ForEach-Object{
+                    Write-Host "$($_.DisplayName)" -ForegroundColor Green
+                }
+        } else {
+            throw
+        }
+    } catch {
+        Write-Error "Alias ""$tmpAliasName ($((Get-Command -Name $tmpAliasName).ReferencedCommand.Name))"" is already exists. Change alias needed. Please edit the script at the end of the file: ""$tmpCmdPath""" -ErrorAction Stop
+    } finally {
+        Remove-Variable -Name "tmpAliasName" -Force
+        Remove-Variable -Name "tmpCmdName" -Force
+    }
+} else {
+    Set-Alias -Name $tmpAliasName -Value $tmpCmdName -PassThru `
+        | ForEach-Object {
+            Write-Host "$($_.DisplayName)" -ForegroundColor Green
+        }
+    Remove-Variable -Name "tmpAliasName" -Force
+    Remove-Variable -Name "tmpCmdName" -Force
+}

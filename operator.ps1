@@ -277,6 +277,7 @@ if ( $IsWindows ){
 . $pwshSrcDir/Process-InQuote_function.ps1
 
 . $pwshSrcDir/Join2-Object_function.ps1
+. $pwshSrcDir/JoinCs-Object_function.ps1
 
 . $pwshSrcDir/Cast-Date_function.ps1
 . $pwshSrcDir/Cast-Decimal_function.ps1
