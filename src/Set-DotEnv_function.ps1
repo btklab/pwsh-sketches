@@ -136,6 +136,10 @@ function Set-DotEnv {
             Write-Error """$Path"" is not exists." -ErrorAction Stop
         }
         write-debug "Target file: $p"
+        # setvariable
+        if ( $DryRun ){
+            $OverWrite = $true
+        }
         # read file
         $envHash = [ordered] @{}
         [string] $ext = (Get-Item -LiteralPath $p).Extension
