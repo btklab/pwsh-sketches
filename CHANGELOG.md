@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- Added [Get-OGP][] Acknowledgements and License Info.
+- NA
 
+## [0.18.0] - 2026-03-08
+
+- Added [Get-OGP][] Acknowledgements and License Info.
+- Added [Invoke-RichTree][] 
 
 ## [0.18.0] - 2025-11-23
 
@@ -481,7 +485,11 @@ Breaking Changes
 [csv2unquote]: src/csv2unquote_function.ps1
 [Build-CSharpAssembly]: src/Build-CSharpAssembly_function.ps1
 
-[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.18.0..HEAD
+[Invoke-RichTree]: src/Invoke-RichTree_function.ps1
+
+
+[unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.18.1..HEAD
+[0.18.1]: https://github.com/btklab/pwsh-sketches/releases/tag/0.18.1
 [0.18.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.18.0
 [0.17.0]: https://github.com/btklab/pwsh-sketches/releases/tag/0.17.0
 [0.16.1]: https://github.com/btklab/pwsh-sketches/releases/tag/0.16.1
