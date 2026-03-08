@@ -228,6 +228,7 @@ if ( $IsWindows ){
 ## file and directory
 . $pwshSrcDir/Get-FullPath_function.ps1
 . $pwshSrcDir/Get-RelativePath_function.ps1
+. $pwshSrcDir/Invoke-RichTree_function.ps1
 
 ## office
 
