@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-- NA
+- Added [Watch-Process][] function
 
 ## [0.18.0] - 2026-03-08
 
@@ -486,6 +486,8 @@ Breaking Changes
 [Build-CSharpAssembly]: src/Build-CSharpAssembly_function.ps1
 
 [Invoke-RichTree]: src/Invoke-RichTree_function.ps1
+
+[Watch-Process]: src/Watch-Process_function.ps1
 
 
 [unreleased]: https://github.com/btklab/pwsh-sketches/compare/0.18.1..HEAD
