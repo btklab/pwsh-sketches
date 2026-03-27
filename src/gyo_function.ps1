@@ -45,6 +45,43 @@ function gyo {
             [bool] $readFileFlag = $True
             [int] $fileArryStartCounter = 0
         }
+
+        if (-not ("FastLineCounter" -as [type])) {
+            Add-Type -TypeDefinition @"
+            using System;
+            using System.IO;
+
+            public static class FastLineCounter {
+                public static long CountLines(string path) {
+                    long count = 0;
+                    // Optimize I/O using a 64 KB fixed buffer and sequential scan.
+                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite, 65536, FileOptions.SequentialScan)) {
+                        if (fs.Length == 0) return 0;
+                        
+                        byte[] buffer = new byte[65536];
+                        int bytesRead;
+                        bool endsWithNewline = false;
+                        
+                        while ((bytesRead = fs.Read(buffer, 0, buffer.Length)) > 0) {
+                            for (int i = 0; i < bytesRead; i++) {
+                                // Count LF (\n = byte 10), supporting both CRLF and LF environments.
+                                if (buffer[i] == 10) { 
+                                    count++;
+                                }
+                            }
+                            endsWithNewline = (buffer[bytesRead - 1] == 10);
+                        }
+                        
+                        // Correction when the final line does not end with a newline character.
+                        if (!endsWithNewline) {
+                            count++;
+                        }
+                    }
+                    return count;
+                }
+            }
+"@
+        }
     }
     process {
         if($stdinFlag){ $readRowCounter++ }
@@ -52,21 +89,17 @@ function gyo {
     end {
         if($readFileFlag){
             for($i = $fileArryStartCounter; $i -lt $args.Count; $i++){
-                $fileList = (Get-ChildItem $args[$i] | ForEach-Object { $_.FullName })
-                foreach($f in $fileList){
-                    $fileFullPath = "$f"
-                    $fileCat = (Get-Content -LiteralPath "$fileFullPath" -Encoding UTF8)
-                    $fileGyoNum = (Get-Content -LiteralPath "$fileFullPath" -Encoding UTF8).Length
-                    $dispFileName = (Split-Path -Leaf "$f")
-                    # Fixed input rows becoming arrays
-                    # instead of objects when there is only
-                    # one line of input.
-                    if ($fileCat -eq $Null){
-                        Write-Output "0 $dispFileName"
-                    } elseif($fileCat.GetType().Name -eq "String"){
-                        Write-Output "1 $dispFileName"
-                    }else{
+                # Add the -File switch to ignore directories.
+                $fileList = Get-ChildItem $args[$i] -File -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName }
+                
+                foreach($fileFullPath in $fileList){
+                    $dispFileName = Split-Path -Leaf $fileFullPath
+                    try {
+                        # Invoke the high-speed counting routine implemented in C#.
+                        $fileGyoNum = [FastLineCounter]::CountLines($fileFullPath)
                         Write-Output "$fileGyoNum $dispFileName"
+                    } catch {
+                        Write-Error "Failed to read the file.: $dispFileName - $_"
                     }
                 }
             }
