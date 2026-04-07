@@ -1,120 +1,80 @@
 <#
 .SYNOPSIS
-    Sponge-Property (Alias:sponge/unbox) - Buffer all input before outputting and Expand a Property.
+    Sponge-Property (Alias: sponge, unbox)
+    Buffers all pipeline input into memory before processing, then expands the specified property or properties.
 
-    This function is useful for chaining pipelines to expand
-    nested objects without the backtracking for parentheses.
+    PURPOSE:
+    This function eliminates the need for "backtracking" with parentheses when drilling down into nested objects.
+    Instead of writing `(Get-Service).Name`, you can write `Get-Service | sponge Name`.
 
-    Basically, this function buffer standard input.
+    BEHAVIOR:
+    - Buffers ALL input from the pipeline before outputting any results.
+    - If no property is specified, it simply outputs the buffered collection.
+    - Supports deep-drilling via dot-notation (e.g., "User.ID") or multiple arguments.
+    - Limitation: Only property expansion is supported; method execution is not.
 
-        $input -> ($input)
-    
-    Optionally, You can specify a property and expand it.
-    (Method execution does not supported.)
+.PARAMETER Property
+    One or more property names to expand. Supports dot-separated strings (e.g., "Parent.Child") 
+    and multiple arguments (e.g., "Parent", "Child").
 
-        ls | sponge Name
-        ls | unbox Name
-
-        (equivalent to following:)
-        ls | Select-Object -ExpandProperty Name
-
-    This avoids the need to re-enter parentheses as shown below.
-
-        (ls).Name
-
+.PARAMETER InputObject
+    The objects passed from the pipeline to be buffered and expanded.
 
 .EXAMPLE
-    # expand property
-    ls | sponge Name
-    ls | Sponge-Property Name
-
-    # equivalent to following
-    (ls).Name
-    ls | Select-Object -ExpandProperty Name
-
-    # It is similar to the following output.
-    ls | select Name
-    ls | Select-Object -Property Name
+    # Dot-notation expansion
+    $json | sponge User.Details.ID
 
 .EXAMPLE
-    # Example of chaining pipelines
-    # to expand properties sequentially.
-    $json = Get-Date `
-        | Select-Object -Property * `
-        | ConvertTo-Json `
-        | ConvertFrom-Json
+    # Mixed dot-notation and multiple arguments
+    $json | sponge User.Details ID
     
-    # json data
-    $json
+    # All are equivalent to:
+    # (($json).User.Details).ID
 
-        DisplayHint : 2
-        DateTime    : Sunday, March 23, 2025 12:19:44 PM
-        Date        : 2025/03/23 0:00:00
-        Day         : 23
-        DayOfWeek   : 0
-        DayOfYear   : 82
-        Hour        : 12
-        Kind        : 2
-        Millisecond : 666
-        Microsecond : 298
-        Nanosecond  : 300
-        Minute      : 19
-        Month       : 3
-        Second      : 44
-        Ticks       : 638783291846662983
-        TimeOfDay   : @{Ticks=443846662983; Days=0; Hours=12; Milliseconds
-                      =666; Microseconds=298; Nanoseconds=300; Minutes=19;
-                       Seconds=44; TotalDays=0.513711415489583; TotalHours
-                      =12.32907397175; TotalMilliseconds=44384666.2983; To
-                      talMicroseconds=44384666298.3; TotalNanoseconds=4438
-                      4666298300; TotalMinutes=739.744438305; TotalSeconds
-                      =44384.6662983}
-        Year        : 2025
+.EXAMPLE
+    # Simple expansion
+    Get-Process | sponge Name
 
-    # expand property: TimeOfDay
-    # (Expand properties in the pipeline without
-    # the backtracking for parentheses
-    $json | sponge TimeOfDay
-
-        Ticks             : 443846662983
-        Days              : 0
-        Hours             : 12
-        Milliseconds      : 666
-        Microseconds      : 298
-        Nanoseconds       : 300
-        Minutes           : 19
-        Seconds           : 44
-        TotalDays         : 0.513711415489583
-        TotalHours        : 12.32907397175
-        TotalMilliseconds : 44384666.2983
-        TotalMicroseconds : 44384666298.3
-        TotalNanoseconds  : 44384666298300
-        TotalMinutes      : 739.744438305
-        TotalSeconds      : 44384.6662983
-    
-    # Further chaining pipelines to expand properties.
-    $json | sponge TimeOfDay | sponge Ticks
-
-        443846662983
-#>        
+.NOTES
+    The name "sponge" is inspired by the unix 'sponge' utility which "soaks up" 
+    standard input before writing to a file, preventing race conditions.
+#>
 function Sponge-Property {
     [CmdletBinding()]
     [Alias('unbox')]
     param (
-        [Parameter( Mandatory=$False, Position=0 )]
+        [Parameter(Mandatory = $false, Position = 0)]
         [Alias('p')]
-        [string] $Property
-        ,
-        [parameter( Mandatory=$False, ValueFromPipeline=$True )]
+        [string[]] $Property,
+
+        [Parameter(Mandatory = $false, ValueFromPipeline = $true)]
         [object[]] $InputObject
     )
-    # create script str
-    if ( $Property ){
-        ($input).$Property
-    } else {
-        ($input)
+
+    process {
+        # The automatic variable $input contains all objects from the pipeline.
+        # We convert it to an array to "soak up" all data before further processing.
+        $bufferedItems = @($input)
+
+        if ($null -eq $Property -or $Property.Count -eq 0) {
+            return $bufferedItems
+        }
+
+        # Normalize property list: handle both dot-notation and array elements.
+        # Example: @("User.Details", "ID") -> @("User", "Details", "ID")
+        $propertyChain = $Property | ForEach-Object { $_.Split('.') } | Where-Object { $_ -ne "" }
+
+        # Drill down through the property chain
+        $currentValue = $bufferedItems
+        foreach ($p in $propertyChain) {
+            if ($null -eq $currentValue) { break }
+            $currentValue = $currentValue.$p
+        }
+
+        $currentValue
     }
 }
+
 # set alias
 [String] $tmpAliasName = "sponge"
 [String] $tmpCmdName   = "Sponge-Property"
