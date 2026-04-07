@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Changed [Sponge-Property] Enable multiple properties.
 - Added [Watch-Process][] function
+- Refactor [gyo][] function
 
 ## [0.18.0] - 2026-03-08
 
