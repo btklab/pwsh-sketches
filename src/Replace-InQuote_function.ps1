@@ -77,9 +77,9 @@ function Replace-InQuote {
         [Alias("f","from")]
         [string]$Pattern,
 
-        [Parameter(Mandatory=$true, Position=1)]
+        [Parameter(Mandatory=$false, Position=1)]
         [Alias("t","to")]
-        [string]$Replacement,
+        [string]$Replacement = '',
 
         [Parameter(Mandatory=$false)]
         [string]$StartToken = '"',
