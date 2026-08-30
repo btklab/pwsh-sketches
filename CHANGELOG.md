@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+- Update [Replace-InQuote] -Replacement parameter to allow empty strings for deletion.
 - Refactor [Pars-iCal] standardize parser to output analytics-ready objects and add optional time indicators
 - Changed [Sponge-Property] Enable multiple properties.
 - Added [Watch-Process][] function
