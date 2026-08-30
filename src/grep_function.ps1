@@ -146,10 +146,10 @@
     Get-Command | Out-File -FilePath .\Command.txt -Encoding utf8
     cat .\Command.txt | grep "Get\-", "Set\-" -NotMatch | Select-Object -Last 5
 
-    Cmdlet          Write-Output                                       7.0.0.0    Microsoft.PowerShell.Utility
-    Cmdlet          Write-Progress                                     7.0.0.0    Microsoft.PowerShell.Utility
-    Cmdlet          Write-Verbose                                      7.0.0.0    Microsoft.PowerShell.Utility
-    Cmdlet          Write-Warning                                      7.0.0.0    Microsoft.PowerShell.Utility
+    Cmdlet Write-Output   7.0.0.0 Microsoft.PowerShell.Utility
+    Cmdlet Write-Progress 7.0.0.0 Microsoft.PowerShell.Utility
+    Cmdlet Write-Verbose  7.0.0.0 Microsoft.PowerShell.Utility
+    Cmdlet Write-Warning  7.0.0.0 Microsoft.PowerShell.Utility
 
 .EXAMPLE
 # Use double quotes when searching for tab characters (grep "`t")
@@ -165,18 +165,18 @@
     Get-Command | Out-File -FilePath .\Command.txt -Encoding utf8
     cat .\Command.txt | grep 'Get\-Computer' -C 2, 3
 
-      Cmdlet          Get-Command                                        7.3.1.500  Microsoft.PowerShell.Core
-      Cmdlet          Get-ComputeProcess                                 1.0.0.0    HostComputeService
-    > Cmdlet          Get-ComputerInfo                                   7.0.0.0    Microsoft.PowerShell.Management
-      Cmdlet          Get-Content                                        7.0.0.0    Microsoft.PowerShell.Management
-      Cmdlet          Get-Counter                                        7.0.0.0    Microsoft.PowerShell.Diagnostics
-      Cmdlet          Get-Credential                                     7.0.0.0    Microsoft.PowerShell.Security
+      Cmdlet Get-Command        7.3.1.500  Microsoft.PowerShell.Core
+      Cmdlet Get-ComputeProcess 1.0.0.0    HostComputeService
+    > Cmdlet Get-ComputerInfo   7.0.0.0    Microsoft.PowerShell.Management
+      Cmdlet Get-Content        7.0.0.0    Microsoft.PowerShell.Management
+      Cmdlet Get-Counter        7.0.0.0    Microsoft.PowerShell.Diagnostics
+      Cmdlet Get-Credential     7.0.0.0    Microsoft.PowerShell.Security
 
     Tips: use Out-String -Stream (alias:oss) to greppable
 
     cat .\Command.txt | grep 'Get\-Computer' -C 2, 3 | oss | grep '>'
 
-    > Cmdlet          Get-ComputerInfo                                   7.0.0.0    Microsoft.PowerShell.Management
+    > Cmdlet Get-ComputerInfo 7.0.0.0 Microsoft.PowerShell.Management
 
 .EXAMPLE
     # Find all pattern matches (grep 'regex' -o)
